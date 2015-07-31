@@ -160,12 +160,7 @@
 ```
 
 
- .h中暴露 designated 初始化方法，是为了方便子类化 [^.h中暴露 designated 初始化方法，是为了方便子类化]。
-[^.h中暴露 designated 初始化方法，是为了方便子类化]: [***《禅与 Objective-C 编程艺术 （Zen and the Art of the Objective-C Craftsmanship 中文翻译）》***](http://is.gd/OQ49zk)。
-
-----------
-
-
+ .h中暴露 designated 初始化方法，是为了方便子类化 （想了解更多，请戳--》 [***《禅与 Objective-C 编程艺术 （Zen and the Art of the Objective-C Craftsmanship 中文翻译）》***](http://is.gd/OQ49zk)。）
 
 
 
