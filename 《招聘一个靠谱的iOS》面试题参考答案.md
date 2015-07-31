@@ -1090,3 +1090,11 @@ runtime部分主要参考[Apple官方文档：Declared Properties](https://devel
 ###53. IB中User Defined Runtime Attributes如何使用？ 
 ###54. 如何调试BAD_ACCESS错误
 ###55. lldb（gdb）常用的调试命令？
+
+
+
+----------
+
+
+Posted by [微博@iOS程序犭袁](http://weibo.com/luohanchenyilong/)  
+原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | [Creative Commons BY-NC-ND 3.0](http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh)
