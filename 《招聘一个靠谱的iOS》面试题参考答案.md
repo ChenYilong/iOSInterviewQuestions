@@ -164,16 +164,16 @@
 
 
  2. 按照接口设计的惯例，如果设计了“初始化方法” (initializer)，也应当搭配一个快捷构造方法。而快捷构造方法的返回值，建议为instancetype，为保持一致性，init方法和快捷构造方法的返回类型最好都用instancetype。
-2. 如果基于第一种修改方法：既然该类中已经有一个“初始化方法” (initializer)，用于设置“姓名”(Name)、“年龄”(Age)和“性别”(Sex）的初始值:
+ 2. 如果基于第一种修改方法：既然该类中已经有一个“初始化方法” (initializer)，用于设置“姓名”(Name)、“年龄”(Age)和“性别”(Sex）的初始值:
 那么在设计对应@property时就应该尽量使用不可变的对象：其三个属性都应该设为“只读”。用初始化方法设置好属性值之后，就不能再改变了。在本例中，仍需声明属性的“内存管理语义”。于是可以把属性的定义改成这样
 
         @property (nonatomic, copy, readonly) NSString *name;
         @property (nonatomic, assign, readonly) NSUInter age;
         @property (nonatomic, assign, readonly) CYLSex sex;
       由于是只读属性，所以编译器不会为其创建对应的“设置方法”，即便如此，我们还是要写上这些属性的语义，以此表明初始化方法在设置这些属性值时所用的方式。要是不写明语义的话，该类的调用者就不知道初始化方法里会拷贝这些属性，他们有可能会在调用初始化方法之前自行拷贝属性值。这种操作多余而且低效。
-2. `initUserModelWithUserName`如果改为`initWithName`会更加简洁，而且足够清晰。
-2. `UserModel`如果改为`User`会更加简洁，而且足够清晰。
-2. `UserSex`如果改为`Sex`会更加简洁，而且足够清晰。
+ 2. `initUserModelWithUserName`如果改为`initWithName`会更加简洁，而且足够清晰。
+ 2. `UserModel`如果改为`User`会更加简洁，而且足够清晰。
+ 2. `UserSex`如果改为`Sex`会更加简洁，而且足够清晰。
 
 ####***硬伤部分***
 
