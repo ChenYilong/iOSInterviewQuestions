@@ -755,6 +755,7 @@ stringCopy的值也不会因此改变，但是如果不使用copy，stringCopy�
 
 这些说法，笔者下文中，可能都会用到，指的是一个东西。
 
+
 正如
 [Apple官方文档 ***You Can Customize Synthesized Instance Variable Names***](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/EncapsulatingData/EncapsulatingData.html#//apple_ref/doc/uid/TP40011210-CH5-SW6) 所说：
 ![enter image description here](http://i.imgur.com/D6d0zGJ.png)
