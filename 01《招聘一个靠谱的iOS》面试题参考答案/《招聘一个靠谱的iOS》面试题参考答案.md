@@ -663,9 +663,11 @@ objc_setAssociatedObject(objectToBeDeallocted,
  2. 读/写权限---`readwrite(读写)`、`readooly (只读)`
  3. 内存管理语义---`assign`、`strong`、 `weak`、`unsafe_unretained`、`copy`
  4. 方法名---`getter=<name>` 、`setter=<name>`
-    
-        @property (nonatomic, getter=isOn) BOOL on;
+   
+  `getter=<name>`的样式：
 
+        @property (nonatomic, getter=isOn) BOOL on;
+（ `setter=<name>`这种不常用，也不推荐使用。故不在这里给出写法。）
 
 ###10. weak属性需要在dealloc中置nil么？
 不需要。
@@ -751,7 +753,7 @@ stringCopy的值也不会因此改变，但是如果不使用copy，stringCopy�
 
 > 实例变量 = 成员变量 ＝ ivar
 
-笔者喜欢用“成员变量”这种说法。
+这些说法，笔者下文中，可能都会用到，指的是一个东西。
 
 正如
 [Apple官方文档 ***You Can Customize Synthesized Instance Variable Names***](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/EncapsulatingData/EncapsulatingData.html#//apple_ref/doc/uid/TP40011210-CH5-SW6) 所说：
