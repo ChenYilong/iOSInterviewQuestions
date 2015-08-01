@@ -199,7 +199,7 @@
 
  1. 在ARC中,在有可能出现循环引用的时候,往往通过要让其中一端使用weak来解决,比如:delegate代理属性
 
- 2. 自身已经对它进行一次强应用,没有必要再强引用一次,此时也会使用weak,自定义IBOutlet控件属性一般也使用weak；当然，也可以使用strong。在下文也有论述：***《IBOutlet连出来的视图属性为什么可以被设置成weak?》***
+ 2. 自身已经对它进行一次强引用,没有必要再强引用一次,此时也会使用weak,自定义IBOutlet控件属性一般也使用weak；当然，也可以使用strong。在下文也有论述：***《IBOutlet连出来的视图属性为什么可以被设置成weak?》***
 
 不同点：
  
@@ -216,7 +216,7 @@ NSlnteger 等)的简单赋值操作。
  1. NSString、NSArray、NSDictionary 等等经常使用copy关键字，是因为他们有对应的可变类型：NSMutableString、NSMutableArray、NSMutableDictionary；
  2. block也经常使用copy关键字，具体原因见[官方文档：***Objects Use Properties to Keep Track of Blocks***](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/WorkingwithBlocks/WorkingwithBlocks.html#//apple_ref/doc/uid/TP40011210-CH8-SW12)：
 
- block使用copy是从MRC遗留下来的“传统”,在MRC中,方法内部的block是在在栈区的,使用copy可以把它放到堆区.在ARC中写不写都行：对于block使用copy还是strong效果是一样的，但写上copy也无伤大雅，还能时刻提醒我们：编译器自动对block进行了copy操作。
+ block使用copy是从MRC遗留下来的“传统”,在MRC中,方法内部的block是在栈区的,使用copy可以把它放到堆区.在ARC中写不写都行：对于block使用copy还是strong效果是一样的，但写上copy也无伤大雅，还能时刻提醒我们：编译器自动对block进行了copy操作。
 
  ![enter image description here](http://i.imgur.com/VlVKl8L.png)
 
@@ -231,7 +231,7 @@ copy此特质所表达的所属关系与strong类似。然而设置方法并不�
 
 
 ###4. 这个写法会出什么问题： `@property (copy) NSMutableArray *array;`
-两个问题：1、添加,删除,修改数组内的元素的时候,程序会因为找不到对于的方法而崩溃.因为copy就是复制一个不可变NSArray的对象；2、使用了atomic属性会严重影响性能 ； 
+两个问题：1、添加,删除,修改数组内的元素的时候,程序会因为找不到对应的方法而崩溃.因为copy就是复制一个不可变NSArray的对象；2、使用了atomic属性会严重影响性能 ； 
 
 第1条的相关原因在下文中有论述***《用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？如果改用strong关键字，可能造成什么问题？》*** 以及上文***《怎么用 copy 关键字？》***也有论述。
 
@@ -239,14 +239,13 @@ copy此特质所表达的所属关系与strong类似。然而设置方法并不�
 
 > 该属性使用了同步锁，会在创建时生成一些额外的代码用于帮助编写多线程程序，这会带来性能问题，通过声明nonatomic可以节省这些虽然很小但是不必要额外开销。
 
-在默认情况下，由编译器折合成的方法会通过锁定机制确保其原子性(atomicity)。如果
-属性具备nonatomic特质，则不使用同步锁。请注意，尽管没有名为“atomic”的特质(如果某属性不具备nonatomic特质，那它就是“原子的”(atomic))。
+在默认情况下，由编译器所合成的方法会通过锁定机制确保其原子性(atomicity)。如果属性具备nonatomic特质，则不使用同步锁。请注意，尽管没有名为“atomic”的特质(如果某属性不具备nonatomic特质，那它就是“原子的”(atomic))。
 
 在iOS开发中，你会发现，几乎所有属性都声明为nonatomic。
 
 一般情况下并不要求属性必须是“原子的”，因为这并不能保证“线程安全” ( thread safety)，若要实现“线程安全”的操作，还需采用更为深层的锁定机制才行。例如，一个线程在连续多次读取某属性值的过程中有别的线程在同时改写该值，那么即便将属性声明为atomic，也还是会读到不同的属性值。
 
-因此，开发iOS程序时一般都会使用nooatomic属性。但是在开发Mac OS X程序时，使用
+因此，开发iOS程序时一般都会使用nonatomic属性。但是在开发Mac OS X程序时，使用
 atomic属性通常都不会有性能瓶颈。
 
 ###5. 如何让自己的类用 copy 修饰符？如何重写带 copy 关键字的 setter？
@@ -488,7 +487,7 @@ atomic属性通常都不会有性能瓶颈。
 	@synthesize lastName = myLastName; 
 	@end 
 
-我为了搞清属性是怎么实现的,曾经反编译过相关的代码,他大致生成了五个个东西
+我为了搞清属性是怎么实现的,曾经反编译过相关的代码,他大致生成了五个东西
 
  1. OBJC_IVAR_$类名$属性名称 ：该属性的“偏移量” (offset)，这个偏移量是“硬编码” (hardcode)，表示该变量距离存放对象的内存区域的起始地址有多远。
  2. setter与getter方法对应的实现函数
@@ -500,7 +499,7 @@ atomic属性通常都不会有性能瓶颈。
 
 ###7. @protocol 和 category 中如何使用 @property
 
- 1. 在protocol中使用property只会生成setter和getter方法声明,我们使用属性的目的,是希望遵守我协议的对象的实现该属性
+ 1. 在protocol中使用property只会生成setter和getter方法声明,我们使用属性的目的,是希望遵守我协议的对象能实现该属性
  2. category 使用 @property 也是只会生成setter和getter方法的声明,如果我们真的需要给category增加属性的实现,需要借助于运行时的两个函数：
 
   1. objc_setAssociatedObject
@@ -783,7 +782,7 @@ stringCopy的值也不会因此改变，但是如果不使用copy，stringCopy�
 
 
 
-上述语法会将生成的实例变量命名为`_myFirstName`与`_myLastName`，而不再使用默认的名字。一般情况下无须修改默认的实例变量名，但是如果你不喜欢以下划线来命名实例变量，那么可以用这个办法将其改为自己想要的名字。笔者还是推荐使用默认的命名案，因为如果所有人都坚持这套方案，那么写出来的代码大家都能看得懂。
+上述语法会将生成的实例变量命名为`_myFirstName`与`_myLastName`，而不再使用默认的名字。一般情况下无须修改默认的实例变量名，但是如果你不喜欢以下划线来命名实例变量，那么可以用这个办法将其改为自己想要的名字。笔者还是推荐使用默认的命名方案，因为如果所有人都坚持这套方案，那么写出来的代码大家都能看得懂。
 
 总结下@synthesize合成实例变量的规则，有以下几点：
 
