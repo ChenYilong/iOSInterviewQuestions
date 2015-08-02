@@ -197,7 +197,7 @@
 什么情况使用 weak 关键字？
 
 
- 1. 在ARC中,在有可能出现循环引用的时候,往往通过要让其中一端使用weak来解决,比如:delegate代理属性
+ 1. 在ARC中,在有可能出现循环引用的时候,往往要通过让其中一端使用weak来解决,比如:delegate代理属性
 
  2. 自身已经对它进行一次强引用,没有必要再强引用一次,此时也会使用weak,自定义IBOutlet控件属性一般也使用weak；当然，也可以使用strong。在下文也有论述：***《IBOutlet连出来的视图属性为什么可以被设置成weak?》***
 
@@ -489,21 +489,22 @@ atomic属性通常都不会有性能瓶颈。
 
 我为了搞清属性是怎么实现的,曾经反编译过相关的代码,他大致生成了五个东西
 
- 1. OBJC_IVAR_$类名$属性名称 ：该属性的“偏移量” (offset)，这个偏移量是“硬编码” (hardcode)，表示该变量距离存放对象的内存区域的起始地址有多远。
+ 1. `OBJC_IVAR_$类名$属性名称` ：该属性的“偏移量” (offset)，这个偏移量是“硬编码” (hardcode)，表示该变量距离存放对象的内存区域的起始地址有多远。
  2. setter与getter方法对应的实现函数
- 2. ivar_list ：成员变量列表
- 2. method_list ：方法列表
- 2. prop_list ：属性列表
+ 2. `ivar_list` ：成员变量列表
+ 2. `method_list` ：方法列表
+ 2. `prop_list` ：属性列表
 
-也就是说我们每次在增加一个属性,系统都会在ivar_list中添加一个成员变量的描述,在method_list中增加setter与getter方法的描述,在属性列表中增加一个属性的描述,然后计算该属性在对象中的偏移量,然后给出setter与getter方法对应的实现,在setter方法中从偏移量的位置开始赋值,在getter方法中从偏移量开始取值,为了能够读取正确字节数,系统对象偏移量的指针类型进行了类型强转.
+
+也就是说我们每次在增加一个属性,系统都会在`ivar_list`中添加一个成员变量的描述,在`method_list`中增加setter与getter方法的描述,在属性列表中增加一个属性的描述,然后计算该属性在对象中的偏移量,然后给出setter与getter方法对应的实现,在setter方法中从偏移量的位置开始赋值,在getter方法中从偏移量开始取值,为了能够读取正确字节数,系统对象偏移量的指针类型进行了类型强转.
 
 ###7. @protocol 和 category 中如何使用 @property
 
  1. 在protocol中使用property只会生成setter和getter方法声明,我们使用属性的目的,是希望遵守我协议的对象能实现该属性
  2. category 使用 @property 也是只会生成setter和getter方法的声明,如果我们真的需要给category增加属性的实现,需要借助于运行时的两个函数：
 
-  1. objc_setAssociatedObject
-  2. objc_getAssociatedObject
+  1. `objc_setAssociatedObject`
+  2. `objc_getAssociatedObject`
 
 ###8. runtime 如何实现 weak 属性
 
@@ -512,9 +513,75 @@ atomic属性通常都不会有性能瓶颈。
 > weak 此特质表明该属性定义了一种“非拥有关系” (nonowning relationship)。为这种属性设置新值时，设置方法既不保留新值，也不释放旧值。此特质同assign类似， 然而在属性所指的对象遭到摧毁时，属性值也会清空(nil out)。
 
 那么runtime如何实现weak变量的自动置nil？
-runtime 对注册的类， 会进行布局，对于 weak 对象会放入一个 hash 表中。 用 weak 指向的对象地址作为 key，当此对象的引用计数为0的时候会 dealloc，假如内存地址是a，那么就会以a为键， 在这个 weak 表中搜索，找到所有以a为键的所有 weak 对象，从而设置为 nil。
+runtime 对注册的类， 会进行布局，对于 weak 对象会放入一个 hash 表中。 用 weak 指向的对象地址作为 key，当此对象的引用计数为0的时候会 dealloc，假如内存地址是a，那么就会以a为键， 在这个 weak 表中搜索，找到所有以a为键的 weak 对象，从而设置为 nil。
 
-我们模拟下weak的setter方法，应该如下：
+使用伪代码模拟“runtime如何实现weak属性”：
+ 
+
+
+ 
+```Objective-C
+// 使用伪代码模拟：runtime如何实现weak属性
+// http://weibo.com/luohanchenyilong/
+// https://github.com/ChenYilong
+
+ id obj1;
+ objc_initWeak(&obj1, obj);
+/*obj引用计数变为0，变量作用域结束*/
+ objc_destroyWeak(&obj1);
+```
+
+下面对用到的两个方法`objc_initWeak`和`objc_destroyWeak`做下解释：
+
+总体说来，作用是：
+通过`objc_initWeak`函数初始化“附有weak修饰符的变量（obj1）”，在变量作用域结束时通过`objc_destoryWeak`函数释放该变量（obj1）。
+
+下面分别介绍下方法的内部实现：
+
+`objc_initWeak`函数的实现是这样的：在将“附有weak修饰符的变量（obj1）”初始化为0（nil）后，会将“赋值对象”（obj）作为参数调用`objc_storeWeak`函数。
+
+ 
+```Objective-C
+obj1 = 0；
+obj_storeWeak(&obj1, obj);
+```
+
+也就是说：
+
+> weak修饰的指针默认值是nil（在Objective-C中向nil发送消息是安全的）
+
+
+
+
+然后`obj_destroyWeak`函数将0（nil）作为参数，调用`objc_storeWeak`函数。
+
+`objc_storeWeak(&obj1, 0);`
+
+前面的源代码与下列源代码相同。
+
+
+
+```Objective-C
+// 使用伪代码模拟：runtime如何实现weak属性
+// http://weibo.com/luohanchenyilong/
+// https://github.com/ChenYilong
+
+id obj1;
+obj1 = 0;
+objc_storeWeak(&obj1, obj);
+/* ... obj的引用计数变为0 ... */
+objc_storeWeak(&obj1, 0);
+```
+
+
+`objc_storeWeak`函数把第二个参数的赋值对象的地址作为键值，将第一个参数的weak修饰的属性变量的地址注册到weak表中。如果第二个参数为0（nil），那么把变量的地址从weak表中删除，在后面的相关一题会详解。
+
+使用伪代码是为了方便理解，下面我们“真枪实弹”地实现下：
+
+> 如何让不使用weak修饰的@property，拥有weak的效果。
+
+
+我们从setter方法入手：
 
     - (void)setObject:(NSObject *)object
     {
@@ -529,6 +596,7 @@ runtime 对注册的类， 会进行布局，对于 weak 对象会放入一个 h
  1. 在setter方法中做如下设置：
 
         objc_setAssociatedObject(self, "object", object, OBJC_ASSOCIATION_ASSIGN);
+
  2. 在属性所指的对象遭到摧毁时，属性值也会清空(nil out)。做到这点，同样要借助runtime：
  
  ```Objective-C
@@ -667,6 +735,7 @@ objc_setAssociatedObject(objectToBeDeallocted,
 
         @property (nonatomic, getter=isOn) BOOL on;
 （ `setter=<name>`这种不常用，也不推荐使用。故不在这里给出写法。）
+ 3. 不常用的：`nonnull`,`null_resettable`,`nullable`
 
 ###10. weak属性需要在dealloc中置nil么？
 不需要。
@@ -699,7 +768,7 @@ objc_setAssociatedObject(objectToBeDeallocted,
 
 ###11. @synthesize和@dynamic分别有什么作用？
 
- 1. @property有两个对应的词，一个是@synthesize，一个是@dynamic。如果@synthesize和@dynamic都没写，那么默认的就是@syntheszie var = _var;
+ 1. @property有两个对应的词，一个是@synthesize，一个是@dynamic。如果@synthesize和@dynamic都没写，那么默认的就是`@syntheszie var = _var;`
  2. @synthesize的语义是如果你没有手动实现setter方法和getter方法，那么编译器会自动为你加上这两个方法。
  3. @dynamic告诉编译器：属性的setter与getter方法由用户自己实现，不自动生成。（当然对于readonly的属性只需提供getter即可）。假如一个属性被声明为@dynamic var，然后你没有提供@setter方法和@getter方法，编译的时候没问题，但是当程序运行到`instance.var = someVar`，由于缺setter方法会导致程序崩溃；或者当运行到 `someVar = var`时，由于缺getter方法同样会导致崩溃。编译时没问题，运行时才执行相应的方法，这就是所谓的动态绑定。
 
@@ -747,7 +816,7 @@ stringCopy的值也不会因此改变，但是如果不使用copy，stringCopy�
 参考链接：[iOS 集合的深复制与浅复制](https://www.zybuluo.com/MicroCai/note/50592)
 
 
-###14. @synthesize合成实例变量的规则是什么？假如property名为foo，存在一个名为_foo的实例变量，那么还会自动合成新变量么？
+###14. @synthesize合成实例变量的规则是什么？假如property名为foo，存在一个名为`_foo`的实例变量，那么还会自动合成新变量么？
 在回答之前先说明下一个概念：
 
 > 实例变量 = 成员变量 ＝ ivar
@@ -874,6 +943,7 @@ stringCopy的值也不会因此改变，但是如果不使用copy，stringCopy�
 	@end
 结果编译器报错：
 ![enter image description here](http://i.imgur.com/fAEGHIo.png)
+
 当你同时重写了setter和getter时，系统就不会生成ivar（实例变量/成员变量）。这时候有两种选择：
 
  1. 要么如第14行：手动创建ivar
@@ -896,19 +966,88 @@ Person * motherInlaw = [[aPerson spouse] mother];
  2. 如果方法返回值为结构体,发送给nil的消息将返回0。结构体中各个字段的值将都是0。
  2. 如果方法的返回值不是上述提到的几种情况，那么发送给nil的消息的返回值将是未定义的。
 
+具体原因如下：
+
+
+> objc是动态语言，每个方法在运行时会被动态转为消息发送，即：objc_msgSend(receiver, selector)。
+
+
+那么，为了方便理解这个内容，还是贴一个objc的源代码：
+
+
+ 
+```Objective-C
+
+// runtime.h（类在runtime中的定义）
+// http://weibo.com/luohanchenyilong/
+// https://github.com/ChenYilong
+
+struct objc_class {
+  Class isa OBJC_ISA_AVAILABILITY; //isa指针指向Meta Class，因为Objc的类的本身也是一个Object，为了处理这个关系，runtime就创造了Meta Class，当给类发送[NSObject alloc]这样消息时，实际上是把这个消息发给了Class Object
+  #if !__OBJC2__
+  Class super_class OBJC2_UNAVAILABLE; // 父类
+  const char *name OBJC2_UNAVAILABLE; // 类名
+  long version OBJC2_UNAVAILABLE; // 类的版本信息，默认为0
+  long info OBJC2_UNAVAILABLE; // 类信息，供运行期使用的一些位标识
+  long instance_size OBJC2_UNAVAILABLE; // 该类的实例变量大小
+  struct objc_ivar_list *ivars OBJC2_UNAVAILABLE; // 该类的成员变量链表
+  struct objc_method_list **methodLists OBJC2_UNAVAILABLE; // 方法定义的链表
+  struct objc_cache *cache OBJC2_UNAVAILABLE; // 方法缓存，对象接到一个消息会根据isa指针查找消息对象，这时会在method Lists中遍历，如果cache了，常用的方法调用时就能够提高调用的效率。
+  struct objc_protocol_list *protocols OBJC2_UNAVAILABLE; // 协议链表
+  #endif
+  } OBJC2_UNAVAILABLE;
+```
+
+objc在向一个对象发送消息时，runtime库会根据对象的isa指针找到该对象实际所属的类，然后在该类中的方法列表以及其父类方法列表中寻找方法运行，然后在发送消息的时候，objc_msgSend方法不会返回值，所谓的返回内容都是具体调用时执行的。
+那么，回到本题，如果向一个nil对象发送消息，首先在寻找对象的isa指针时就是0地址返回了，所以不会出现任何错误。
+
+
 ###17. objc中向一个对象发送消息[obj foo]和objc_msgSend()函数之间有什么关系？
-该方法编译之后就是objc_msgSend()函数调用.如果我没有记错的大概是这样的.
+具体原因同上题：该方法编译之后就是`objc_msgSend()`函数调用.如果我没有记错的大概是这样的：
 
  
 ```Objective-C
 ((void ()(id, SEL))(void )objc_msgSend)((id)obj, sel_registerName("foo"));
 ```
+也就是说：
+
+>  [obj foo];在objc动态编译时，会被转意为：`objc_msgSend(obj, @selector(foo));`。
+
+
 
 
 ###18. 什么时候会报unrecognized selector的异常？
 
-当该对象上某个方法,而该对象上没有实现这个方法的时候，
+简单来说：
+
+
+> 当该对象上某个方法,而该对象上没有实现这个方法的时候，
 可以通过“消息转发”进行解决。
+
+
+
+简单的流程如下，在上一题中也提到过：
+
+
+> objc是动态语言，每个方法在运行时会被动态转为消息发送，即：objc_msgSend(receiver, selector)。
+
+
+objc在向一个对象发送消息时，runtime库会根据对象的isa指针找到该对象实际所属的类，然后在该类中的方法列表以及其父类方法列表中寻找方法运行，如果，在最顶层的父类中依然找不到相应的方法时，程序在运行时会挂掉并抛出异常unrecognized selector sent to XXX 。但是在这之前，objc的运行时会给出三次拯救程序崩溃的机会：
+
+
+ 1. Method resolution
+
+ objc运行时会调用`+resolveInstanceMethod:`或者 `+resolveClassMethod:`，让你有机会提供一个函数实现。如果你添加了函数并返回 YES，那运行时系统就会重新启动一次消息发送的过程，如果 resolve 方法返回 NO ，运行时就会移到下一步，消息转发（Message Forwarding）。
+
+ 2. Fast forwarding
+
+ 如果目标对象实现了`-forwardingTargetForSelector:`，Runtime 这时就会调用这个方法，给你把这个消息转发给其他对象的机会。
+只要这个方法返回的不是nil和self，整个消息发送的过程就会被重启，当然发送的对象会变成你返回的那个对象。否则，就会继续Normal Fowarding。
+这里叫Fast，只是为了区别下一步的转发机制。因为这一步不会创建任何新的对象，但下一步转发会创建一个NSInvocation对象，所以相对更快点。
+ 3. Normal forwarding
+
+ 这一步是Runtime最后一次给你挽救的机会。首先它会发送`-methodSignatureForSelector:`消息获得函数的参数和返回值类型。如果`-methodSignatureForSelector:`返回nil，Runtime则会发出`-doesNotRecognizeSelector:`消息，程序这时也就挂掉了。如果返回了一个函数签名，Runtime就会创建一个NSInvocation对象并发送`-forwardInvocation:`消息给目标对象。
+
 
 ###19. 一个objc对象如何进行内存布局？（考虑有父类的情况）
  - 所有父类的成员变量和自己的成员变量都会存放在该对象所对应的存储空间中.
@@ -924,7 +1063,7 @@ Person * motherInlaw = [[aPerson spouse] mother];
  - 根对象就是NSobject
 
 如图:
-![enter image description here](http://i.imgur.com/wSpGe6J.png)
+![enter image description here](http://i.imgur.com/w6tzFxz.png)
 
 ###20. 一个objc对象的isa的指针指向什么？有什么作用？
 
@@ -975,23 +1114,23 @@ self 是类的隐藏参数，指向当前调用方法的这个类的实例。而
     NSLog((NSString *)&__NSConstantStringImpl__var_folders_gm_0jk35cwn1d3326x0061qym280000gn_T_main_a5cecc_mi_0, NSStringFromClass(((Class (*)(id, SEL))(void *)objc_msgSend)((id)self, sel_registerName("class"))));
 
     NSLog((NSString *)&__NSConstantStringImpl__var_folders_gm_0jk35cwn1d3326x0061qym280000gn_T_main_a5cecc_mi_1, NSStringFromClass(((Class (*)(__rw_objc_super *, SEL))(void *)objc_msgSendSuper)((__rw_objc_super){ (id)self, (id)class_getSuperclass(objc_getClass("Son")) }, sel_registerName("class"))));
-从上面的代码中，我们可以发现在调用 [self class] 时，会转化成 objc_msgSend函数。看下函数定义：
+从上面的代码中，我们可以发现在调用 [self class] 时，会转化成 `objc_msgSend`函数。看下函数定义：
 
 	id objc_msgSend(id self, SEL op, ...)
 我们把 self 做为第一个参数传递进去。
 
-而在调用 [super class]时，会转化成 objc_msgSendSuper函数。看下函数定义:
+而在调用 [super class]时，会转化成 `objc_msgSendSuper`函数。看下函数定义:
 
 	id objc_msgSendSuper(struct objc_super *super, SEL op, ...)
-第一个参数是 objc_super 这样一个结构体，其定义如下:
+第一个参数是 `objc_super` 这样一个结构体，其定义如下:
 
 	struct objc_super {
 	   __unsafe_unretained id receiver;
 	   __unsafe_unretained Class super_class;
 	};
-结构体有两个成员，第一个成员是 receiver, 类似于上面的 objc_msgSend函数第一个参数self 。第二个成员是记录当前类的父类是什么。
+结构体有两个成员，第一个成员是 receiver, 类似于上面的 `objc_msgSend`函数第一个参数self 。第二个成员是记录当前类的父类是什么。
 
-所以，当调用 ［self class] 时，实际先调用的是 objc_msgSend函数，第一个参数是 Son当前的这个实例，然后在 Son 这个类里面去找 - (Class)class这个方法，没有，去父类 Father里找，也没有，最后在 NSObject类中发现这个方法。而 - (Class)class的实现就是返回self的类别，故上述输出结果为 Son。
+所以，当调用 ［self class] 时，实际先调用的是 `objc_msgSend`函数，第一个参数是 Son当前的这个实例，然后在 Son 这个类里面去找 - (Class)class这个方法，没有，去父类 Father里找，也没有，最后在 NSObject类中发现这个方法。而 - (Class)class的实现就是返回self的类别，故上述输出结果为 Son。
 
 objc Runtime开源代码对- (Class)class方法的实现:
 
@@ -1035,14 +1174,14 @@ objc Runtime开源代码对- (Class)class方法的实现:
  2. 实例方法中也可以调用类方法(通过类名)
 
 
-下一篇文章将对以下问题进行总结，并将本篇文章的勘误一并列出，欢迎指正！
+下一篇文章将发布在[这里](https://github.com/ChenYilong/iOSInterviewQuestions)，会对以下问题进行总结，并将本篇文章的勘误一并列出，欢迎指正！请持续关注[微博@iOS程序犭袁](http://weibo.com/luohanchenyilong/)
 ----------
 @property部分主要参考
 [Apple官方文档：Properties Encapsulate an Object’s Values](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/EncapsulatingData/EncapsulatingData.html#//apple_ref/doc/uid/TP40011210-CH5-SW2)
 runtime部分主要参考[Apple官方文档：Declared Properties](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtPropertyIntrospection.html)
 
 
-###25. _objc_msgForward函数是做什么的，直接调用它将会发生什么？
+###25. `_objc_msgForward`函数是做什么的，直接调用它将会发生什么？
 
 ###26. runtime如何实现weak变量的自动置nil？
 
@@ -1059,15 +1198,15 @@ runtime部分主要参考[Apple官方文档：Declared Properties](https://devel
 ###32. objc使用什么机制管理对象内存？
 ###33. ARC通过什么方式帮助开发者管理内存？
 ###34. 不手动指定autoreleasepool的前提下，一个autorealese对象在什么时刻释放？（比如在一个vc的viewDidLoad中创建）
-###35. BAD_ACCESS在什么情况下出现？
+###35. `BAD_ACCESS`在什么情况下出现？
 ###36. 苹果是如何实现autoreleasepool的？ 
 ###37. 使用block时什么情况会发生引用循环，如何解决？
 ###38. 在block内如何修改block外部变量？
 ###39. 使用系统的某些block api（如UIView的block版本写动画时），是否也考虑引用循环问题？ 
-###40. GCD的队列（dispatch_queue_t）分哪两种类型？
+###40. GCD的队列（`dispatch_queue_t`）分哪两种类型？
 ###41. 如何用GCD同步若干个异步调用？（如根据若干个url异步加载多张图片，然后在都下载完成后合成一张整图）
-###42. dispatch_barrier_async的作用是什么？
-###43. 苹果为什么要废弃dispatch_get_current_queue？
+###42. `dispatch_barrier_async`的作用是什么？
+###43. 苹果为什么要废弃`dispatch_get_current_queue`？
 ###44. 以下代码运行结果如何？
 
 
@@ -1083,14 +1222,14 @@ runtime部分主要参考[Apple官方文档：Declared Properties](https://devel
 
 ###45. addObserver:forKeyPath:options:context:各个参数的作用分别是什么，observer中需要实现哪个方法才能获得KVO回调？
 ###46. 如何手动触发一个value的KVO
-###47. 若一个类有实例变量NSString *_foo，调用setValue:forKey:时，可以以foo还是_foo作为key？
+###47. 若一个类有实例变量`NSString *_foo`，调用setValue:forKey:时，可以以foo还是`_foo`作为key？
 ###48. KVC的keyPath中的集合运算符如何使用？
 ###49. KVC和KVO的keyPath一定是属性么？
 ###50. 如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？
 ###51. apple用什么方式实现对一个对象的KVO？ 
 ###52. IBOutlet连出来的视图属性为什么可以被设置成weak?
 ###53. IB中User Defined Runtime Attributes如何使用？ 
-###54. 如何调试BAD_ACCESS错误
+###54. 如何调试`BAD_ACCESS`错误
 ###55. lldb（gdb）常用的调试命令？
 
 
