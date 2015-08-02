@@ -1074,17 +1074,24 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
 
 
 ###19. 一个objc对象如何进行内存布局？（考虑有父类的情况）
+
  - 所有父类的成员变量和自己的成员变量都会存放在该对象所对应的存储空间中.
  - 每一个对象内部都有一个isa指针,指向他的类对象,类对象中存放着本对象的
 
 
-  1. 对象方法列表
+  1. 对象方法列表（对象能够接收的消息列表，保存在它所对应的类对象中）
   2. 成员变量的列表,
   2. 属性列表,
 
- 它内部也有一个isa指针指向元对象(meta class),元对象内部存放的是类方法列表,类对象内部还有一个superclass的指针,指向他的父类对象
+ 它内部也有一个isa指针指向元对象(meta class),元对象内部存放的是类方法列表,类对象内部还有一个superclass的指针,指向他的父类对象。
 
- - 根对象就是NSobject
+ ![enter image description here](http://i.imgur.com/7mJlUj1.png)
+
+ - 根对象就是NSobject，它的superclass指针指向nil
+
+ - 类对象既然称为对象，那它也是一个实例。类对象中也有一个isa指针指向它的元类(meta class)，即类对象是元类的实例。元类内部存放的是类方法列表，根元类的isa指针指向自己，superclass指针指向NSObject类。
+
+
 
 如图:
 ![enter image description here](http://i.imgur.com/w6tzFxz.png)
