@@ -800,6 +800,12 @@ objc_setAssociatedObject(objectToBeDeallocted,
   
  atomic,readwrite,strong
 
+参考链接：
+
+ 1. [ ***Objective-C ARC: strong vs retain and weak vs assign*** ](http://stackoverflow.com/a/15541801/3395008)
+
+ 2. [ ***Variable property attributes or Modifiers in iOS*** ](http://rdcworld-iphone.blogspot.in/2012/12/variable-property-attributes-or.html)
+
 ###13. 用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？如果改用strong关键字，可能造成什么问题？
 
 
