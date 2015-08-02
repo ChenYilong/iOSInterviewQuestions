@@ -886,6 +886,11 @@ stringCopy的值也不会因此改变，但是如果不使用copy，stringCopy�
 
  2. 如果是 `@synthesize foo = _foo;` 就不会生成成员变量了.
 
+假如property名为foo，存在一个名为_foo的实例变量，那么还会自动合成新变量么？
+不会。如下图：
+
+![enter image description here](http://i.imgur.com/t28ge4W.png)
+
 
 ###15. 在有了自动合成属性实例变量之后，@synthesize还有哪些使用场景？
 
