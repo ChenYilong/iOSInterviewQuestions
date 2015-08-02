@@ -513,9 +513,20 @@ atomic属性通常都不会有性能瓶颈。
 > weak 此特质表明该属性定义了一种“非拥有关系” (nonowning relationship)。为这种属性设置新值时，设置方法既不保留新值，也不释放旧值。此特质同assign类似， 然而在属性所指的对象遭到摧毁时，属性值也会清空(nil out)。
 
 那么runtime如何实现weak变量的自动置nil？
-runtime 对注册的类， 会进行布局，对于 weak 对象会放入一个 hash 表中。 用 weak 指向的对象地址作为 key，当此对象的引用计数为0的时候会 dealloc，假如内存地址是a，那么就会以a为键， 在这个 weak 表中搜索，找到所有以a为键的 weak 对象，从而设置为 nil。
 
-使用伪代码模拟“runtime如何实现weak属性”：
+
+> runtime 对注册的类， 会进行布局，对于 weak 对象会放入一个 hash 表中。 用 weak 指向的对象内存地址作为 key，当此对象的引用计数为0的时候会 dealloc，假如 weak 指向的对象内存地址是a，那么就会以a为键， 在这个 weak 表中搜索，找到所有以a为键的 weak 对象，从而设置为 nil。
+
+
+我们可以设计一个函数（伪代码）来表示上述机制：
+
+`objc_storeWeak(&a, b)`函数：
+
+`objc_storeWeak`函数把第二个参数--赋值对象（b）的内存地址作为键值key，将第一个参数--weak修饰的属性变量（a）的内存地址（&a）作为value，注册到 weak 表中。如果第二个参数（b）为0（nil），那么把变量（a）的内存地址（&a）从weak表中删除，
+
+你可以把`objc_storeWeak(&a, b)`理解为：`objc_storeWeak(value, key)`，并且当key变nil，将value置nil。
+
+下面我们将基于`objc_storeWeak(&a, b)`函数，使用伪代码模拟“runtime如何实现weak属性”：
  
 
 
@@ -538,7 +549,9 @@ runtime 对注册的类， 会进行布局，对于 weak 对象会放入一个 h
 
 下面分别介绍下方法的内部实现：
 
-`objc_initWeak`函数的实现是这样的：在将“附有weak修饰符的变量（obj1）”初始化为0（nil）后，会将“赋值对象”（obj）作为参数调用`objc_storeWeak`函数。
+`objc_initWeak`函数的实现是这样的：在将“附有weak修饰符的变量（obj1）”初始化为0（nil）后，会将“赋值对象”（obj）作为参数，调用`objc_storeWeak`函数。
+
+
 
  
 ```Objective-C
@@ -548,7 +561,7 @@ obj_storeWeak(&obj1, obj);
 
 也就是说：
 
-> weak修饰的指针默认值是nil（在Objective-C中向nil发送消息是安全的）
+>  weak 修饰的指针默认值是 nil （在Objective-C中向nil发送消息是安全的）
 
 
 
@@ -569,12 +582,12 @@ obj_storeWeak(&obj1, obj);
 id obj1;
 obj1 = 0;
 objc_storeWeak(&obj1, obj);
-/* ... obj的引用计数变为0 ... */
+/* ... obj的引用计数变为0，被置nil ... */
 objc_storeWeak(&obj1, 0);
 ```
 
 
-`objc_storeWeak`函数把第二个参数的赋值对象的地址作为键值，将第一个参数的weak修饰的属性变量的地址注册到weak表中。如果第二个参数为0（nil），那么把变量的地址从weak表中删除，在后面的相关一题会详解。
+`objc_storeWeak`函数把第二个参数--赋值对象（obj）的内存地址作为键值，将第一个参数--weak修饰的属性变量（obj1）的内存地址注册到 weak 表中。如果第二个参数（obj）为0（nil），那么把变量（obj1）的地址从weak表中删除，在后面的相关一题会详解。
 
 使用伪代码是为了方便理解，下面我们“真枪实弹”地实现下：
 
