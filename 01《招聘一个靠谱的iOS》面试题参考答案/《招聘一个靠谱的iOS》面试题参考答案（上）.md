@@ -33,8 +33,8 @@
 	@property (nonatomic, assign, readonly) NSUInteger age;
 	@property (nonatomic, assign, readonly) CYLSex sex;
 
-	- (instancetype)initWithName:(NSString *)name age:(int)age sex:(CYLSex)sex;
-	+ (instancetype)userWithName:(NSString *)name age:(int)age sex:(CYLSex)sex;
+	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
+	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
 
 	@end
 
@@ -152,9 +152,9 @@
 	@property (nonatomic, assign, readonly) NSUInteger age;
 	@property (nonatomic, assign, readwrite) CYLSex sex;
 
-	- (instancetype)initWithName:(NSString *)name age:(int)age sex:(CYLSex)sex;
-	- (instancetype)initWithName:(NSString *)name age:(int)age;
-	+ (instancetype)userWithName:(NSString *)name age:(int)age sex:(CYLSex)sex;
+	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
+	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age;
+	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
 
 	@end
 ```
@@ -285,8 +285,8 @@ atomic属性通常都不会有性能瓶颈。
 	@property (nonatomic, assign, readonly) NSUInteger age;
 	@property (nonatomic, assign, readonly) CYLSex sex;
 
-	- (instancetype)initWithName:(NSString *)name age:(int)age sex:(CYLSex)sex;
-	+ (instancetype)userWithName:(NSString *)name age:(int)age sex:(CYLSex)sex;
+	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
+	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
 
 	@end
 
@@ -298,7 +298,7 @@ atomic属性通常都不会有性能瓶颈。
 	CYLUser *copy = [[[self copy] allocWithZone:zone] 
 		             initWithName:_name
  							      age:_age
-						          sex:sex];
+						          sex:_sex];
 	return copy;
 }
 ```
@@ -320,8 +320,8 @@ atomic属性通常都不会有性能瓶颈。
 	@property (nonatomic, assign, readonly) NSUInteger age;
 	@property (nonatomic, assign, readonly) CYLSex sex;
 
-	- (instancetype)initWithName:(NSString *)name age:(int)age sex:(CYLSex)sex;
-	+ (instancetype)userWithName:(NSString *)name age:(int)age sex:(CYLSex)sex;
+	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
+	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
 	- (void)addFriend:(CYLUser *)user;
 	- (void)removeFriend:(CYLUser *)user;
 
@@ -376,7 +376,7 @@ atomic属性通常都不会有性能瓶颈。
 		CYLUser *copy = [[[self copy] allocWithZone:zone] 
 			             initWithName:_name
 	 							      age:_age
-							          sex:sex];
+							          sex:_sex];
 		copy->_friends = [[NSMutableSet alloc] initWithSet:_friends 
 												 copyItems:YES];
 		return copy;
@@ -390,14 +390,14 @@ atomic属性通常都不会有性能瓶颈。
 
 【注：深浅拷贝的概念，在下文中有介绍，详见下文的：***用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？如果改用strong关键字，可能造成什么问题？***】
 
-在例子中，存放朋友对象的set是用“copyWithZooe:”方法来拷贝的，这种浅拷贝方式不会逐个复制set中的元素。若需要深拷贝的话，则可像下面这样，编写一个专供深拷贝所用的方法:
+在例子中，存放朋友对象的set是用“copyWithZone:”方法来拷贝的，这种浅拷贝方式不会逐个复制set中的元素。若需要深拷贝的话，则可像下面这样，编写一个专供深拷贝所用的方法:
 	
 
 	- (id)deepCopy {
 		CYLUser *copy = [[[self copy] allocWithZone:zone] 
 			             initWithName:_name
 	 							      age:_age
-							          sex:sex];
+							          sex:_sex];
 		copy->_friends = [[NSMutableSet alloc] initWithSet:_friends 
 												 copyItems:YES];
 		return copy;
@@ -409,7 +409,10 @@ atomic属性通常都不会有性能瓶颈。
 如果抛开本例来回答的话，如下：
 
 	- (void)setName:(NSString *)name {
+		if (_name!=name) {
+		//[_name release];
 		_name = [name copy];
+	    }
 	}
 
 
@@ -1051,7 +1054,7 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
 简单来说：
 
 
-> 当使用某对象上的某个方法,而该对象上没有实现这个方法的时候，
+> 当该对象上某个方法,而该对象上没有实现这个方法的时候，
 可以通过“消息转发”进行解决。
 
 
