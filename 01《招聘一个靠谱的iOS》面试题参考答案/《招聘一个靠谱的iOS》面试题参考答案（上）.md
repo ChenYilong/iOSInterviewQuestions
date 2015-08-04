@@ -298,7 +298,7 @@ atomic属性通常都不会有性能瓶颈。
 	CYLUser *copy = [[[self copy] allocWithZone:zone] 
 		             initWithName:_name
  							      age:_age
-						          sex:sex];
+						          sex:_sex];
 	return copy;
 }
 ```
@@ -367,7 +367,7 @@ atomic属性通常都不会有性能瓶颈。
 		CYLUser *copy = [[[self copy] allocWithZone:zone] 
 			             initWithName:_name
 	 							      age:_age
-							          sex:sex];
+							          sex:_sex];
 		copy->_friends = [_friends mutableCopy];
 		return copy;
 	}
@@ -376,7 +376,7 @@ atomic属性通常都不会有性能瓶颈。
 		CYLUser *copy = [[[self copy] allocWithZone:zone] 
 			             initWithName:_name
 	 							      age:_age
-							          sex:sex];
+							          sex:_sex];
 		copy->_friends = [[NSMutableSet alloc] initWithSet:_friends 
 												 copyItems:YES];
 		return copy;
@@ -397,7 +397,7 @@ atomic属性通常都不会有性能瓶颈。
 		CYLUser *copy = [[[self copy] allocWithZone:zone] 
 			             initWithName:_name
 	 							      age:_age
-							          sex:sex];
+							          sex:_sex];
 		copy->_friends = [[NSMutableSet alloc] initWithSet:_friends 
 												 copyItems:YES];
 		return copy;
