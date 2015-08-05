@@ -760,7 +760,7 @@ objc_setAssociatedObject(objectToBeDeallocted,
 不需要。
 
 
-> 在ARC环境无论是强指针还是弱指针都无需在deallco设置为nil，ARC会自动帮我们处理
+> 在ARC环境无论是强指针还是弱指针都无需在 dealloc 设置为 nil ， ARC 会自动帮我们处理
 
 即便是编译器不帮我们做这些，weak也不需要在dealloc中置nil：
 
