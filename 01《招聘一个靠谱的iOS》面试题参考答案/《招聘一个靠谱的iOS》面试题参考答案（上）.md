@@ -235,6 +235,40 @@ copy此特质所表达的所属关系与strong类似。然而设置方法并不�
 
 第1条的相关原因在下文中有论述***《用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？如果改用strong关键字，可能造成什么问题？》*** 以及上文***《怎么用 copy 关键字？》***也有论述。
 
+比如下面的代码就会发生崩溃
+
+ 
+ 
+```Objective-C
+// .h文件
+// http://weibo.com/luohanchenyilong/
+// https://github.com/ChenYilong
+// 下面的代码就会发生崩溃
+
+@property (nonatomic, copy) NSMutableArray *mutableArray;
+```
+
+
+```Objective-C
+// .m文件
+// http://weibo.com/luohanchenyilong/
+// https://github.com/ChenYilong
+// 下面的代码就会发生崩溃
+
+NSMutableArray *array = [NSMutableArray arrayWithObjects:@1,@2,nil];
+self.mutableArray = array;
+[self.mutableArray removeObjectAtIndex:0];
+```
+
+接下来就会奔溃：
+
+ 
+```Objective-C
+ -[__NSArrayI removeObjectAtIndex:]: unrecognized selector sent to instance 0x7fcd1bc30460
+```
+
+
+
 第2条原因，如下：
 
 > 该属性使用了同步锁，会在创建时生成一些额外的代码用于帮助编写多线程程序，这会带来性能问题，通过声明nonatomic可以节省这些虽然很小但是不必要额外开销。
