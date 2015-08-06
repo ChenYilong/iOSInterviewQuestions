@@ -1228,8 +1228,84 @@ objc Runtime开源代码对- (Class)class方法的实现:
 
 ###23. 使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？
 
- - 在ARC下不需要
- - 在MRC中,对于使用retain或copy策略的需要
+ - 在ARC下不需要。
+ - <p><del> 在MRC中,对于使用retain或copy策略的需要 。</del></p>在MRC下也不需要
+
+> 无论在MRC下还是ARC下均不需要。
+
+
+[ ***2011年版本的Apple API 官方文档 - Associative References***  ](https://web.archive.org/web/20120818164935/http://developer.apple.com/library/ios/#/web/20120820002100/http://developer.apple.com/library/ios/documentation/cocoa/conceptual/objectivec/Chapters/ocAssociativeReferences.html) 一节中有一个MRC环境下的例子：
+
+
+ 
+```Objective-C
+// 在MRC下，使用runtime Associate方法关联的对象，不需要在主对象dealloc的时候释放
+// http://weibo.com/luohanchenyilong/ (微博@iOS程序犭袁)
+// https://github.com/ChenYilong
+// 摘自2011年版本的Apple API 官方文档 - Associative References 
+
+static char overviewKey;
+ 
+NSArray *array =
+    [[NSArray alloc] initWithObjects:@"One", @"Two", @"Three", nil];
+// For the purposes of illustration, use initWithFormat: to ensure
+// the string can be deallocated
+NSString *overview =
+    [[NSString alloc] initWithFormat:@"%@", @"First three numbers"];
+ 
+objc_setAssociatedObject (
+    array,
+    &overviewKey,
+    overview,
+    OBJC_ASSOCIATION_RETAIN
+);
+ 
+[overview release];
+// (1) overview valid
+[array release];
+// (2) overview invalid
+```
+文档指出 
+
+> At point 1, the string `overview` is still valid because the `OBJC_ASSOCIATION_RETAIN` policy specifies that the array retains the associated object. When the array is deallocated, however (at point 2), `overview` is released and so in this case also deallocated.
+
+我们可以看到，在`[array release];`之后，overview就会被release释放掉了。
+
+既然会被销毁，那么具体在什么时间点？
+
+
+> 根据[ ***WWDC 2011, Session 322 (第36分22秒)*** ](https://developer.apple.com/videos/wwdc/2011/#322-video)中发布的内存销毁时间表，被关联的对象在生命周期内要比对象本身释放的晚很多。它们会在被 NSObject -dealloc 调用的 object_dispose() 方法中释放。
+
+对象的内存销毁时间表，分四个步骤：
+
+	// 对象的内存销毁时间表
+	// http://weibo.com/luohanchenyilong/ (微博@iOS程序犭袁)
+	// https://github.com/ChenYilong
+    // 根据 WWDC 2011, Session 322 (36分22秒)中发布的内存销毁时间表 
+
+    // 1. 调用 -release ：引用计数变为零
+    //     * 对象正在被销毁，生命周期即将结束.
+    //     * 不能再有新的 __weak 弱引用， 否则将指向 nil.
+    //     * 调用 [self dealloc] 
+    // 2. 父类 调用 -dealloc
+    //     * 继承关系中最底层的父类 在调用 -dealloc
+    //     * 如果是 MRC 代码 则会手动释放实例变量们（iVars）
+    //     * 继承关系中每一层的父类 都在调用 -dealloc
+    // 3. NSObject 调 -dealloc
+    //     * 只做一件事：调用 Objective-C runtime 中的 object_dispose() 方法
+    // 4. 调用 object_dispose()
+    //     * 为 C++ 的实例变量们（iVars）调用 destructors 
+    //     * 为 ARC 状态下的 实例变量们（iVars） 调用 -release 
+    //     * 解除所有使用 runtime Associate方法关联的对象
+    //     * 解除所有 __weak 引用
+    //     * 调用 free()
+
+
+（[对象的内存销毁时间表参考链接](http://stackoverflow.com/a/10843510/3395008)）
+
+
+
+
 
 ###24. objc中的类方法和实例方法有什么本质区别和联系？
 
