@@ -33,8 +33,8 @@
 	@property (nonatomic, assign, readonly) NSUInteger age;
 	@property (nonatomic, assign, readonly) CYLSex sex;
 
-	- (instancetype)initWithName:(NSString *)name age:(int)age sex:(CYLSex)sex;
-	+ (instancetype)userWithName:(NSString *)name age:(int)age sex:(CYLSex)sex;
+	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
+	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
 
 	@end
 
@@ -110,7 +110,7 @@
     @implementation CYLUser
 
     - (instancetype)initWithName:(NSString *)name
-                             age:(int)age
+                             age:(NSUInteger)age
                              sex:(CYLSex)sex {
         if(self = [super init]) {
             _name = [name copy];
@@ -121,7 +121,7 @@
     }
 
     - (instancetype)initWithName:(NSString *)name
-                             age:(int)age {
+                             age:(NSUInteger)age {
         return [self initWithName:name age:age sex:nil];
     }
 
@@ -159,9 +159,9 @@
 	@property (nonatomic, assign, readonly) NSUInteger age;
 	@property (nonatomic, assign, readwrite) CYLSex sex;
 
-	- (instancetype)initWithName:(NSString *)name age:(int)age sex:(CYLSex)sex;
-	- (instancetype)initWithName:(NSString *)name age:(int)age;
-	+ (instancetype)userWithName:(NSString *)name age:(int)age sex:(CYLSex)sex;
+	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
+	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age;
+	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
 
 	@end
 ```
@@ -326,8 +326,8 @@ atomic属性通常都不会有性能瓶颈。
 	@property (nonatomic, assign, readonly) NSUInteger age;
 	@property (nonatomic, assign, readonly) CYLSex sex;
 
-	- (instancetype)initWithName:(NSString *)name age:(int)age sex:(CYLSex)sex;
-	+ (instancetype)userWithName:(NSString *)name age:(int)age sex:(CYLSex)sex;
+	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
+	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
 
 	@end
 
@@ -361,8 +361,8 @@ atomic属性通常都不会有性能瓶颈。
 	@property (nonatomic, assign, readonly) NSUInteger age;
 	@property (nonatomic, assign, readonly) CYLSex sex;
 
-	- (instancetype)initWithName:(NSString *)name age:(int)age sex:(CYLSex)sex;
-	+ (instancetype)userWithName:(NSString *)name age:(int)age sex:(CYLSex)sex;
+	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
+	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
 	- (void)addFriend:(CYLUser *)user;
 	- (void)removeFriend:(CYLUser *)user;
 
@@ -385,7 +385,7 @@ atomic属性通常都不会有性能瓶颈。
 	}
 
 	- (instancetype)initWithName:(NSString *)name 
-								 age:(int)age 
+								 age:(NSUInteger)age 
 								 sex:(CYLSex)sex {
 	     if(self = [super init]) {
 	     	_name = [name copy];
@@ -459,7 +459,7 @@ atomic属性通常都不会有性能瓶颈。
 那如何确保name被copy？在初始化方法(initializer)中做：
 	
 	- (instancetype)initWithName:(NSString *)name 
-								 age:(int)age 
+								 age:(NSUInteger)age 
 								 sex:(CYLSex)sex {
 	     if(self = [super init]) {
 	     	_name = [name copy];
