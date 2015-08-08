@@ -636,6 +636,7 @@ atomic属性通常都不会有性能瓶颈。
 
 > runtime 对注册的类， 会进行布局，对于 weak 对象会放入一个 hash 表中。 用 weak 指向的对象内存地址作为 key，当此对象的引用计数为0的时候会 dealloc，假如 weak 指向的对象内存地址是a，那么就会以a为键， 在这个 weak 表中搜索，找到所有以a为键的 weak 对象，从而设置为 nil。
 
+（注：在下文的《使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？》里给出的“对象的内存销毁时间表”也提到`__weak`引用的解除时间。）
 
 我们可以设计一个函数（伪代码）来表示上述机制：
 
@@ -1170,7 +1171,7 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
 简单来说：
 
 
-> 当该对象上某个方法,而该对象上没有实现这个方法的时候，
+> 当调用该对象上某个方法,而该对象上没有实现这个方法的时候，
 可以通过“消息转发”进行解决。
 
 
@@ -1361,25 +1362,25 @@ objc_setAssociatedObject (
 	// https://github.com/ChenYilong
     // 根据 WWDC 2011, Session 322 (36分22秒)中发布的内存销毁时间表 
 
-    // 1. 调用 -release ：引用计数变为零
-    //     * 对象正在被销毁，生命周期即将结束.
-    //     * 不能再有新的 __weak 弱引用， 否则将指向 nil.
-    //     * 调用 [self dealloc] 
-    // 2. 父类 调用 -dealloc
-    //     * 继承关系中最底层的父类 在调用 -dealloc
-    //     * 如果是 MRC 代码 则会手动释放实例变量们（iVars）
-    //     * 继承关系中每一层的父类 都在调用 -dealloc
-    // 3. NSObject 调 -dealloc
-    //     * 只做一件事：调用 Objective-C runtime 中的 object_dispose() 方法
-    // 4. 调用 object_dispose()
-    //     * 为 C++ 的实例变量们（iVars）调用 destructors 
-    //     * 为 ARC 状态下的 实例变量们（iVars） 调用 -release 
-    //     * 解除所有使用 runtime Associate方法关联的对象
-    //     * 解除所有 __weak 引用
-    //     * 调用 free()
+     1. 调用 -release ：引用计数变为零
+         * 对象正在被销毁，生命周期即将结束.
+         * 不能再有新的 __weak 弱引用， 否则将指向 nil.
+         * 调用 [self dealloc] 
+     2. 父类 调用 -dealloc
+         * 继承关系中最底层的父类 在调用 -dealloc
+         * 如果是 MRC 代码 则会手动释放实例变量们（iVars）
+         * 继承关系中每一层的父类 都在调用 -dealloc
+     3. NSObject 调 -dealloc
+         * 只做一件事：调用 Objective-C runtime 中的 object_dispose() 方法
+     4. 调用 object_dispose()
+         * 为 C++ 的实例变量们（iVars）调用 destructors 
+         * 为 ARC 状态下的 实例变量们（iVars） 调用 -release 
+         * 解除所有使用 runtime Associate方法关联的对象
+         * 解除所有 __weak 引用
+         * 调用 free()
 
 
-（[对象的内存销毁时间表参考链接](http://stackoverflow.com/a/10843510/3395008)）
+对象的内存销毁时间表：[参考链接](http://stackoverflow.com/a/10843510/3395008)。
 
 
 
