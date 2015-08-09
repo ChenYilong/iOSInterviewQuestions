@@ -1152,19 +1152,52 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
 那么，回到本题，如果向一个nil对象发送消息，首先在寻找对象的isa指针时就是0地址返回了，所以不会出现任何错误。
 
 
-###17. objc中向一个对象发送消息[obj foo]和objc_msgSend()函数之间有什么关系？
-具体原因同上题：该方法编译之后就是`objc_msgSend()`函数调用.如果我没有记错的大概是这样的：
+###17. objc中向一个对象发送消息[obj foo]和`objc_msgSend()`函数之间有什么关系？
+具体原因同上题：该方法编译之后就是`objc_msgSend()`函数调用.
+
+我们用 clang 分析下，clang 提供一个命令，可以将Objective-C的源码改写成C++语言，借此可以研究下[obj foo]和`objc_msgSend()`函数之间有什么关系。
+
+以下面的代码为例，由于 clang 后的代码达到了10万多行，为了便于区分，添加了一个叫 iOSinit 方法，
+
+```Objective-C
+//
+//  main.m
+//  http://weibo.com/luohanchenyilong/
+//  https://github.com/ChenYilong
+//  Copyright (c) 2015年 微博@iOS程序犭袁. All rights reserved.
+//
+
+
+#import "CYLTest.h"
+
+int main(int argc, char * argv[]) {
+    @autoreleasepool {
+        CYLTest *test = [[CYLTest alloc] init];
+        [test performSelector:(@selector(iOSinit))];
+        return 0;
+    }
+}
+```
+
+在终端中输入
+
+```Objective-C
+clang -rewrite-objc main.m
+```
+就可以生成一个`main.cpp`的文件，在最低端（10万4千行左右）
+
+![enter image description here](http://i.imgur.com/eAH5YWn.png)
+
+我们可以看到大概是这样的：
 
  
 ```Objective-C
 ((void ()(id, SEL))(void )objc_msgSend)((id)obj, sel_registerName("foo"));
 ```
+
 也就是说：
 
 >  [obj foo];在objc动态编译时，会被转意为：`objc_msgSend(obj, @selector(foo));`。
-
-
-
 
 ###18. 什么时候会报unrecognized selector的异常？
 
