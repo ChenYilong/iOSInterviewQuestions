@@ -336,7 +336,7 @@ atomic属性通常都不会有性能瓶颈。
  
 ```Objective-C
 - (id)copyWithZone:(NSZone *)zone {
-	CYLUser *copy = [[[self copy] allocWithZone:zone] 
+	CYLUser *copy = [[[self class] allocWithZone:zone] 
 		             initWithName:_name
  							      age:_age
 						          sex:_sex];
@@ -405,7 +405,7 @@ atomic属性通常都不会有性能瓶颈。
 	}
 
 	- (id)copyWithZone:(NSZone *)zone {
-		CYLUser *copy = [[[self copy] allocWithZone:zone] 
+		CYLUser *copy = [[[self class] allocWithZone:zone] 
 			             initWithName:_name
 	 							      age:_age
 							          sex:_sex];
@@ -414,7 +414,7 @@ atomic属性通常都不会有性能瓶颈。
 	}
 
 	- (id)deepCopy {
-		CYLUser *copy = [[[self copy] allocWithZone:zone] 
+		CYLUser *copy = [[[self class] allocWithZone:zone] 
 			             initWithName:_name
 	 							      age:_age
 							          sex:_sex];
@@ -435,7 +435,7 @@ atomic属性通常都不会有性能瓶颈。
 	
 
 	- (id)deepCopy {
-		CYLUser *copy = [[[self copy] allocWithZone:zone] 
+		CYLUser *copy = [[[self class] allocWithZone:zone] 
 			             initWithName:_name
 	 							      age:_age
 							          sex:_sex];
