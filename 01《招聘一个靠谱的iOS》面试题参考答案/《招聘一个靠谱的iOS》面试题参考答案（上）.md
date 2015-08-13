@@ -524,8 +524,8 @@ atomic属性通常都不会有性能瓶颈。
  
 ```Objective-C
 -(void)setSpeed:(int)_speed{
-    if(_speed < 0) _speed = 0;
-    if(_speed > 300) _speed = 300;
+    if(_speed < 0) speed = 0;
+    if(_speed > 300) speed = 300;
     _speed = speed;
 }
 ```
