@@ -1244,7 +1244,19 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
 
  它内部也有一个isa指针指向元对象(meta class),元对象内部存放的是类方法列表,类对象内部还有一个superclass的指针,指向他的父类对象。
 
+每个 Objective-C 对象都有相同的结构，如下图所示：
+
  ![enter image description here](http://i.imgur.com/7mJlUj1.png)
+
+翻译过来就是
+
+| ------------- |
+| ISA指针 |
+| 根类的实例变量 |
+| 倒数第二层父类的实例变量 |
+| --- |
+| 父类的实例变量 |
+| 类的实例变量 |
 
  - 根对象就是NSobject，它的superclass指针指向nil
 
