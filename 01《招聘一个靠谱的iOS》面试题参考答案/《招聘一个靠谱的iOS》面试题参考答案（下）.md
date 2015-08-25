@@ -548,7 +548,7 @@ autoreleasepool以一个队列数组的形式实现,主要通过下列三个函�
 ###38. 在block内如何修改block外部变量？
 默认情况下，在block中访问的外部变量是复制过去的，即：**写操作不对原变量生效**。但是你可以加上`__block`来让其写操作生效，示例代码如下:
 
-	block int a = 0;
+	__block int a = 0;
 	void  (^foo)(void) = ^{ 
 	    a = 1; 
 	}
