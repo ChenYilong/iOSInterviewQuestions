@@ -29,9 +29,9 @@
 
 	@interface CYLUser : NSObject<NSCopying>
 
-	@property (nonatomic, copy, readonly) NSString *name;
-	@property (nonatomic, assign, readonly) NSUInteger age;
-	@property (nonatomic, assign, readonly) CYLSex sex;
+	@property (nonatomic, readonly, copy) NSString *name;
+	@property (nonatomic, readonly, assign) NSUInteger age;
+	@property (nonatomic, readonly, assign) CYLSex sex;
 
 	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
 	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
@@ -155,9 +155,9 @@
 
 	@interface CYLUser : NSObject<NSCopying>
 
-	@property (nonatomic, copy, readonly) NSString *name;
-	@property (nonatomic, assign, readonly) NSUInteger age;
-	@property (nonatomic, assign, readwrite) CYLSex sex;
+	@property (nonatomic, readonly, copy) NSString *name;
+	@property (nonatomic, readonly, assign) NSUInteger age;
+	@property (nonatomic, readwrite, assign) CYLSex sex;
 
 	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
 	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age;
@@ -174,13 +174,20 @@
  2. 如果基于第一种修改方法：既然该类中已经有一个“初始化方法” (initializer)，用于设置“姓名”(Name)、“年龄”(Age)和“性别”(Sex）的初始值:
 那么在设计对应@property时就应该尽量使用不可变的对象：其三个属性都应该设为“只读”。用初始化方法设置好属性值之后，就不能再改变了。在本例中，仍需声明属性的“内存管理语义”。于是可以把属性的定义改成这样
 
-        @property (nonatomic, copy, readonly) NSString *name;
-        @property (nonatomic, assign, readonly) NSUInter age;
-        @property (nonatomic, assign, readonly) CYLSex sex;
+        @property (nonatomic, readonly, copy) NSString *name;
+        @property (nonatomic, readonly, assign) NSUInter age;
+        @property (nonatomic, readonly, assign) CYLSex sex;
       由于是只读属性，所以编译器不会为其创建对应的“设置方法”，即便如此，我们还是要写上这些属性的语义，以此表明初始化方法在设置这些属性值时所用的方式。要是不写明语义的话，该类的调用者就不知道初始化方法里会拷贝这些属性，他们有可能会在调用初始化方法之前自行拷贝属性值。这种操作多余而且低效。
  2. `initUserModelWithUserName`如果改为`initWithName`会更加简洁，而且足够清晰。
  2. `UserModel`如果改为`User`会更加简洁，而且足够清晰。
  2. `UserSex`如果改为`Sex`会更加简洁，而且足够清晰。
+ 2. 第二个@property中assign和nonatomic调换位置。
+ 推荐按照下面的格式来定义属性
+
+ ```Objective-C
+@property (nonatomic, readwrite, copy) NSString *name;
+ ```
+ 属性的参数应该按照下面的顺序排列： 原子性，读写 和 内存管理。 这样做你的属性更容易修改正确，并且更好阅读。这在[《禅与Objective-C编程艺术 >》](https://github.com/oa414/objc-zen-book-cn#属性定义)里有介绍。而且习惯上修改某个属性的修饰符时，一般从属性名从右向左搜索需要修动的修饰符。最可能从最右边开始修改这些属性的修饰符，根据经验这些修饰符被修改的可能性从高到底应为：内存管理 > 读写权限 >原子操作。
 
 ####***硬伤部分***
 
@@ -198,7 +205,6 @@
  10. 
 	`-(id)initUserModelWithUserName: (NSString*)name withAge:(int)age;`方法中`(NSString*)name`,应为`(NSString *)name`，少了空格。 
  7.  doLogIn方法命名不清晰：笔者猜测是login的意思，应该是粗心手误造成的。
- 2. 第二个@property中assign和nonatomic调换位置。
 
 ###2. 什么情况使用 weak 关键字，相比 assign 有什么不同？
 什么情况使用 weak 关键字？
@@ -322,9 +328,9 @@ atomic属性通常都不会有性能瓶颈。
 
 	@interface CYLUser : NSObject<NSCopying>
 
-	@property (nonatomic, copy, readonly) NSString *name;
-	@property (nonatomic, assign, readonly) NSUInteger age;
-	@property (nonatomic, assign, readonly) CYLSex sex;
+	@property (nonatomic, readonly, copy) NSString *name;
+	@property (nonatomic, readonly, assign) NSUInteger age;
+	@property (nonatomic, readonly, assign) CYLSex sex;
 
 	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
 	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
@@ -357,9 +363,9 @@ atomic属性通常都不会有性能瓶颈。
 
 	@interface CYLUser : NSObject<NSCopying>
 
-	@property (nonatomic, copy, readonly) NSString *name;
-	@property (nonatomic, assign, readonly) NSUInteger age;
-	@property (nonatomic, assign, readonly) CYLSex sex;
+	@property (nonatomic, readonly, copy) NSString *name;
+	@property (nonatomic, readonly, assign) NSUInteger age;
+	@property (nonatomic, readonly, assign) CYLSex sex;
 
 	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
 	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
@@ -603,7 +609,7 @@ atomic属性通常都不会有性能瓶颈。
 
 	@implementation Person 
 	@synthesize firstName = _myFirstName; 
-	@synthesize lastName = myLastName; 
+	@synthesize lastName = _myLastName; 
 	@end 
 
 我为了搞清属性是怎么实现的,曾经反编译过相关的代码,他大致生成了五个东西
