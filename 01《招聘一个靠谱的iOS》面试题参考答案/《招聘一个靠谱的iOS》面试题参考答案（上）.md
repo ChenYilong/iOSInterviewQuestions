@@ -941,7 +941,13 @@ objc_setAssociatedObject(objectToBeDeallocted,
 copy此特质所表达的所属关系与strong类似。然而设置方法并不保留新值，而是将其“拷贝” (copy)。
 当属性类型为NSString时，经常用此特质来保护其封装性，因为传递给设置方法的新值有可能指向一个NSMutableString类的实例。这个类是NSString的子类，表示一种可修改其值的字符串，此时若是不拷贝字符串，那么设置完属性之后，字符串的值就可能会在对象不知情的情况下遭人更改。所以，这时就要拷贝一份“不可变” (immutable)的字符串，确保对象中的字符串值不会无意间变动。只要实现属性所用的对象是“可变的” (mutable)，就应该在设置新属性值时拷贝一份。
 
-为了理解这种做法，首先要知道，对非集合类对象的copy操作：
+为了理解这种做法，首先要知道，两种情况：
+
+
+ 1. 对非集合类对象的copy与mutableCopy操作；
+ 2. 对集合类对象的copy与mutableCopy操作。
+
+####1. 对非集合类对象的copy操作：
 
 在非集合类对象中：对immutable对象进行copy操作，是指针复制，mutableCopy操作时内容复制；对mutable对象进行copy和mutableCopy都是内容复制。用代码简单表示如下：
 
@@ -964,7 +970,7 @@ stringCopy的值也不会因此改变，但是如果不使用copy，stringCopy�
 
 > 用@property声明 NSString、NSArray、NSDictionary 经常使用copy关键字，是因为他们有对应的可变类型：NSMutableString、NSMutableArray、NSMutableDictionary，他们之间可能进行赋值操作，为确保对象中的字符串值不会无意间变动，应该在设置新属性值时拷贝一份。
 
-2、集合类对象的copy与mutableCopy
+####2、集合类对象的copy与mutableCopy
 
 集合类对象是指NSArray、NSDictionary、NSSet ... 之类的对象。下面先看集合类immutable对象使用copy和mutableCopy的一个例子：
 
