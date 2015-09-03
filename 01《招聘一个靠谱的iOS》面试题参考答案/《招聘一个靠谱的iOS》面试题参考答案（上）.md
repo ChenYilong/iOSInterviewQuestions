@@ -964,8 +964,32 @@ stringCopy的值也不会因此改变，但是如果不使用copy，stringCopy�
 
 > 用@property声明 NSString、NSArray、NSDictionary 经常使用copy关键字，是因为他们有对应的可变类型：NSMutableString、NSMutableArray、NSMutableDictionary，他们之间可能进行赋值操作，为确保对象中的字符串值不会无意间变动，应该在设置新属性值时拷贝一份。
 
-参考链接：[iOS 集合的深复制与浅复制](https://www.zybuluo.com/MicroCai/note/50592)
+2、集合类对象的copy与mutableCopy
 
+集合类对象是指NSArray、NSDictionary、NSSet ... 之类的对象。下面先看集合类immutable对象使用copy和mutableCopy的一个例子：
+
+	NSArray *array = @[@[@"a", @"b"], @[@"c", @"d"];
+	NSArray *copyArray = [array copy];
+	NSMutableArray *mCopyArray = [array mutableCopy];
+
+查看内容，可以看到copyArray和array的地址是一样的，而mCopyArray和array的地址是不同的。说明copy操作进行了指针拷贝，mutableCopy进行了内容拷贝。但需要强调的是：此处的内容拷贝，仅仅是拷贝array这个对象，array集合内部的元素仍然是指针拷贝。这和上面的非集合immutable对象的拷贝还是挺相似的，那么mutable对象的拷贝会不会类似呢？我们继续往下，看mutable对象拷贝的例子：
+
+	NSMutableArray *array = [NSMutableArray arrayWithObjects:[NSMutableString stringWithString:@"a"],@"b",@"c",nil];
+	NSArray *copyArray = [array copy];
+	NSMutableArray *mCopyArray = [array mutableCopy];
+
+查看内存，如我们所料，copyArray、mCopyArray和array的内存地址都不一样，说明copyArray、mCopyArray都对array进行了内容拷贝。同样，我们可以得出结论：
+
+在集合类对象中，对immutable对象进行copy，是指针复制，mutableCopy是内容复制；对mutable对象进行copy和mutableCopy都是内容复制。但是：集合对象的内容复制仅限于对象本身，对象元素仍然是指针复制。用代码简单表示如下：
+
+	[immutableObject copy] // 浅复制
+	[immutableObject mutableCopy] //单层深复制
+	[mutableObject copy] //单层深复制
+	[mutableObject mutableCopy] //单层深复制
+
+这个代码结论和非集合类的非常相似。
+
+参考链接：[iOS 集合的深复制与浅复制](https://www.zybuluo.com/MicroCai/note/50592)
 
 ###14. @synthesize合成实例变量的规则是什么？假如property名为foo，存在一个名为`_foo`的实例变量，那么还会自动合成新变量么？
 在回答之前先说明下一个概念：
