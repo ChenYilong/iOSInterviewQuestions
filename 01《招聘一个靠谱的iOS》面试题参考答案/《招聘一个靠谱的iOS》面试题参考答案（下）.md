@@ -223,6 +223,7 @@ int main(int argc, char * argv[]) {
 
  5. `doesNotRecognizeSelector:` 方法
 
+为了能更清晰地理解这些方法的作用，git仓库里也给出了一个Demo，名称叫“ `_objc_msgForward_demo` ”,可运行起来看看。
 
 
 下面回答下第二个问题“直接`_objc_msgForward`调用它将会发生什么？”
