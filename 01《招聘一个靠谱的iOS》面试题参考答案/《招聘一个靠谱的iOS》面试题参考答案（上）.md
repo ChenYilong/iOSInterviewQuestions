@@ -872,7 +872,7 @@ objc_setAssociatedObject(objectToBeDeallocted,
 
     在默认情况下，由编译器合成的方法会通过锁定机制确保其原子性(atomicity)。如果属性具备nonatomic特质，则不使用同步锁。请注意，尽管没有名为“atomic”的特质(如果某属性不具备nonatomic特质，那它就是“原子的” ( atomic) )，但是仍然可以在属性特质中写明这一点，编译器不会报错。若是自己定义存取方法，那么就应该遵从与属性特质相符的原子性。
 
- 2. 读/写权限---`readwrite(读写)`、`readooly (只读)`
+ 2. 读/写权限---`readwrite(读写)`、`readonly (只读)`
  3. 内存管理语义---`assign`、`strong`、 `weak`、`unsafe_unretained`、`copy`
  4. 方法名---`getter=<name>` 、`setter=<name>`
    
