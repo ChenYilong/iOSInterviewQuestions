@@ -507,7 +507,11 @@ NSTimer *timer = [NSTimer timerWithTimeInterval:1.0
 每次 runloop 的时候，都会检查对象的 retainCount，如果retainCount 为 0，说明该对象没有地方需要继续使用了，可以释放掉了。
 
 ###33. ARC通过什么方式帮助开发者管理内存？
-编译时根据代码上下文，插入 retain/release
+ <p><del>编译时根据代码上下文，插入 retain/release
+</del></p>
+ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单。应该是编译期和运行期两部分共同帮助开发者管理内存。
+
+在编译期，ARC用的是更底层的C接口实现的retain/release/autorelease，这样做性能更好，也是为什么不能在ARC环境下手动retain/release/autorelease，同时对同一上下文的同一对象的成对retain/release操作进行优化（即忽略掉不必要的操作）；ARC也包含运行期组件，这个地方做的优化比较复杂，但也不能被忽略。【TODO:后续更新会详细描述下】
 ###34. 不手动指定autoreleasepool的前提下，一个autorealese对象在什么时刻释放？（比如在一个vc的viewDidLoad中创建）
 分两种情况：手动干预释放时机、系统自动去释放。
 
