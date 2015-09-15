@@ -69,10 +69,10 @@
 
 
  5. 如果工程项目非常庞大，需要拆分成不同的模块，可以在类、typedef宏命名的时候使用前缀。
- 6. doLogIn方法不应写在该类中： <p><del>虽然`LogIn`的命名不太清晰，但笔者猜测是login的意思， （勘误：Login是名词，LogIn 是动词， [ ***Log in vs. login*** ](http://grammarist.com/spelling/log-in-login/)）</del></p>登录操作属于业务逻辑，观察类名 UserModel ，以及属性的命名方式，该类应该是一个 Model 而不是一个“ MVVM 模式下的 ViewModel ”：
+ 6. doLogIn方法不应写在该类中： <p><del>虽然`LogIn`的命名不太清晰，但笔者猜测是login的意思， （勘误：Login是名词，LogIn 是动词，都表示登陆的意思。见： [ ***Log in vs. login*** ](http://grammarist.com/spelling/log-in-login/)）</del></p>登录操作属于业务逻辑，观察类名 UserModel ，以及属性的命名方式，该类应该是一个 Model 而不是一个“ MVVM 模式下的 ViewModel ”：
 
 
- > 无论是MVC模式还是MVVM模式，业务逻辑都不应当写在Model里。
+ > 无论是MVC模式还是MVVM模式，业务逻辑都不应当写在Model里：MVC 应在 C，MVVM 应在 VM。
 
 
  （如果抛开命名规范，假设该类真的是MVVM模式里的 ViewModel ，那么UserModel这个类可能对应的是用户注册页面，如果有特殊的业务需求，比如： `-logIn` 对应的应当是注册并登录的一个Button，出现 `-logIn` 方法也可能是合理的。）
@@ -82,7 +82,7 @@
 
   > 如果方法表示让对象执行一个动作，使用动词打头来命名，注意不要使用`do`，`does`这种多余的关键字，动词本身的暗示就足够了。
 
-应为 `-logIn` （注意：Login是名词，LogIn 是动词，  见[ ***Log in vs. login*** ](http://grammarist.com/spelling/log-in-login/)）
+ 应为 `-logIn` （注意： `Login` 是名词， `LogIn`  是动词，都表示登陆。  见[ ***Log in vs. login*** ](http://grammarist.com/spelling/log-in-login/)）
 
  11. `-(id)initUserModelWithUserName: (NSString*)name withAge:(int)age;`方法中不要用`with`来连接两个参数:`withAge:`应当换为`age:`，`age:`已经足以清晰说明参数的作用，也不建议用`andAge:`：通常情况下，即使有类似`withA:withB:`的命名需求，也通常是使用`withA:andB:`这种命名，用来表示方法执行了两个相对独立的操作（*从设计上来说，这时候也可以拆分成两个独立的方法*），它不应该用作阐明有多个参数，比如下面的：
 
@@ -207,8 +207,8 @@
 	`-(id)initUserModelWithUserName: (NSString*)name withAge:(int)age;`方法中方法名与参数之间多了空格：`(NSString*)name`前多了空格。
  10. 
 	`-(id)initUserModelWithUserName: (NSString*)name withAge:(int)age;`方法中`(NSString*)name`,应为`(NSString *)name`，少了空格。 
- 7.  doLogIn方法命名不清晰：笔者猜测是login的意思，应该是粗心手误造成的。
-
+ 7.  <p><del>doLogIn方法中的 `LogIn` 命名不清晰：笔者猜测是login的意思，应该是粗心手误造成的。
+ （勘误： `Login` 是名词， `LogIn`  是动词，都表示登陆的意思。见： [ ***Log in vs. login*** ](http://grammarist.com/spelling/log-in-login/)）</del></p>
 ###2. 什么情况使用 weak 关键字，相比 assign 有什么不同？
 什么情况使用 weak 关键字？
 
