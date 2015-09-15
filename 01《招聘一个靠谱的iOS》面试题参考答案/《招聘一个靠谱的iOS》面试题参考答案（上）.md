@@ -56,6 +56,7 @@
 	    CYLSexWoman
 	};
 ```
+ （仅仅让性别包含男和女可能并不严谨，最严谨的做法可以参考 [这里](https://github.com/ChenYilong/iOSInterviewQuestions/issues/9) 。）
  2. age属性的类型：应避免使用基本类型，建议使Foundation数据类型，对应关系如下：
  
  ```Objective-C
