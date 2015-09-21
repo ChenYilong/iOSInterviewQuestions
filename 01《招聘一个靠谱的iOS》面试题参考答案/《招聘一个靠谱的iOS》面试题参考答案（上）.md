@@ -303,7 +303,7 @@ atomic属性通常都不会有性能瓶颈。
 ###5. 如何让自己的类用 copy 修饰符？如何重写带 copy 关键字的 setter？
 
 
-> 若想令自己所写的对象具有拷贝功能，则需实现NSCopying协议。如果自定义的对象分为可变版本与不可变版本，那么就要同时实现NSCopyiog与NSMutableCopying协议。
+> 若想令自己所写的对象具有拷贝功能，则需实现NSCopying协议。如果自定义的对象分为可变版本与不可变版本，那么就要同时实现 `NSCopying` 与 `NSMutableCopying` 协议。
 
 
 
