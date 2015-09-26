@@ -10,6 +10,35 @@
 
 ----------
 
+#索引
+
+ 1.  [风格纠错题](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#1-风格纠错题) 
+
+  1.  [优化部分](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#优化部分) 
+  2.  [硬伤部分](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#硬伤部分) 
+ 2.   [什么情况使用 weak 关键字，相比 assign 有什么不同？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#2-什么情况使用-weak-关键字相比-assign-有什么不同) 
+ 3.  [怎么用 copy 关键字？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#3-怎么用-copy-关键字) 
+ 4.  [这个写法会出什么问题： @property (copy) NSMutableArray *array;](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#4-这个写法会出什么问题-property-copy-nsmutablearray-array) 
+ 5.  [ 如何让自己的类用 copy 修饰符？如何重写带 copy 关键字的 setter？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#5-如何让自己的类用-copy-修饰符如何重写带-copy-关键字的-setter) 
+ 6.  [@property 的本质是什么？ivar、getter、setter 是如何生成并添加到这个类中的](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#6-property-的本质是什么ivargettersetter-是如何生成并添加到这个类中的) 
+ 7.  [@protocol 和 category 中如何使用 @property](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#7-protocol-和-category-中如何使用-property) 
+ 8.  [ runtime 如何实现 weak 属性](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#8-runtime-如何实现-weak-属性) 
+ 9.  [@property中有哪些属性关键字？/ @property 后面可以有哪些修饰符？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#9-property中有哪些属性关键字-property-后面可以有哪些修饰符) 
+ 10. [ weak属性需要在dealloc中置nil么？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#10-weak属性需要在dealloc中置nil么)
+ 11.  [@synthesize和@dynamic分别有什么作用？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#11-synthesize和dynamic分别有什么作用) 
+ 12.  [ARC下，不显式指定任何属性关键字时，默认的关键字都有哪些？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#12-arc下不显式指定任何属性关键字时默认的关键字都有哪些) 
+ 13.  [用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？如果改用strong关键字，可能造成什么问题？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#13-用property声明的nsstring或nsarraynsdictionary经常使用copy关键字为什么如果改用strong关键字可能造成什么问题) 
+  1.  [对非集合类对象的copy操作](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#1-对非集合类对象的copy操作) 
+  2.  [集合类对象的copy与mutableCopy](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#2集合类对象的copy与mutablecopy) 
+ 14.  [@synthesize合成实例变量的规则是什么？假如property名为foo，存在一个名为_foo的实例变量，那么还会自动合成新变量么？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#14-synthesize合成实例变量的规则是什么假如property名为foo存在一个名为_foo的实例变量那么还会自动合成新变量么) 
+ 15.  [在有了自动合成属性实例变量之后，@synthesize还有哪些使用场景？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#15-在有了自动合成属性实例变量之后synthesize还有哪些使用场景) 
+ 16.  [objc中向一个nil对象发送消息将会发生什么？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#16-objc中向一个nil对象发送消息将会发生什么) 
+ 17.  [objc中向一个对象发送消息[obj foo]和objc_msgSend()函数之间有什么关系？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#17-objc中向一个对象发送消息obj-foo和objc_msgsend函数之间有什么关系) 
+ 18.  [什么时候会报unrecognized selector的异常？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#18-什么时候会报unrecognized-selector的异常) 
+ 19.  [一个objc对象如何进行内存布局？（考虑有父类的情况）](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#19-一个objc对象如何进行内存布局考虑有父类的情况) 
+ 20. [一个objc对象的isa的指针指向什么？有什么作用？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#20-一个objc对象的isa的指针指向什么有什么作用)
+ 21.  [下面的代码输出什么？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#21-下面的代码输出什么) 
+ 22. 22--55题，请看下篇。
 
 ###1. 风格纠错题
 ![enter image description here](http://i.imgur.com/O7Zev94.png)
