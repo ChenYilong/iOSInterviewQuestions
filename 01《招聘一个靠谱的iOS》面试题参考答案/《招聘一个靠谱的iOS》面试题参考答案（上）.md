@@ -64,26 +64,26 @@
 
 
  ```Objective-C
-	// .h文件
-	// http://weibo.com/luohanchenyilong/
-	// https://github.com/ChenYilong
-	// 修改完的代码，这是第一种修改方法，后面会给出第二种修改方法
+// .h文件
+// http://weibo.com/luohanchenyilong/
+// https://github.com/ChenYilong
+// 修改完的代码，这是第一种修改方法，后面会给出第二种修改方法
 
-	typedef NS_ENUM(NSInteger, CYLSex) {
-	    CYLSexMan,
-	    CYLSexWoman
-	};
+typedef NS_ENUM(NSInteger, CYLSex) {
+    CYLSexMan,
+    CYLSexWoman
+};
 
-	@interface CYLUser : NSObject<NSCopying>
+@interface CYLUser : NSObject<NSCopying>
 
-	@property (nonatomic, readonly, copy) NSString *name;
-	@property (nonatomic, readonly, assign) NSUInteger age;
-	@property (nonatomic, readonly, assign) CYLSex sex;
+@property (nonatomic, readonly, copy) NSString *name;
+@property (nonatomic, readonly, assign) NSUInteger age;
+@property (nonatomic, readonly, assign) CYLSex sex;
 
-	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
-	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
+- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
++ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
 
-	@end
+@end
  ```
 
 
