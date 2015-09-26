@@ -38,6 +38,22 @@
  19.  [一个objc对象如何进行内存布局？（考虑有父类的情况）](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#19-一个objc对象如何进行内存布局考虑有父类的情况) 
  20. [一个objc对象的isa的指针指向什么？有什么作用？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#20-一个objc对象的isa的指针指向什么有什么作用)
  21.  [下面的代码输出什么？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#21-下面的代码输出什么) 
+
+
+ ```Objective-C
+	@implementation Son : Father
+	- (id)init
+	{
+	    self = [super init];
+	    if (self) {
+	        NSLog(@"%@", NSStringFromClass([self class]));
+	        NSLog(@"%@", NSStringFromClass([super class]));
+	    }
+	    return self;
+	}
+	@end
+ ```
+
  22. 22--55题，请看下篇。
 
 ###1. 风格纠错题
@@ -1348,6 +1364,8 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
 
 
 
+
+ ```Objective-C
 	@implementation Son : Father
 	- (id)init
 	{
@@ -1359,6 +1377,8 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
 	    return self;
 	}
 	@end
+ ```
+
 
 **答案：**
 
