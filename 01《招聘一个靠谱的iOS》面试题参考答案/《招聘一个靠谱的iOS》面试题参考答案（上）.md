@@ -62,6 +62,8 @@
 
 修改方法有很多种，现给出一种做示例：
 
+
+ ```Objective-C
 	// .h文件
 	// http://weibo.com/luohanchenyilong/
 	// https://github.com/ChenYilong
@@ -82,6 +84,7 @@
 	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
 
 	@end
+ ```
 
 
 
@@ -223,9 +226,13 @@
  2. 如果基于第一种修改方法：既然该类中已经有一个“初始化方法” (initializer)，用于设置“姓名”(Name)、“年龄”(Age)和“性别”(Sex）的初始值:
 那么在设计对应@property时就应该尽量使用不可变的对象：其三个属性都应该设为“只读”。用初始化方法设置好属性值之后，就不能再改变了。在本例中，仍需声明属性的“内存管理语义”。于是可以把属性的定义改成这样
 
+
+ ```Objective-C
         @property (nonatomic, readonly, copy) NSString *name;
-        @property (nonatomic, readonly, assign) NSUInter age;
+        @property (nonatomic, readonly, assign) NSUInteger age;
         @property (nonatomic, readonly, assign) CYLSex sex;
+ ```
+
       由于是只读属性，所以编译器不会为其创建对应的“设置方法”，即便如此，我们还是要写上这些属性的语义，以此表明初始化方法在设置这些属性值时所用的方式。要是不写明语义的话，该类的调用者就不知道初始化方法里会拷贝这些属性，他们有可能会在调用初始化方法之前自行拷贝属性值。这种操作多余而且低效。
  2. `initUserModelWithUserName`如果改为`initWithName`会更加简洁，而且足够清晰。
  2. `UserModel`如果改为`User`会更加简洁，而且足够清晰。
@@ -366,6 +373,7 @@ atomic属性通常都不会有性能瓶颈。
 以第一题的代码为例：
    
 
+ ```Objective-C
 	// .h文件
 	// http://weibo.com/luohanchenyilong/
 	// https://github.com/ChenYilong
@@ -386,6 +394,8 @@ atomic属性通常都不会有性能瓶颈。
 	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
 
 	@end
+ ```
+
 
 然后实现协议中规定的方法：
 
@@ -401,85 +411,91 @@ atomic属性通常都不会有性能瓶颈。
 ```
 但在实际的项目中，不可能这么简单，遇到更复杂一点，比如类对象中的数据结构可能并未在初始化方法中设置好，需要另行设置。举个例子，假如CYLUser中含有一个数组，与其他CYLUser对象建立或解除朋友关系的那些方法都需要操作这个数组。那么在这种情况下，你得把这个包含朋友对象的数组也一并拷贝过来。下面列出了实现此功能所需的全部代码:
 
-	// .h文件
-	// http://weibo.com/luohanchenyilong/
-	// https://github.com/ChenYilong
-	// 以第一题《风格纠错题》里的代码为例
+```Objective-C
+// .h文件
+// http://weibo.com/luohanchenyilong/
+// https://github.com/ChenYilong
+// 以第一题《风格纠错题》里的代码为例
 
-	typedef NS_ENUM(NSInteger, CYLSex) {
-	    CYLSexMan,
-	    CYLSexWoman
-	};
+typedef NS_ENUM(NSInteger, CYLSex) {
+    CYLSexMan,
+    CYLSexWoman
+};
 
-	@interface CYLUser : NSObject<NSCopying>
+@interface CYLUser : NSObject<NSCopying>
 
-	@property (nonatomic, readonly, copy) NSString *name;
-	@property (nonatomic, readonly, assign) NSUInteger age;
-	@property (nonatomic, readonly, assign) CYLSex sex;
+@property (nonatomic, readonly, copy) NSString *name;
+@property (nonatomic, readonly, assign) NSUInteger age;
+@property (nonatomic, readonly, assign) CYLSex sex;
 
-	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
-	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
-	- (void)addFriend:(CYLUser *)user;
-	- (void)removeFriend:(CYLUser *)user;
+- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
++ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
+- (void)addFriend:(CYLUser *)user;
+- (void)removeFriend:(CYLUser *)user;
 
-	@end
+@end
+```
 
 // .m文件
 
 
-	// .m文件
-	// http://weibo.com/luohanchenyilong/
-	// https://github.com/ChenYilong
-	// 
 
-	@implementation CYLUser {
-		NSMutableSet *_friends;
-	}
+ ```Objective-C
+// .m文件
+// http://weibo.com/luohanchenyilong/
+// https://github.com/ChenYilong
+//
 
-	- (void)setName:(NSString *)name {
-		_name = [name copy];
-	}
+@implementation CYLUser {
+    NSMutableSet *_friends;
+}
 
-	- (instancetype)initWithName:(NSString *)name 
-								 age:(NSUInteger)age 
-								 sex:(CYLSex)sex {
-	     if(self = [super init]) {
-	     	_name = [name copy];
-	     	_age = age;
-	     	_sex = sex;
-	     	_friends = [[NSMutableSet alloc] init];
-	     }
-	     return self;
-	}
+- (void)setName:(NSString *)name {
+    _name = [name copy];
+}
 
-	- (void)addFriend:(CYLUser *)user {
-		[_friends addObject:user];
-	}
+- (instancetype)initWithName:(NSString *)name
+                         age:(NSUInteger)age
+                         sex:(CYLSex)sex {
+    if(self = [super init]) {
+        _name = [name copy];
+        _age = age;
+        _sex = sex;
+        _friends = [[NSMutableSet alloc] init];
+    }
+    return self;
+}
 
-	- (void)removeFriend:(CYLUser *)user {
-		[_friends removeObject:person];
-	}
+- (void)addFriend:(CYLUser *)user {
+    [_friends addObject:user];
+}
 
-	- (id)copyWithZone:(NSZone *)zone {
-		CYLUser *copy = [[[self class] allocWithZone:zone] 
-			             initWithName:_name
-	 							      age:_age
-							          sex:_sex];
-		copy->_friends = [_friends mutableCopy];
-		return copy;
-	}
+- (void)removeFriend:(CYLUser *)user {
+    [_friends removeObject:person];
+}
 
-	- (id)deepCopy {
-		CYLUser *copy = [[[self class] allocWithZone:zone] 
-			             initWithName:_name
-	 							      age:_age
-							          sex:_sex];
-		copy->_friends = [[NSMutableSet alloc] initWithSet:_friends 
-												 copyItems:YES];
-		return copy;
-	}
+- (id)copyWithZone:(NSZone *)zone {
+    CYLUser *copy = [[[self class] allocWithZone:zone]
+                     initWithName:_name
+                     age:_age
+                     sex:_sex];
+    copy->_friends = [_friends mutableCopy];
+    return copy;
+}
 
-	@end
+- (id)deepCopy {
+    CYLUser *copy = [[[self class] allocWithZone:zone]
+                     initWithName:_name
+                     age:_age
+                     sex:_sex];
+    copy->_friends = [[NSMutableSet alloc] initWithSet:_friends
+                                             copyItems:YES];
+    return copy;
+}
+
+@end
+
+ ```
 
 以上做法能满足基本的需求，但是也有缺陷：
 
@@ -490,15 +506,18 @@ atomic属性通常都不会有性能瓶颈。
 在例子中，存放朋友对象的set是用“copyWithZone:”方法来拷贝的，这种浅拷贝方式不会逐个复制set中的元素。若需要深拷贝的话，则可像下面这样，编写一个专供深拷贝所用的方法:
 	
 
-	- (id)deepCopy {
-		CYLUser *copy = [[[self class] allocWithZone:zone] 
-			             initWithName:_name
-	 							      age:_age
-							          sex:_sex];
-		copy->_friends = [[NSMutableSet alloc] initWithSet:_friends 
-												 copyItems:YES];
-		return copy;
-	}
+ ```Objective-C
+- (id)deepCopy {
+    CYLUser *copy = [[[self class] allocWithZone:zone]
+                     initWithName:_name
+                     age:_age
+                     sex:_sex];
+    copy->_friends = [[NSMutableSet alloc] initWithSet:_friends
+                                             copyItems:YES];
+    return copy;
+}
+
+ ```
 
 至于***如何重写带 copy 关键字的 setter***这个问题，
 
@@ -516,12 +535,16 @@ atomic属性通常都不会有性能瓶颈。
 
 不过也有争议，有人说“苹果如果像下面这样干，是不是效率会高一些？”
 
-	- (void)setName:(NSString *)name {
-		if (_name != name) {
-		//[_name release];//MRC
-		_name = [name copy];
-	    }
-	}
+
+ ```Objective-C
+- (void)setName:(NSString *)name {
+    if (_name != name) {
+        //[_name release];//MRC
+        _name = [name copy];
+    }
+}
+ ```
+
 
 
 这样真得高效吗？不见得！这种写法“看上去很美、很合理”，但在实际开发中，它更像下图里的做法：
@@ -591,7 +614,8 @@ atomic属性通常都不会有性能瓶颈。
 回到这个题目，如果单单就上文的代码而言，我们不需要也不能重写name的 setter ：由于是name是只读属性，所以编译器不会为其创建对应的“设置方法”，用初始化方法设置好属性值之后，就不能再改变了。（ 在本例中，之所以还要声明属性的“内存管理语义”--copy，是因为：如果不写copy，该类的调用者就不知道初始化方法里会拷贝这些属性，他们有可能会在调用初始化方法之前自行拷贝属性值。这种操作多余而低效。）。
 
 那如何确保name被copy？在初始化方法(initializer)中做：
-	
+
+ ```Objective-C
 	- (instancetype)initWithName:(NSString *)name 
 								 age:(NSUInteger)age 
 								 sex:(CYLSex)sex {
@@ -603,6 +627,9 @@ atomic属性通常都不会有性能瓶颈。
 	     }
 	     return self;
 	}
+
+ ```
+
 
 	
 ###6. @property 的本质是什么？ivar、getter、setter 是如何生成并添加到这个类中的
@@ -627,21 +654,27 @@ atomic属性通常都不会有性能瓶颈。
 例如下面这个类：
 
 
-	@interface Person : NSObject 
-	@property NSString *firstName; 
-	@property NSString *lastName; 
-	@end 
+
+ ```Objective-C
+@interface Person : NSObject
+@property NSString *firstName;
+@property NSString *lastName;
+@end
+ ```
 
 
 上述代码写出来的类与下面这种写法等效：
 
 
-	@interface Person : NSObject 
-	- (NSString *)firstName; 
-	- (void)setFirstName:(NSString *)firstName; 
-	- (NSString *)lastName; 
-	- (void)setLastName:(NSString *)lastName; 
-	@end 
+
+ ```Objective-C
+@interface Person : NSObject
+- (NSString *)firstName;
+- (void)setFirstName:(NSString *)firstName;
+- (NSString *)lastName;
+- (void)setLastName:(NSString *)lastName;
+@end
+ ```
 
 
 
@@ -657,10 +690,13 @@ atomic属性通常都不会有性能瓶颈。
 @synthesize语法来指定实例变量的名字.
 
 
-	@implementation Person 
-	@synthesize firstName = _myFirstName; 
-	@synthesize lastName = _myLastName; 
-	@end 
+
+ ```Objective-C
+@implementation Person
+@synthesize firstName = _myFirstName;
+@synthesize lastName = _myLastName;
+@end
+ ```
 
 我为了搞清属性是怎么实现的,曾经反编译过相关的代码,他大致生成了五个东西
 
@@ -778,19 +814,24 @@ objc_storeWeak(&obj1, 0);
 
 我们从setter方法入手：
 
-    - (void)setObject:(NSObject *)object
-    {
-        objc_setAssociatedObject(self, "object", object, OBJC_ASSOCIATION_ASSIGN);
-        [object cyl_runAtDealloc:^{
-            _object = nil;
-        }];
-    }
-    
+ ```Objective-C
+- (void)setObject:(NSObject *)object
+{
+    objc_setAssociatedObject(self, "object", object, OBJC_ASSOCIATION_ASSIGN);
+    [object cyl_runAtDealloc:^{
+        _object = nil;
+    }];
+}
+ ```
+
 也就是有两个步骤：
 
  1. 在setter方法中做如下设置：
 
+
+ ```Objective-C
         objc_setAssociatedObject(self, "object", object, OBJC_ASSOCIATION_ASSIGN);
+ ```
 
  2. 在属性所指的对象遭到摧毁时，属性值也会清空(nil out)。做到这点，同样要借助runtime：
  
@@ -809,103 +850,120 @@ objc_setAssociatedObject(objectToBeDeallocted,
 
 第一部分：创建一个类，可以理解为一个“事件”：当目标对象销毁时，同时要发生的“事件”。借助block执行“事件”。
 
-    // .h文件
-    // http://weibo.com/luohanchenyilong/
-    // https://github.com/ChenYilong
-    // 这个类，可以理解为一个“事件”：当目标对象销毁时，同时要发生的“事件”。借助block执行“事件”。
+// .h文件
 
-    typedef void (^voidBlock)(void);
-    
-    @interface CYLBlockExecutor : NSObject 
-        
-    - (id)initWithBlock:(voidBlock)block;
-    
-    @end
-    
+ ```Objective-C
+// .h文件
+// http://weibo.com/luohanchenyilong/
+// https://github.com/ChenYilong
+// 这个类，可以理解为一个“事件”：当目标对象销毁时，同时要发生的“事件”。借助block执行“事件”。
 
-    // .m文件
-    // http://weibo.com/luohanchenyilong/
-    // https://github.com/ChenYilong
-    // 这个类，可以理解为一个“事件”：当目标对象销毁时，同时要发生的“事件”。借助block执行“事件”。
+typedef void (^voidBlock)(void);
 
-    #import "CYLBlockExecutor.h"
+@interface CYLBlockExecutor : NSObject
 
-    @interface CYLBlockExecutor() {
-        voidBlock _block;
-    }
-    @implementation CYLBlockExecutor
-        
-    - (id)initWithBlock:(voidBlock)aBlock
-    {
-        self = [super init];
-        
-        if (self) {
-            _block = [aBlock copy];
-        }
-        
-        return self;
-    }
+- (id)initWithBlock:(voidBlock)block;
+
+@end
+ ```
+
+// .m文件
+
+ ```Objective-C
+// .m文件
+// http://weibo.com/luohanchenyilong/
+// https://github.com/ChenYilong
+// 这个类，可以理解为一个“事件”：当目标对象销毁时，同时要发生的“事件”。借助block执行“事件”。
+
+#import "CYLBlockExecutor.h"
+
+@interface CYLBlockExecutor() {
+    voidBlock _block;
+}
+@implementation CYLBlockExecutor
+
+- (id)initWithBlock:(voidBlock)aBlock
+{
+    self = [super init];
     
-    - (void)dealloc
-    {
-        _block ? _block() : nil;
+    if (self) {
+        _block = [aBlock copy];
     }
     
-    @end
+    return self;
+}
+
+- (void)dealloc
+{
+    _block ? _block() : nil;
+}
+
+@end
+ ```
 
 第二部分：核心代码：利用runtime实现`cyl_runAtDealloc`方法
 
-    // CYLNSObject+RunAtDealloc.h文件
-    // http://weibo.com/luohanchenyilong/
-    // https://github.com/ChenYilong
-    // 利用runtime实现cyl_runAtDealloc方法
+ ```Objective-C
+// CYLNSObject+RunAtDealloc.h文件
+// http://weibo.com/luohanchenyilong/
+// https://github.com/ChenYilong
+// 利用runtime实现cyl_runAtDealloc方法
 
-    #import "CYLBlockExecutor.h"
+#import "CYLBlockExecutor.h"
 
-    const void *runAtDeallocBlockKey = &runAtDeallocBlockKey;
-    
-    @interface NSObject (CYLRunAtDealloc)
-    
-    - (void)cyl_runAtDealloc:(voidBlock)block;
-    
-    @end
-    
+const void *runAtDeallocBlockKey = &runAtDeallocBlockKey;
 
-    // CYLNSObject+RunAtDealloc.m文件
-    // http://weibo.com/luohanchenyilong/
-    // https://github.com/ChenYilong
-    // 利用runtime实现cyl_runAtDealloc方法
+@interface NSObject (CYLRunAtDealloc)
 
-    #import "CYLNSObject+RunAtDealloc.h"
-    #import "CYLBlockExecutor.h"
+- (void)cyl_runAtDealloc:(voidBlock)block;
 
-    @implementation NSObject (CYLRunAtDealloc)
-    
-    - (void)cyl_runAtDealloc:(voidBlock)block
-    {
-        if (block) {
-            CYLBlockExecutor *executor = [[CYLBlockExecutor alloc] initWithBlock:block];
-            
-            objc_setAssociatedObject(self,
-                                     runAtDeallocBlockKey,
-                                     executor,
-                                     OBJC_ASSOCIATION_RETAIN);
-        }
+@end
+
+
+// CYLNSObject+RunAtDealloc.m文件
+// http://weibo.com/luohanchenyilong/
+// https://github.com/ChenYilong
+// 利用runtime实现cyl_runAtDealloc方法
+
+#import "CYLNSObject+RunAtDealloc.h"
+#import "CYLBlockExecutor.h"
+
+@implementation NSObject (CYLRunAtDealloc)
+
+- (void)cyl_runAtDealloc:(voidBlock)block
+{
+    if (block) {
+        CYLBlockExecutor *executor = [[CYLBlockExecutor alloc] initWithBlock:block];
+        
+        objc_setAssociatedObject(self,
+                                 runAtDeallocBlockKey,
+                                 executor,
+                                 OBJC_ASSOCIATION_RETAIN);
     }
-    
-    @end
+}
+
+@end
+ ```
 
 使用方法：
 导入
 
+
+ ```Objective-C
     #import "CYLNSObject+RunAtDealloc.h"
+ ```
+
 然后就可以使用了：
 
-        NSObject *foo = [[NSObject alloc] init];
-            
-        [foo cyl_runAtDealloc:^{
-            NSLog(@"正在释放foo!");
-        }];
+
+ ```Objective-C
+NSObject *foo = [[NSObject alloc] init];
+
+[foo cyl_runAtDealloc:^{
+    NSLog(@"正在释放foo!");
+}];
+ ```
+
 
 
 
@@ -944,13 +1002,17 @@ objc_setAssociatedObject(objectToBeDeallocted,
 
 我们模拟下weak的setter方法，应该如下：
 
-    - (void)setObject:(NSObject *)object
-    {
-        objc_setAssociatedObject(self, "object", object, OBJC_ASSOCIATION_ASSIGN);
-        [object cyl_runAtDealloc:^{
-            _object = nil;
-        }];
-    }
+
+ ```Objective-C
+- (void)setObject:(NSObject *)object
+{
+    objc_setAssociatedObject(self, "object", object, OBJC_ASSOCIATION_ASSIGN);
+    [object cyl_runAtDealloc:^{
+        _object = nil;
+    }];
+}
+ ```
+
 
 也即:
 
@@ -1008,12 +1070,20 @@ copy此特质所表达的所属关系与strong类似。然而设置方法并不�
 	
 比如以下代码：
 
-	NSMutableString *string = [NSMutableString stringWithString:@"origin"];//copy
-	NSString *stringCopy = [string copy]; 
+
+ ```Objective-C
+NSMutableString *string = [NSMutableString stringWithString:@"origin"];//copy
+NSString *stringCopy = [string copy];
+ ```
+
 
 查看内存，会发现 string、stringCopy 内存地址都不一样，说明此时都是做内容拷贝、深拷贝。即使你进行如下操作：
 
-	[string appendString:@"origion!"]
+
+ ```Objective-C
+[string appendString:@"origion!"]
+ ```
+
 stringCopy的值也不会因此改变，但是如果不使用copy，stringCopy的值就会被改变。
   集合类对象以此类推。
 所以，
@@ -1024,24 +1094,34 @@ stringCopy的值也不会因此改变，但是如果不使用copy，stringCopy�
 
 集合类对象是指NSArray、NSDictionary、NSSet ... 之类的对象。下面先看集合类immutable对象使用copy和mutableCopy的一个例子：
 
-	NSArray *array = @[@[@"a", @"b"], @[@"c", @"d"];
-	NSArray *copyArray = [array copy];
-	NSMutableArray *mCopyArray = [array mutableCopy];
+ ```Objective-C
+NSArray *array = @[@[@"a", @"b"], @[@"c", @"d"];
+NSArray *copyArray = [array copy];
+NSMutableArray *mCopyArray = [array mutableCopy];
+ ```
 
 查看内容，可以看到copyArray和array的地址是一样的，而mCopyArray和array的地址是不同的。说明copy操作进行了指针拷贝，mutableCopy进行了内容拷贝。但需要强调的是：此处的内容拷贝，仅仅是拷贝array这个对象，array集合内部的元素仍然是指针拷贝。这和上面的非集合immutable对象的拷贝还是挺相似的，那么mutable对象的拷贝会不会类似呢？我们继续往下，看mutable对象拷贝的例子：
 
-	NSMutableArray *array = [NSMutableArray arrayWithObjects:[NSMutableString stringWithString:@"a"],@"b",@"c",nil];
-	NSArray *copyArray = [array copy];
-	NSMutableArray *mCopyArray = [array mutableCopy];
+
+ ```Objective-C
+NSMutableArray *array = [NSMutableArray arrayWithObjects:[NSMutableString stringWithString:@"a"],@"b",@"c",nil];
+NSArray *copyArray = [array copy];
+NSMutableArray *mCopyArray = [array mutableCopy];
+ ```
+
 
 查看内存，如我们所料，copyArray、mCopyArray和array的内存地址都不一样，说明copyArray、mCopyArray都对array进行了内容拷贝。同样，我们可以得出结论：
 
 在集合类对象中，对immutable对象进行copy，是指针复制，mutableCopy是内容复制；对mutable对象进行copy和mutableCopy都是内容复制。但是：集合对象的内容复制仅限于对象本身，对象元素仍然是指针复制。用代码简单表示如下：
 
-	[immutableObject copy] // 浅复制
-	[immutableObject mutableCopy] //单层深复制
-	[mutableObject copy] //单层深复制
-	[mutableObject mutableCopy] //单层深复制
+
+ ```Objective-C
+[immutableObject copy] // 浅复制
+[immutableObject mutableCopy] //单层深复制
+[mutableObject copy] //单层深复制
+[mutableObject mutableCopy] //单层深复制
+ ```
+
 
 这个代码结论和非集合类的非常相似。
 
@@ -1141,42 +1221,46 @@ stringCopy的值也不会因此改变，但是如果不使用copy，stringCopy�
 举例说明：应用场景：
 
 
-	//
-	// .m文件
-	// http://weibo.com/luohanchenyilong/ (微博@iOS程序犭袁)
-	// https://github.com/ChenYilong
-	// 打开第14行和第17行中任意一行，就可编译成功
+ ```Objective-C
 
-	@import Foundation;
+//
+// .m文件
+// http://weibo.com/luohanchenyilong/ (微博@iOS程序犭袁)
+// https://github.com/ChenYilong
+// 打开第14行和第17行中任意一行，就可编译成功
 
-	@interface CYLObject : NSObject
-	@property (nonatomic, copy) NSString *title;
-	@end
+@import Foundation;
 
-	@implementation CYLObject {
-	//    NSString *_title;
-	}
+@interface CYLObject : NSObject
+@property (nonatomic, copy) NSString *title;
+@end
 
-	//@synthesize title = _title;
+@implementation CYLObject {
+    //    NSString *_title;
+}
 
-	- (instancetype)init
-	{
-	    self = [super init];
-	    if (self) {
-	        _title = @"微博@iOS程序犭袁";
-	    }
-	    return self;
-	}
+//@synthesize title = _title;
 
-	- (NSString *)title {
-	    return _title;
-	}
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _title = @"微博@iOS程序犭袁";
+    }
+    return self;
+}
 
-	- (void)setTitle:(NSString *)title {
-	    _title = [title copy];
-	}
+- (NSString *)title {
+    return _title;
+}
 
-	@end
+- (void)setTitle:(NSString *)title {
+    _title = [title copy];
+}
+
+@end
+ ```
+
 结果编译器报错：
 ![enter image description here](http://i.imgur.com/fAEGHIo.png)
 
@@ -1213,7 +1297,6 @@ Person * motherInlaw = [[aPerson spouse] mother];
 
  
 ```Objective-C
-
 // runtime.h（类在runtime中的定义）
 // http://weibo.com/luohanchenyilong/
 // https://github.com/ChenYilong
@@ -1403,35 +1486,58 @@ self 是类的隐藏参数，指向当前调用方法的这个类的实例。而
 
 使用clang重写命令:
 
+
+ ```Objective-C
 	$ clang -rewrite-objc test.m
+ ```
+
 发现上述代码被转化为:
 
+
+ ```Objective-C
     NSLog((NSString *)&__NSConstantStringImpl__var_folders_gm_0jk35cwn1d3326x0061qym280000gn_T_main_a5cecc_mi_0, NSStringFromClass(((Class (*)(id, SEL))(void *)objc_msgSend)((id)self, sel_registerName("class"))));
 
     NSLog((NSString *)&__NSConstantStringImpl__var_folders_gm_0jk35cwn1d3326x0061qym280000gn_T_main_a5cecc_mi_1, NSStringFromClass(((Class (*)(__rw_objc_super *, SEL))(void *)objc_msgSendSuper)((__rw_objc_super){ (id)self, (id)class_getSuperclass(objc_getClass("Son")) }, sel_registerName("class"))));
+ ```
+
 从上面的代码中，我们可以发现在调用 [self class] 时，会转化成 `objc_msgSend`函数。看下函数定义：
 
+
+ ```Objective-C
 	id objc_msgSend(id self, SEL op, ...)
+ ```
 我们把 self 做为第一个参数传递进去。
 
 而在调用 [super class]时，会转化成 `objc_msgSendSuper`函数。看下函数定义:
 
+
+ ```Objective-C
 	id objc_msgSendSuper(struct objc_super *super, SEL op, ...)
+ ```
+
 第一个参数是 `objc_super` 这样一个结构体，其定义如下:
 
-	struct objc_super {
+
+ ```Objective-C
+struct objc_super {
 	   __unsafe_unretained id receiver;
 	   __unsafe_unretained Class super_class;
-	};
+};
+ ```
+
 结构体有两个成员，第一个成员是 receiver, 类似于上面的 `objc_msgSend`函数第一个参数self 。第二个成员是记录当前类的父类是什么。
 
 所以，当调用 ［self class] 时，实际先调用的是 `objc_msgSend`函数，第一个参数是 Son当前的这个实例，然后在 Son 这个类里面去找 - (Class)class这个方法，没有，去父类 Father里找，也没有，最后在 NSObject类中发现这个方法。而 - (Class)class的实现就是返回self的类别，故上述输出结果为 Son。
 
 objc Runtime开源代码对- (Class)class方法的实现:
 
-	- (Class)class {
-	    return object_getClass(self);
-	}
+
+ ```Objective-C
+- (Class)class {
+    return object_getClass(self);
+}
+ ```
+
 而当调用 `[super class]`时，会转换成`objc_msgSendSuper函数`。第一步先构造 `objc_super` 结构体，结构体第一个成员就是 `self` 。
 第二个成员是 `(id)class_getSuperclass(objc_getClass(“Son”))` , 实际该函数输出结果为 Father。
 第二步是去 Father这个类里去找 `- (Class)class`，没有，然后去NSObject类去找，找到了。最后内部是使用 `objc_msgSend(objc_super->receiver, @selector(class))`去调用，
