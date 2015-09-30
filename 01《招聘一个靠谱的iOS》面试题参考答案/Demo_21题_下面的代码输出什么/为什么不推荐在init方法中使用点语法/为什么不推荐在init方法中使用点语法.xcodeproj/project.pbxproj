@@ -7,39 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9AF373531B920A1300889D8B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AF373521B920A1300889D8B /* main.m */; };
-		9AF373561B920A1300889D8B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AF373551B920A1300889D8B /* AppDelegate.m */; };
-		9AF373591B920A1300889D8B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AF373581B920A1300889D8B /* ViewController.m */; };
-		9AF3735C1B920A1300889D8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AF3735A1B920A1300889D8B /* Main.storyboard */; };
-		9AF3735E1B920A1300889D8B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9AF3735D1B920A1300889D8B /* Images.xcassets */; };
-		9AF373611B920A1300889D8B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AF3735F1B920A1300889D8B /* LaunchScreen.xib */; };
-		9AF373781B920A2300889D8B /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AF373771B920A2300889D8B /* Person.m */; };
-		9AF3737B1B9212B100889D8B /* MaPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AF3737A1B9212B100889D8B /* MaPerson.m */; };
-		9AF899671B928FC400043F71 /* SuperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AF899661B928FC400043F71 /* SuperView.m */; };
-		9AF8996A1B928FD900043F71 /* SubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AF899691B928FD900043F71 /* SubView.m */; };
+		9A9508C61BBC315200658616 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A9508B81BBC315200658616 /* AppDelegate.m */; settings = {ASSET_TAGS = (); }; };
+		9A9508C71BBC315200658616 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A9508B91BBC315200658616 /* LaunchScreen.xib */; settings = {ASSET_TAGS = (); }; };
+		9A9508C81BBC315200658616 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A9508BB1BBC315200658616 /* Main.storyboard */; settings = {ASSET_TAGS = (); }; };
+		9A9508C91BBC315200658616 /* ChenPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A9508BE1BBC315200658616 /* ChenPerson.m */; settings = {ASSET_TAGS = (); }; };
+		9A9508CA1BBC315200658616 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A9508BF1BBC315200658616 /* Images.xcassets */; settings = {ASSET_TAGS = (); }; };
+		9A9508CB1BBC315200658616 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9A9508C01BBC315200658616 /* Info.plist */; settings = {ASSET_TAGS = (); }; };
+		9A9508CC1BBC315200658616 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A9508C11BBC315200658616 /* main.m */; settings = {ASSET_TAGS = (); }; };
+		9A9508CD1BBC315200658616 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A9508C31BBC315200658616 /* Person.m */; settings = {ASSET_TAGS = (); }; };
+		9A9508CE1BBC315200658616 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A9508C51BBC315200658616 /* ViewController.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9A9508B71BBC315200658616 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		9A9508B81BBC315200658616 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		9A9508BA1BBC315200658616 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		9A9508BC1BBC315200658616 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9A9508BD1BBC315200658616 /* ChenPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChenPerson.h; sourceTree = "<group>"; };
+		9A9508BE1BBC315200658616 /* ChenPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChenPerson.m; sourceTree = "<group>"; };
+		9A9508BF1BBC315200658616 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		9A9508C01BBC315200658616 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9A9508C11BBC315200658616 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9A9508C21BBC315200658616 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		9A9508C31BBC315200658616 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		9A9508C41BBC315200658616 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		9A9508C51BBC315200658616 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		9AF3734D1B920A1300889D8B /* 为什么不推荐在init方法中使用点语法.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "为什么不推荐在init方法中使用点语法.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		9AF373511B920A1300889D8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9AF373521B920A1300889D8B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		9AF373541B920A1300889D8B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		9AF373551B920A1300889D8B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		9AF373571B920A1300889D8B /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		9AF373581B920A1300889D8B /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		9AF3735B1B920A1300889D8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		9AF3735D1B920A1300889D8B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		9AF373601B920A1300889D8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		9AF3736B1B920A1400889D8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9AF3736C1B920A1400889D8B /* nil_______Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "nil_______Tests.m"; sourceTree = "<group>"; };
-		9AF373761B920A2300889D8B /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
-		9AF373771B920A2300889D8B /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
-		9AF373791B9212B100889D8B /* MaPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaPerson.h; sourceTree = "<group>"; };
-		9AF3737A1B9212B100889D8B /* MaPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaPerson.m; sourceTree = "<group>"; };
-		9AF899651B928FC400043F71 /* SuperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperView.h; sourceTree = "<group>"; };
-		9AF899661B928FC400043F71 /* SuperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperView.m; sourceTree = "<group>"; };
-		9AF899681B928FD900043F71 /* SubView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubView.h; sourceTree = "<group>"; };
-		9AF899691B928FD900043F71 /* SubView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,11 +46,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9A9508B61BBC315200658616 /* 为什么不推荐在init方法中使用点语法 */ = {
+			isa = PBXGroup;
+			children = (
+				9A9508C41BBC315200658616 /* ViewController.h */,
+				9A9508C51BBC315200658616 /* ViewController.m */,
+				9A9508C21BBC315200658616 /* Person.h */,
+				9A9508C31BBC315200658616 /* Person.m */,
+				9A9508BD1BBC315200658616 /* ChenPerson.h */,
+				9A9508BE1BBC315200658616 /* ChenPerson.m */,
+				9A9508B71BBC315200658616 /* AppDelegate.h */,
+				9A9508B81BBC315200658616 /* AppDelegate.m */,
+				9A9508B91BBC315200658616 /* LaunchScreen.xib */,
+				9A9508BB1BBC315200658616 /* Main.storyboard */,
+				9A9508BF1BBC315200658616 /* Images.xcassets */,
+				9A9508C01BBC315200658616 /* Info.plist */,
+				9A9508C11BBC315200658616 /* main.m */,
+			);
+			path = "为什么不推荐在init方法中使用点语法";
+			sourceTree = "<group>";
+		};
 		9AF373441B920A1300889D8B = {
 			isa = PBXGroup;
 			children = (
-				9AF3734F1B920A1300889D8B /* nil对象调用点语法 */,
-				9AF373691B920A1400889D8B /* nil对象调用点语法Tests */,
+				9A9508B61BBC315200658616 /* 为什么不推荐在init方法中使用点语法 */,
 				9AF3734E1B920A1300889D8B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -68,55 +80,6 @@
 				9AF3734D1B920A1300889D8B /* 为什么不推荐在init方法中使用点语法.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		9AF3734F1B920A1300889D8B /* nil对象调用点语法 */ = {
-			isa = PBXGroup;
-			children = (
-				9AF373541B920A1300889D8B /* AppDelegate.h */,
-				9AF373551B920A1300889D8B /* AppDelegate.m */,
-				9AF373571B920A1300889D8B /* ViewController.h */,
-				9AF373581B920A1300889D8B /* ViewController.m */,
-				9AF373761B920A2300889D8B /* Person.h */,
-				9AF373771B920A2300889D8B /* Person.m */,
-				9AF373791B9212B100889D8B /* MaPerson.h */,
-				9AF3737A1B9212B100889D8B /* MaPerson.m */,
-				9AF899651B928FC400043F71 /* SuperView.h */,
-				9AF899661B928FC400043F71 /* SuperView.m */,
-				9AF899681B928FD900043F71 /* SubView.h */,
-				9AF899691B928FD900043F71 /* SubView.m */,
-				9AF3735A1B920A1300889D8B /* Main.storyboard */,
-				9AF3735D1B920A1300889D8B /* Images.xcassets */,
-				9AF3735F1B920A1300889D8B /* LaunchScreen.xib */,
-				9AF373501B920A1300889D8B /* Supporting Files */,
-			);
-			path = "nil对象调用点语法";
-			sourceTree = "<group>";
-		};
-		9AF373501B920A1300889D8B /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				9AF373511B920A1300889D8B /* Info.plist */,
-				9AF373521B920A1300889D8B /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		9AF373691B920A1400889D8B /* nil对象调用点语法Tests */ = {
-			isa = PBXGroup;
-			children = (
-				9AF3736C1B920A1400889D8B /* nil_______Tests.m */,
-				9AF3736A1B920A1400889D8B /* Supporting Files */,
-			);
-			path = "nil对象调用点语法Tests";
-			sourceTree = "<group>";
-		};
-		9AF3736A1B920A1400889D8B /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				9AF3736B1B920A1400889D8B /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,9 +139,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AF3735C1B920A1300889D8B /* Main.storyboard in Resources */,
-				9AF373611B920A1300889D8B /* LaunchScreen.xib in Resources */,
-				9AF3735E1B920A1300889D8B /* Images.xcassets in Resources */,
+				9A9508CB1BBC315200658616 /* Info.plist in Resources */,
+				9A9508CA1BBC315200658616 /* Images.xcassets in Resources */,
+				9A9508C71BBC315200658616 /* LaunchScreen.xib in Resources */,
+				9A9508C81BBC315200658616 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,33 +153,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AF373591B920A1300889D8B /* ViewController.m in Sources */,
-				9AF3737B1B9212B100889D8B /* MaPerson.m in Sources */,
-				9AF373561B920A1300889D8B /* AppDelegate.m in Sources */,
-				9AF373781B920A2300889D8B /* Person.m in Sources */,
-				9AF899671B928FC400043F71 /* SuperView.m in Sources */,
-				9AF373531B920A1300889D8B /* main.m in Sources */,
-				9AF8996A1B928FD900043F71 /* SubView.m in Sources */,
+				9A9508C91BBC315200658616 /* ChenPerson.m in Sources */,
+				9A9508CC1BBC315200658616 /* main.m in Sources */,
+				9A9508CD1BBC315200658616 /* Person.m in Sources */,
+				9A9508C61BBC315200658616 /* AppDelegate.m in Sources */,
+				9A9508CE1BBC315200658616 /* ViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		9AF3735A1B920A1300889D8B /* Main.storyboard */ = {
+		9A9508B91BBC315200658616 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9AF3735B1B920A1300889D8B /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		9AF3735F1B920A1300889D8B /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9AF373601B920A1300889D8B /* Base */,
+				9A9508BA1BBC315200658616 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		9A9508BB1BBC315200658616 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9A9508BC1BBC315200658616 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -307,7 +269,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = "nil对象调用点语法/Info.plist";
+				INFOPLIST_FILE = "为什么不推荐在init方法中使用点语法/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "为什么不推荐在init方法中使用点语法";
 			};
@@ -317,7 +279,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_FILE = "nil对象调用点语法/Info.plist";
+				INFOPLIST_FILE = "为什么不推荐在init方法中使用点语法/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "为什么不推荐在init方法中使用点语法";
 			};
