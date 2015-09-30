@@ -1135,7 +1135,7 @@ stringCopy的值也不会因此改变，但是如果不使用copy，stringCopy�
 集合类对象是指NSArray、NSDictionary、NSSet ... 之类的对象。下面先看集合类immutable对象使用copy和mutableCopy的一个例子：
 
  ```Objective-C
-NSArray *array = @[@[@"a", @"b"], @[@"c", @"d"];
+NSArray *array = @[@[@"a", @"b"], @[@"c", @"d"]];
 NSArray *copyArray = [array copy];
 NSMutableArray *mCopyArray = [array mutableCopy];
  ```
