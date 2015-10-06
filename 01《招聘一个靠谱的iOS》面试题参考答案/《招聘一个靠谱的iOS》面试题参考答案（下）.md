@@ -21,7 +21,7 @@
  6.  [30. 以+ scheduledTimerWithTimeInterval...的方式触发的timer，在滑动页面上的列表时，timer会暂定回调，为什么？如何解决？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（下）.md#30-以-scheduledtimerwithtimeinterval的方式触发的timer在滑动页面上的列表时timer会暂定回调为什么如何解决) 
  7.  [31. 猜想runloop内部是如何实现的？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（下）.md#31-猜想runloop内部是如何实现的) 
  8.  [32. objc使用什么机制管理对象内存？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（下）.md#32-objc使用什么机制管理对象内存) 
- 9.  [32. objc使用什么机制管理对象内存？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（下）.md#33-arc通过什么方式帮助开发者管理内存) 
+ 9.  [33. ARC通过什么方式帮助开发者管理内存？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（下）.md#33-arc通过什么方式帮助开发者管理内存) 
  10.  [34. 不手动指定autoreleasepool的前提下，一个autorealese对象在什么时刻释放？（比如在一个vc的viewDidLoad中创建）](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（下）.md#34-不手动指定autoreleasepool的前提下一个autorealese对象在什么时刻释放比如在一个vc的viewdidload中创建) 
  11.  [35. BAD_ACCESS在什么情况下出现？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（下）.md#35-bad_access在什么情况下出现) 
  12.  [36. 苹果是如何实现autoreleasepool的？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（下）.md#36-苹果是如何实现autoreleasepool的) 
@@ -579,7 +579,7 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
  就是所谓的：当前作用域大括号结束时释放。
  2. 系统自动去释放--不手动指定autoreleasepool
 
-  Autorelease对象会在当前的 runloop 迭代结束时释放。
+  Autorelease对象出了作用域之后，会被添加到最近一次创建的自动释放池中，并会在当前的 runloop 迭代结束时释放。
  
  如果在一个vc的viewDidLoad中创建一个 Autorelease对象，那么该对象会在 viewDidAppear 方法执行前就被销毁了。
 
@@ -590,14 +590,14 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
 死循环
 ###36. 苹果是如何实现autoreleasepool的？ 
 
-autoreleasepool以一个队列数组的形式实现,主要通过下列三个函数完成.
+autoreleasepool 以一个队列数组的形式实现,主要通过下列三个函数完成.
 
 
  1. `objc_autoreleasepoolPush`
  2. `objc_autoreleasepoolPop`
  3. `objc_aurorelease`
 
-看函数名就可以知道，对autorelease分别执行push，和pop操作。销毁对象时执行release操作。
+看函数名就可以知道，对 autorelease 分别执行 push，和 pop 操作。销毁对象时执行release操作。
 
 
 ###37. 使用block时什么情况会发生引用循环，如何解决？
