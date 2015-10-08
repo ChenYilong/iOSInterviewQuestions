@@ -580,8 +580,41 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
  2. 系统自动去释放--不手动指定autoreleasepool
 
   Autorelease对象出了作用域之后，会被添加到最近一次创建的自动释放池中，并会在当前的 runloop 迭代结束时释放。
- 
+
+释放的时机总结起来，可以用下图来表示：
+
+![autoreleasepool与 runloop 的关系图](http://i61.tinypic.com/28kodwp.jpg)
+
+下面对这张图进行详细的解释：
+
+
+从程序启动到加载完成是一个完整的运行循环，然后会停下来，等待用户交互，用户的每一次交互都会启动一次运行循环，来处理用户所有的点击事件、触摸事件。
+
+我们都是知道：
+**所有 autorelease 的对象，在出了作用域之后，会被自动添加到最近创建的自动释放池中。**
+
+但是如果每次都放进应用程序的 `main.m` 中的 autoreleasepool 中，迟早有被撑满的一刻。这个过程中必定有一个释放的动作。何时？
+
+在一次完整的运行循环结束之前，会被销毁。
+
+那什么时间会创建自动释放池？运行循环检测到事件并启动后，就会创建自动释放池。 
+
+子线程的 runloop 默认是不工作，无法主动创建，必须手动创建。
+
+自定义的 NSOperation 和 NSThread 需要手动创建自动释放池。比如： 自定义的 NSOperation 类中的 main 方法里就必须添加自动释放池。否则出了作用域后，自动释放对象会因为没有自动释放池去处理它，而造成内存泄露。
+
+但对于 blockOperation 和 invocationOperation 这种默认的Operation ，系统已经帮我们封装好了，不需要手动创建自动释放池。
+
+
+@autoreleasepool 当自动释放池被销毁或者耗尽时，会向自动释放池中的所有对象发送 release 消息，释放自动释放池中的所有对象。
+
+
+
  如果在一个vc的viewDidLoad中创建一个 Autorelease对象，那么该对象会在 viewDidAppear 方法执行前就被销毁了。
+
+
+
+
 
 参考链接：[《黑幕背后的Autorelease》](http://blog.sunnyxx.com/2014/10/15/behind-autorelease/)
 
@@ -595,10 +628,13 @@ autoreleasepool 以一个队列数组的形式实现,主要通过下列三个函
 
  1. `objc_autoreleasepoolPush`
  2. `objc_autoreleasepoolPop`
- 3. `objc_aurorelease`
+ 3. `objc_autorelease`
 
 看函数名就可以知道，对 autorelease 分别执行 push，和 pop 操作。销毁对象时执行release操作。
 
+举例说明：我们都知道用类方法创建的对象都是 Autorelease 的，那么一旦 Person 出了作用域，当在 Person 的 dealloc 方法中打上断点，我们就可以看到这样的调用堆栈信息：
+
+ ![enter image description here](http://i60.tinypic.com/15mfj11.jpg)
 
 ###37. 使用block时什么情况会发生引用循环，如何解决？
 一个对象中强引用了block，在block中又使用了该对象，就会发射循环引用。
