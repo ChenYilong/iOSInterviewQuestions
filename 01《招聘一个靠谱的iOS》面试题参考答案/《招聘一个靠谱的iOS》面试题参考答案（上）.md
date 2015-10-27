@@ -982,8 +982,35 @@ NSObject *foo = [[NSObject alloc] init];
    
   `getter=<name>`的样式：
 
+
+ ```Objective-C
         @property (nonatomic, getter=isOn) BOOL on;
-（ `setter=<name>`这种不常用，也不推荐使用。故不在这里给出写法。）
+ ```
+ <p><del>（ `setter=<name>`这种不常用，也不推荐使用。故不在这里给出写法。）
+</del></p>
+
+
+ `setter=<name>`一般用在特殊的情境下，比如：
+
+
+在数据反序列化、转模型的过程中，服务器返回的字段如果以 `init` 开头，所以你需要定义一个 `init` 开头的属性，但默认生成的 `setter` 与 `getter` 方法也会以 `init` 开头，而编译器会把所有以 `init` 开头的方法当成初始化方法，而初始化方法只能返回 self 类型，因此编译器会报错。
+
+这时你就可以使用下面的方式来避免编译器报错：
+
+
+ ```Objective-C
+@property(nonatomic, strong, getter=p_initBy, setter=setP_initBy:)NSString *initBy;
+
+ ```
+
+
+另外也可以用关键字进行特殊说明，来避免编译器报错：
+
+ ```Objective-C
+@property(nonatomic, readwrite, copy, null_resettable) NSString *initBy;
+- (NSString *)initBy __attribute__((objc_method_family(none)));
+ ```
+
  3. 不常用的：`nonnull`,`null_resettable`,`nullable`
 
 ###10. weak属性需要在dealloc中置nil么？
