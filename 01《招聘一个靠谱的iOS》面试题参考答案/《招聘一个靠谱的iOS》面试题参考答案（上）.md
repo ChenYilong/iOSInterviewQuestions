@@ -411,113 +411,18 @@ self.mutableArray = array;
 ```
 
 
-至于***如何重写带 copy 关键字的 setter***这个问题，
-
-
-如果抛开本例来回答的话，如下：
-
-
- 
-```Objective-C
-- (void)setName:(NSString *)name {
-    //[_name release];
-    _name = [name copy];
-}
-```
-
-不过也有争议，有人说“苹果如果像下面这样干，是不是效率会高一些？”
-
+***重写带 copy 关键字的 setter***:
 
  ```Objective-C
 - (void)setName:(NSString *)name {
     if (_name != name) {
-        //[_name release];//MRC
+#if __has_feature(objc_arc)
+        [_name release];
+#endif
         _name = [name copy];
     }
 }
  ```
-
-
-
-这样真得高效吗？不见得！这种写法“看上去很美、很合理”，但在实际开发中，它更像下图里的做法：
-
-![enter image description here](http://i.imgur.com/UwV9oSn.jpeg)
-
-克强总理这样评价你的代码风格：
-
-![enter image description here](http://i.imgur.com/N77Lkic.png)
-
-我和总理的意见基本一致：
-
-
-> 老百姓 copy 一下，咋就这么难？
-
-
-
-
-你可能会说：
-
- 
-之所以在这里做`if判断` 这个操作：是因为一个 if 可能避免一个耗时的copy，还是很划算的。
-(在刚刚讲的：《如何让自己的类用 copy 修饰符？》里的那种复杂的copy，我们可以称之为 “耗时的copy”，但是对 NSString 的 copy 还称不上。)
-
-
-但是你有没有考虑过代价：
-
-
-> 你每次调用 `setX:` 都会做 if 判断，这会让 `setX:` 变慢，如果你在 `setX:`写了一串复杂的 `if+elseif+elseif+...` 判断，将会更慢。
-
-要回答“哪个效率会高一些？”这个问题，不能脱离实际开发，就算 copy 操作十分耗时，if 判断也不见得一定会更快，除非你把一个“ @property他当前的值 ”赋给了他自己，代码看起来就像：
-
-```Objective-C
-[a setX:x1];
-[a setX:x1];    //你确定你要这么干？与其在setter中判断，为什么不把代码写好？
-```
-
-或者
-
-
-```Objective-C
-[a setX:[a x]];   //队友咆哮道：你在干嘛？！！
-```
-
-> 不要在 setter 里进行像 `if(_obj != newObj)` 这样的判断。（该观点参考链接：[ ***How To Write Cocoa Object Setters： Principle 3: Only Optimize After You Measure*** ](http://vgable.com/blog/tag/autorelease/)
-）
-
-
-什么情况会在 copy setter 里做 if 判断？
-例如，车速可能就有最高速的限制，车速也不可能出现负值，如果车子的最高速为300，则 setter 的方法就要改写成这样：
-
- 
-```Objective-C
--(void)setSpeed:(int)_speed{
-    if(_speed < 0) speed = 0;
-    if(_speed > 300) speed = 300;
-    _speed = speed;
-}
-```
-
-
-
-回到这个题目，如果单单就上文的代码而言，我们不需要也不能重写 name 的 setter ：由于是 name 是只读属性，所以编译器不会为其创建对应的“设置方法”，用初始化方法设置好属性值之后，就不能再改变了。（ 在本例中，之所以还要声明属性的“内存管理语义”--copy，是因为：如果不写 copy，该类的调用者就不知道初始化方法里会拷贝这些属性，他们有可能会在调用初始化方法之前自行拷贝属性值。这种操作多余而低效）。
-
-那如何确保 name 被 copy？在初始化方法(initializer)中做：
-
- ```Objective-C
-	- (instancetype)initWithName:(NSString *)name 
-								 age:(NSUInteger)age 
-								 sex:(CYLSex)sex {
-	     if(self = [super init]) {
-	     	_name = [name copy];
-	     	_age = age;
-	     	_sex = sex;
-	     	_friends = [[NSMutableSet alloc] init];
-	     }
-	     return self;
-	}
-
- ```
-
 
 	
 ###6. @property 的本质是什么？ivar、getter、setter 是如何生成并添加到这个类中的
