@@ -471,7 +471,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 }
 
 - (void)removeFriend:(CYLUser *)user {
-    [_friends removeObject:person];
+    [_friends removeObject:user];
 }
 
 - (id)copyWithZone:(NSZone *)zone {
