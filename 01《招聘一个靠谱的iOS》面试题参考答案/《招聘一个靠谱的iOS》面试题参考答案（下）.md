@@ -334,6 +334,8 @@ typedef void (*voidIMP)(id, SEL, ...)
 
 作者的博文[《JSPatch实现原理详解》](http://blog.cnbang.net/tech/2808/)详细记录了实现原理，有兴趣可以看下。
 
+同时 [ ***RAC(ReactiveCocoa)*** ](https://github.com/ReactiveCocoa/ReactiveCocoa) 源码中也用到了该方法。
+
 ###26. runtime如何实现weak变量的自动置nil？
 
 
@@ -637,13 +639,17 @@ autoreleasepool 以一个队列数组的形式实现,主要通过下列三个函
  ![enter image description here](http://i60.tinypic.com/15mfj11.jpg)
 
 ###37. 使用block时什么情况会发生引用循环，如何解决？
-一个对象中强引用了block，在block中又使用了该对象，就会发射循环引用。
+一个对象中强引用了block，在block中又强引用了该对象，就会发射循环引用。
+
 解决方法是将该对象使用__weak或者__block修饰符修饰之后再在block中使用。
+
 
 
  1. id weak weakSelf = self;
 	或者 weak __typeof(&*self)weakSelf = self该方法可以设置宏
  2. id __block weakSelf = self;
+
+或者将其中一方强制制空 `xxx = nil`。
 
 ###38. 在block内如何修改block外部变量？
 默认情况下，在block中访问的外部变量是复制过去的，即：**写操作不对原变量生效**。但是你可以加上`__block`来让其写操作生效，示例代码如下:
@@ -800,13 +806,17 @@ observer中需要实现一下方法：
 想知道如何手动触发，必须知道自动触发 KVO 的原理：
 
 键值观察通知依赖于 NSObject 的两个方法:  `willChangeValueForKey:` 和 `didChangevlueForKey:` 。在一个被观察属性发生改变之前，  `willChangeValueForKey:` 一定会被调用，这就
-会记录旧的值。而当改变发生后，  `didChangeValueForKey:` 会被调用，继而 `observeValueForKey:ofObject:change:context:` 也会被调用。如果可以手动实现这些调用，就可以实现“手动触发”了。
+会记录旧的值。而当改变发生后，  `observeValueForKey:ofObject:change:context:` 会被调用，继而 `didChangeValueForKey:` 也会被调用。如果可以手动实现这些调用，就可以实现“手动触发”了。
 
 那么“手动触发”的使用场景是什么？一般我们只在希望能控制“回调的调用时机”时才会这么做。
 
 具体做法如下：
 
+
+
 如果这个  `value` 是  表示时间的 `self.now` ，那么代码如下：最后两行代码缺一不可。
+
+相关代码已放在仓库里。
 
  ```Objective-C
 //  .m文件
@@ -815,21 +825,25 @@ observer中需要实现一下方法：
 //  手动触发 value 的KVO，最后两行代码缺一不可。
 
 //@property (nonatomic, strong) NSDate *now;
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
+    _now = [NSDate date];
+    [self addObserver:self forKeyPath:@"now" options:NSKeyValueObservingOptionNew context:nil];
+    NSLog(@"1");
     [self willChangeValueForKey:@"now"]; // “手动触发self.now的KVO”，必写。
+    NSLog(@"2");
     [self didChangeValueForKey:@"now"]; // “手动触发self.now的KVO”，必写。
+    NSLog(@"4");
 }
  ```
 
 但是平时我们一般不会这么干，我们都是等系统去“自动触发”。“自动触发”的实现原理：
 
 
- > 比如调用 `setNow:` 时，系统还会以某种方式在中间插入 `wilChangeValueForKey:` 、 `didChangeValueForKey:`  和 `observeValueForKeyPath:ofObject:change:context:` 的调用。
+ > 比如调用 `setNow:` 时，系统还会以某种方式在中间插入 `wilChangeValueForKey:` 、  `didChangeValueForKey:` 和 `observeValueForKeyPath:ofObject:change:context:` 的调用。
 
 
-大家可能以为这是因为 `setNow:` 是合成方法，有时候我们也能看到人们这么写代码:
+大家可能以为这是因为 `setNow:` 是合成方法，有时候我们也能看到有人这么写代码:
 
  ```Objective-C
 - (void)setNow:(NSDate *)aDate {
@@ -838,10 +852,10 @@ observer中需要实现一下方法：
     [self didChangeValueForKey:@"now"];// 没有必要
 }
  ```
-这是完全没有必要的代码，不要这么做，这样的话，KVO代码会被调用两次。KVO在调用存取方法之前总是调用 `willChangeValueForKey:`  ，之后总是调用 `didChangeValueForkey:` 。怎么做到的呢?答案是通过 isa 混写（isa-swizzling）。下文《apple用什么方式实现对一个对象的KVO？》会有详述。
+
+这完全没有必要，不要这么做，这样的话，KVO代码会被调用两次。KVO在调用存取方法之前总是调用 `willChangeValueForKey:`  ，之后总是调用 `didChangeValueForkey:` 。怎么做到的呢?答案是通过 isa 混写（isa-swizzling）。下文《apple用什么方式实现对一个对象的KVO？》会有详述。
 
 参考链接： [Manual Change Notification---Apple 官方文档](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/KeyValueObserving/Articles/KVOCompliance.html#//apple_ref/doc/uid/20002178-SW3) 
-
 
 ###47. 若一个类有实例变量 `NSString *_foo` ，调用setValue:forKey:时，可以以foo还是 `_foo` 作为key？
 都可以。
@@ -880,9 +894,9 @@ KVO支持实例变量
 
 下面做下详细解释：
 
-键值观察通知依赖于 NSObject 的两个方法:  `willChangeValueForKey:` 和 `didChangevlueForKey:` 。在一个被观察属性发生改变之前，  `willChangeValueForKey:` 一定会被调用，这就会记录旧的值。而当改变发生后，  `didChangeValueForKey:` 会被调用，继而 `observeValueForKey:ofObject:change:context:` 也会被调用。可以手动实现这些调用，但很少有人这么做。一般我们只在希望能控制回调的调用时机时才会这么做。大部分情况下，改变通知会自动调用。
+键值观察通知依赖于 NSObject 的两个方法:  `willChangeValueForKey:` 和 `didChangevlueForKey:` 。在一个被观察属性发生改变之前，  `willChangeValueForKey:` 一定会被调用，这就会记录旧的值。而当改变发生后， `observeValueForKey:ofObject:change:context:` 会被调用，继而  `didChangeValueForKey:` 也会被调用。可以手动实现这些调用，但很少有人这么做。一般我们只在希望能控制回调的调用时机时才会这么做。大部分情况下，改变通知会自动调用。
 
- 比如调用 `setNow:` 时，系统还会以某种方式在中间插入 `wilChangeValueForKey:` 、 `didChangeValueForKey:`  和 `observeValueForKeyPath:ofObject:change:context:` 的调用。大家可能以为这是因为 `setNow:` 是合成方法，有时候我们也能看到人们这么写代码:
+ 比如调用 `setNow:` 时，系统还会以某种方式在中间插入 `wilChangeValueForKey:` 、  `didChangeValueForKey:`  和 `observeValueForKeyPath:ofObject:change:context:` 的调用。大家可能以为这是因为 `setNow:` 是合成方法，有时候我们也能看到有人这么写代码:
 
  ```Objective-C
 - (void)setNow:(NSDate *)aDate {
@@ -891,7 +905,8 @@ KVO支持实例变量
     [self didChangeValueForKey:@"now"];// 没有必要
 }
  ```
-这是完全没有必要的代码，不要这么做，这样的话，KVO代码会被调用两次。KVO在调用存取方法之前总是调用 `willChangeValueForKey:`  ，之后总是调用 `didChangeValueForkey:` 。怎么做到的呢?答案是通过 isa 混写（isa-swizzling）。第一次对一个对象调用 `addObserver:forKeyPath:options:context:` 时，框架会创建这个类的新的 KVO 子类，并将被观察对象转换为新子类的对象。在这个 KVO 特殊子类中， Cocoa 创建观察属性的 setter ，大致工作原理如下:
+
+这完全没有必要，不要这么做，这样的话，KVO代码会被调用两次。KVO在调用存取方法之前总是调用 `willChangeValueForKey:`  ，之后总是调用 `didChangeValueForkey:` 。怎么做到的呢?答案是通过 isa 混写（isa-swizzling）。第一次对一个对象调用 `addObserver:forKeyPath:options:context:` 时，框架会创建这个类的新的 KVO 子类，并将被观察对象转换为新子类的对象。在这个 KVO 特殊子类中， Cocoa 创建观察属性的 setter ，大致工作原理如下:
 
  ```Objective-C
 - (void)setNow:(NSDate *)aDate {
@@ -910,6 +925,43 @@ KVO 在实现中通过 ` isa 混写（isa-swizzling）` 把这个对象的 isa �
 然而 KVO 在实现中使用了 ` isa 混写（ isa-swizzling）` ，这个的确不是很容易发现：Apple 还重写、覆盖了 `-class` 方法并返回原来的类。 企图欺骗我们：这个类没有变，就是原本那个类。。。
 
 但是，假设“被监听的对象”的类对象是 `MYClass` ，有时候我们能看到对 `NSKVONotifying_MYClass` 的引用而不是对  `MYClass`  的引用。借此我们得以知道 Apple 使用了 ` isa 混写（isa-swizzling）`。具体探究过程可参考[ 这篇博文 ](https://www.mikeash.com/pyblog/friday-qa-2009-01-23.html)。
+
+
+那么 `wilChangeValueForKey:` 、  `didChangeValueForKey:`  和 `observeValueForKeyPath:ofObject:change:context:` 这三个方法的执行顺序是怎样的呢？
+
+ `wilChangeValueForKey:` 、  `didChangeValueForKey:` 很好理解，`observeValueForKeyPath:ofObject:change:context:` 的执行时机是什么时候呢？
+
+ 先看一个例子：
+
+代码已放在仓库里。
+
+ ```Objective-C
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self addObserver:self forKeyPath:@"now" options:NSKeyValueObservingOptionNew context:nil];
+    NSLog(@"1");
+    [self willChangeValueForKey:@"now"]; // “手动触发self.now的KVO”，必写。
+    NSLog(@"2");
+    [self didChangeValueForKey:@"now"]; // “手动触发self.now的KVO”，必写。
+    NSLog(@"4");
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    NSLog(@"3");
+}
+
+ ```
+
+![enter image description here](http://i66.tinypic.com/ncm7th.jpg)
+
+
+如果单单从下面这个例子的打印上， 
+
+顺序似乎是 `wilChangeValueForKey:` 、 `observeValueForKeyPath:ofObject:change:context:` 、 `didChangeValueForKey:` 。
+
+其实不然，这里有一个 `observeValueForKeyPath:ofObject:change:context:`  , 和 `didChangeValueForKey:` 到底谁先调用的问题：如果 `observeValueForKeyPath:ofObject:change:context:` 是在 `didChangeValueForKey:` 内部触发的操作呢？ 那么顺序就是： `wilChangeValueForKey:` 、  `didChangeValueForKey:`  和 `observeValueForKeyPath:ofObject:change:context:` 
+
+不信你把 `didChangeValueForKey:` 注视掉，看下 `observeValueForKeyPath:ofObject:change:context:` 会不会执行。
 
 ###52. IBOutlet连出来的视图属性为什么可以被设置成weak?
 
