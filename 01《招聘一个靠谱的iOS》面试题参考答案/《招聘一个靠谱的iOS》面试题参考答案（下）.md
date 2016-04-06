@@ -870,7 +870,10 @@ KVO支持实例变量
 ###50. 如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？
 
 
-请参考：[《如何自己动手实现 KVO》](http://tech.glowing.com/cn/implement-kvo/)
+请参考：
+
+  1. [《如何自己动手实现 KVO》](http://tech.glowing.com/cn/implement-kvo/)
+  2. [**KVO for manually implemented properties**]( http://stackoverflow.com/a/10042641/3395008 ) 
 
 ###51. apple用什么方式实现对一个对象的KVO？ 
 
@@ -962,6 +965,12 @@ KVO 在实现中通过 ` isa 混写（isa-swizzling）` 把这个对象的 isa �
 其实不然，这里有一个 `observeValueForKeyPath:ofObject:change:context:`  , 和 `didChangeValueForKey:` 到底谁先调用的问题：如果 `observeValueForKeyPath:ofObject:change:context:` 是在 `didChangeValueForKey:` 内部触发的操作呢？ 那么顺序就是： `wilChangeValueForKey:` 、  `didChangeValueForKey:`  和 `observeValueForKeyPath:ofObject:change:context:` 
 
 不信你把 `didChangeValueForKey:` 注视掉，看下 `observeValueForKeyPath:ofObject:change:context:` 会不会执行。
+
+了解到这一点很重要，正如  [46. 如何手动触发一个value的KVO](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（下）.md#46-如何手动触发一个value的kvo)  所说的：
+
+“手动触发”的使用场景是什么？一般我们只在希望能控制“回调的调用时机”时才会这么做。
+
+而“回调的调用时机”就是在你调用 `didChangeValueForKey:` 方法时。
 
 ###52. IBOutlet连出来的视图属性为什么可以被设置成weak?
 

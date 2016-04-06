@@ -28,10 +28,6 @@
     NSLog(@"3");
 }
 
-+ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key {
-    return NO;
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
