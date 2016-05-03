@@ -651,6 +651,8 @@ autoreleasepool 以一个队列数组的形式实现,主要通过下列三个函
 
 或者将其中一方强制制空 `xxx = nil`。
 
+检测代码中是否存在循环引用问题，可使用 Facebook 开源的一个检测工具  [***FBRetainCycleDetector***](https://github.com/facebook/FBRetainCycleDetector) 。
+
 ###38. 在block内如何修改block外部变量？
 默认情况下，在block中访问的外部变量是复制过去的，即：**写操作不对原变量生效**。但是你可以加上`__block`来让其写操作生效，示例代码如下:
 
@@ -720,6 +722,7 @@ __typeof__(self) strongSelf = weakSelf;
  ```
 self --> _observer --> block --> self 显然这也是一个循环引用。
 
+检测代码中是否存在循环引用问题，可使用 Facebook 开源的一个检测工具  [***FBRetainCycleDetector***](https://github.com/facebook/FBRetainCycleDetector) 。
 ###40. GCD的队列（`dispatch_queue_t`）分哪两种类型？
 
 
