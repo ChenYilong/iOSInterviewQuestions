@@ -1493,7 +1493,7 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
  类的实例变量 | 
 
 
- - 根对象就是NSobject，它的superclass指针指向nil
+ - 根对象就是NSObject，它的superclass指针指向nil
 
  - 类对象既然称为对象，那它也是一个实例。类对象中也有一个isa指针指向它的元类(meta class)，即类对象是元类的实例。元类内部存放的是类方法列表，根元类的isa指针指向自己，superclass指针指向NSObject类。
 
