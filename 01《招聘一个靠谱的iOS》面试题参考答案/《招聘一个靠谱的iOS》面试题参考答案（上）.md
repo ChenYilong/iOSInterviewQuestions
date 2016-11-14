@@ -278,7 +278,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 而 `assign` 的“设置方法”只会执行针对“纯量类型” (scalar type，例如 CGFloat 或 
 NSlnteger 等)的简单赋值操作。
 
- 2. assigin 可以用非 OC 对象,而 weak 必须用于 OC 对象
+ 2. assign 可以用非 OC 对象,而 weak 必须用于 OC 对象
 
 ###3. 怎么用 copy 关键字？
 用途：
