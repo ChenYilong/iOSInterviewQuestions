@@ -686,7 +686,38 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 @end
  ```
 
+**更新**：
 
+property在runtime中是`objc_property_t`定义如下:
+
+```objective-c
+typedef struct objc_property *objc_property_t;
+```
+
+而`objc_property`是一个结构体，包括name和attributes，定义如下：
+
+```objective-c
+struct property_t {
+    const char *name;
+    const char *attributes;
+};
+```
+
+而attributes本质是`objc_property_attribute_t`，定义了property的一些属性，定义如下：
+
+```objective-c
+/// Defines a property attribute
+typedef struct {
+    const char *name;           /**< The name of the attribute */
+    const char *value;          /**< The value of the attribute (usually empty) */
+} objc_property_attribute_t;
+```
+
+而attributes的具体内容是什么呢？其实，包括：类型，原子性，内存语义和对应的实例变量。
+
+例如：我们定义一个string的property`@property (nonatomic, copy) NSString *string;`，通过 `property_getAttributes(property)`获取到attributes并打印出来之后的结果为`T@"NSString",C,N,V_string`
+
+其中T就代表类型，可参阅[Type Encodings](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100-SW1)，C就代表Copy，N代表nonatomic，V就代表对于的实例变量。
 
 
 
