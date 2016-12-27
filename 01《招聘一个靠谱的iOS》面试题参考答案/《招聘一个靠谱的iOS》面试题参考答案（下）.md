@@ -943,7 +943,7 @@ observer中需要实现一下方法：
  3. 格式 @"@sum.age"或 @"集合属性.@max.age"
 
 ###49. KVC和KVO的keyPath一定是属性么？
-KVO支持实例变量
+KVC 支持实例变量，KVO 只能手动支持[手动设定实例变量的KVO实现监听](https://yq.aliyun.com/articles/30483)
 ###50. 如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？
 
 
