@@ -686,7 +686,38 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 @end
  ```
 
+**更新**：
 
+property在runtime中是`objc_property_t`定义如下:
+
+```objective-c
+typedef struct objc_property *objc_property_t;
+```
+
+而`objc_property`是一个结构体，包括name和attributes，定义如下：
+
+```objective-c
+struct property_t {
+    const char *name;
+    const char *attributes;
+};
+```
+
+而attributes本质是`objc_property_attribute_t`，定义了property的一些属性，定义如下：
+
+```objective-c
+/// Defines a property attribute
+typedef struct {
+    const char *name;           /**< The name of the attribute */
+    const char *value;          /**< The value of the attribute (usually empty) */
+} objc_property_attribute_t;
+```
+
+而attributes的具体内容是什么呢？其实，包括：类型，原子性，内存语义和对应的实例变量。
+
+例如：我们定义一个string的property`@property (nonatomic, copy) NSString *string;`，通过 `property_getAttributes(property)`获取到attributes并打印出来之后的结果为`T@"NSString",C,N,V_string`
+
+其中T就代表类型，可参阅[Type Encodings](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100-SW1)，C就代表Copy，N代表nonatomic，V就代表对于的实例变量。
 
 
 
@@ -988,7 +1019,7 @@ NSObject *foo = [[NSObject alloc] init];
  
  1. 原子性--- `nonatomic` 特质
 
-    在默认情况下，由编译器合成的方法会通过锁定机制确保其原子性(atomicity)。如果属性具备 nonatomic 特质，则不使用同步锁。请注意，尽管没有名为“atomic”的特质(如果某属性不具备 nonatomic 特质，那它就是“原子的” ( atomic) )，但是仍然可以在属性特质中写明这一点，编译器不会报错。若是自己定义存取方法，那么就应该遵从与属性特质相符的原子性。
+    在默认情况下，由编译器合成的方法会通过锁定机制确保其原子性(atomicity)。如果属性具备 nonatomic 特质，则不使用自旋锁。请注意，尽管没有名为“atomic”的特质(如果某属性不具备 nonatomic 特质，那它就是“原子的” ( atomic) )，但是仍然可以在属性特质中写明这一点，编译器不会报错。若是自己定义存取方法，那么就应该遵从与属性特质相符的原子性。
 
  2. 读/写权限---`readwrite(读写)`、`readonly (只读)`
  3. 内存管理语义---`assign`、`strong`、 `weak`、`unsafe_unretained`、`copy`
@@ -1898,3 +1929,5 @@ runtime部分主要参考[Apple官方文档：Declared Properties](https://devel
 
 Posted by [微博@iOS程序犭袁](http://weibo.com/luohanchenyilong/)  
 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | [Creative Commons BY-NC-ND 3.0](http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh)
+
+
