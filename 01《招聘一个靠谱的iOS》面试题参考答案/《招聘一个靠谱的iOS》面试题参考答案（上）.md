@@ -771,6 +771,51 @@ typedef struct {
 
 （注：在下文的《使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？》里给出的“对象的内存销毁时间表”也提到`__weak`引用的解除时间。）
 
+
+先看下 runtime 里源码的实现：
+
+
+ ```Objective-C
+/**
+ * The internal structure stored in the weak references table. 
+ * It maintains and stores
+ * a hash set of weak references pointing to an object.
+ * If out_of_line==0, the set is instead a small inline array.
+ */
+#define WEAK_INLINE_COUNT 4
+struct weak_entry_t {
+    DisguisedPtr<objc_object> referent;
+    union {
+        struct {
+            weak_referrer_t *referrers;
+            uintptr_t        out_of_line : 1;
+            uintptr_t        num_refs : PTR_MINUS_1;
+            uintptr_t        mask;
+            uintptr_t        max_hash_displacement;
+        };
+        struct {
+            // out_of_line=0 is LSB of one of these (don't care which)
+            weak_referrer_t  inline_referrers[WEAK_INLINE_COUNT];
+        };
+    };
+};
+
+/**
+ * The global weak references table. Stores object ids as keys,
+ * and weak_entry_t structs as their values.
+ */
+struct weak_table_t {
+    weak_entry_t *weak_entries;
+    size_t    num_entries;
+    uintptr_t mask;
+    uintptr_t max_hash_displacement;
+};
+ ```
+
+具体完整实现参照 [objc/objc-weak.h](https://opensource.apple.com/source/objc4/objc4-646/runtime/objc-weak.h) 。
+
+
+
 我们可以设计一个函数（伪代码）来表示上述机制：
 
 `objc_storeWeak(&a, b)`函数：
