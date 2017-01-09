@@ -1058,6 +1058,53 @@ NSObject *foo = [[NSObject alloc] init];
 
  3. 不常用的：`nonnull`,`null_resettable`,`nullable`
 
+
+注意：很多人会认为如果属性具备 nonatomic 特质，则不使用
+“同步锁”。其实在属性设置方法中使用的是自旋锁，自旋锁相关代码如下：
+
+
+ ```Objective-C
+static inline void reallySetProperty(id self, SEL _cmd, id newValue, ptrdiff_t offset, bool atomic, bool copy, bool mutableCopy)
+{
+    if (offset == 0) {
+        object_setClass(self, newValue);
+        return;
+    }
+
+    id oldValue;
+    id *slot = (id*) ((char*)self + offset);
+
+    if (copy) {
+        newValue = [newValue copyWithZone:nil];
+    } else if (mutableCopy) {
+        newValue = [newValue mutableCopyWithZone:nil];
+    } else {
+        if (*slot == newValue) return;
+        newValue = objc_retain(newValue);
+    }
+
+    if (!atomic) {
+        oldValue = *slot;
+        *slot = newValue;
+    } else {
+        spinlock_t& slotlock = PropertyLocks[slot];
+        slotlock.lock();
+        oldValue = *slot;
+        *slot = newValue;        
+        slotlock.unlock();
+    }
+
+    objc_release(oldValue);
+}
+
+void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL atomic, signed char shouldCopy) 
+{
+    bool copy = (shouldCopy && shouldCopy != MUTABLE_COPY);
+    bool mutableCopy = (shouldCopy == MUTABLE_COPY);
+    reallySetProperty(self, _cmd, newValue, offset, atomic, copy, mutableCopy);
+}
+ ```
+
 ###10. weak属性需要在dealloc中置nil么？
 不需要。
 
