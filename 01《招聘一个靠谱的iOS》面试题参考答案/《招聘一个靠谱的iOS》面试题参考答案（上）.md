@@ -498,7 +498,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 }
 
 - (id)deepCopy {
-    CYLUser *copy = [[[self class] allocWithZone:zone]
+    CYLUser *copy = [[[self class] alloc]
                      initWithName:_name
                      age:_age
                      sex:_sex];
@@ -522,7 +522,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 
  ```Objective-C
 - (id)deepCopy {
-    CYLUser *copy = [[[self class] allocWithZone:zone]
+    CYLUser *copy = [[[self class] alloc]
                      initWithName:_name
                      age:_age
                      sex:_sex];
