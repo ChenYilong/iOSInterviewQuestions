@@ -564,7 +564,7 @@ NSTimer *timer = [NSTimer timerWithTimeInterval:1.0
 
 ###32. objc使用什么机制管理对象内存？
 
-通过 retainCount 的机制来决定对象是否需要释放。
+通过 [引用计数](http://book.2cto.com/201305/23871.html) 的机制来决定对象是否需要释放。
 每次 runloop 的时候，都会检查对象的 retainCount，如果retainCount 为 0，说明该对象没有地方需要继续使用了，可以释放掉了。
 
 ###33. ARC通过什么方式帮助开发者管理内存？
