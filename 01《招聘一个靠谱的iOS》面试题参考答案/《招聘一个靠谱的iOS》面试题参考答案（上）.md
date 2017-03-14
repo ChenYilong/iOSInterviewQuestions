@@ -900,6 +900,8 @@ objc_storeWeak(&obj1, 0);
 
 我们从setter方法入手：
 
+（注意以下的 `cyl_runAtDealloc` 方法实现仅仅用于模拟原理，如果想用于项目中，还需要考虑更复杂的场景，想在实际项目使用的话，可以使用我写的一个小库，可以使用 CocoaPods 在项目中使用： [CYLDeallocBlockExecutor](https://github.com/ChenYilong/CYLDeallocBlockExecutor) ）
+
  ```Objective-C
 - (void)setObject:(NSObject *)object
 {
@@ -1051,12 +1053,9 @@ NSObject *foo = [[NSObject alloc] init];
  ```
 
 
+如果对 `cyl_runAtDealloc` 的实现原理有兴趣，可以看下我写的一个小库，可以使用 CocoaPods 在项目中使用： [CYLDeallocBlockExecutor](https://github.com/ChenYilong/CYLDeallocBlockExecutor) 
 
-
-
-
-
-如果对 `cyl_runAtDealloc` 的实现原理有兴趣，可以看下这篇博文 [***Fun With the Objective-C Runtime: Run Code at Deallocation of Any Object***](http://stackoverflow.com/a/31560217/3395008)
+参考博文： [***Fun With the Objective-C Runtime: Run Code at Deallocation of Any Object***](http://stackoverflow.com/a/31560217/3395008)
 
 
 ###9. @property中有哪些属性关键字？/ @property 后面可以有哪些修饰符？
@@ -1172,6 +1171,8 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
     }];
 }
  ```
+
+如果对 `cyl_runAtDealloc` 的实现原理有兴趣，可以看下我写的一个小库，可以使用 CocoaPods 在项目中使用： [CYLDeallocBlockExecutor](https://github.com/ChenYilong/CYLDeallocBlockExecutor) 
 
 
 也即:
