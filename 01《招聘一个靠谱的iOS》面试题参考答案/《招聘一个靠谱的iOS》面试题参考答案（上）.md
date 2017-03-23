@@ -10,7 +10,7 @@
 
 ----------
 
-#索引
+# 索引
 
  1.  [风格纠错题](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#1-风格纠错题) 
 
@@ -56,7 +56,7 @@
 
  22. 22--55题，请看下篇。
 
-###1. 风格纠错题
+### 1. 风格纠错题
 ![enter image description here](http://i.imgur.com/O7Zev94.png)
 修改完的代码：
 
@@ -93,7 +93,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 。因为***硬伤部分***没什么技术含量，为了节省大家时间，放在后面讲，大神请直接看***优化部分***。
 
 
-####***优化部分***
+#### ***优化部分***
 
  4. enum 建议使用 `NS_ENUM` 和 `NS_OPTIONS` 宏来定义枚举类型，参见官方的 [Adopting Modern Objective-C](https://developer.apple.com/library/ios/releasenotes/ObjectiveC/ModernizationObjC/AdoptingModernObjective-C/AdoptingModernObjective-C.html) 一文：
 
@@ -245,7 +245,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
  ```
  属性的参数应该按照下面的顺序排列： 原子性，读写 和 内存管理。 这样做你的属性更容易修改正确，并且更好阅读。这在[《禅与Objective-C编程艺术 >》](https://github.com/oa414/objc-zen-book-cn#属性定义)里有介绍。而且习惯上修改某个属性的修饰符时，一般从属性名从右向左搜索需要修动的修饰符。最可能从最右边开始修改这些属性的修饰符，根据经验这些修饰符被修改的可能性从高到底应为：内存管理 > 读写权限 >原子操作。
 
-####***硬伤部分***
+#### ***硬伤部分***
 
  1. 在-和(void)之间应该有一个空格
  3. enum 中驼峰命名法和下划线命名法混用错误：枚举类型的命名规则和函数的命名规则相同：命名时使用驼峰命名法，勿使用下划线命名法。
@@ -263,7 +263,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
  7.  <p><del>doLogIn方法中的 `LogIn` 命名不清晰：笔者猜测是login的意思，应该是粗心手误造成的。
  （勘误： `Login` 是名词， `LogIn`  是动词，都表示登陆的意思。见： [ ***Log in vs. login*** ](http://grammarist.com/spelling/log-in-login/)）</del></p>
 
-###2. 什么情况使用 weak 关键字，相比 assign 有什么不同？
+### 2. 什么情况使用 weak 关键字，相比 assign 有什么不同？
 什么情况使用 weak 关键字？
 
 
@@ -280,7 +280,7 @@ NSlnteger 等)的简单赋值操作。
 
  2. assign 可以用非 OC 对象,而 weak 必须用于 OC 对象
 
-###3. 怎么用 copy 关键字？
+### 3. 怎么用 copy 关键字？
 用途：
 
  1. NSString、NSArray、NSDictionary 等等经常使用copy关键字，是因为他们有对应的可变类型：NSMutableString、NSMutableArray、NSMutableDictionary；
@@ -314,7 +314,7 @@ NSlnteger 等)的简单赋值操作。
 该问题在下文中也有论述：***用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？如果改用strong关键字，可能造成什么问题？***
 
 
-###4. 这个写法会出什么问题： `@property (copy) NSMutableArray *array;`
+### 4. 这个写法会出什么问题： `@property (copy) NSMutableArray *array;`
 两个问题：1、添加,删除,修改数组内的元素的时候,程序会因为找不到对应的方法而崩溃.因为 copy 就是复制一个不可变 NSArray 的对象；2、使用了 atomic 属性会严重影响性能 ； 
 
 第1条的相关原因在下文中有论述***《用@property声明的NSString（或NSArray，NSDictionary）经常使用 copy 关键字，为什么？如果改用strong关键字，可能造成什么问题？》*** 以及上文***《怎么用 copy 关键字？》***也有论述。
@@ -366,7 +366,7 @@ self.mutableArray = array;
 因此，开发iOS程序时一般都会使用 nonatomic 属性。但是在开发 Mac OS X 程序时，使用
  atomic 属性通常都不会有性能瓶颈。
 
-###5. 如何让自己的类用 copy 修饰符？如何重写带 copy 关键字的 setter？
+### 5. 如何让自己的类用 copy 修饰符？如何重写带 copy 关键字的 setter？
 
 
 > 若想令自己所写的对象具有拷贝功能，则需实现 NSCopying 协议。如果自定义的对象分为可变版本与不可变版本，那么就要同时实现 `NSCopying` 与 `NSMutableCopying` 协议。
@@ -642,7 +642,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 
 
 	
-###6. @property 的本质是什么？ivar、getter、setter 是如何生成并添加到这个类中的
+### 6. @property 的本质是什么？ivar、getter、setter 是如何生成并添加到这个类中的
 
 **@property 的本质是什么？**
 
@@ -750,7 +750,7 @@ typedef struct {
 
 也就是说我们每次在增加一个属性,系统都会在 `ivar_list` 中添加一个成员变量的描述,在 `method_list` 中增加 setter 与 getter 方法的描述,在属性列表中增加一个属性的描述,然后计算该属性在对象中的偏移量,然后给出 setter 与 getter 方法对应的实现,在 setter 方法中从偏移量的位置开始赋值,在 getter 方法中从偏移量开始取值,为了能够读取正确字节数,系统对象偏移量的指针类型进行了类型强转.
 
-###7. @protocol 和 category 中如何使用 @property
+### 7. @protocol 和 category 中如何使用 @property
 
  1. 在 protocol 中使用 property 只会生成 setter 和 getter 方法声明,我们使用属性的目的,是希望遵守我协议的对象能实现该属性
  2. category 使用 @property 也是只会生成 setter 和 getter 方法的声明,如果我们真的需要给 category 增加属性的实现,需要借助于运行时的两个函数：
@@ -758,7 +758,7 @@ typedef struct {
   1. `objc_setAssociatedObject`
   2. `objc_getAssociatedObject`
 
-###8. runtime 如何实现 weak 属性
+### 8. runtime 如何实现 weak 属性
 
 要实现 weak 属性，首先要搞清楚 weak 属性的特点：
 
@@ -1058,7 +1058,7 @@ NSObject *foo = [[NSObject alloc] init];
 参考博文： [***Fun With the Objective-C Runtime: Run Code at Deallocation of Any Object***](http://stackoverflow.com/a/31560217/3395008)
 
 
-###9. @property中有哪些属性关键字？/ @property 后面可以有哪些修饰符？
+### 9. @property中有哪些属性关键字？/ @property 后面可以有哪些修饰符？
 属性可以拥有的特质分为四类:
  
  1. 原子性--- `nonatomic` 特质
@@ -1149,7 +1149,7 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
 }
  ```
 
-###10. weak属性需要在dealloc中置nil么？
+### 10. weak属性需要在dealloc中置nil么？
 不需要。
 
 
@@ -1184,13 +1184,13 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
 
 
 
-###11. @synthesize和@dynamic分别有什么作用？
+### 11. @synthesize和@dynamic分别有什么作用？
 
  1. @property有两个对应的词，一个是 @synthesize，一个是 @dynamic。如果 @synthesize和 @dynamic都没写，那么默认的就是`@syntheszie var = _var;`
  2. @synthesize 的语义是如果你没有手动实现 setter 方法和 getter 方法，那么编译器会自动为你加上这两个方法。
  3. @dynamic 告诉编译器：属性的 setter 与 getter 方法由用户自己实现，不自动生成。（当然对于 readonly 的属性只需提供 getter 即可）。假如一个属性被声明为 @dynamic var，然后你没有提供 @setter方法和 @getter 方法，编译的时候没问题，但是当程序运行到 `instance.var = someVar`，由于缺 setter 方法会导致程序崩溃；或者当运行到 `someVar = var` 时，由于缺 getter 方法同样会导致崩溃。编译时没问题，运行时才执行相应的方法，这就是所谓的动态绑定。
 
-###12. ARC下，不显式指定任何属性关键字时，默认的关键字都有哪些？
+### 12. ARC下，不显式指定任何属性关键字时，默认的关键字都有哪些？
 
  1. 对应基本数据类型默认关键字是
  
@@ -1205,7 +1205,7 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
 
  2. [ ***Variable property attributes or Modifiers in iOS*** ](http://rdcworld-iphone.blogspot.in/2012/12/variable-property-attributes-or.html)
 
-###13. 用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？如果改用strong关键字，可能造成什么问题？
+### 13. 用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？如果改用strong关键字，可能造成什么问题？
 
 
  1. 因为父类指针可以指向子类对象,使用 copy 的目的是为了让本对象的属性不受外界影响,使用 copy 无论给我传入是一个可变对象还是不可对象,我本身持有的就是一个不可变的副本.
@@ -1260,7 +1260,7 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
  1. 对非集合类对象的 copy 与 mutableCopy 操作；
  2. 对集合类对象的 copy 与 mutableCopy 操作。
 
-####1. 对非集合类对象的copy操作：
+#### 1. 对非集合类对象的copy操作：
 
 在非集合类对象中：对 immutable 对象进行 copy 操作，是指针复制，mutableCopy 操作时内容复制；对 mutable 对象进行 copy 和 mutableCopy 都是内容复制。用代码简单表示如下：
 
@@ -1291,7 +1291,7 @@ stringCopy 的值也不会因此改变，但是如果不使用 copy，stringCopy
 
 > 用 @property 声明 NSString、NSArray、NSDictionary 经常使用 copy 关键字，是因为他们有对应的可变类型：NSMutableString、NSMutableArray、NSMutableDictionary，他们之间可能进行赋值操作，为确保对象中的字符串值不会无意间变动，应该在设置新属性值时拷贝一份。
 
-####2、集合类对象的copy与mutableCopy
+#### 2、集合类对象的copy与mutableCopy
 
 集合类对象是指 NSArray、NSDictionary、NSSet ... 之类的对象。下面先看集合类immutable对象使用 copy 和 mutableCopy 的一个例子：
 
@@ -1328,7 +1328,7 @@ NSMutableArray *mCopyArray = [array mutableCopy];
 
 参考链接：[iOS 集合的深复制与浅复制](https://www.zybuluo.com/MicroCai/note/50592)
 
-###14. @synthesize合成实例变量的规则是什么？假如property名为foo，存在一个名为`_foo`的实例变量，那么还会自动合成新变量么？
+### 14. @synthesize合成实例变量的规则是什么？假如property名为foo，存在一个名为`_foo`的实例变量，那么还会自动合成新变量么？
 在回答之前先说明下一个概念：
 
 > 实例变量 = 成员变量 ＝ ivar
@@ -1385,7 +1385,7 @@ NSMutableArray *mCopyArray = [array mutableCopy];
 ![enter image description here](http://i.imgur.com/t28ge4W.png)
 
 
-###15. 在有了自动合成属性实例变量之后，@synthesize还有哪些使用场景？
+### 15. 在有了自动合成属性实例变量之后，@synthesize还有哪些使用场景？
 
 回答这个问题前，我们要搞清楚一个问题，什么情况下不会autosynthesis（自动合成）？
 
@@ -1471,7 +1471,7 @@ NSMutableArray *mCopyArray = [array mutableCopy];
  2. 要么如第17行：使用`@synthesize foo = _foo;` ，关联 @property 与 ivar。
 
 更多信息，请戳- 》[ ***When should I use @synthesize explicitly?*** ](http://stackoverflow.com/a/19821816/3395008)
-###16. objc中向一个nil对象发送消息将会发生什么？
+### 16. objc中向一个nil对象发送消息将会发生什么？
 在 Objective-C 中向 nil 发送消息是完全有效的——只是在运行时不会有任何作用:
 
  1. 如果一个方法返回值是一个对象，那么发送给nil的消息将返回0(nil)。例如：  
@@ -1522,7 +1522,7 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
 那么，回到本题，如果向一个nil对象发送消息，首先在寻找对象的isa指针时就是0地址返回了，所以不会出现任何错误。
 
 
-###17. objc中向一个对象发送消息[obj foo]和`objc_msgSend()`函数之间有什么关系？
+### 17. objc中向一个对象发送消息[obj foo]和`objc_msgSend()`函数之间有什么关系？
 具体原因同上题：该方法编译之后就是`objc_msgSend()`函数调用.
 
 我们用 clang 分析下，clang 提供一个命令，可以将Objective-C的源码改写成C++语言，借此可以研究下[obj foo]和`objc_msgSend()`函数之间有什么关系。
@@ -1569,7 +1569,7 @@ clang -rewrite-objc main.m
 
 >  [obj foo];在objc动态编译时，会被转意为：`objc_msgSend(obj, @selector(foo));`。
 
-###18. 什么时候会报unrecognized selector的异常？
+### 18. 什么时候会报unrecognized selector的异常？
 
 简单来说：
 
@@ -1603,7 +1603,7 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
 
 为了能更清晰地理解这些方法的作用，git仓库里也给出了一个Demo，名称叫“ `_objc_msgForward_demo` ”,可运行起来看看。
 
-###19. 一个objc对象如何进行内存布局？（考虑有父类的情况）
+### 19. 一个objc对象如何进行内存布局？（考虑有父类的情况）
 
  - 所有父类的成员变量和自己的成员变量都会存放在该对象所对应的存储空间中.
  - 每一个对象内部都有一个isa指针,指向他的类对象,类对象中存放着本对象的
@@ -1640,11 +1640,11 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
 如图:
 ![enter image description here](http://i.imgur.com/w6tzFxz.png)
 
-###20. 一个objc对象的isa的指针指向什么？有什么作用？
+### 20. 一个objc对象的isa的指针指向什么？有什么作用？
 
 指向他的类对象,从而可以找到对象上的方法
 
-###21. 下面的代码输出什么？
+### 21. 下面的代码输出什么？
 
 
 
@@ -1851,11 +1851,11 @@ objc Runtime开源代码对- (Class)class方法的实现:
 参考链接：[微博@Chun_iOS](http://weibo.com/junbbcom)的博文[刨根问底Objective－C Runtime（1）－ Self & Super](http://chun.tips/blog/2014/11/05/bao-gen-wen-di-objective%5Bnil%5Dc-runtime(1)%5Bnil%5D-self-and-super/)
 
 
-###22. runtime如何通过selector找到对应的IMP地址？（分别考虑类方法和实例方法）
+### 22. runtime如何通过selector找到对应的IMP地址？（分别考虑类方法和实例方法）
 
 每一个类对象中都一个方法列表,方法列表中记录着方法的名称,方法实现,以及参数类型,其实selector本质就是方法名称,通过这个方法名称就可以在方法列表中找到对应的方法实现.
 
-###23. 使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？
+### 23. 使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？
 
  - 在ARC下不需要。
  - <p><del> 在MRC中,对于使用retain或copy策略的需要 。</del></p>在MRC下也不需要
@@ -1936,7 +1936,7 @@ objc_setAssociatedObject (
 
 
 
-###24. objc中的类方法和实例方法有什么本质区别和联系？
+### 24. objc中的类方法和实例方法有什么本质区别和联系？
 
 类方法：
 
