@@ -257,12 +257,9 @@ typedef NS_ENUM(NSInteger, CYLSex) {
  2. `UserModel :NSObject` 应为`UserModel : NSObject`，也就是`:`右侧少了一个空格。
  2.  `@interface` 与 `@property` 属性声明中间应当间隔一行。
  2. 两个方法定义之间不需要换行，有时为了区分方法的功能也可间隔一行，但示例代码中间隔了两行。
- 9. 
-	`-(id)initUserModelWithUserName: (NSString*)name withAge:(int)age;`方法中方法名与参数之间多了空格。而且 `-` 与 `(id)` 之间少了空格。
- 10. 
-	`-(id)initUserModelWithUserName: (NSString*)name withAge:(int)age;`方法中方法名与参数之间多了空格：`(NSString*)name` 前多了空格。
- 10. 
-	`-(id)initUserModelWithUserName: (NSString*)name withAge:(int)age;` 方法中 `(NSString*)name`,应为 `(NSString *)name`，少了空格。 
+ 9. `-(id)initUserModelWithUserName: (NSString*)name withAge:(int)age;` 方法中方法名与参数之间多了空格。而且 `-` 与 `(id)` 之间少了空格。
+ 10. `-(id)initUserModelWithUserName: (NSString*)name withAge:(int)age;` 方法中方法名与参数之间多了空格：`(NSString*)name` 前多了空格。
+ 10. `-(id)initUserModelWithUserName: (NSString*)name withAge:(int)age;` 方法中 `(NSString*)name`,应为 `(NSString *)name`，少了空格。 
  7.  <p><del>doLogIn方法中的 `LogIn` 命名不清晰：笔者猜测是login的意思，应该是粗心手误造成的。
  （勘误： `Login` 是名词， `LogIn`  是动词，都表示登陆的意思。见： [ ***Log in vs. login*** ](http://grammarist.com/spelling/log-in-login/)）</del></p>
 
