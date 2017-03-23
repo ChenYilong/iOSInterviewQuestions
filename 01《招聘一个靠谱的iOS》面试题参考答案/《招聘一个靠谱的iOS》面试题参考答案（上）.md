@@ -1964,33 +1964,33 @@ objc_setAssociatedObject (
 runtime部分主要参考[Apple官方文档：Declared Properties](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtPropertyIntrospection.html)
 
 
-###25. `_objc_msgForward`函数是做什么的，直接调用它将会发生什么？
+### 25. `_objc_msgForward`函数是做什么的，直接调用它将会发生什么？
 
-###26. runtime如何实现weak变量的自动置nil？
+### 26. runtime如何实现weak变量的自动置nil？
 
-###27. 能否向编译后得到的类中增加实例变量？能否向运行时创建的类中添加实例变量？为什么？ 
+### 27. 能否向编译后得到的类中增加实例变量？能否向运行时创建的类中添加实例变量？为什么？ 
 
-###28. runloop和线程有什么关系？
+### 28. runloop和线程有什么关系？
 
 
-###29. runloop的mode作用是什么？
+### 29. runloop的mode作用是什么？
 
-###30. 以+ scheduledTimerWithTimeInterval...的方式触发的timer，在滑动页面上的列表时，timer会暂定回调，为什么？如何解决？
+### 30. 以+ scheduledTimerWithTimeInterval...的方式触发的timer，在滑动页面上的列表时，timer会暂定回调，为什么？如何解决？
 
-###31. 猜想runloop内部是如何实现的？
-###32. objc使用什么机制管理对象内存？
-###33. ARC通过什么方式帮助开发者管理内存？
-###34. 不手动指定autoreleasepool的前提下，一个autorealese对象在什么时刻释放？（比如在一个vc的viewDidLoad中创建）
-###35. `BAD_ACCESS`在什么情况下出现？
-###36. 苹果是如何实现autoreleasepool的？ 
-###37. 使用block时什么情况会发生引用循环，如何解决？
-###38. 在block内如何修改block外部变量？
-###39. 使用系统的某些block api（如UIView的block版本写动画时），是否也考虑引用循环问题？ 
-###40. GCD的队列（`dispatch_queue_t`）分哪两种类型？
-###41. 如何用GCD同步若干个异步调用？（如根据若干个url异步加载多张图片，然后在都下载完成后合成一张整图）
-###42. `dispatch_barrier_async`的作用是什么？
-###43. 苹果为什么要废弃`dispatch_get_current_queue`？
-###44. 以下代码运行结果如何？
+### 31. 猜想runloop内部是如何实现的？
+### 32. objc使用什么机制管理对象内存？
+### 33. ARC通过什么方式帮助开发者管理内存？
+### 34. 不手动指定autoreleasepool的前提下，一个autorealese对象在什么时刻释放？（比如在一个vc的viewDidLoad中创建）
+### 35. `BAD_ACCESS`在什么情况下出现？
+### 36. 苹果是如何实现autoreleasepool的？ 
+### 37. 使用block时什么情况会发生引用循环，如何解决？
+### 38. 在block内如何修改block外部变量？
+### 39. 使用系统的某些block api（如UIView的block版本写动画时），是否也考虑引用循环问题？ 
+### 40. GCD的队列（`dispatch_queue_t`）分哪两种类型？
+### 41. 如何用GCD同步若干个异步调用？（如根据若干个url异步加载多张图片，然后在都下载完成后合成一张整图）
+### 42. `dispatch_barrier_async`的作用是什么？
+### 43. 苹果为什么要废弃`dispatch_get_current_queue`？
+### 44. 以下代码运行结果如何？
 
 
 	- (void)viewDidLoad
@@ -2003,17 +2003,17 @@ runtime部分主要参考[Apple官方文档：Declared Properties](https://devel
 	    NSLog(@"3");
 	}
 
-###45. addObserver:forKeyPath:options:context:各个参数的作用分别是什么，observer中需要实现哪个方法才能获得KVO回调？
-###46. 如何手动触发一个value的KVO
-###47. 若一个类有实例变量`NSString *_foo`，调用setValue:forKey:时，可以以foo还是`_foo`作为key？
-###48. KVC的keyPath中的集合运算符如何使用？
-###49. KVC和KVO的keyPath一定是属性么？
-###50. 如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？
-###51. apple用什么方式实现对一个对象的KVO？ 
-###52. IBOutlet连出来的视图属性为什么可以被设置成weak?
-###53. IB中User Defined Runtime Attributes如何使用？ 
-###54. 如何调试`BAD_ACCESS`错误
-###55. lldb（gdb）常用的调试命令？
+### 45. addObserver:forKeyPath:options:context:各个参数的作用分别是什么，observer中需要实现哪个方法才能获得KVO回调？
+### 46. 如何手动触发一个value的KVO
+### 47. 若一个类有实例变量`NSString *_foo`，调用setValue:forKey:时，可以以foo还是`_foo`作为key？
+### 48. KVC的keyPath中的集合运算符如何使用？
+### 49. KVC和KVO的keyPath一定是属性么？
+### 50. 如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？
+### 51. apple用什么方式实现对一个对象的KVO？ 
+### 52. IBOutlet连出来的视图属性为什么可以被设置成weak?
+### 53. IB中User Defined Runtime Attributes如何使用？ 
+### 54. 如何调试`BAD_ACCESS`错误
+### 55. lldb（gdb）常用的调试命令？
 
 
 
