@@ -1,7 +1,6 @@
 # iOSInterviewQuestions（面试题学习交流群：515295083）
 
-<p align="center">[![https://twitter.com/stevechen1010](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&maxAge=2592000)](https://twitter.com/stevechen1010)[![bitHound](http://i67.tinypic.com/wbulbr.jpg)](http://weibo.com/luohanchenyilong)
-</a>
+<p align="center"><a href="https://twitter.com/stevechen1010"><img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social&maxAge=2592000"></a><a href="http://weibo.com/luohanchenyilong"><img src="http://i67.tinypic.com/wbulbr.jpg"></a></a>
 
 iOS面试题集锦（附答案）
 
@@ -19,3 +18,4 @@ iOS面试题集锦（附答案）
 ![enter image description here](http://www.resumetarget.com/blog/wp-content/uploads/2013/06/bad-interview.jpg)
 
 <p align="center"><a href="http://weibo.com/u/1692391497?s=6uyXnP" target="_blank"><img border="0" src="http://service.t.sina.com.cn/widget/qmd/1692391497/b46c844b/1.png"/></a></a>
+
