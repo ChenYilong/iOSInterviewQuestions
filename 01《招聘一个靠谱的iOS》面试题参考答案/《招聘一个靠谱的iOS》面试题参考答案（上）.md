@@ -1567,7 +1567,7 @@ clang -rewrite-objc main.m
 
 也就是说：
 
->  [obj foo];在objc动态编译时，会被转意为：`objc_msgSend(obj, @selector(foo));`。
+>  [obj foo];在objc编译时，会被转意为：`objc_msgSend(obj, @selector(foo));`。
 
 ### 18. 什么时候会报unrecognized selector的异常？
 
