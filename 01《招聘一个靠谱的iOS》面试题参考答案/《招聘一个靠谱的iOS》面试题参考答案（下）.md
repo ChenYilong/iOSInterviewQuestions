@@ -164,7 +164,12 @@ IMP lookUpImpOrNil(Class cls, SEL sel) {
 ```Objective-C
 (void)instrumentObjcMessageSends(YES);
 ```
-
+因为该函数处于 objc-internal.h 内，而该文件并不开放，所以调用的时候先声明，目的是告诉编译器程序目标文件包含该方法存在，让编译通过
+```
+OBJC_EXPORT void
+instrumentObjcMessageSends(BOOL flag)
+OBJC_AVAILABLE(10.0, 2.0, 9.0, 1.0, 2.0);
+```
 
 或者断点暂停程序运行，并在 gdb 中输入下面的命令：
 
