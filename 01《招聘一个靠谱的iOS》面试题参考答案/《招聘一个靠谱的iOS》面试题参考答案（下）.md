@@ -601,7 +601,7 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
 
 那什么时间会创建自动释放池？运行循环检测到事件并启动后，就会创建自动释放池。 
 
-子线程的 runloop 默认是不工作，无法主动创建，必须手动创建。
+从 `RunLoop` 源代码中可知，子线程默认是没有 `RunLoop` 的，如果需要在子线程开启 `RunLoop` ，则需要调用 `[NSRunLoop CurrentRunLoop]` 方法，它内部实现是先检查线程，如果发现是子线程，以懒加载的形式 创建一个子线程的 `RunLoop`。并存储在一个全局的 可变字典里。编程人员在调用 `[NSRunLoop CurrentRunLoop]` 时，是自动创建 `RunLoop` 的，而没法手动创建。
 
 自定义的 NSOperation 和 NSThread 需要手动创建自动释放池。比如： 自定义的 NSOperation 类中的 main 方法里就必须添加自动释放池。否则出了作用域后，自动释放对象会因为没有自动释放池去处理它，而造成内存泄露。
 
