@@ -1,6 +1,8 @@
 # iOSInterviewQuestions（面试题学习交流群：515295083）
 
-<p align="center"><a href="https://twitter.com/stevechen1010"><img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social&maxAge=2592000"></a><a href="http://weibo.com/luohanchenyilong"><img src="http://i67.tinypic.com/wbulbr.jpg"></a></a>
+<p align="center"><a href="https://twitter.com/stevechen1010"><img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social&maxAge=2592000"></a><a href="http://weibo.com/luohanchenyilong"><img src="http://i67.tinypic.com/wbulbr.jpg"></a></a></a><a href="https://t.me/iosobjc"><img src="http://i66.tinypic.com/of2hbn.jpg"></a></a> 
+
+qq群有人数有限，如果群满，可以加 Telegram 群交流 https://t.me/iosobjc
 
 iOS面试题集锦（附答案）
 
