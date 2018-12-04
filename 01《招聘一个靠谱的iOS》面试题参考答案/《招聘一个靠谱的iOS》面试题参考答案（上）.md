@@ -106,15 +106,15 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 	};
  ```
  （仅仅让性别包含男和女可能并不严谨，最严谨的做法可以参考 [这里](https://github.com/ChenYilong/iOSInterviewQuestions/issues/9) 。）
- 
+
  2. age 属性的类型：应避免使用基本类型，建议使用 Foundation 数据类型，对应关系如下：
- 
+
  ```Objective-C
 	int -> NSInteger
 	unsigned -> NSUInteger
 	float -> CGFloat
 	动画时间 -> NSTimeInterval
-```
+ ```
 同时考虑到 age 的特点，应使用 NSUInteger ，而非 int 。
 这样做的是基于64-bit 适配考虑，详情可参考出题者的博文[《64-bit Tips》](http://blog.sunnyxx.com/2014/12/20/64-bit-tips/)。
 
@@ -144,7 +144,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 - (instancetype)initWithName:(CGFloat)width andAge:(CGFloat)height;
 //正确，使用"and"来表示两个相对独立的操作
 - (BOOL)openFile:(NSString *)fullPath withApplication:(NSString *)appName andDeactivate:(BOOL)flag;
-```
+  ```
 
  7. 由于字符串值可能会改变，所以要把相关属性的“内存管理语义”声明为 copy 。(原因在下文有详细论述：***用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？***)
  8. “性别”(sex）属性的：该类中只给出了一种“初始化方法” (initializer)用于设置“姓名”(Name)和“年龄”(Age)的初始值，那如何对“性别”(Sex）初始化？
@@ -153,7 +153,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 
  
 
- 
+
  ```Objective-C
 
     // .m文件
@@ -180,7 +180,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
     }
 
     @end
-```
+ ```
 
 
 
@@ -193,7 +193,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 
 
 
- 
+
  ```Objective-C
 
 
@@ -218,7 +218,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
 
 	@end
-```
+ ```
 
 
   `.h` 中暴露 designated 初始化方法，是为了方便子类化 （想了解更多，请戳--》 [***《禅与 Objective-C 编程艺术 （Zen and the Art of the Objective-C Craftsmanship 中文翻译）》***](http://is.gd/OQ49zk)。）
@@ -236,7 +236,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
  ```
 
       由于是只读属性，所以编译器不会为其创建对应的“设置方法”，即便如此，我们还是要写上这些属性的语义，以此表明初始化方法在设置这些属性值时所用的方式。要是不写明语义的话，该类的调用者就不知道初始化方法里会拷贝这些属性，他们有可能会在调用初始化方法之前自行拷贝属性值。这种操作多余而且低效。
-      
+
  9. `initUserModelWithUserName` 如果改为 `initWithName` 会更加简洁，而且足够清晰。
  10. `UserModel` 如果改为 `User` 会更加简洁，而且足够清晰。
  11. `UserSex`如果改为`Sex` 会更加简洁，而且足够清晰。
@@ -272,7 +272,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
  2. 自身已经对它进行一次强引用,没有必要再强引用一次,此时也会使用 weak,自定义 IBOutlet 控件属性一般也使用 weak；当然，也可以使用strong。在下文也有论述：***《IBOutlet连出来的视图属性为什么可以被设置成weak?》***
 
 不同点：
- 
+
  1. `weak` 此特质表明该属性定义了一种“非拥有关系” (nonowning relationship)。为这种属性设置新值时，设置方法既不保留新值，也不释放旧值。此特质同assign类似，
 然而在属性所指的对象遭到摧毁时，属性值也会清空(nil out)。
 而 `assign` 的“设置方法”只会执行针对“纯量类型” (scalar type，例如 CGFloat 或 
@@ -310,7 +310,7 @@ NSlnteger 等)的简单赋值操作。
 
 
 > 用 `@property` 声明 NSString、NSArray、NSDictionary 经常使用 copy 关键字，是因为他们有对应的可变类型：NSMutableString、NSMutableArray、NSMutableDictionary，他们之间可能进行赋值操作，为确保对象中的字符串值不会无意间变动，应该在设置新属性值时拷贝一份。
- 
+
 该问题在下文中也有论述：***用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？如果改用strong关键字，可能造成什么问题？***
 
 
@@ -322,7 +322,7 @@ NSlnteger 等)的简单赋值操作。
 比如下面的代码就会发生崩溃
 
  
- 
+
 ```Objective-C
 // .h文件
 // http://weibo.com/luohanchenyilong/
@@ -346,7 +346,7 @@ self.mutableArray = array;
 
 接下来就会奔溃：
 
- 
+
 ```Objective-C
  -[__NSArrayI removeObjectAtIndex:]: unrecognized selector sent to instance 0x7fcd1bc30460
 ```
@@ -381,11 +381,11 @@ self.mutableArray = array;
 
  ```Objective-C
 - (id)copyWithZone:(NSZone *)zone;
-```
+ ```
 注意：一提到让自己的类用 copy 修饰符，我们总是想覆写copy方法，其实真正需要实现的却是 “copyWithZone” 方法。
 
 以第一题的代码为例：
-   
+
 
  ```Objective-C
 	// .h文件
@@ -413,7 +413,7 @@ self.mutableArray = array;
 
 然后实现协议中规定的方法：
 
- 
+
 ```Objective-C
 - (id)copyWithZone:(NSZone *)zone {
 	CYLUser *copy = [[[self class] allocWithZone:zone] 
@@ -464,10 +464,6 @@ typedef NS_ENUM(NSInteger, CYLSex) {
     NSMutableSet *_friends;
 }
 
-- (void)setName:(NSString *)name {
-    _name = [name copy];
-}
-
 - (instancetype)initWithName:(NSString *)name
                          age:(NSUInteger)age
                          sex:(CYLSex)sex {
@@ -478,6 +474,12 @@ typedef NS_ENUM(NSInteger, CYLSex) {
         _friends = [[NSMutableSet alloc] init];
     }
     return self;
+}
+
++ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CSex)sex {
+    CYLUser *user = [[CYLUser alloc] initWithName:name.copy age:age sex:sex];
+    user->_friends = [[NSMutableSet alloc] init];
+    return user;
 }
 
 - (void)addFriend:(CYLUser *)user {
@@ -518,7 +520,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 【注：深浅拷贝的概念，在下文中有介绍，详见下文的：***用@property声明的 NSString（或NSArray，NSDictionary）经常使用 copy 关键字，为什么？如果改用 strong 关键字，可能造成什么问题？***】
 
 在例子中，存放朋友对象的 set 是用 “copyWithZone:” 方法来拷贝的，这种浅拷贝方式不会逐个复制 set 中的元素。若需要深拷贝的话，则可像下面这样，编写一个专供深拷贝所用的方法:
-	
+​	
 
  ```Objective-C
 - (id)deepCopy {
@@ -539,7 +541,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 如果抛开本例来回答的话，如下：
 
 
- 
+
 ```Objective-C
 - (void)setName:(NSString *)name {
     //[_name release];
@@ -579,7 +581,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 
 你可能会说：
 
- 
+
 之所以在这里做`if判断` 这个操作：是因为一个 if 可能避免一个耗时的copy，还是很划算的。
 (在刚刚讲的：《如何让自己的类用 copy 修饰符？》里的那种复杂的copy，我们可以称之为 “耗时的copy”，但是对 NSString 的 copy 还称不上。)
 
@@ -610,7 +612,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 什么情况会在 copy setter 里做 if 判断？
 例如，车速可能就有最高速的限制，车速也不可能出现负值，如果车子的最高速为300，则 setter 的方法就要改写成这样：
 
- 
+
 ```Objective-C
 -(void)setSpeed:(int)_speed{
     if(_speed < 0) speed = 0;
@@ -641,7 +643,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
  ```
 
 
-	
+​	
 ### 6. @property 的本质是什么？ivar、getter、setter 是如何生成并添加到这个类中的
 
 **@property 的本质是什么？**
@@ -831,10 +833,10 @@ struct weak_table_t {
 
 
 下面我们将基于`objc_storeWeak(&a, b)`函数，使用伪代码模拟“runtime如何实现weak属性”：
- 
 
 
- 
+
+
 ```Objective-C
 // 使用伪代码模拟：runtime如何实现weak属性
 // http://weibo.com/luohanchenyilong/
@@ -857,7 +859,7 @@ struct weak_table_t {
 
 
 
- 
+
 ```Objective-C
 obj1 = 0；
 obj_storeWeak(&obj1, obj);
@@ -922,7 +924,7 @@ objc_storeWeak(&obj1, 0);
  ```
 
  2. 在属性所指的对象遭到摧毁时，属性值也会清空(nil out)。做到这点，同样要借助 runtime：
- 
+
  ```Objective-C
 //要销毁的目标对象
 id objectToBeDeallocated;
@@ -932,7 +934,7 @@ objc_setAssociatedObject(objectToBeDeallocted,
                          someUniqueKey,
                          objectWeWantToBeReleasedWhenThatHappens,
                          OBJC_ASSOCIATION_RETAIN);
-```
+ ```
 
 知道了思路，我们就开始实现 `cyl_runAtDealloc` 方法，实现过程分两部分：
 
@@ -1060,7 +1062,7 @@ NSObject *foo = [[NSObject alloc] init];
 
 ### 9. @property中有哪些属性关键字？/ @property 后面可以有哪些修饰符？
 属性可以拥有的特质分为四类:
- 
+
  1. 原子性--- `nonatomic` 特质
 
     在默认情况下，由编译器合成的方法会通过锁定机制确保其原子性(atomicity)。如果属性具备 nonatomic 特质，则不使用自旋锁。请注意，尽管没有名为“atomic”的特质(如果某属性不具备 nonatomic 特质，那它就是“原子的” ( atomic) )，但是仍然可以在属性特质中写明这一点，编译器不会报错。若是自己定义存取方法，那么就应该遵从与属性特质相符的原子性。
@@ -1069,6 +1071,7 @@ NSObject *foo = [[NSObject alloc] init];
  3. 内存管理语义---`assign`、`strong`、 `weak`、`unsafe_unretained`、`copy`
  4. 方法名---`getter=<name>` 、`setter=<name>`
    
+
   `getter=<name>`的样式：
 
 
@@ -1193,10 +1196,10 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
 ### 12. ARC下，不显式指定任何属性关键字时，默认的关键字都有哪些？
 
  1. 对应基本数据类型默认关键字是
- 
+
  atomic,readwrite,assign
  2. 对于普通的 Objective-C 对象
-  
+
  atomic,readwrite,strong
 
 参考链接：
@@ -1270,6 +1273,7 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
  - [mutableObject copy] //深复制
  - [mutableObject mutableCopy] //深复制
 	
+
 比如以下代码：
 
 
@@ -1343,7 +1347,7 @@ NSMutableArray *mCopyArray = [array mutableCopy];
 
 如果使用了属性的话，那么编译器就会自动编写访问属性所需的方法，此过程叫做“自动合成”( auto synthesis)。需要强调的是，这个过程由编译器在编译期执行，所以编辑器里看不到这些“合成方法” (synthesized method)的源代码。除了生成方法代码之外，编译器还要自动向类中添加适当类型的实例变量，并且在属性名前面加下划线，以此作为实例变量的名字。
 
- 
+
 ```Objective-C
 @interface CYLPerson : NSObject 
 @property NSString *firstName; 
@@ -1354,7 +1358,7 @@ NSMutableArray *mCopyArray = [array mutableCopy];
 
 在上例中，会生成两个实例变量，其名称分别为
  `_firstName` 与 `_lastName`。也可以在类的实现代码里通过 `@synthesize` 语法来指定实例变量的名字:
- 
+
 ```Objective-C
 @implementation CYLPerson 
 @synthesize firstName = _myFirstName; 
@@ -1396,7 +1400,7 @@ NSMutableArray *mCopyArray = [array mutableCopy];
  2. 在 @protocol 中定义的所有属性
  2. 在 category 中定义的所有属性
  2. 重载的属性 
- 
+
  当你在子类中重载了父类中的属性，你必须 使用 `@synthesize` 来手动合成ivar。
 
 除了后三条，对其他几个我们可以总结出一个规律：当你想手动管理 @property 的所有内容时，你就会尝试通过实现 @property 的所有“存取方法”（the accessor methods）或者使用 `@dynamic` 来达到这个目的，这时编译器就会认为你打算手动管理 @property，于是编译器就禁用了 autosynthesis（自动合成）。
@@ -1406,7 +1410,7 @@ NSMutableArray *mCopyArray = [array mutableCopy];
 其实，`@synthesize` 语法还有一个应用场景，但是不太建议大家使用：
 
 可以在类的实现代码里通过 `@synthesize` 语法来指定实例变量的名字:
- 
+
 ```Objective-C
 @implementation CYLPerson 
 @synthesize firstName = _myFirstName; 
@@ -1477,10 +1481,10 @@ NSMutableArray *mCopyArray = [array mutableCopy];
 
  1. 如果一个方法返回值是一个对象，那么发送给nil的消息将返回0(nil)。例如：  
 
- 
+
  ```Objective-C
 Person * motherInlaw = [[aPerson spouse] mother];
-```
+ ```
 
 
  如果 spouse 对象为 nil，那么发送给 nil 的消息 mother 也将返回 nil。
@@ -1497,7 +1501,7 @@ Person * motherInlaw = [[aPerson spouse] mother];
 那么，为了方便理解这个内容，还是贴一个objc的源代码：
 
 
- 
+
 ```Objective-C
 // runtime.h（类在runtime中的定义）
 // http://weibo.com/luohanchenyilong/
@@ -1561,7 +1565,7 @@ clang -rewrite-objc main.m
 
 我们可以看到大概是这样的：
 
- 
+
 ```Objective-C
 ((void ()(id, SEL))(void )objc_msgSend)((id)obj, sel_registerName("foo"));
 ```
@@ -1671,11 +1675,11 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
 
 	NSStringFromClass([self class]) = Son
 	NSStringFromClass([super class]) = Son
- 
+
 
 
 这个题目主要是考察关于 Objective-C 中对 self 和 super 的理解。
- 
+
 
 我们都知道：self 是类的隐藏参数，指向当前调用方法的这个类的实例。那 super 呢？
 
@@ -1867,7 +1871,7 @@ objc Runtime开源代码对- (Class)class方法的实现:
 [ ***2011年版本的Apple API 官方文档 - Associative References***  ](https://web.archive.org/web/20120818164935/http://developer.apple.com/library/ios/#/web/20120820002100/http://developer.apple.com/library/ios/documentation/cocoa/conceptual/objectivec/Chapters/ocAssociativeReferences.html) 一节中有一个MRC环境下的例子：
 
 
- 
+
 ```Objective-C
 // 在MRC下，使用runtime Associate方法关联的对象，不需要在主对象dealloc的时候释放
 // http://weibo.com/luohanchenyilong/ (微博@iOS程序犭袁)
@@ -1911,24 +1915,24 @@ objc_setAssociatedObject (
 	// 对象的内存销毁时间表
 	// http://weibo.com/luohanchenyilong/ (微博@iOS程序犭袁)
 	// https://github.com/ChenYilong
-    // 根据 WWDC 2011, Session 322 (36分22秒)中发布的内存销毁时间表 
-
-     1. 调用 -release ：引用计数变为零
-         * 对象正在被销毁，生命周期即将结束.
-         * 不能再有新的 __weak 弱引用， 否则将指向 nil.
-         * 调用 [self dealloc] 
-     2. 子类 调用 -dealloc
-         * 继承关系中最底层的子类 在调用 -dealloc
-         * 如果是 MRC 代码 则会手动释放实例变量们（iVars）
-         * 继承关系中每一层的父类 都在调用 -dealloc
-     3. NSObject 调 -dealloc
-         * 只做一件事：调用 Objective-C runtime 中的 object_dispose() 方法
-     4. 调用 object_dispose()
-         * 为 C++ 的实例变量们（iVars）调用 destructors 
-         * 为 ARC 状态下的 实例变量们（iVars） 调用 -release 
-         * 解除所有使用 runtime Associate方法关联的对象
-         * 解除所有 __weak 引用
-         * 调用 free()
+	// 根据 WWDC 2011, Session 322 (36分22秒)中发布的内存销毁时间表 
+	
+	 1. 调用 -release ：引用计数变为零
+	     * 对象正在被销毁，生命周期即将结束.
+	     * 不能再有新的 __weak 弱引用， 否则将指向 nil.
+	     * 调用 [self dealloc] 
+	 2. 子类 调用 -dealloc
+	     * 继承关系中最底层的子类 在调用 -dealloc
+	     * 如果是 MRC 代码 则会手动释放实例变量们（iVars）
+	     * 继承关系中每一层的父类 都在调用 -dealloc
+	 3. NSObject 调 -dealloc
+	     * 只做一件事：调用 Objective-C runtime 中的 object_dispose() 方法
+	 4. 调用 object_dispose()
+	     * 为 C++ 的实例变量们（iVars）调用 destructors 
+	     * 为 ARC 状态下的 实例变量们（iVars） 调用 -release 
+	     * 解除所有使用 runtime Associate方法关联的对象
+	     * 解除所有 __weak 引用
+	     * 调用 free()
 
 
 对象的内存销毁时间表：[参考链接](http://stackoverflow.com/a/10843510/3395008)。
