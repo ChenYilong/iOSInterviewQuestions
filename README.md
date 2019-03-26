@@ -3,7 +3,7 @@
 <p align="center"><a href="https://twitter.com/stevechen1010"><img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social&maxAge=2592000"></a><a href="http://weibo.com/luohanchenyilong"><img src="http://i67.tinypic.com/wbulbr.jpg"></a></a></a><a href="https://t.me/iosobjc"><img src="http://i66.tinypic.com/of2hbn.jpg"></a></a> 
 
 
-  -  [点此获取 qq群,Telegram 群交流信息]( https://github.com/ChenYilong/iOSBlog/issues/21) 。
+  -  [点此获取 QQ 群,Telegram 群交流信息]( https://github.com/ChenYilong/iOSBlog/issues/21) 。
 
 ## iOS面试题集锦（附答案）
 
