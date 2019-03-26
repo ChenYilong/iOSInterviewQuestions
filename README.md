@@ -1,10 +1,11 @@
-# iOSInterviewQuestions（面试题学习交流群：515295083）
+# iOSInterviewQuestions
 
 <p align="center"><a href="https://twitter.com/stevechen1010"><img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social&maxAge=2592000"></a><a href="http://weibo.com/luohanchenyilong"><img src="http://i67.tinypic.com/wbulbr.jpg"></a></a></a><a href="https://t.me/iosobjc"><img src="http://i66.tinypic.com/of2hbn.jpg"></a></a> 
 
-qq群有人数有限，如果群满，可以加 Telegram 群交流 https://t.me/iosobjc
 
-iOS面试题集锦（附答案）
+  -  [点此获取 qq群,Telegram 群交流信息]( https://github.com/ChenYilong/iOSBlog/issues/21) 。
+
+## iOS面试题集锦（附答案）
 
 
 第一篇  ： [《招聘一个靠谱的 iOS》—参考答案（上）](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md)
