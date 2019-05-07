@@ -3,7 +3,7 @@
 <p align="center"><a href="https://twitter.com/stevechen1010"><img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social&maxAge=2592000"></a><a href="http://weibo.com/luohanchenyilong"><img src="http://i67.tinypic.com/wbulbr.jpg"></a></a></a><a href="https://t.me/iosobjc"><img src="http://i66.tinypic.com/of2hbn.jpg"></a></a> 
 
 <p align="center">
-<a href="https://github.com/ChenYilong/iOSInterviewQuestions/wiki.atom"><img src="https://img.shields.io/badge/RSS feed (full text feed)-订阅-yellow.svg"></a>
+<a href="https://github.com/ChenYilong/iOSBlog/wiki.atom"><img src="https://img.shields.io/badge/RSS feed (full text feed)-订阅我的博客更新-yellow.svg"></a>
 </p>
 
 
