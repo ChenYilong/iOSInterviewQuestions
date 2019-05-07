@@ -9,6 +9,8 @@
 
   -  [点此获取 QQ 群,Telegram 群交流信息]( https://github.com/ChenYilong/iOSBlog/issues/21) 。
 
+![enter image description here](http://www.resumetarget.com/blog/wp-content/uploads/2013/06/bad-interview.jpg)
+
 ## iOS面试题集锦（附答案）
 
 
@@ -22,7 +24,12 @@
 
 博文中给出了高质量的面试题，但是未给出答案，我尝试着总结了下答案，分两篇发：这是[上篇](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md) ，这是[下篇](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（下）.md) 。请持续关注[微博@iOS程序犭袁](http://weibo.com/luohanchenyilong/)。
 
-![enter image description here](http://www.resumetarget.com/blog/wp-content/uploads/2013/06/bad-interview.jpg)
+
+## 微信群面试题系列（附答案）
+
+ [《微信群面试题系列》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues?q=is%3Aissue+is%3Aopen+label%3Awiki ) 
+ 
+
 
 <p align="center"><a href="http://weibo.com/u/1692391497?s=6uyXnP" target="_blank"><img border="0" src="http://service.t.sina.com.cn/widget/qmd/1692391497/b46c844b/1.png"/></a></a>
 
