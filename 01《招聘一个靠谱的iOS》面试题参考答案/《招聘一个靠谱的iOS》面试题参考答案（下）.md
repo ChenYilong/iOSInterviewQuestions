@@ -828,8 +828,9 @@ dispatch_group_notify(group, dispatch_get_main_queue(), ^{
 
 ### 43. 苹果为什么要废弃`dispatch_get_current_queue`？
 
-`dispatch_get_current_queue`容易造成死锁
-
+`dispatch_get_current_queue`函数的行为常常与开发者所预期的不同。
+由于派发队列是按层级来组织的，这意味着排在某条队列中的块会在其上级队列里执行。
+队列间的层级关系会导致检查当前队列是否为执行同步派发所用的队列这种方法并不总是奏效。`dispatch_get_current_queue`函数通常会被用于解决由不可以重入的代码所引发的死锁，然后能用此函数解决的问题，通常也可以用"队列特定数据"来解决。
 
 ### 44. 以下代码运行结果如何？
 
