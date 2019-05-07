@@ -1,13 +1,36 @@
 # iOSInterviewQuestions
 
-<p align="center"><a href="https://twitter.com/stevechen1010"><img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social&maxAge=2592000"></a><a href="http://weibo.com/luohanchenyilong"><img src="http://i67.tinypic.com/wbulbr.jpg"></a></a></a><a href="https://t.me/iosobjc"><img src="http://i66.tinypic.com/of2hbn.jpg"></a></a> 
+
+----------
+
+
+<!--- 
 
 <p align="center">
-<a href="https://github.com/ChenYilong/iOSBlog/wiki.atom"><img src="https://img.shields.io/badge/RSS feed (full text feed)-订阅我的博客更新-yellow.svg"></a>
+<a href=""><img src="https://img.shields.io/badge/pod-v1.21.x-brightgreen.svg"></a>
+<a href=""><img src="https://img.shields.io/badge/Swift-compatible-orange.svg"></a>
+<a href=""><img src="https://img.shields.io/badge/platform-iOS%207.0%2B-ff69b5152950834.svg"></a>
+<a href="https://github.com/ChenYilong/CYLTabBarController/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg?style=flat"></a>
+</p>
+
+-->
+
+<p align="center">
+<a href="https://github.com/ChenYilong/iOSBlog/releases.atom"><img src="https://img.shields.io/badge/RSS feed (full text feed)-订阅我的博客更新-yellow.svg"></a>
+</p>
+<p align="center">
+<a href="https://github.com/ChenYilong/iOSBlog/issues/21"><img src="https://img.shields.io/static/v1.svg?label=QQ%E3%80%81Telegram%20Group&color=blue&message=%E7%82%B9%E5%87%BB%E8%8E%B7%E5%8F%96QQ%E3%80%81Telegram%E7%BE%A4%E4%BF%A1%E6%81%AF&color=green"></a>
 </p>
 
 
-  -  [点此获取 QQ 群,Telegram 群交流信息]( https://github.com/ChenYilong/iOSBlog/issues/21) 。
+<p align="center">
+<a href="https://twitter.com/stevechen1010"><img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social&maxAge=2592000"></a>
+<a href="http://weibo.com/luohanchenyilong"><img src="http://i67.tinypic.com/wbulbr.jpg"></a>
+</a><a href="https://t.me/iosobjc"><img src="http://i66.tinypic.com/of2hbn.jpg"></a></a> 
+</p>
+
+----------
+
 
 ![enter image description here](http://www.resumetarget.com/blog/wp-content/uploads/2013/06/bad-interview.jpg)
 
