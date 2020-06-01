@@ -10,7 +10,7 @@
 
 ----------
 
-#索引
+# 索引
 
  1.  [风格纠错题](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md#1-风格纠错题) 
 
@@ -56,7 +56,7 @@
 
  22. 22--55题，请看下篇。
 
-###1. 风格纠错题
+### 1. 风格纠错题
 ![enter image description here](http://i.imgur.com/O7Zev94.png)
 修改完的代码：
 
@@ -89,22 +89,24 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 
 
 
-下面对具体修改的地方，分两部分做下介绍：***硬伤部分***和***优化部分***
-。因为***硬伤部分***没什么技术含量，为了节省大家时间，放在后面讲，大神请直接看***优化部分***。
+下面对具体修改的地方，分两部分做下介绍：**硬伤部分** 和 **优化部分**
+。因为**硬伤部分**没什么技术含量，为了节省大家时间，放在后面讲，大神请直接看**优化部分**。
 
 
-####***优化部分***
+#### **优化部分**
 
- 4. enum 建议使用 `NS_ENUM` 和 `NS_OPTIONS` 宏来定义枚举类型，参见官方的 [Adopting Modern Objective-C](https://developer.apple.com/library/ios/releasenotes/ObjectiveC/ModernizationObjC/AdoptingModernObjective-C/AdoptingModernObjective-C.html) 一文：
+ 1. enum 建议使用 `NS_ENUM` 和 `NS_OPTIONS` 宏来定义枚举类型，参见官方的 [Adopting Modern Objective-C](https://developer.apple.com/library/ios/releasenotes/ObjectiveC/ModernizationObjC/AdoptingModernObjective-C/AdoptingModernObjective-C.html) 一文：
 
-    ```objective-c
+
+ ```objective-c
 //定义一个枚举
 	typedef NS_ENUM(NSInteger, CYLSex) {
 	    CYLSexMan,
 	    CYLSexWoman
 	};
-```
+ ```
  （仅仅让性别包含男和女可能并不严谨，最严谨的做法可以参考 [这里](https://github.com/ChenYilong/iOSInterviewQuestions/issues/9) 。）
+ 
  2. age 属性的类型：应避免使用基本类型，建议使用 Foundation 数据类型，对应关系如下：
  
  ```Objective-C
@@ -117,8 +119,8 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 这样做的是基于64-bit 适配考虑，详情可参考出题者的博文[《64-bit Tips》](http://blog.sunnyxx.com/2014/12/20/64-bit-tips/)。
 
 
- 5. 如果工程项目非常庞大，需要拆分成不同的模块，可以在类、typedef宏命名的时候使用前缀。
- 6. doLogIn方法不应写在该类中： <p><del>虽然`LogIn`的命名不太清晰，但笔者猜测是login的意思， （勘误：Login是名词，LogIn 是动词，都表示登陆的意思。见： [ ***Log in vs. login*** ](http://grammarist.com/spelling/log-in-login/)）</del></p>登录操作属于业务逻辑，观察类名 UserModel ，以及属性的命名方式，该类应该是一个 Model 而不是一个“ MVVM 模式下的 ViewModel ”：
+ 3. 如果工程项目非常庞大，需要拆分成不同的模块，可以在类、typedef宏命名的时候使用前缀。
+ 4. doLogIn方法不应写在该类中： <p><del>虽然`LogIn`的命名不太清晰，但笔者猜测是login的意思， （勘误：Login是名词，LogIn 是动词，都表示登陆的意思。见： [ ***Log in vs. login*** ](http://grammarist.com/spelling/log-in-login/)）</del></p>登录操作属于业务逻辑，观察类名 UserModel ，以及属性的命名方式，该类应该是一个 Model 而不是一个“ MVVM 模式下的 ViewModel ”：
 
 
  > 无论是 MVC 模式还是 MVVM 模式，业务逻辑都不应当写在 Model 里：MVC 应在 C，MVVM 应在 VM。
@@ -126,14 +128,14 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 
  （如果抛开命名规范，假设该类真的是 MVVM 模式里的 ViewModel ，那么 UserModel 这个类可能对应的是用户注册页面，如果有特殊的业务需求，比如： `-logIn` 对应的应当是注册并登录的一个 Button ，出现 `-logIn` 方法也可能是合理的。）
 
- 7.  doLogIn 方法命名不规范：添加了多余的动词前缀。
+ 5.  doLogIn 方法命名不规范：添加了多余的动词前缀。
 请牢记：
 
   > 如果方法表示让对象执行一个动作，使用动词打头来命名，注意不要使用 `do`，`does` 这种多余的关键字，动词本身的暗示就足够了。
 
  应为 `-logIn` （注意： `Login` 是名词， `LogIn`  是动词，都表示登陆。  见[ ***Log in vs. login*** ](http://grammarist.com/spelling/log-in-login/)）
 
- 11. `-(id)initUserModelWithUserName: (NSString*)name withAge:(int)age;`方法中不要用 `with` 来连接两个参数: `withAge:` 应当换为`age:`，`age:` 已经足以清晰说明参数的作用，也不建议用 `andAge:` ：通常情况下，即使有类似 `withA:withB:` 的命名需求，也通常是使用`withA:andB:` 这种命名，用来表示方法执行了两个相对独立的操作（*从设计上来说，这时候也可以拆分成两个独立的方法*），它不应该用作阐明有多个参数，比如下面的：
+ 6. `-(id)initUserModelWithUserName: (NSString*)name withAge:(int)age;`方法中不要用 `with` 来连接两个参数: `withAge:` 应当换为`age:`，`age:` 已经足以清晰说明参数的作用，也不建议用 `andAge:` ：通常情况下，即使有类似 `withA:withB:` 的命名需求，也通常是使用`withA:andB:` 这种命名，用来表示方法执行了两个相对独立的操作（*从设计上来说，这时候也可以拆分成两个独立的方法*），它不应该用作阐明有多个参数，比如下面的：
 
   ```objective-c
 //错误，不要使用"and"来连接参数
@@ -144,8 +146,8 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 - (BOOL)openFile:(NSString *)fullPath withApplication:(NSString *)appName andDeactivate:(BOOL)flag;
 ```
 
- 12. 由于字符串值可能会改变，所以要把相关属性的“内存管理语义”声明为 copy 。(原因在下文有详细论述：***用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？***)
- 2. “性别”(sex）属性的：该类中只给出了一种“初始化方法” (initializer)用于设置“姓名”(Name)和“年龄”(Age)的初始值，那如何对“性别”(Sex）初始化？
+ 7. 由于字符串值可能会改变，所以要把相关属性的“内存管理语义”声明为 copy 。(原因在下文有详细论述：***用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？***)
+ 8. “性别”(sex）属性的：该类中只给出了一种“初始化方法” (initializer)用于设置“姓名”(Name)和“年龄”(Age)的初始值，那如何对“性别”(Sex）初始化？
 
  Objective-C 有 designated 和 secondary 初始化方法的观念。 designated 初始化方法是提供所有的参数，secondary 初始化方法是一个或多个，并且提供一个或者更多的默认参数来调用 designated 初始化方法的初始化方法。举例说明：
 
@@ -222,8 +224,8 @@ typedef NS_ENUM(NSInteger, CYLSex) {
   `.h` 中暴露 designated 初始化方法，是为了方便子类化 （想了解更多，请戳--》 [***《禅与 Objective-C 编程艺术 （Zen and the Art of the Objective-C Craftsmanship 中文翻译）》***](http://is.gd/OQ49zk)。）
 
 
- 2. 按照接口设计的惯例，如果设计了“初始化方法” (initializer)，也应当搭配一个快捷构造方法。而快捷构造方法的返回值，建议为 instancetype，为保持一致性，init 方法和快捷构造方法的返回类型最好都用 instancetype。
- 2. 如果基于第一种修改方法：既然该类中已经有一个“初始化方法” (initializer)，用于设置“姓名”(Name)、“年龄”(Age)和“性别”(Sex）的初始值:
+   - 按照接口设计的惯例，如果设计了“初始化方法” (initializer)，也应当搭配一个快捷构造方法。而快捷构造方法的返回值，建议为 instancetype，为保持一致性，init 方法和快捷构造方法的返回类型最好都用 instancetype。
+   - 如果基于第一种修改方法：既然该类中已经有一个“初始化方法” (initializer)，用于设置“姓名”(Name)、“年龄”(Age)和“性别”(Sex）的初始值:
 那么在设计对应 `@property` 时就应该尽量使用不可变的对象：其三个属性都应该设为“只读”。用初始化方法设置好属性值之后，就不能再改变了。在本例中，仍需声明属性的“内存管理语义”。于是可以把属性的定义改成这样
 
 
@@ -234,10 +236,11 @@ typedef NS_ENUM(NSInteger, CYLSex) {
  ```
 
       由于是只读属性，所以编译器不会为其创建对应的“设置方法”，即便如此，我们还是要写上这些属性的语义，以此表明初始化方法在设置这些属性值时所用的方式。要是不写明语义的话，该类的调用者就不知道初始化方法里会拷贝这些属性，他们有可能会在调用初始化方法之前自行拷贝属性值。这种操作多余而且低效。
- 2. `initUserModelWithUserName` 如果改为 `initWithName` 会更加简洁，而且足够清晰。
- 2. `UserModel` 如果改为 `User` 会更加简洁，而且足够清晰。
- 2. `UserSex`如果改为`Sex` 会更加简洁，而且足够清晰。
- 2. 第二个 `@property` 中 assign 和 nonatomic 调换位置。
+      
+ 9. `initUserModelWithUserName` 如果改为 `initWithName` 会更加简洁，而且足够清晰。
+ 10. `UserModel` 如果改为 `User` 会更加简洁，而且足够清晰。
+ 11. `UserSex`如果改为`Sex` 会更加简洁，而且足够清晰。
+ 12. 第二个 `@property` 中 assign 和 nonatomic 调换位置。
  推荐按照下面的格式来定义属性
 
  ```Objective-C
@@ -245,7 +248,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
  ```
  属性的参数应该按照下面的顺序排列： 原子性，读写 和 内存管理。 这样做你的属性更容易修改正确，并且更好阅读。这在[《禅与Objective-C编程艺术 >》](https://github.com/oa414/objc-zen-book-cn#属性定义)里有介绍。而且习惯上修改某个属性的修饰符时，一般从属性名从右向左搜索需要修动的修饰符。最可能从最右边开始修改这些属性的修饰符，根据经验这些修饰符被修改的可能性从高到底应为：内存管理 > 读写权限 >原子操作。
 
-####***硬伤部分***
+#### ***硬伤部分***
 
  1. 在-和(void)之间应该有一个空格
  3. enum 中驼峰命名法和下划线命名法混用错误：枚举类型的命名规则和函数的命名规则相同：命名时使用驼峰命名法，勿使用下划线命名法。
@@ -254,16 +257,13 @@ typedef NS_ENUM(NSInteger, CYLSex) {
  2. `UserModel :NSObject` 应为`UserModel : NSObject`，也就是`:`右侧少了一个空格。
  2.  `@interface` 与 `@property` 属性声明中间应当间隔一行。
  2. 两个方法定义之间不需要换行，有时为了区分方法的功能也可间隔一行，但示例代码中间隔了两行。
- 9. 
-	`-(id)initUserModelWithUserName: (NSString*)name withAge:(int)age;`方法中方法名与参数之间多了空格。而且 `-` 与 `(id)` 之间少了空格。
- 10. 
-	`-(id)initUserModelWithUserName: (NSString*)name withAge:(int)age;`方法中方法名与参数之间多了空格：`(NSString*)name` 前多了空格。
- 10. 
-	`-(id)initUserModelWithUserName: (NSString*)name withAge:(int)age;` 方法中 `(NSString*)name`,应为 `(NSString *)name`，少了空格。 
+ 9. `-(id)initUserModelWithUserName: (NSString*)name withAge:(int)age;` 方法中方法名与参数之间多了空格。而且 `-` 与 `(id)` 之间少了空格。
+ 10. `-(id)initUserModelWithUserName: (NSString*)name withAge:(int)age;` 方法中方法名与参数之间多了空格：`(NSString*)name` 前多了空格。
+ 10. `-(id)initUserModelWithUserName: (NSString*)name withAge:(int)age;` 方法中 `(NSString*)name`,应为 `(NSString *)name`，少了空格。 
  7.  <p><del>doLogIn方法中的 `LogIn` 命名不清晰：笔者猜测是login的意思，应该是粗心手误造成的。
  （勘误： `Login` 是名词， `LogIn`  是动词，都表示登陆的意思。见： [ ***Log in vs. login*** ](http://grammarist.com/spelling/log-in-login/)）</del></p>
 
-###2. 什么情况使用 weak 关键字，相比 assign 有什么不同？
+### 2. 什么情况使用 weak 关键字，相比 assign 有什么不同？
 什么情况使用 weak 关键字？
 
 
@@ -280,7 +280,7 @@ NSlnteger 等)的简单赋值操作。
 
  2. assign 可以用非 OC 对象,而 weak 必须用于 OC 对象
 
-###3. 怎么用 copy 关键字？
+### 3. 怎么用 copy 关键字？
 用途：
 
  1. NSString、NSArray、NSDictionary 等等经常使用copy关键字，是因为他们有对应的可变类型：NSMutableString、NSMutableArray、NSMutableDictionary；
@@ -289,16 +289,16 @@ NSlnteger 等)的简单赋值操作。
   block 使用 copy 是从 MRC 遗留下来的“传统”,在 MRC 中,方法内部的 block 是在栈区的,使用 copy 可以把它放到堆区.在 ARC 中写不写都行：对于 block 使用 copy 还是 strong 效果是一样的，但写上 copy 也无伤大雅，还能时刻提醒我们：编译器自动对 block 进行了 copy 操作。如果不写 copy ，该类的调用者有可能会忘记或者根本不知道“编译器会自动对 block 进行了 copy 操作”，他们有可能会在调用之前自行拷贝属性值。这种操作多余而低效。你也许会感觉我这种做法有些怪异，不需要写依然写。如果你这样想，其实是你“日用而不知”，你平时开发中是经常在用我说的这种做法的，比如下面的属性不写copy也行，但是你会选择写还是不写呢？
 
  ```Objective-C
-@property (nonatomic, copy) NSString *userId;
+ @property (nonatomic, copy) NSString *userId;
 
-- (instancetype)initWithUserId:(NSString *)userId {
+ - (instancetype)initWithUserId:(NSString *)userId {
     self = [super init];
     if (!self) {
         return nil;
     }
     _userId = [userId copy];
     return self;
-}
+ }
 
  ```
 
@@ -314,7 +314,7 @@ NSlnteger 等)的简单赋值操作。
 该问题在下文中也有论述：***用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？如果改用strong关键字，可能造成什么问题？***
 
 
-###4. 这个写法会出什么问题： `@property (copy) NSMutableArray *array;`
+### 4. 这个写法会出什么问题： `@property (copy) NSMutableArray *array;`
 两个问题：1、添加,删除,修改数组内的元素的时候,程序会因为找不到对应的方法而崩溃.因为 copy 就是复制一个不可变 NSArray 的对象；2、使用了 atomic 属性会严重影响性能 ； 
 
 第1条的相关原因在下文中有论述***《用@property声明的NSString（或NSArray，NSDictionary）经常使用 copy 关键字，为什么？如果改用strong关键字，可能造成什么问题？》*** 以及上文***《怎么用 copy 关键字？》***也有论述。
@@ -355,9 +355,9 @@ self.mutableArray = array;
 
 第2条原因，如下：
 
-> 该属性使用了同步锁，会在创建时生成一些额外的代码用于帮助编写多线程程序，这会带来性能问题，通过声明 nonatomic 可以节省这些虽然很小但是不必要额外开销。
+> 该属性使用了自旋锁，会在创建时生成一些额外的代码用于帮助编写多线程程序，这会带来性能问题，通过声明 nonatomic 可以节省这些虽然很小但是不必要额外开销。
 
-在默认情况下，由编译器所合成的方法会通过锁定机制确保其原子性(atomicity)。如果属性具备 nonatomic 特质，则不使用同步锁。请注意，尽管没有名为“atomic”的特质(如果某属性不具备 nonatomic 特质，那它就是“原子的”(atomic))。
+在默认情况下，由编译器所合成的方法会通过锁定机制确保其原子性(atomicity)。如果属性具备 nonatomic 特质，则不使用自旋锁。请注意，尽管没有名为“atomic”的特质(如果某属性不具备 nonatomic 特质，那它就是“原子的”(atomic))。
 
 在iOS开发中，你会发现，几乎所有属性都声明为 nonatomic。
 
@@ -366,7 +366,7 @@ self.mutableArray = array;
 因此，开发iOS程序时一般都会使用 nonatomic 属性。但是在开发 Mac OS X 程序时，使用
  atomic 属性通常都不会有性能瓶颈。
 
-###5. 如何让自己的类用 copy 修饰符？如何重写带 copy 关键字的 setter？
+### 5. 如何让自己的类用 copy 修饰符？如何重写带 copy 关键字的 setter？
 
 
 > 若想令自己所写的对象具有拷贝功能，则需实现 NSCopying 协议。如果自定义的对象分为可变版本与不可变版本，那么就要同时实现 `NSCopying` 与 `NSMutableCopying` 协议。
@@ -498,7 +498,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 }
 
 - (id)deepCopy {
-    CYLUser *copy = [[[self class] allocWithZone:zone]
+    CYLUser *copy = [[[self class] alloc]
                      initWithName:_name
                      age:_age
                      sex:_sex];
@@ -522,7 +522,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 
  ```Objective-C
 - (id)deepCopy {
-    CYLUser *copy = [[[self class] allocWithZone:zone]
+    CYLUser *copy = [[[self class] alloc]
                      initWithName:_name
                      age:_age
                      sex:_sex];
@@ -642,7 +642,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 
 
 	
-###6. @property 的本质是什么？ivar、getter、setter 是如何生成并添加到这个类中的
+### 6. @property 的本质是什么？ivar、getter、setter 是如何生成并添加到这个类中的
 
 **@property 的本质是什么？**
 
@@ -717,7 +717,7 @@ typedef struct {
 
 例如：我们定义一个string的property`@property (nonatomic, copy) NSString *string;`，通过 `property_getAttributes(property)`获取到attributes并打印出来之后的结果为`T@"NSString",C,N,V_string`
 
-其中T就代表类型，可参阅[Type Encodings](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100-SW1)，C就代表Copy，N代表nonatomic，V就代表对于的实例变量。
+其中T就代表类型，可参阅[Type Encodings](https://developer.apple.com/library/content/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtTypeEncodings.html#//apple_ref/doc/uid/TP40008048-CH100-SW1)，C就代表Copy，N代表nonatomic，V就代表对应的实例变量。
 
 
 
@@ -750,7 +750,7 @@ typedef struct {
 
 也就是说我们每次在增加一个属性,系统都会在 `ivar_list` 中添加一个成员变量的描述,在 `method_list` 中增加 setter 与 getter 方法的描述,在属性列表中增加一个属性的描述,然后计算该属性在对象中的偏移量,然后给出 setter 与 getter 方法对应的实现,在 setter 方法中从偏移量的位置开始赋值,在 getter 方法中从偏移量开始取值,为了能够读取正确字节数,系统对象偏移量的指针类型进行了类型强转.
 
-###7. @protocol 和 category 中如何使用 @property
+### 7. @protocol 和 category 中如何使用 @property
 
  1. 在 protocol 中使用 property 只会生成 setter 和 getter 方法声明,我们使用属性的目的,是希望遵守我协议的对象能实现该属性
  2. category 使用 @property 也是只会生成 setter 和 getter 方法的声明,如果我们真的需要给 category 增加属性的实现,需要借助于运行时的两个函数：
@@ -758,7 +758,7 @@ typedef struct {
   1. `objc_setAssociatedObject`
   2. `objc_getAssociatedObject`
 
-###8. runtime 如何实现 weak 属性
+### 8. runtime 如何实现 weak 属性
 
 要实现 weak 属性，首先要搞清楚 weak 属性的特点：
 
@@ -899,6 +899,8 @@ objc_storeWeak(&obj1, 0);
 
 
 我们从setter方法入手：
+
+（注意以下的 `cyl_runAtDealloc` 方法实现仅仅用于模拟原理，如果想用于项目中，还需要考虑更复杂的场景，想在实际项目使用的话，可以使用我写的一个小库，可以使用 CocoaPods 在项目中使用： [CYLDeallocBlockExecutor](https://github.com/ChenYilong/CYLDeallocBlockExecutor) ）
 
  ```Objective-C
 - (void)setObject:(NSObject *)object
@@ -1051,15 +1053,12 @@ NSObject *foo = [[NSObject alloc] init];
  ```
 
 
+如果对 `cyl_runAtDealloc` 的实现原理有兴趣，可以看下我写的一个小库，可以使用 CocoaPods 在项目中使用： [CYLDeallocBlockExecutor](https://github.com/ChenYilong/CYLDeallocBlockExecutor) 
+
+参考博文： [***Fun With the Objective-C Runtime: Run Code at Deallocation of Any Object***](http://stackoverflow.com/a/31560217/3395008)
 
 
-
-
-
-如果对 `cyl_runAtDealloc` 的实现原理有兴趣，可以看下这篇博文 [***Fun With the Objective-C Runtime: Run Code at Deallocation of Any Object***](http://stackoverflow.com/a/31560217/3395008)
-
-
-###9. @property中有哪些属性关键字？/ @property 后面可以有哪些修饰符？
+### 9. @property中有哪些属性关键字？/ @property 后面可以有哪些修饰符？
 属性可以拥有的特质分为四类:
  
  1. 原子性--- `nonatomic` 特质
@@ -1150,7 +1149,7 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
 }
  ```
 
-###10. weak属性需要在dealloc中置nil么？
+### 10. weak属性需要在dealloc中置nil么？
 不需要。
 
 
@@ -1173,6 +1172,8 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
 }
  ```
 
+如果对 `cyl_runAtDealloc` 的实现原理有兴趣，可以看下我写的一个小库，可以使用 CocoaPods 在项目中使用： [CYLDeallocBlockExecutor](https://github.com/ChenYilong/CYLDeallocBlockExecutor) 
+
 
 也即:
 
@@ -1183,13 +1184,13 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
 
 
 
-###11. @synthesize和@dynamic分别有什么作用？
+### 11. @synthesize和@dynamic分别有什么作用？
 
  1. @property有两个对应的词，一个是 @synthesize，一个是 @dynamic。如果 @synthesize和 @dynamic都没写，那么默认的就是`@syntheszie var = _var;`
  2. @synthesize 的语义是如果你没有手动实现 setter 方法和 getter 方法，那么编译器会自动为你加上这两个方法。
  3. @dynamic 告诉编译器：属性的 setter 与 getter 方法由用户自己实现，不自动生成。（当然对于 readonly 的属性只需提供 getter 即可）。假如一个属性被声明为 @dynamic var，然后你没有提供 @setter方法和 @getter 方法，编译的时候没问题，但是当程序运行到 `instance.var = someVar`，由于缺 setter 方法会导致程序崩溃；或者当运行到 `someVar = var` 时，由于缺 getter 方法同样会导致崩溃。编译时没问题，运行时才执行相应的方法，这就是所谓的动态绑定。
 
-###12. ARC下，不显式指定任何属性关键字时，默认的关键字都有哪些？
+### 12. ARC下，不显式指定任何属性关键字时，默认的关键字都有哪些？
 
  1. 对应基本数据类型默认关键字是
  
@@ -1204,7 +1205,7 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
 
  2. [ ***Variable property attributes or Modifiers in iOS*** ](http://rdcworld-iphone.blogspot.in/2012/12/variable-property-attributes-or.html)
 
-###13. 用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？如果改用strong关键字，可能造成什么问题？
+### 13. 用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？如果改用strong关键字，可能造成什么问题？
 
 
  1. 因为父类指针可以指向子类对象,使用 copy 的目的是为了让本对象的属性不受外界影响,使用 copy 无论给我传入是一个可变对象还是不可对象,我本身持有的就是一个不可变的副本.
@@ -1225,8 +1226,9 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
 然后进行下面的操作：
 
  ```Objective-C
-    NSMutableArray *mutableArray = [[NSMutableArray alloc] init];
     NSArray *array = @[ @1, @2, @3, @4 ];
+    NSMutableArray *mutableArray = [NSMutableArray arrayWithArray:array];
+    
     self.array = mutableArray;
     [mutableArray removeAllObjects];;
     NSLog(@"%@",self.array);
@@ -1259,7 +1261,7 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
  1. 对非集合类对象的 copy 与 mutableCopy 操作；
  2. 对集合类对象的 copy 与 mutableCopy 操作。
 
-####1. 对非集合类对象的copy操作：
+#### 1. 对非集合类对象的copy操作：
 
 在非集合类对象中：对 immutable 对象进行 copy 操作，是指针复制，mutableCopy 操作时内容复制；对 mutable 对象进行 copy 和 mutableCopy 都是内容复制。用代码简单表示如下：
 
@@ -1290,7 +1292,7 @@ stringCopy 的值也不会因此改变，但是如果不使用 copy，stringCopy
 
 > 用 @property 声明 NSString、NSArray、NSDictionary 经常使用 copy 关键字，是因为他们有对应的可变类型：NSMutableString、NSMutableArray、NSMutableDictionary，他们之间可能进行赋值操作，为确保对象中的字符串值不会无意间变动，应该在设置新属性值时拷贝一份。
 
-####2、集合类对象的copy与mutableCopy
+#### 2、集合类对象的copy与mutableCopy
 
 集合类对象是指 NSArray、NSDictionary、NSSet ... 之类的对象。下面先看集合类immutable对象使用 copy 和 mutableCopy 的一个例子：
 
@@ -1327,7 +1329,7 @@ NSMutableArray *mCopyArray = [array mutableCopy];
 
 参考链接：[iOS 集合的深复制与浅复制](https://www.zybuluo.com/MicroCai/note/50592)
 
-###14. @synthesize合成实例变量的规则是什么？假如property名为foo，存在一个名为`_foo`的实例变量，那么还会自动合成新变量么？
+### 14. @synthesize合成实例变量的规则是什么？假如property名为foo，存在一个名为`_foo`的实例变量，那么还会自动合成新变量么？
 在回答之前先说明下一个概念：
 
 > 实例变量 = 成员变量 ＝ ivar
@@ -1384,7 +1386,7 @@ NSMutableArray *mCopyArray = [array mutableCopy];
 ![enter image description here](http://i.imgur.com/t28ge4W.png)
 
 
-###15. 在有了自动合成属性实例变量之后，@synthesize还有哪些使用场景？
+### 15. 在有了自动合成属性实例变量之后，@synthesize还有哪些使用场景？
 
 回答这个问题前，我们要搞清楚一个问题，什么情况下不会autosynthesis（自动合成）？
 
@@ -1470,7 +1472,7 @@ NSMutableArray *mCopyArray = [array mutableCopy];
  2. 要么如第17行：使用`@synthesize foo = _foo;` ，关联 @property 与 ivar。
 
 更多信息，请戳- 》[ ***When should I use @synthesize explicitly?*** ](http://stackoverflow.com/a/19821816/3395008)
-###16. objc中向一个nil对象发送消息将会发生什么？
+### 16. objc中向一个nil对象发送消息将会发生什么？
 在 Objective-C 中向 nil 发送消息是完全有效的——只是在运行时不会有任何作用:
 
  1. 如果一个方法返回值是一个对象，那么发送给nil的消息将返回0(nil)。例如：  
@@ -1521,7 +1523,7 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
 那么，回到本题，如果向一个nil对象发送消息，首先在寻找对象的isa指针时就是0地址返回了，所以不会出现任何错误。
 
 
-###17. objc中向一个对象发送消息[obj foo]和`objc_msgSend()`函数之间有什么关系？
+### 17. objc中向一个对象发送消息[obj foo]和`objc_msgSend()`函数之间有什么关系？
 具体原因同上题：该方法编译之后就是`objc_msgSend()`函数调用.
 
 我们用 clang 分析下，clang 提供一个命令，可以将Objective-C的源码改写成C++语言，借此可以研究下[obj foo]和`objc_msgSend()`函数之间有什么关系。
@@ -1566,9 +1568,9 @@ clang -rewrite-objc main.m
 
 也就是说：
 
->  [obj foo];在objc动态编译时，会被转意为：`objc_msgSend(obj, @selector(foo));`。
+>  [obj foo];在objc编译时，会被转意为：`objc_msgSend(obj, @selector(foo));`。
 
-###18. 什么时候会报unrecognized selector的异常？
+### 18. 什么时候会报unrecognized selector的异常？
 
 简单来说：
 
@@ -1602,7 +1604,7 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
 
 为了能更清晰地理解这些方法的作用，git仓库里也给出了一个Demo，名称叫“ `_objc_msgForward_demo` ”,可运行起来看看。
 
-###19. 一个objc对象如何进行内存布局？（考虑有父类的情况）
+### 19. 一个objc对象如何进行内存布局？（考虑有父类的情况）
 
  - 所有父类的成员变量和自己的成员变量都会存放在该对象所对应的存储空间中.
  - 每一个对象内部都有一个isa指针,指向他的类对象,类对象中存放着本对象的
@@ -1639,11 +1641,11 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
 如图:
 ![enter image description here](http://i.imgur.com/w6tzFxz.png)
 
-###20. 一个objc对象的isa的指针指向什么？有什么作用？
+### 20. 一个objc对象的isa的指针指向什么？有什么作用？
 
 指向他的类对象,从而可以找到对象上的方法
 
-###21. 下面的代码输出什么？
+### 21. 下面的代码输出什么？
 
 
 
@@ -1850,11 +1852,11 @@ objc Runtime开源代码对- (Class)class方法的实现:
 参考链接：[微博@Chun_iOS](http://weibo.com/junbbcom)的博文[刨根问底Objective－C Runtime（1）－ Self & Super](http://chun.tips/blog/2014/11/05/bao-gen-wen-di-objective%5Bnil%5Dc-runtime(1)%5Bnil%5D-self-and-super/)
 
 
-###22. runtime如何通过selector找到对应的IMP地址？（分别考虑类方法和实例方法）
+### 22. runtime如何通过selector找到对应的IMP地址？（分别考虑类方法和实例方法）
 
 每一个类对象中都一个方法列表,方法列表中记录着方法的名称,方法实现,以及参数类型,其实selector本质就是方法名称,通过这个方法名称就可以在方法列表中找到对应的方法实现.
 
-###23. 使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？
+### 23. 使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？
 
  - 在ARC下不需要。
  - <p><del> 在MRC中,对于使用retain或copy策略的需要 。</del></p>在MRC下也不需要
@@ -1935,7 +1937,7 @@ objc_setAssociatedObject (
 
 
 
-###24. objc中的类方法和实例方法有什么本质区别和联系？
+### 24. objc中的类方法和实例方法有什么本质区别和联系？
 
 类方法：
 
@@ -1963,33 +1965,33 @@ objc_setAssociatedObject (
 runtime部分主要参考[Apple官方文档：Declared Properties](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ObjCRuntimeGuide/Articles/ocrtPropertyIntrospection.html)
 
 
-###25. `_objc_msgForward`函数是做什么的，直接调用它将会发生什么？
+### 25. `_objc_msgForward`函数是做什么的，直接调用它将会发生什么？
 
-###26. runtime如何实现weak变量的自动置nil？
+### 26. runtime如何实现weak变量的自动置nil？
 
-###27. 能否向编译后得到的类中增加实例变量？能否向运行时创建的类中添加实例变量？为什么？ 
+### 27. 能否向编译后得到的类中增加实例变量？能否向运行时创建的类中添加实例变量？为什么？ 
 
-###28. runloop和线程有什么关系？
+### 28. runloop和线程有什么关系？
 
 
-###29. runloop的mode作用是什么？
+### 29. runloop的mode作用是什么？
 
-###30. 以+ scheduledTimerWithTimeInterval...的方式触发的timer，在滑动页面上的列表时，timer会暂定回调，为什么？如何解决？
+### 30. 以+ scheduledTimerWithTimeInterval...的方式触发的timer，在滑动页面上的列表时，timer会暂定回调，为什么？如何解决？
 
-###31. 猜想runloop内部是如何实现的？
-###32. objc使用什么机制管理对象内存？
-###33. ARC通过什么方式帮助开发者管理内存？
-###34. 不手动指定autoreleasepool的前提下，一个autorealese对象在什么时刻释放？（比如在一个vc的viewDidLoad中创建）
-###35. `BAD_ACCESS`在什么情况下出现？
-###36. 苹果是如何实现autoreleasepool的？ 
-###37. 使用block时什么情况会发生引用循环，如何解决？
-###38. 在block内如何修改block外部变量？
-###39. 使用系统的某些block api（如UIView的block版本写动画时），是否也考虑引用循环问题？ 
-###40. GCD的队列（`dispatch_queue_t`）分哪两种类型？
-###41. 如何用GCD同步若干个异步调用？（如根据若干个url异步加载多张图片，然后在都下载完成后合成一张整图）
-###42. `dispatch_barrier_async`的作用是什么？
-###43. 苹果为什么要废弃`dispatch_get_current_queue`？
-###44. 以下代码运行结果如何？
+### 31. 猜想runloop内部是如何实现的？
+### 32. objc使用什么机制管理对象内存？
+### 33. ARC通过什么方式帮助开发者管理内存？
+### 34. 不手动指定autoreleasepool的前提下，一个autorealese对象在什么时刻释放？（比如在一个vc的viewDidLoad中创建）
+### 35. `BAD_ACCESS`在什么情况下出现？
+### 36. 苹果是如何实现autoreleasepool的？ 
+### 37. 使用block时什么情况会发生引用循环，如何解决？
+### 38. 在block内如何修改block外部变量？
+### 39. 使用系统的某些block api（如UIView的block版本写动画时），是否也考虑引用循环问题？ 
+### 40. GCD的队列（`dispatch_queue_t`）分哪两种类型？
+### 41. 如何用GCD同步若干个异步调用？（如根据若干个url异步加载多张图片，然后在都下载完成后合成一张整图）
+### 42. `dispatch_barrier_async`的作用是什么？
+### 43. 苹果为什么要废弃`dispatch_get_current_queue`？
+### 44. 以下代码运行结果如何？
 
 
 	- (void)viewDidLoad
@@ -2002,24 +2004,22 @@ runtime部分主要参考[Apple官方文档：Declared Properties](https://devel
 	    NSLog(@"3");
 	}
 
-###45. addObserver:forKeyPath:options:context:各个参数的作用分别是什么，observer中需要实现哪个方法才能获得KVO回调？
-###46. 如何手动触发一个value的KVO
-###47. 若一个类有实例变量`NSString *_foo`，调用setValue:forKey:时，可以以foo还是`_foo`作为key？
-###48. KVC的keyPath中的集合运算符如何使用？
-###49. KVC和KVO的keyPath一定是属性么？
-###50. 如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？
-###51. apple用什么方式实现对一个对象的KVO？ 
-###52. IBOutlet连出来的视图属性为什么可以被设置成weak?
-###53. IB中User Defined Runtime Attributes如何使用？ 
-###54. 如何调试`BAD_ACCESS`错误
-###55. lldb（gdb）常用的调试命令？
+### 45. addObserver:forKeyPath:options:context:各个参数的作用分别是什么，observer中需要实现哪个方法才能获得KVO回调？
+### 46. 如何手动触发一个value的KVO
+### 47. 若一个类有实例变量`NSString *_foo`，调用setValue:forKey:时，可以以foo还是`_foo`作为key？
+### 48. KVC的keyPath中的集合运算符如何使用？
+### 49. KVC和KVO的keyPath一定是属性么？
+### 50. 如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？
+### 51. apple用什么方式实现对一个对象的KVO？ 
+### 52. IBOutlet连出来的视图属性为什么可以被设置成weak?
+### 53. IB中User Defined Runtime Attributes如何使用？ 
+### 54. 如何调试`BAD_ACCESS`错误
+### 55. lldb（gdb）常用的调试命令？
 
 
 
-----------
-
-
-Posted by [微博@iOS程序犭袁](http://weibo.com/luohanchenyilong/)  
+<hr />
+Posted by Posted by [微博@iOS程序犭袁](http://weibo.com/luohanchenyilong/) & [公众号@iTeaTime技术清谈](https://mp.weixin.qq.com/s/A4e5h3xgIEh6PInf1Rjqsw) 
 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | [Creative Commons BY-NC-ND 3.0](http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh)
-
+<p align="center"><a href="http://weibo.com/u/1692391497?s=6uyXnP" target="_blank"><img border="0" src="http://service.t.sina.com.cn/widget/qmd/1692391497/b46c844b/1.png"/></a></p>
 

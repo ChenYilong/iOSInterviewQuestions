@@ -53,7 +53,6 @@ id dynamicMethodIMP(id self, SEL _cmd) {
     return result; // 3
 }
 
-
 - (void)forwardInvocation:(NSInvocation *)anInvocation {
 //    [super forwardInvocation:anInvocation];
     [self.target forwardInvocation:anInvocation];

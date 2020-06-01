@@ -12,7 +12,7 @@
 @implementation ForwardingTarge
 
 id dynamicMethod(id self, SEL _cmd) {
-    NSLog(@"%s:动态添加的方法",__FUNCTION__);
+    NSLog(@"🔴类名与方法名：%@（在第%@行），描述：%@", @(__PRETTY_FUNCTION__), @(__LINE__), @"动态添加的方法");
     return @0;
 }
 

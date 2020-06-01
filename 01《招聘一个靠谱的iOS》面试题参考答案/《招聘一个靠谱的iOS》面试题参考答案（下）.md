@@ -70,7 +70,7 @@
 ----------
 
 
-###25. `_objc_msgForward`函数是做什么的，直接调用它将会发生什么？
+### 25. `_objc_msgForward`函数是做什么的，直接调用它将会发生什么？
 
 > `_objc_msgForward`是 IMP 类型，用于消息转发的：当向一个对象发送一条消息，但它并没有实现的时候，`_objc_msgForward`会尝试做消息转发。
 
@@ -164,7 +164,12 @@ IMP lookUpImpOrNil(Class cls, SEL sel) {
 ```Objective-C
 (void)instrumentObjcMessageSends(YES);
 ```
-
+因为该函数处于 objc-internal.h 内，而该文件并不开放，所以调用的时候先声明，目的是告诉编译器程序目标文件包含该方法存在，让编译通过
+```
+OBJC_EXPORT void
+instrumentObjcMessageSends(BOOL flag)
+OBJC_AVAILABLE(10.0, 2.0, 9.0, 1.0, 2.0);
+```
 
 或者断点暂停程序运行，并在 gdb 中输入下面的命令：
 
@@ -264,7 +269,7 @@ int main(int argc, char * argv[]) {
 
  3. 调用`methodSignatureForSelector:`方法，尝试获得一个方法签名。如果获取不到，则直接调用`doesNotRecognizeSelector`抛出异常。如果能获取，则返回非nil：创建一个 NSlnvocation 并传给`forwardInvocation:`。
 
- 4. 调用`forwardInvocation:`方法，将第3步获取到的方法签名包装成 Invocation 传入，如何处理就在这里面了，并返回非ni。
+ 4. 调用`forwardInvocation:`方法，将第3步获取到的方法签名包装成 Invocation 传入，如何处理就在这里面了，并返回非nil。
 
  5. 调用`doesNotRecognizeSelector:` ，默认的实现是抛出异常。如果第3步没能获得一个方法签名，执行该步骤。
 
@@ -336,7 +341,7 @@ typedef void (*voidIMP)(id, SEL, ...)
 
 同时 [ ***RAC(ReactiveCocoa)*** ](https://github.com/ReactiveCocoa/ReactiveCocoa) 源码中也用到了该方法。
 
-###26. runtime如何实现weak变量的自动置nil？
+### 26. runtime如何实现weak变量的自动置nil？
 
 
 > runtime 对注册的类， 会进行布局，对于 weak 对象会放入一个 hash 表中。 用 weak 指向的对象内存地址作为 key，当此对象的引用计数为0的时候会 dealloc，假如 weak 指向的对象内存地址是a，那么就会以a为键， 在这个 weak 表中搜索，找到所有以a为键的 weak 对象，从而设置为 nil。
@@ -424,7 +429,7 @@ objc_storeWeak(&obj1, 0);
 
 
 
-###27. 能否向编译后得到的类中增加实例变量？能否向运行时创建的类中添加实例变量？为什么？ 
+### 27. 能否向编译后得到的类中增加实例变量？能否向运行时创建的类中添加实例变量？为什么？ 
 
  - 不能向编译后得到的类中增加实例变量；
  - 能向运行时创建的类中添加实例变量；
@@ -436,7 +441,7 @@ objc_storeWeak(&obj1, 0);
  - 运行时创建的类是可以添加实例变量，调用 `class_addIvar` 函数。但是得在调用 `objc_allocateClassPair` 之后，`objc_registerClassPair` 之前，原因同上。
 
 
-###28. runloop和线程有什么关系？
+### 28. runloop和线程有什么关系？
 
 总的说来，Run loop，正如其名，loop表示某种循环，和run放在一起就表示一直在运行着的循环。实际上，run loop和线程是紧密相连的，可以这样说run loop是为了线程而生，没有线程，它就没有存在的必要。Run loops是线程的基础架构部分， Cocoa 和 CoreFundation 都提供了 run loop 对象方便配置和管理线程的 run loop （以下都以 Cocoa 为例）。每个线程，包括程序的主线程（ main thread ）都有与之相应的 run loop 对象。
 
@@ -475,7 +480,7 @@ NSRunLoop *runloop = [NSRunLoop currentRunLoop];
 
 参考链接：[《Objective-C之run loop详解》](http://blog.csdn.net/wzzvictory/article/details/9237973)。
 
-###29. runloop的mode作用是什么？
+### 29. runloop的mode作用是什么？
 
 model 主要是用来指定事件在运行循环中的优先级的，分为：
 
@@ -490,7 +495,7 @@ model 主要是用来指定事件在运行循环中的优先级的，分为：
  1. NSDefaultRunLoopMode（kCFRunLoopDefaultMode）
  2. NSRunLoopCommonModes（kCFRunLoopCommonModes）
 
-###30. 以+ scheduledTimerWithTimeInterval...的方式触发的timer，在滑动页面上的列表时，timer会暂定回调，为什么？如何解决？
+### 30. 以+ scheduledTimerWithTimeInterval...的方式触发的timer，在滑动页面上的列表时，timer会暂定回调，为什么？如何解决？
 
 RunLoop只能运行在一种mode下，如果要换mode，当前的loop也需要停下重启成新的。利用这个机制，ScrollView滚动过程中NSDefaultRunLoopMode（kCFRunLoopDefaultMode）的mode会切换到UITrackingRunLoopMode来保证ScrollView的流畅滑动：只能在NSDefaultRunLoopMode模式下处理的事件会影响ScrollView的滑动。
 
@@ -522,7 +527,7 @@ NSTimer *timer = [NSTimer timerWithTimeInterval:1.0
 ```
 
 
-###31. 猜想runloop内部是如何实现的？
+### 31. 猜想runloop内部是如何实现的？
 
 > 一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，通常的代码逻辑
 是这样的：
@@ -562,18 +567,18 @@ NSTimer *timer = [NSTimer timerWithTimeInterval:1.0
  1. [《深入理解RunLoop》](http://blog.ibireme.com/2015/05/18/runloop/#base)
  2. 摘自博文[***CFRunLoop***](https://github.com/ming1016/study/wiki/CFRunLoop)，原作者是[微博@我就叫Sunny怎么了](http://weibo.com/u/1364395395)
 
-###32. objc使用什么机制管理对象内存？
+### 32. objc使用什么机制管理对象内存？
 
 通过 retainCount 的机制来决定对象是否需要释放。
 每次 runloop 的时候，都会检查对象的 retainCount，如果retainCount 为 0，说明该对象没有地方需要继续使用了，可以释放掉了。
 
-###33. ARC通过什么方式帮助开发者管理内存？
+### 33. ARC通过什么方式帮助开发者管理内存？
  <p><del>编译时根据代码上下文，插入 retain/release
 </del></p>
 ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单。应该是编译期和运行期两部分共同帮助开发者管理内存。
 
 在编译期，ARC用的是更底层的C接口实现的retain/release/autorelease，这样做性能更好，也是为什么不能在ARC环境下手动retain/release/autorelease，同时对同一上下文的同一对象的成对retain/release操作进行优化（即忽略掉不必要的操作）；ARC也包含运行期组件，这个地方做的优化比较复杂，但也不能被忽略。【TODO:后续更新会详细描述下】
-###34. 不手动指定autoreleasepool的前提下，一个autorealese对象在什么时刻释放？（比如在一个vc的viewDidLoad中创建）
+###  34. 不手动指定autoreleasepool的前提下，一个autorealese对象在什么时刻释放？（比如在一个vc的viewDidLoad中创建）
 分两种情况：手动干预释放时机、系统自动去释放。
 
 
@@ -585,7 +590,8 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
 
 释放的时机总结起来，可以用下图来表示：
 
-![autoreleasepool与 runloop 的关系图](http://i61.tinypic.com/28kodwp.jpg)
+
+<p align="center"><a href="https://mp.weixin.qq.com/s/A4e5h3xgIEh6PInf1Rjqsw"><img src="http://ww3.sinaimg.cn/large/006y8mN6gy1g71mm4cx74j30kr0gngnw.jpg"></a></p>
 
 下面对这张图进行详细的解释：
 
@@ -601,7 +607,7 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
 
 那什么时间会创建自动释放池？运行循环检测到事件并启动后，就会创建自动释放池。 
 
-子线程的 runloop 默认是不工作，无法主动创建，必须手动创建。
+从 `RunLoop` 源代码中可知，子线程默认是没有 `RunLoop` 的，如果需要在子线程开启 `RunLoop` ，则需要调用 `[NSRunLoop CurrentRunLoop]` 方法，它内部实现是先检查线程，如果发现是子线程，以懒加载的形式 创建一个子线程的 `RunLoop`。并存储在一个全局的 可变字典里。编程人员在调用 `[NSRunLoop CurrentRunLoop]` 时，是自动创建 `RunLoop` 的，而没法手动创建。
 
 自定义的 NSOperation 和 NSThread 需要手动创建自动释放池。比如： 自定义的 NSOperation 类中的 main 方法里就必须添加自动释放池。否则出了作用域后，自动释放对象会因为没有自动释放池去处理它，而造成内存泄露。
 
@@ -620,10 +626,10 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
 
 参考链接：[《黑幕背后的Autorelease》](http://blog.sunnyxx.com/2014/10/15/behind-autorelease/)
 
-###35. BAD_ACCESS在什么情况下出现？
-访问了野指针，比如对一个已经释放的对象执行了release、访问已经释放对象的成员变量或者发消息。
+###  35. BAD_ACCESS在什么情况下出现？
+访问了悬垂指针，比如对一个已经释放的对象执行了release、访问已经释放对象的成员变量或者发消息。
 死循环
-###36. 苹果是如何实现autoreleasepool的？ 
+###  36. 苹果是如何实现autoreleasepool的？ 
 
 autoreleasepool 以一个队列数组的形式实现,主要通过下列三个函数完成.
 
@@ -636,9 +642,12 @@ autoreleasepool 以一个队列数组的形式实现,主要通过下列三个函
 
 举例说明：我们都知道用类方法创建的对象都是 Autorelease 的，那么一旦 Person 出了作用域，当在 Person 的 dealloc 方法中打上断点，我们就可以看到这样的调用堆栈信息：
 
- ![enter image description here](http://i60.tinypic.com/15mfj11.jpg)
+ 
+ <p align="center"><a href="https://mp.weixin.qq.com/s/A4e5h3xgIEh6PInf1Rjqsw"><img src="http://ww1.sinaimg.cn/large/006y8mN6gy1g71molq31cj30ad0iojse.jpg"></a></p>
 
-###37. 使用block时什么情况会发生引用循环，如何解决？
+
+
+### 37. 使用block时什么情况会发生引用循环，如何解决？
 一个对象中强引用了block，在block中又强引用了该对象，就会发射循环引用。
 
 解决方法是将该对象使用__weak或者__block修饰符修饰之后再在block中使用。
@@ -653,7 +662,7 @@ autoreleasepool 以一个队列数组的形式实现,主要通过下列三个函
 
 检测代码中是否存在循环引用问题，可使用 Facebook 开源的一个检测工具  [***FBRetainCycleDetector***](https://github.com/facebook/FBRetainCycleDetector) 。
 
-###38. 在block内如何修改block外部变量？
+### 38. 在block内如何修改block外部变量？
 默认情况下，在block中访问的外部变量是复制过去的，即：**写操作不对原变量生效**。但是你可以加上 `__block` 来让其写操作生效，示例代码如下:
 
 
@@ -723,7 +732,7 @@ autoreleasepool 以一个队列数组的形式实现,主要通过下列三个函
         a.string = @"Jerry";
         NSLog(@"\n block内部：------------------------------------\n\
          a指向的堆中地址：%p；a在栈中的指针地址：%p", a, &a);               //a在栈区
-        a = [NSMutableString stringWithString:@"William"];
+        //a = [NSMutableString stringWithString:@"William"];
     };
     foo();
     NSLog(@"\n 定以后：------------------------------------\n\
@@ -731,7 +740,7 @@ autoreleasepool 以一个队列数组的形式实现,主要通过下列三个函
     
  ```
 
-![enter image description here](http://i66.tinypic.com/34euhcy.jpg)
+<p align="center"><a href="https://mp.weixin.qq.com/s/A4e5h3xgIEh6PInf1Rjqsw"><img src="http://ww2.sinaimg.cn/large/006y8mN6gy1g71mr9ygfsj30qh0buju1.jpg"></a></p>
 
 
  这里的a已经由基本数据类型，变成了对象类型。block会对对象类型的指针进行copy，copy到堆中，但并不会改变该指针所指向的堆中的地址，所以在上面的示例代码中，block体内修改的实际是a指向的堆中的内容。
@@ -740,7 +749,7 @@ autoreleasepool 以一个队列数组的形式实现,主要通过下列三个函
 
 上文已经说过：**Block不允许修改外部变量的值**，这里所说的外部变量的值，指的是栈中指针的内存地址。栈区是红灯区，堆区才是绿灯区。
 
-###39. 使用系统的某些block api（如UIView的block版本写动画时），是否也考虑引用循环问题？ 
+### 39. 使用系统的某些block api（如UIView的block版本写动画时），是否也考虑引用循环问题？ 
 
 系统的某些block api中，UIView的block版本写动画时不需要考虑，但也有一些api 需要考虑：
 
@@ -797,13 +806,13 @@ __typeof__(self) strongSelf = weakSelf;
 self --> _observer --> block --> self 显然这也是一个循环引用。
 
 检测代码中是否存在循环引用问题，可使用 Facebook 开源的一个检测工具  [***FBRetainCycleDetector***](https://github.com/facebook/FBRetainCycleDetector) 。
-###40. GCD的队列（`dispatch_queue_t`）分哪两种类型？
+### 40. GCD的队列（`dispatch_queue_t`）分哪两种类型？
 
 
  1. 串行队列Serial Dispatch Queue
  2. 并行队列Concurrent Dispatch Queue
 
-###41. 如何用GCD同步若干个异步调用？（如根据若干个url异步加载多张图片，然后在都下载完成后合成一张整图）
+### 41. 如何用GCD同步若干个异步调用？（如根据若干个url异步加载多张图片，然后在都下载完成后合成一张整图）
 
 使用Dispatch Group追加block到Global Group Queue,这些block如果全部执行完毕，就会执行Main Dispatch Queue中的结束处理的block。
 
@@ -817,7 +826,7 @@ dispatch_group_notify(group, dispatch_get_main_queue(), ^{
         // 合并图片
 });
 ```
-###42. `dispatch_barrier_async`的作用是什么？
+### 42. `dispatch_barrier_async`的作用是什么？
  在并行队列中，为了保持某些任务的顺序，需要等待一些任务完成后才能继续进行，使用 barrier 来等待之前任务完成，避免数据竞争等问题。 
  `dispatch_barrier_async` 函数会等待追加到Concurrent Dispatch Queue并行队列中的操作全部执行完之后，然后再执行 `dispatch_barrier_async` 函数追加的处理，等 `dispatch_barrier_async` 追加的处理执行结束之后，Concurrent Dispatch Queue才恢复之前的动作继续执行。
 
@@ -826,12 +835,13 @@ dispatch_group_notify(group, dispatch_get_main_queue(), ^{
 （注意：使用 `dispatch_barrier_async` ，该函数只能搭配自定义并行队列 `dispatch_queue_t` 使用。不能使用： `dispatch_get_global_queue` ，否则 `dispatch_barrier_async` 的作用会和 `dispatch_async` 的作用一模一样。 ）
 
 
-###43. 苹果为什么要废弃`dispatch_get_current_queue`？
+### 43. 苹果为什么要废弃`dispatch_get_current_queue`？
 
-`dispatch_get_current_queue`容易造成死锁
+`dispatch_get_current_queue`函数的行为常常与开发者所预期的不同。
+由于派发队列是按层级来组织的，这意味着排在某条队列中的块会在其上级队列里执行。
+队列间的层级关系会导致检查当前队列是否为执行同步派发所用的队列这种方法并不总是奏效。`dispatch_get_current_queue`函数通常会被用于解决由不可以重入的代码所引发的死锁，然后能用此函数解决的问题，通常也可以用"队列特定数据"来解决。
 
-
-###44. 以下代码运行结果如何？
+### 44. 以下代码运行结果如何？
 
 
 	- (void)viewDidLoad
@@ -847,7 +857,7 @@ dispatch_group_notify(group, dispatch_get_main_queue(), ^{
 只输出：1 。发生主线程锁死。
 
 
-###45. addObserver:forKeyPath:options:context:各个参数的作用分别是什么，observer中需要实现哪个方法才能获得KVO回调？
+### 45. addObserver:forKeyPath:options:context:各个参数的作用分别是什么，observer中需要实现哪个方法才能获得KVO回调？
 
 ```Objective-C
 // 添加键值观察
@@ -874,7 +884,7 @@ observer中需要实现一下方法：
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context;
 ```
 
-###46. 如何手动触发一个value的KVO
+### 46. 如何手动触发一个value的KVO
 
 所谓的“手动触发”是区别于“自动触发”：
 
@@ -934,17 +944,17 @@ observer中需要实现一下方法：
 
 参考链接： [Manual Change Notification---Apple 官方文档](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/KeyValueObserving/Articles/KVOCompliance.html#//apple_ref/doc/uid/20002178-SW3) 
 
-###47. 若一个类有实例变量 `NSString *_foo` ，调用setValue:forKey:时，可以以foo还是 `_foo` 作为key？
+### 47. 若一个类有实例变量 `NSString *_foo` ，调用setValue:forKey:时，可以以foo还是 `_foo` 作为key？
 都可以。
-###48. KVC的keyPath中的集合运算符如何使用？
+### 48. KVC的keyPath中的集合运算符如何使用？
 
  1. 必须用在集合对象上或普通对象的集合属性上
  2. 简单集合运算符有@avg， @count ， @max ， @min ，@sum，
  3. 格式 @"@sum.age"或 @"集合属性.@max.age"
 
-###49. KVC和KVO的keyPath一定是属性么？
+### 49. KVC和KVO的keyPath一定是属性么？
 KVC 支持实例变量，KVO 只能手动支持[手动设定实例变量的KVO实现监听](https://yq.aliyun.com/articles/30483)
-###50. 如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？
+### 50. 如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？
 
 
 请参考：
@@ -952,7 +962,7 @@ KVC 支持实例变量，KVO 只能手动支持[手动设定实例变量的KVO�
   1. [《如何自己动手实现 KVO》](http://tech.glowing.com/cn/implement-kvo/)
   2. [**KVO for manually implemented properties**]( http://stackoverflow.com/a/10042641/3395008 ) 
 
-###51. apple用什么方式实现对一个对象的KVO？ 
+### 51. apple用什么方式实现对一个对象的KVO？ 
 
 
 
@@ -964,7 +974,9 @@ KVC 支持实例变量，KVO 只能手动支持[手动设定实例变量的KVO�
 
  > 当你观察一个对象时，一个新的类会被动态创建。这个类继承自该对象的原本的类，并重写了被观察属性的 setter 方法。重写的 setter 方法会负责在调用原 setter 方法之前和之后，通知所有观察对象：值的更改。最后通过 ` isa 混写（isa-swizzling）` 把这个对象的 isa 指针 ( isa 指针告诉 Runtime 系统这个对象的类是什么 ) 指向这个新创建的子类，对象就神奇的变成了新创建的子类的实例。我画了一张示意图，如下所示：
 
-![enter image description here](http://i62.tinypic.com/sy57ur.jpg)
+
+<p align="center"><a href="https://mp.weixin.qq.com/s/A4e5h3xgIEh6PInf1Rjqsw"><img src="http://ww1.sinaimg.cn/large/006y8mN6gy1g71mu8gh57j30jg0bnq41.jpg"></a></p>
+
 
  KVO 确实有点黑魔法：
 
@@ -1032,7 +1044,6 @@ KVO 在实现中通过 ` isa 混写（isa-swizzling）` 把这个对象的 isa �
 
  ```
 
-![enter image description here](http://i66.tinypic.com/ncm7th.jpg)
 
 
 如果单单从下面这个例子的打印上， 
@@ -1049,7 +1060,7 @@ KVO 在实现中通过 ` isa 混写（isa-swizzling）` 把这个对象的 isa �
 
 而“回调的调用时机”就是在你调用 `didChangeValueForKey:` 方法时。
 
-###52. IBOutlet连出来的视图属性为什么可以被设置成weak?
+### 52. IBOutlet连出来的视图属性为什么可以被设置成weak?
 
 参考链接：[ ***Should IBOutlets be strong or weak under ARC?*** ](http://stackoverflow.com/questions/7678469/should-iboutlets-be-strong-or-weak-under-arc)
 
@@ -1060,12 +1071,12 @@ KVO 在实现中通过 ` isa 混写（isa-swizzling）` 把这个对象的 isa �
 
 不过这个回答漏了个重要知识，使用storyboard（xib不行）创建的vc，会有一个叫_topLevelObjectsToKeepAliveFromStoryboard的私有数组强引用所有top level的对象，所以这时即便outlet声明成weak也没关系
 
-###53. IB中User Defined Runtime Attributes如何使用？ 
+### 53. IB中User Defined Runtime Attributes如何使用？ 
 
 它能够通过KVC的方式配置一些你在interface builder 中不能配置的属性。当你希望在IB中作尽可能多得事情，这个特性能够帮助你编写更加轻量级的viewcontroller
 
 
-###54. 如何调试BAD_ACCESS错误
+### 54. 如何调试BAD_ACCESS错误
 
 
  1. 重写object的respondsToSelector方法，现实出现EXEC_BAD_ACCESS前访问的最后一个object
@@ -1075,9 +1086,11 @@ KVO 在实现中通过 ` isa 混写（isa-swizzling）` 把这个对象的 isa �
  3. 设置全局断点快速定位问题代码所在行
  4. Xcode 7 已经集成了BAD_ACCESS捕获功能：**Address Sanitizer**。
 用法如下：在配置中勾选✅Enable Address Sanitizer
- ![enter image description here](https://developer.apple.com/library/prerelease/ios/documentation/DeveloperTools/Conceptual/WhatsNewXcode/Art/xc7-asan_2x.png)
 
-###55. lldb（gdb）常用的调试命令？
+<p align="center"><a href="https://mp.weixin.qq.com/s/A4e5h3xgIEh6PInf1Rjqsw"><img src="http://ww4.sinaimg.cn/large/006y8mN6gy1g71n53zsvpj30qc09sdh7.jpg"></a></p>
+
+
+### 55. lldb（gdb）常用的调试命令？
 
  - breakpoint 设置断点定位到某一个函数
  - n 断点指针下一步
@@ -1090,8 +1103,8 @@ KVO 在实现中通过 ` isa 混写（isa-swizzling）` 把这个对象的 isa �
  2. 苹果官方文档：[ ***iOS Debugging Magic*** ](https://developer.apple.com/library/ios/technotes/tn2239/_index.html)。
 
 
-----------
-
-
-Posted by [微博@iOS程序犭袁](http://weibo.com/luohanchenyilong/)  
+<hr />
+Posted by Posted by [微博@iOS程序犭袁](http://weibo.com/luohanchenyilong/) & [公众号@iTeaTime技术清谈](https://mp.weixin.qq.com/s/A4e5h3xgIEh6PInf1Rjqsw) 
 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | [Creative Commons BY-NC-ND 3.0](http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh)
+<p align="center"><a href="http://weibo.com/u/1692391497?s=6uyXnP" target="_blank"><img border="0" src="http://service.t.sina.com.cn/widget/qmd/1692391497/b46c844b/1.png"/></a></p>
+
