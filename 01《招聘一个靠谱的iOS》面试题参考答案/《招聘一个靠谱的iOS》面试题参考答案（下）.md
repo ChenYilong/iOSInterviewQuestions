@@ -305,9 +305,9 @@ int main(int argc, char * argv[]) {
 
 |--| `_objc_msgForward`参数| 类型 |
 -------------|-------------|-------------
- 1.| 所属对象 | id类型
- 2. |方法名 | SEL类型 
- 3. |可变参数 |可变参数类型
+ 1 | 所属对象 | id类型
+ 2 |方法名 | SEL类型 
+ 3 |可变参数 |可变参数类型
 
 
 首先了解下如何调用 IMP 类型的方法，IMP类型是如下格式：
@@ -582,9 +582,9 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
 分两种情况：手动干预释放时机、系统自动去释放。
 
 
- 1. 手动干预释放时机--指定autoreleasepool
+ 1. 手动干预释放时机--指定  `autoreleasepool`
  就是所谓的：当前作用域大括号结束时释放。
- 2. 系统自动去释放--不手动指定autoreleasepool
+ 2. 系统自动去释放--不手动指定 `autoreleasepool`
 
   Autorelease对象出了作用域之后，会被添加到最近一次创建的自动释放池中，并会在当前的 runloop 迭代结束时释放。
 
@@ -606,6 +606,8 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
 在一次完整的运行循环结束之前，会被销毁。
 
 那什么时间会创建自动释放池？运行循环检测到事件并启动后，就会创建自动释放池。 
+
+~~“子线程的 runloop 默认是不工作，无法主动创建，必须手动创建。”（表述不准确， 见 issue#82 #https://github.com/ChenYilong/iOSInterviewQuestions/issues/82）~~
 
 从 `RunLoop` 源代码中可知，子线程默认是没有 `RunLoop` 的，如果需要在子线程开启 `RunLoop` ，则需要调用 `[NSRunLoop CurrentRunLoop]` 方法，它内部实现是先检查线程，如果发现是子线程，以懒加载的形式 创建一个子线程的 `RunLoop`。并存储在一个全局的 可变字典里。编程人员在调用 `[NSRunLoop CurrentRunLoop]` 时，是自动创建 `RunLoop` 的，而没法手动创建。
 
@@ -751,61 +753,202 @@ autoreleasepool 以一个队列数组的形式实现,主要通过下列三个函
 
 ### 39. 使用系统的某些block api（如UIView的block版本写动画时），是否也考虑引用循环问题？ 
 
-系统的某些block api中，UIView的block版本写动画时不需要考虑，但也有一些api 需要考虑：
+注：39题对应Demo 请在仓库中查看以 Demo39 开头的工程。 
 
+出题只举了一个例子，我们多举几个例子：
 
-所谓“引用循环”是指双向的强引用，所以那些“单向的强引用”（block 强引用 self ）没有问题，比如这些：
 
  ```Objective-C
+//判断如下几种情况,是否有循环引用? 是否有内存泄漏?
+//2020-06-01 16:34:43 @iTeaTime(技术清谈)@ChenYilong 
+
+ //情况❶ UIViewAnimationsBlock
+[UIView animateWithDuration:duration animations:^{ [self.superview layoutIfNeeded]; }]; 
+
+ //情况❷ NSNotificationCenterBlock
+[[NSNotificationCenter defaultCenter] addObserverForName:@"someNotification" 
+                                                  object:nil 
+                           queue:[NSOperationQueue mainQueue]
+                                              usingBlock:^(NSNotification * notification) {
+                                                    self.someProperty = xyz; }]; 
+
+ //情况❸ NSNotificationCenterIVARBlock
+  _observer = [[NSNotificationCenter defaultCenter] addObserverForName:@"testKey"
+                                                                object:nil
+                                                                 queue:nil
+                                                            usingBlock:^(NSNotification *note) {
+      [self dismissModalViewControllerAnimated:YES];
+  }];
+
+ //情况❹ GCDBlock
+    dispatch_group_async(self.operationGroup, self.serialQueue, ^{
+        [self doSomething];
+    });
+
+//情况❺ NSOperationQueueBlock
+[[NSOperationQueue mainQueue] addOperationWithBlock:^{ self.someProperty = xyz; }]; 
+
+
+//情况❻ NSOperationQueueIVARBlock
+_mainQueue = [[NSOperationQueue mainQueue] addOperationWithBlock:^{ self.someProperty = xyz; }]; 
+ ```
+
+情况一:
+
+系统的某些block api中，比如 `UIView` 的 `block` 版本写动画时不需要考虑循环引用的问题，但也有一些系统 api 需要考虑内存泄漏的问题。
+
+其中 `UIView` 的 `block` 版本写动画时不需要考虑虑循环引用的原因是：
+
+比如典型的代码是这样：
+
+ ```Objective-C
+ //@iTeaTime(技术清谈)@ChenYilong 
+ //思考：是否有内存泄漏?是否有循环引用?
 [UIView animateWithDuration:duration animations:^{ [self.superview layoutIfNeeded]; }]; 
  ```
+ 
+ 其中 `block` 会立即执行，所以并不会持有 `block` 。 其中 `duration` 延迟时间并不能决定 `block` 执行的时机， `block` 始终是瞬间执行。
+ 
+
+ 这里涉及了 `CoreAnimation` （核心动画）相关的知识：
+ 
+ 首先分清下面几个结构概念：
+ 
+  - UIView 层
+  - Layer 层
+   - data 数据层
+  
+  其中
+  
+  - UIView 层的`block` 仅仅是提供了类似快照 data 的变化。
+  - 当真正执行  `Animation` 动画时才会将
+“原有状态”与“执行完 `block` 的状态”做一个差值，来去做动画。
+ 
+这个问题关于循环引用的部分已经解答完毕，下面我们来扩展一下，探究一下系统API相关的内存泄漏问题。
+
+
+-------------
+
+情况二:
+
 
 
 
  ```Objective-C
-[[NSOperationQueue mainQueue] addOperationWithBlock:^{ self.someProperty = xyz; }]; 
- ```
-
-
-
-
- ```Objective-C
+ //@iTeaTime(技术清谈)@ChenYilong 
+ //思考：是否有内存泄漏?是否有循环引用?
 [[NSNotificationCenter defaultCenter] addObserverForName:@"someNotification" 
                                                   object:nil 
                            queue:[NSOperationQueue mainQueue]
                                               usingBlock:^(NSNotification * notification) {
                                                     self.someProperty = xyz; }]; 
  ```
-
-这些情况不需要考虑“引用循环”。
-
-
-但如果你使用一些参数中可能含有 ivar 的系统 api ，如 GCD 、NSNotificationCenter就要小心一点：比如GCD 内部如果引用了 self，而且 GCD 的其他参数是 ivar，则要考虑到循环引用：
-
+ 
+ 情况三:
+ 
  ```Objective-C
-__weak __typeof__(self) weakSelf = self;
-dispatch_group_async(_operationsGroup, _operationsQueue, ^
-{
-__typeof__(self) strongSelf = weakSelf;
-[strongSelf doSomething];
-[strongSelf doSomethingElse];
-} );
- ```
-类似的：
-
- ```Objective-C
-  __weak __typeof__(self) weakSelf = self;
+ //@iTeaTime(技术清谈)@ChenYilong 
+ //思考：是否有内存泄漏?是否有循环引用?
   _observer = [[NSNotificationCenter defaultCenter] addObserverForName:@"testKey"
                                                                 object:nil
                                                                  queue:nil
                                                             usingBlock:^(NSNotification *note) {
-      __typeof__(self) strongSelf = weakSelf;
-      [strongSelf dismissModalViewControllerAnimated:YES];
+      [self dismissModalViewControllerAnimated:YES];
   }];
  ```
-self --> _observer --> block --> self 显然这也是一个循环引用。
+ 
 
-检测代码中是否存在循环引用问题，可使用 Facebook 开源的一个检测工具  [***FBRetainCycleDetector***](https://github.com/facebook/FBRetainCycleDetector) 。
+情况四:
+
+而下面的代码虽然有类似的结构但并不存在内存泄漏:
+
+
+ ```Objective-C
+ //@iTeaTime(技术清谈)@ChenYilong 
+  //思考：是否有内存泄漏?是否有循环引用?
+    dispatch_group_async(self.operationGroup, self.serialQueue, ^{
+        [self doSomething];
+    });
+ ```
+
+
+那么为什么情况二 `NSNotificationCenter` 的代码会有内存泄漏问题呢？
+
+
+~~我之前的理解: self --> _observer --> block --> self 显然这也是一个循环引用。（对循环引用的成因解释有误，详见issue#73 https://github.com/ChenYilong/iOSInterviewQuestions/issues/73 ）~~
+
+
+其实和循环引用没有关系；这里 `block` 强引用了 `self` , 但是 `self` 并没有强引用`block`; 所以没有循环引用。
+
+情况二这里出现内存泄漏问题实际上是因为：
+
+ - `[NSNoficationCenter defaultCenter]` 持有了 `block`, 
+ - 这个 `block` 持有了 `self`; 
+ - 而 `[NSNoficationCenter defaultCenter]` 是一个单例，因此这个单例持有了 `self`, 从而导致 `self` 不被释放。
+
+![https://github.com/ChenYilong](https://tva1.sinaimg.cn/large/007S8ZIlgy1gfcrlp0gn0j30z40lwag6.jpg)
+
+![](https://tva1.sinaimg.cn/large/007S8ZIlgy1gfd5t6s8n8j31c00u0u0y.jpg)
+
+以下来自[APPLE API文档 -- Instance Method
+addObserverForName:object:queue:usingBlock:]( https://developer.apple.com/documentation/foundation/nsnotificationcenter/1411723-addobserverforname) ：
+
+> The block is copied by the notification center and (the copy) held until the observer registration is removed.
+
+但整个过程中并没有循环引用，因为 `self` 没有持有 `NotificationCenter` , 也没有持有 `block`。即使 `self` 持有这个`Observer`, 并没有任何证据或者文档标明 `Observer` 会持有这个`block`, 所以我之前的解释是不正确的。这里 Observer 应该是不持有 block 的，因为只需要 `NSNotificationCenter` 同时持有 `Observer` 和 `block` 即可实现 `API` 所提供的功能, 这里也不存在循环引用。
+
+
+
+其中情况三:
+
+存在循环引用
+
+![](https://tva1.sinaimg.cn/large/007S8ZIlgy1gfd5sf6tbbj31c00u0npd.jpg)
+![](https://tva1.sinaimg.cn/large/007S8ZIlgy1gfd5v5laamj31hc0u0dvv.jpg)
+
+根据上面的原理，思考一下情况五：
+
+ ```Objective-C
+  //@iTeaTime(技术清谈)@ChenYilong 
+  //思考：是否有内存泄漏?是否有循环引用?
+[[NSOperationQueue mainQueue] addOperationWithBlock:^{ self.someProperty = xyz; }]; 
+ ```
+ 
+ 这个因为 `[NSOperationQueue mainQueue]` 并非单例，所以并没有内存泄漏。
+ 见下图:
+ 
+ ![https://github.com/ChenYilong](https://tva1.sinaimg.cn/large/007S8ZIlgy1gfct4s2979j30y00lq0y0.jpg)
+ 
+-------------
+
+针对情况四 `GCD` 的问题，实际上，self确实持有了queue; 而block也确实持有了self; 但是并没有证据或者文档表明这个queue一定会持有block; 而且即使queue持有了block, 在block执行完毕的时候，由于需要将任务从队列中移除，因此完全可以解除queue对block的持有关系，所以实际上这里也不存在循环引用。下面的测试代码可以验证这一点(其中`CYLUser`有一个属性name):
+
+
+ ```Objective-C
+   //@iTeaTime(技术清谈)@ChenYilong 
+	    CYLUser *user = [[CYLUser alloc] init];
+    dispatch_group_async(self.operationGroup, self.serialQueue, ^{
+        NSLog(@"dispatch_async demoGCDRetainCycle");
+        [self.testList addObject:@"demoGCDRetainCycle2"];
+        user.name = @"测试";
+        NSLog(@"Detecor 's name: %@", user.name);
+    });
+ ```
+
+    
+那么会看到先打印出 `dispatch_async demoGCDRetainCycle`, 然后打印出这个 `user` 的name, 然后执行 `CYLUser` 的 `-dealloc` 方法。也就是说在这个block执行完毕的时候，仅由这个block持有的 `user`就会被释放了, 从而验证这个 `block` 都被释放了，即使对应的 `queue` 还存在。   
+
+
+什么时候这里会有循环引用呢？仍然是当 `self` 持有 `block` 的时候，例如这个 `block`是 `self` 的一个 `strong` 的属性，但这就和 `GCD` 的调用无关了，这个时候无论是否调用 `GCD` 的 `API` 都会有循环引用的。
+
+
+检测代码中是否存在循环引用/内存泄漏问题，
+
+- 可用 Xcode-instruments-Leak 工具查看
+- 也可以使用可以使用 Xcode 的 Debug 工具，内存图查看
+- 使用 Facebook 开源的一个检测工具  [***FBRetainCycleDetector***](https://github.com/facebook/FBRetainCycleDetector) 。
+
+
 ### 40. GCD的队列（`dispatch_queue_t`）分哪两种类型？
 
 
@@ -844,8 +987,9 @@ dispatch_group_notify(group, dispatch_get_main_queue(), ^{
 ### 44. 以下代码运行结果如何？
 
 
-	- (void)viewDidLoad
-	{
+
+ ```Objective-C
+	- (void)viewDidLoad {
 	    [super viewDidLoad];
 	    NSLog(@"1");
 	    dispatch_sync(dispatch_get_main_queue(), ^{
@@ -853,6 +997,8 @@ dispatch_group_notify(group, dispatch_get_main_queue(), ^{
 	    });
 	    NSLog(@"3");
 	}
+ ```
+
 
 只输出：1 。发生主线程锁死。
 

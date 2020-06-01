@@ -612,10 +612,10 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 
  
 ```Objective-C
--(void)setSpeed:(int)_speed{
-    if(_speed < 0) speed = 0;
-    if(_speed > 300) speed = 300;
-    _speed = speed;
+-(void)setSpeed:(int)speed {
+    if(speed < 0) speed = 0;
+    if(speed > 300) speed = 300;
+   _speed = speed;
 }
 ```
 
@@ -1392,10 +1392,10 @@ NSMutableArray *mCopyArray = [array mutableCopy];
 
  1. 同时重写了 setter 和 getter 时
  2. 重写了只读属性的 getter 时
- 2. 使用了 @dynamic 时
- 2. 在 @protocol 中定义的所有属性
- 2. 在 category 中定义的所有属性
- 2. 重载的属性 
+ 3. 使用了 @dynamic 时
+ 4. 在 @protocol 中定义的所有属性
+ 5. 在 category 中定义的所有属性
+ 6. 重写（overridden）的属性 
  
  当你在子类中重载了父类中的属性，你必须 使用 `@synthesize` 来手动合成ivar。
 

@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Jv6-ye-b2m">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--GCDBlock-->
+        <scene sceneID="nVu-1C-BsU">
+            <objects>
+                <viewController storyboardIdentifier="GCDBlock" title="GCDBlock" useStoryboardIdentifierAsRestorationIdentifier="YES" id="O2M-t0-YYC" customClass="GCDBlock" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TcA-rI-YvZ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="sio-tk-B2P">
+                                <rect key="frame" x="20" y="44" width="374" height="818"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <string key="text">    dispatch_group_async(self.operationGroup, self.serialQueue, ^{
+        [self doSomething];
+    });</string>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="k85-wP-IpG"/>
+                    </view>
+                    <connections>
+                        <outlet property="textView" destination="sio-tk-B2P" id="qTw-wb-W5f"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uOs-g8-S2C" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="216" y="376"/>
+        </scene>
+        <!--NSOperationQueueBlock-->
+        <scene sceneID="lPM-G4-h28">
+            <objects>
+                <viewController storyboardIdentifier="NSOperationQueueBlock" title="NSOperationQueueBlock" useStoryboardIdentifierAsRestorationIdentifier="YES" id="SX5-cq-ia8" customClass="NSOperationQueueBlock" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EKU-h2-ZEo">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gbF-iG-O73">
+                                <rect key="frame" x="20" y="44" width="374" height="818"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemPurpleColor" red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <string key="text">[[NSOperationQueue mainQueue] addOperationWithBlock:^{ self.someProperty = xyz; }]; 
+</string>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="xfO-Qb-7GC"/>
+                    </view>
+                    <connections>
+                        <outlet property="textView" destination="gbF-iG-O73" id="Ee9-Yw-eCz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mxc-db-boq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1047" y="376"/>
+        </scene>
+        <!--NSOperationQueueIVARBlock-->
+        <scene sceneID="7u0-SQ-ITw">
+            <objects>
+                <viewController storyboardIdentifier="NSOperationQueueIVARBlock" title="NSOperationQueueIVARBlock" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mlV-2Q-GnH" customClass="NSOperationQueueIVARBlock" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iVT-zz-1LW">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="_mainQueue = [[NSOperationQueue mainQueue] addOperationWithBlock:^{ self.someProperty = xyz; }];" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Tgz-3W-twQ">
+                                <rect key="frame" x="20" y="39" width="374" height="818"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemIndigoColor" red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="xqb-rg-jh3"/>
+                    </view>
+                    <connections>
+                        <outlet property="textView" destination="Tgz-3W-twQ" id="xgv-aa-6BJ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gaV-0e-KeZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1815" y="376"/>
+        </scene>
+        <!--Root View Controller-->
+        <scene sceneID="kuH-6p-Vop">
+            <objects>
+                <tableViewController id="1Sm-FC-PWv" customClass="ViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Zqy-tH-r0L">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="HEB-lp-a6q">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HEB-lp-a6q" id="C93-gm-8mm">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="1Sm-FC-PWv" id="iYh-NW-j97"/>
+                            <outlet property="delegate" destination="1Sm-FC-PWv" id="HEP-6E-r1t"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="fAM-XN-WFj"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vIb-J4-oyx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-613" y="100"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="eLi-ym-Ash">
+            <objects>
+                <navigationController id="Jv6-ye-b2m" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ri1-8f-MWq">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="1Sm-FC-PWv" kind="relationship" relationship="rootViewController" id="0a3-v3-l2u"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ah6-4k-cDD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1538" y="101"/>
+        </scene>
+        <!--UIViewAnimationsBlock-->
+        <scene sceneID="Yzt-E7-fOK">
+            <objects>
+                <viewController storyboardIdentifier="UIViewAnimationsBlock" title="UIViewAnimationsBlock" useStoryboardIdentifierAsRestorationIdentifier="YES" id="NZc-kq-RQ7" customClass="UIViewAnimationsBlock" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fbp-KL-iAZ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="[UIView animateWithDuration:duration animations:^{ [self.superview layoutIfNeeded]; }]; " textAlignment="natural" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M8i-4B-Cwo">
+                                <rect key="frame" x="20" y="44" width="374" height="818"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="hK7-mN-ci1"/>
+                    </view>
+                    <connections>
+                        <outlet property="textView" destination="M8i-4B-Cwo" id="INb-m1-0K0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wAE-EM-UvM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="218.84057971014494" y="-312.05357142857139"/>
+        </scene>
+        <!--NSNotificationCenterBlock-->
+        <scene sceneID="vaQ-kW-WGn">
+            <objects>
+                <viewController storyboardIdentifier="NSNotificationCenterBlock" title="NSNotificationCenterBlock" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Kxu-UJ-QVb" customClass="NSNotificationCenterBlock" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tCj-Pe-9Yn">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Biv-0b-5Ft">
+                                <rect key="frame" x="20" y="44" width="374" height="818"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <string key="text">  [[NSNotificationCenter defaultCenter] addObserverForName:@"someNotification"
+                             object:nil
+                              queue:[NSOperationQueue mainQueue]
+                         usingBlock:^(NSNotification * notification) {
+                               self.someProperty = xyz; }];</string>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="a12-N6-qlu"/>
+                    </view>
+                    <connections>
+                        <outlet property="textView" destination="Biv-0b-5Ft" id="EPE-L3-pr4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2o5-TJ-uKB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1029" y="-312"/>
+        </scene>
+        <!--NSOperationQueueIVARBlock-->
+        <scene sceneID="SkX-7S-SYE">
+            <objects>
+                <viewController storyboardIdentifier="NSNotificationCenterIVARBlock" title="NSOperationQueueIVARBlock" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Awa-ei-WiL" customClass="NSNotificationCenterIVARBlock" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fYz-pw-x9b">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YXY-Id-q1F">
+                                <rect key="frame" x="20" y="44" width="374" height="818"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <string key="text">      _observer = [[NSNotificationCenter defaultCenter] addObserverForName:@"testKey"
+                                                                    object:nil
+                                                                     queue:nil
+                                                                usingBlock:^(NSNotification *note) {
+          [self dismissModalViewControllerAnimated:YES];
+      }];</string>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="7YH-1L-CtW"/>
+                    </view>
+                    <connections>
+                        <outlet property="textView" destination="YXY-Id-q1F" id="dJi-R3-phW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="slr-Ac-M1N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1793" y="-312"/>
+        </scene>
+    </scenes>
+</document>
