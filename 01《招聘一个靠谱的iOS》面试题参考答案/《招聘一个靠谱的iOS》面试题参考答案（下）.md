@@ -888,6 +888,9 @@ _mainQueue = [[NSOperationQueue mainQueue] addOperationWithBlock:^{ self.somePro
 
 ![https://github.com/ChenYilong](https://tva1.sinaimg.cn/large/007S8ZIlgy1gfcrlp0gn0j30z40lwag6.jpg)
 
+
+
+
 ![](https://tva1.sinaimg.cn/large/007S8ZIlgy1gfd5t6s8n8j31c00u0u0y.jpg)
 
 以下来自[APPLE API文档 -- Instance Method
@@ -904,6 +907,9 @@ addObserverForName:object:queue:usingBlock:]( https://developer.apple.com/docume
 存在循环引用
 
 ![](https://tva1.sinaimg.cn/large/007S8ZIlgy1gfd5sf6tbbj31c00u0npd.jpg)
+
+![](https://tva1.sinaimg.cn/large/007S8ZIlgy1gfdss1tynzg31c10u0npf.gif)
+
 ![](https://tva1.sinaimg.cn/large/007S8ZIlgy1gfd5v5laamj31hc0u0dvv.jpg)
 
 根据上面的原理，思考一下情况五：
@@ -945,7 +951,8 @@ addObserverForName:object:queue:usingBlock:]( https://developer.apple.com/docume
 检测代码中是否存在循环引用/内存泄漏问题，
 
 - 可用 Xcode-instruments-Leak 工具查看
-- 也可以使用可以使用 Xcode 的 Debug 工具，内存图查看
+- 也可以使用可以使用 Xcode 的 Debug 工具--内存图查看，使用方法
+- ![](https://tva1.sinaimg.cn/large/007S8ZIlgy1gfdss1tynzg31c10u0npf.gif)
 - 使用 Facebook 开源的一个检测工具  [***FBRetainCycleDetector***](https://github.com/facebook/FBRetainCycleDetector) 。
 
 
