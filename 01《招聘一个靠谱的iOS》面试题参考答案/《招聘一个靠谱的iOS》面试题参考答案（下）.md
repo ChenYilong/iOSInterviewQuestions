@@ -908,7 +908,7 @@ addObserverForName:object:queue:usingBlock:]( https://developer.apple.com/docume
 
 ![](https://tva1.sinaimg.cn/large/007S8ZIlgy1gfd5sf6tbbj31c00u0npd.jpg)
 
-![](https://tva1.sinaimg.cn/large/007S8ZIlgy1gfdss1tynzg31c10u0npf.gif)
+![https://github.com/ChenYilong](https://i.loli.net/2020/06/02/pDLde8Hgkt4X69u.gif)
 
 ![](https://tva1.sinaimg.cn/large/007S8ZIlgy1gfd5v5laamj31hc0u0dvv.jpg)
 
@@ -952,7 +952,7 @@ addObserverForName:object:queue:usingBlock:]( https://developer.apple.com/docume
 
 - 可用 Xcode-instruments-Leak 工具查看
 - 也可以使用可以使用 Xcode 的 Debug 工具--内存图查看，使用方法
-- ![](https://tva1.sinaimg.cn/large/007S8ZIlgy1gfdss1tynzg31c10u0npf.gif)
+- ![https://github.com/ChenYilong](https://i.loli.net/2020/06/02/pDLde8Hgkt4X69u.gif)
 - 使用 Facebook 开源的一个检测工具  [***FBRetainCycleDetector***](https://github.com/facebook/FBRetainCycleDetector) 。
 
 
