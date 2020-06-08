@@ -766,7 +766,7 @@ Block 的类 | 副本源的配置存储域| 复制效果
 `_NSConcreteMallocBlock`| 堆 | 引用计数增加
 
 
-在 ARC 环境下，编译器会根据情況自动将栈上的 block 复制到堆上，比如以下情况：
+在 ARC 环境下，编译器会根据情况自动将栈上的 block 复制到堆上，比如以下情况：
 
 - block 作为函数返回值时
 - 将 block 赋值给 __strong 指针时
@@ -935,7 +935,7 @@ static struct IMAGE_INFO { unsigned version; unsigned flag; } _OBJC_IMAGE_INFO =
 先认识一下 `__block` 修饰符：
 
  - `__block` 可以用于解决 block 内部无法修改 auto 变量值的问题
- - `__block` 不能修饰全局变量、静态夜量（static)
+ - `__block` 不能修饰全局变量、静态、变量（static)
 
 编译器会将 `__block`  变量包装成一个对象
 
@@ -1005,7 +1005,7 @@ int main(int argc, char * argv[]) {
  
  1. 定义后前：6171559672
  2. block内部：5732708296
- 3. 定义后后：5732708296
+ 3. 定义后：5732708296
  
 中间相差438851376个字节，也就是 418.5M 的空间，因为堆地址要小于栈地址，又因为 iOS 中主线程的栈区内存只有1M，Mac也只有8M，既然 iOS 中一条线程最大的栈空间是1M，显然a已经是在堆区了。
 
@@ -1076,7 +1076,7 @@ static void __main_block_copy_0(struct __main_block_impl_0*dst, struct __main_bl
 
 
 
-正如上文说提到的：
+正如上文提到的：
 
  > 我们都知道：**Block不允许修改外部变量的值**，这里所说的外部变量的值，指的是栈中 auto 变量。`__block` 作用是将 auto 变量封装为结构体(对象)，在结构体内部新建一个同名 auto 变量，block 内截获该结构体的指针，在 block 中使用自动变量时，使用指针指向的结构体中的自动变量。于是就可以达到修改外部变量的作用。
  
