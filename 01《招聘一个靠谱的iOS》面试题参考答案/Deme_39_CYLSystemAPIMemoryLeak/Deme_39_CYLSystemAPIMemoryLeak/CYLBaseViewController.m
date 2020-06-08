@@ -7,6 +7,7 @@
 //
 
 #import "CYLBaseViewController.h"
+#import "CYLBaseViewController+CYLBaseViewControllerExtension.h"
 
 @interface CYLBaseViewController ()
 

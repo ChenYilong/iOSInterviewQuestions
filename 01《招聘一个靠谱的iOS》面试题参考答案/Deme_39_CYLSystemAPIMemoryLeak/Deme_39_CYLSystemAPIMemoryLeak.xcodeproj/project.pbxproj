@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A3CA841248CE5960022276A /* CYLBaseViewController+CYLBaseViewControllerExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A3CA840248CE5960022276A /* CYLBaseViewController+CYLBaseViewControllerExtension.m */; };
 		9AD5C4742485167900704476 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD5C4732485167900704476 /* AppDelegate.m */; };
 		9AD5C4772485167900704476 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD5C4762485167900704476 /* SceneDelegate.m */; };
 		9AD5C47A2485167900704476 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AD5C4792485167900704476 /* ViewController.m */; };
@@ -43,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9A3CA83F248CE5960022276A /* CYLBaseViewController+CYLBaseViewControllerExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CYLBaseViewController+CYLBaseViewControllerExtension.h"; sourceTree = "<group>"; };
+		9A3CA840248CE5960022276A /* CYLBaseViewController+CYLBaseViewControllerExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "CYLBaseViewController+CYLBaseViewControllerExtension.m"; sourceTree = "<group>"; };
 		9AD5C46F2485167900704476 /* Deme_39_CYLSystemAPIMemoryLeak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Deme_39_CYLSystemAPIMemoryLeak.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AD5C4722485167900704476 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9AD5C4732485167900704476 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -145,6 +148,8 @@
 				9AD5C4B724851B8200704476 /* NSOperationQueueIVARBlock.m */,
 				9AD5C4B92485273B00704476 /* CYLBaseViewController.h */,
 				9AD5C4BA2485273C00704476 /* CYLBaseViewController.m */,
+				9A3CA83F248CE5960022276A /* CYLBaseViewController+CYLBaseViewControllerExtension.h */,
+				9A3CA840248CE5960022276A /* CYLBaseViewController+CYLBaseViewControllerExtension.m */,
 				9AD5C47B2485167900704476 /* Main.storyboard */,
 				9AD5C47E2485167D00704476 /* Assets.xcassets */,
 				9AD5C4802485167D00704476 /* LaunchScreen.storyboard */,
@@ -311,6 +316,7 @@
 				9AD5C4B524851B7600704476 /* NSOperationQueueBlock.m in Sources */,
 				9AD5C4AF24851B5D00704476 /* NSNotificationCenterIVARBlock.m in Sources */,
 				9AD5C4B224851B6900704476 /* GCDBlock.m in Sources */,
+				9A3CA841248CE5960022276A /* CYLBaseViewController+CYLBaseViewControllerExtension.m in Sources */,
 				9AD5C4B824851B8200704476 /* NSOperationQueueIVARBlock.m in Sources */,
 				9AD5C4772485167900704476 /* SceneDelegate.m in Sources */,
 			);

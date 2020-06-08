@@ -57,7 +57,7 @@
  22. 22--55题，请看下篇。
 
 ### 1. 风格纠错题
-![enter image description here](http://i.imgur.com/O7Zev94.png)
+![https://github.com/ChenYilong](http://i.imgur.com/O7Zev94.png)
 修改完的代码：
 
 修改方法有很多种，现给出一种做示例：
@@ -263,6 +263,39 @@ typedef NS_ENUM(NSInteger, CYLSex) {
  7.  <p><del>doLogIn方法中的 `LogIn` 命名不清晰：笔者猜测是login的意思，应该是粗心手误造成的。
  （勘误： `Login` 是名词， `LogIn`  是动词，都表示登陆的意思。见： [ ***Log in vs. login*** ](http://grammarist.com/spelling/log-in-login/)）</del></p>
 
+注意： 
+
+关于 age 是否需要设置为 `NSUInteger` 的问题：
+
+因为需要考虑到「Objective-C 的有符号的 -1 隐式转换到无符号整数」的情况，
+
+这里提供两种方案供选择：
+
+第一种方案:
+
+age 设计为 NSInteger类型，防止他人传负数。
+
+另一种方案(折中方案):
+
+age 设计为 NSUInteger类型，外部只读，
+提供初始化接口，初始化接口内部，判断是否溢出。
+
+设置为 NSUInteger 的好处 |设置为 NSUInteger 的坏处 
+:-------------:|:-------------: 
+内存占用小 | Objective-C 的有符号的 -1 隐式转换到无符号整数
+能起到提示作用：提示调用方传参数格式 | -
+
+设置为 NSInteger 的好处 |设置为 NSInteger 的坏处 
+:-------------:|:-------------: 
+内存占用大 | 可以规避该问题「Objective-C 的有符号的 -1 隐式转换到无符号整数」的情况
+- | 不能起到提示作用：提示调用方传参数格式
+
+考虑到目前 iPhone 设备的内存与 NSInteger 的内存开销，建议采用 “将 age 设计为 NSInteger类型”的方案。
+
+Objective-C 中诸如 NSArray 中的 count 返回的是 NSUInteger 是一个非常不优雅的设计， Swift 中的 Array 的 count 就选择使用 Int 。强制要用 `NSUInteger` 的地方就是 `bitmask` ， Objective-C 中叫 NS_OPTION ，因为要消除不同的编译器的 `right shift` 到底是 `arithmetic right shift` 还是 `logical right shift` 的歧义。
+
+
+
 ### 2. 什么情况使用 weak 关键字，相比 assign 有什么不同？
 什么情况使用 weak 关键字？
 
@@ -286,7 +319,26 @@ NSlnteger 等)的简单赋值操作。
  1. NSString、NSArray、NSDictionary 等等经常使用copy关键字，是因为他们有对应的可变类型：NSMutableString、NSMutableArray、NSMutableDictionary；
  2. block 也经常使用 copy 关键字，具体原因见[官方文档：***Objects Use Properties to Keep Track of Blocks***](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/WorkingwithBlocks/WorkingwithBlocks.html#//apple_ref/doc/uid/TP40011210-CH8-SW12)：
 
-  block 使用 copy 是从 MRC 遗留下来的“传统”,在 MRC 中,方法内部的 block 是在栈区的,使用 copy 可以把它放到堆区.在 ARC 中写不写都行：对于 block 使用 copy 还是 strong 效果是一样的，但写上 copy 也无伤大雅，还能时刻提醒我们：编译器自动对 block 进行了 copy 操作。如果不写 copy ，该类的调用者有可能会忘记或者根本不知道“编译器会自动对 block 进行了 copy 操作”，他们有可能会在调用之前自行拷贝属性值。这种操作多余而低效。你也许会感觉我这种做法有些怪异，不需要写依然写。如果你这样想，其实是你“日用而不知”，你平时开发中是经常在用我说的这种做法的，比如下面的属性不写copy也行，但是你会选择写还是不写呢？
+  block 使用 copy 是从 MRC 遗留下来的“传统”,在 MRC 中,方法内部的 block 是在栈区的,使用 copy 可以把它放到堆区.
+  
+  在 ARC 中写不写都行：
+  
+  在 ARC 环境下，编译器会根据情況自动将栈上的 block 复制到堆上，比如以下情况：
+
+- block 作为函数返回值时
+- 将 block 赋值给 __strong 指针时（property 的 copy 属性对应的是这一条）
+- block 作为 Cocoa API 中方法名含有 using Block 的方法参数时
+- block 作为 GCD API 的方法参数时
+
+  ![](https://tva1.sinaimg.cn/large/007S8ZIlly1gfj47m0v1wj30s01cak0r.jpg)
+  
+其中， block 的 property 设置为 copy， 对应的是这一条：将 block 赋值给 __strong 指针时。
+
+  
+  
+  换句话说：
+  
+  对于 block 使用 copy 还是 strong 效果是一样的，但写上 copy 也无伤大雅，还能时刻提醒我们：编译器自动对 block 进行了 copy 操作。如果不写 copy ，该类的调用者有可能会忘记或者根本不知道“编译器会自动对 block 进行了 copy 操作”，他们有可能会在调用之前自行拷贝属性值。这种操作多余而低效。你也许会感觉我这种做法有些怪异，不需要写还依然写。如果你这样想，其实是你“日用而不知”，你平时开发中是经常在用我说的这种做法的，比如下面的属性不写copy也行，但是你会选择写还是不写呢？
 
  ```Objective-C
  @property (nonatomic, copy) NSString *userId;
@@ -302,7 +354,7 @@ NSlnteger 等)的简单赋值操作。
 
  ```
 
- ![enter image description here](http://i.imgur.com/VlVKl8L.png)
+ ![https://github.com/ChenYilong](http://i.imgur.com/VlVKl8L.png)
 
 下面做下解释：
  copy 此特质所表达的所属关系与 strong 类似。然而设置方法并不保留新值，而是将其“拷贝” (copy)。
@@ -563,11 +615,11 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 
 这样真得高效吗？不见得！这种写法“看上去很美、很合理”，但在实际开发中，它更像下图里的做法：
 
-![enter image description here](http://i.imgur.com/UwV9oSn.jpeg)
+![https://github.com/ChenYilong](http://i.imgur.com/UwV9oSn.jpeg)
 
 克强总理这样评价你的代码风格：
 
-![enter image description here](http://i.imgur.com/N77Lkic.png)
+![https://github.com/ChenYilong](http://i.imgur.com/N77Lkic.png)
 
 我和总理的意见基本一致：
 
@@ -621,7 +673,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 
 
 
-回到这个题目，如果单单就上文的代码而言，我们不需要也不能重写 name 的 setter ：由于是 name 是只读属性，所以编译器不会为其创建对应的“设置方法”，用初始化方法设置好属性值之后，就不能再改变了。（ 在本例中，之所以还要声明属性的“内存管理语义”--copy，是因为：如果不写 copy，该类的调用者就不知道初始化方法里会拷贝这些属性，他们有可能会在调用初始化方法之前自行拷贝属性值。这种操作多余而低效）。
+回到这个题目，如果单单就上文的代码而言，我们不需要也不能重写 name 的 setter ：由于 name 是只读属性，所以编译器不会为其创建对应的“设置方法”，用初始化方法设置好属性值之后，就不能再改变了。（ 在本例中，之所以还要声明属性的“内存管理语义”--copy，是因为：如果不写 copy，该类的调用者就不知道初始化方法里会拷贝这些属性，他们有可能会在调用初始化方法之前自行拷贝属性值。这种操作多余而低效）。
 
 那如何确保 name 被 copy？在初始化方法(initializer)中做：
 
@@ -827,7 +879,7 @@ struct weak_table_t {
 在b非nil时，a和b指向同一个内存地址，在b变nil时，a变nil。此时向a发送消息不会崩溃：在Objective-C中向nil发送消息是安全的。
 
 而如果a是由 assign 修饰的，则：
-在 b 非 nil 时，a 和 b 指向同一个内存地址，在 b 变 nil 时，a 还是指向该内存地址，变野指针。此时向 a 发送消息极易崩溃。
+在 b 非 nil 时，a 和 b 指向同一个内存地址，在 b 变 nil 时，a 还是指向该内存地址，变野指针。此时向 a 发送消息会产生崩溃。
 
 
 下面我们将基于`objc_storeWeak(&a, b)`函数，使用伪代码模拟“runtime如何实现weak属性”：
@@ -1192,12 +1244,17 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
 
 ### 12. ARC下，不显式指定任何属性关键字时，默认的关键字都有哪些？
 
- 1. 对应基本数据类型默认关键字是
+1 对应基本数据类型默认关键字是
  
- atomic,readwrite,assign
- 2. 对于普通的 Objective-C 对象
+  - `atomic`
+  - `readwrite`
+  - `assign`
+ 
+2 对于普通的 Objective-C 对象
   
- atomic,readwrite,strong
+  - `atomic`
+  - `readwrite`
+  - `strong`
 
 参考链接：
 
@@ -1220,7 +1277,7 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
 定义一个以 strong 修饰的 array：
 
  ```Objective-C
-@property (nonatomic ,readwrite, strong) NSArray *array;
+@property (nonatomic, readwrite, strong) NSArray *array;
  ```
 
 然后进行下面的操作：
@@ -1339,7 +1396,7 @@ NSMutableArray *mCopyArray = [array mutableCopy];
 
 正如
 [Apple官方文档 ***You Can Customize Synthesized Instance Variable Names***](https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/EncapsulatingData/EncapsulatingData.html#//apple_ref/doc/uid/TP40011210-CH5-SW6) 所说：
-![enter image description here](http://i.imgur.com/D6d0zGJ.png)
+![https://github.com/ChenYilong](http://i.imgur.com/D6d0zGJ.png)
 
 如果使用了属性的话，那么编译器就会自动编写访问属性所需的方法，此过程叫做“自动合成”( auto synthesis)。需要强调的是，这个过程由编译器在编译期执行，所以编辑器里看不到这些“合成方法” (synthesized method)的源代码。除了生成方法代码之外，编译器还要自动向类中添加适当类型的实例变量，并且在属性名前面加下划线，以此作为实例变量的名字。
 
@@ -1364,26 +1421,26 @@ NSMutableArray *mCopyArray = [array mutableCopy];
 
 
 
-上述语法会将生成的实例变量命名为 `_myFirstName` 与 `_myLastName` ，而不再使用默认的名字。一般情况下无须修改默认的实例变量名，但是如果你不喜欢以下划线来命名实例变量，那么可以用这个办法将其改为自己想要的名字。笔者还是推荐使用默认的命名方案，因为如果所有人都坚持这套方案，那么写出来的代码大家都能看得懂。
+上述语法会将生成的实例变量命名为 `_myFirstName` 与 `_myLastName` ，而不再使用默认的名字。一般情况下无须修改默认的实例变量名，但是如果你不喜欢以“下划线”来命名实例变量，那么可以用这个办法将其改为自己想要的名字。笔者还是推荐使用默认的命名方案，因为如果所有人都坚持这套方案，那么写出来的代码大家都能看得懂。
 
 总结下 @synthesize 合成实例变量的规则，有以下几点：
 
 
- 1. 如果指定了成员变量的名称,会生成一个指定的名称的成员变量,
+ 1 如果指定了成员变量的名称,会生成一个指定的名称的成员变量,
 
- 2. 如果这个成员已经存在了就不再生成了.
- 2. 如果是 `@synthesize foo;` 还会生成一个名称为foo的成员变量，也就是说：
+ 2 如果这个成员已经存在了就不再生成了.
+ 3 如果是 `@synthesize foo;` 还会生成一个名称为foo的成员变量，也就是说：
 
  > 如果没有指定成员变量的名称会自动生成一个属性同名的成员变量,
 
 
 
- 2. 如果是 `@synthesize foo = _foo;` 就不会生成成员变量了.
+ 4 如果是 `@synthesize foo = _foo;` 就不会生成成员变量了.
 
 假如 property 名为 foo，存在一个名为 `_foo` 的实例变量，那么还会自动合成新变量么？
 不会。如下图：
 
-![enter image description here](http://i.imgur.com/t28ge4W.png)
+![https://github.com/ChenYilong](http://i.imgur.com/t28ge4W.png)
 
 
 ### 15. 在有了自动合成属性实例变量之后，@synthesize还有哪些使用场景？
@@ -1397,7 +1454,7 @@ NSMutableArray *mCopyArray = [array mutableCopy];
  5. 在 category 中定义的所有属性
  6. 重写（overridden）的属性 
  
- 当你在子类中重载了父类中的属性，你必须 使用 `@synthesize` 来手动合成ivar。
+ 当你在子类中重写（overridden）了父类中的属性，你必须 使用 `@synthesize` 来手动合成ivar。
 
 除了后三条，对其他几个我们可以总结出一个规律：当你想手动管理 @property 的所有内容时，你就会尝试通过实现 @property 的所有“存取方法”（the accessor methods）或者使用 `@dynamic` 来达到这个目的，这时编译器就会认为你打算手动管理 @property，于是编译器就禁用了 autosynthesis（自动合成）。
 
@@ -1464,7 +1521,7 @@ NSMutableArray *mCopyArray = [array mutableCopy];
  ```
 
 结果编译器报错：
-![enter image description here](http://i.imgur.com/fAEGHIo.png)
+![https://github.com/ChenYilong](http://i.imgur.com/fAEGHIo.png)
 
 当你同时重写了 setter 和 getter 时，系统就不会生成 ivar（实例变量/成员变量）。这时候有两种选择：
 
@@ -1475,18 +1532,21 @@ NSMutableArray *mCopyArray = [array mutableCopy];
 ### 16. objc中向一个nil对象发送消息将会发生什么？
 在 Objective-C 中向 nil 发送消息是完全有效的——只是在运行时不会有任何作用:
 
- 1. 如果一个方法返回值是一个对象，那么发送给nil的消息将返回0(nil)。例如：  
+1、 如果一个方法返回值是一个对象，那么发送给nil的消息将返回0(nil)。例如：  
 
  
- ```Objective-C
+```Objective-C
 Person * motherInlaw = [[aPerson spouse] mother];
 ```
 
 
  如果 spouse 对象为 nil，那么发送给 nil 的消息 mother 也将返回 nil。
- 2. 如果方法返回值为指针类型，其指针大小为小于或者等于sizeof(void*)，float，double，long double 或者 long long 的整型标量，发送给 nil 的消息将返回0。
- 2. 如果方法返回值为结构体,发送给 nil 的消息将返回0。结构体中各个字段的值将都是0。
- 2. 如果方法的返回值不是上述提到的几种情况，那么发送给 nil 的消息的返回值将是未定义的。
+
+2、 如果方法返回值为指针类型，其指针大小为小于或者等于sizeof(void*)，float，double，long double 或者 long long 的整型标量，发送给 nil 的消息将返回0。
+
+3、 如果方法返回值为结构体,发送给 nil 的消息将返回0。结构体中各个字段的值将都是0。
+
+4、 如果方法的返回值不是上述提到的几种情况，那么发送给 nil 的消息的返回值将是未定义的。
 
 具体原因如下：
 
@@ -1522,7 +1582,6 @@ struct objc_class {
 objc在向一个对象发送消息时，runtime库会根据对象的isa指针找到该对象实际所属的类，然后在该类中的方法列表以及其父类方法列表中寻找方法运行，然后在发送消息的时候，objc_msgSend方法不会返回值，所谓的返回内容都是具体调用时执行的。
 那么，回到本题，如果向一个nil对象发送消息，首先在寻找对象的isa指针时就是0地址返回了，所以不会出现任何错误。
 
-
 ### 17. objc中向一个对象发送消息[obj foo]和`objc_msgSend()`函数之间有什么关系？
 具体原因同上题：该方法编译之后就是`objc_msgSend()`函数调用.
 
@@ -1557,7 +1616,7 @@ clang -rewrite-objc main.m
 ```
 就可以生成一个`main.cpp`的文件，在最低端（10万4千行左右）
 
-![enter image description here](http://i.imgur.com/eAH5YWn.png)
+![https://github.com/ChenYilong](http://i.imgur.com/eAH5YWn.png)
 
 我们可以看到大概是这样的：
 
@@ -1595,12 +1654,12 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
 
  2. Fast forwarding
 
- 如果目标对象实现了`-forwardingTargetForSelector:`，Runtime 这时就会调用这个方法，给你把这个消息转发给其他对象的机会。
+ 如果目标对象实现了 `-forwardingTargetForSelector:`，Runtime 这时就会调用这个方法，给你把这个消息转发给其他对象的机会。
 只要这个方法返回的不是nil和self，整个消息发送的过程就会被重启，当然发送的对象会变成你返回的那个对象。否则，就会继续Normal Fowarding。
 这里叫Fast，只是为了区别下一步的转发机制。因为这一步不会创建任何新的对象，但下一步转发会创建一个NSInvocation对象，所以相对更快点。
  3. Normal forwarding
 
- 这一步是Runtime最后一次给你挽救的机会。首先它会发送`-methodSignatureForSelector:`消息获得函数的参数和返回值类型。如果`-methodSignatureForSelector:`返回nil，Runtime则会发出`-doesNotRecognizeSelector:`消息，程序这时也就挂掉了。如果返回了一个函数签名，Runtime就会创建一个NSInvocation对象并发送`-forwardInvocation:`消息给目标对象。
+ 这一步是Runtime最后一次给你挽救的机会。首先它会发送 `-methodSignatureForSelector:` 消息获得函数的参数和返回值类型。如果 `-methodSignatureForSelector:` 返回nil，Runtime则会发出 `-doesNotRecognizeSelector:` 消息，程序这时也就挂掉了。如果返回了一个函数签名，Runtime就会创建一个NSInvocation对象并发送 `-forwardInvocation:` 消息给目标对象。
 
 为了能更清晰地理解这些方法的作用，git仓库里也给出了一个Demo，名称叫“ `_objc_msgForward_demo` ”,可运行起来看看。
 
@@ -1618,7 +1677,7 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
 
 每个 Objective-C 对象都有相同的结构，如下图所示：
 
- ![enter image description here](http://i.imgur.com/7mJlUj1.png)
+ ![https://github.com/ChenYilong](http://i.imgur.com/7mJlUj1.png)
 
 翻译过来就是
 
@@ -1639,11 +1698,14 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
 
 
 如图:
-![enter image description here](http://i.imgur.com/w6tzFxz.png)
+![https://github.com/ChenYilong](http://i.imgur.com/w6tzFxz.png)
 
 ### 20. 一个objc对象的isa的指针指向什么？有什么作用？
+`isa` 顾名思义 `is a` 表示对象所属的类。
 
-指向他的类对象,从而可以找到对象上的方法
+`isa` 指向他的类对象，从而可以找到对象上的方法。
+
+同一个类的不同对象，他们的 isa 指针是一样的。
 
 ### 21. 下面的代码输出什么？
 
@@ -1854,8 +1916,17 @@ objc Runtime开源代码对- (Class)class方法的实现:
 
 ### 22. runtime如何通过selector找到对应的IMP地址？（分别考虑类方法和实例方法）
 
-每一个类对象中都一个方法列表,方法列表中记录着方法的名称,方法实现,以及参数类型,其实selector本质就是方法名称,通过这个方法名称就可以在方法列表中找到对应的方法实现.
+每一个类对象中都一个方法列表，方法列表中记录着方法的名称、方法实现、以及参数类型，其实selector 本质就是方法名称，通过这个方法名称就可以在方法列表中找到对应的方法实现。
 
+参考 NSObject 上面的方法：
+
+ ```Objective-C
+- (IMP)methodForSelector:(SEL)aSelector;
++ (IMP)instanceMethodForSelector:(SEL)aSelector;
+ ```
+ 
+ 参考： [Apple Documentation-Objective-C Runtime-NSObject-methodForSelector:]( https://developer.apple.com/documentation/objectivec/nsobject/1418863-methodforselector?language=objc "Apple Documentation-Objective-C Runtime-NSObject-methodForSelector:") 
+ 
 ### 23. 使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？
 
  - 在ARC下不需要。
@@ -2018,8 +2089,12 @@ runtime部分主要参考[Apple官方文档：Declared Properties](https://devel
 
 
 
-<hr />
+
+-------------
+
+
 Posted by Posted by [微博@iOS程序犭袁](http://weibo.com/luohanchenyilong/) & [公众号@iTeaTime技术清谈](https://mp.weixin.qq.com/s/A4e5h3xgIEh6PInf1Rjqsw) 
 原创文章，版权声明：自由转载-非商用-非衍生-保持署名 | [Creative Commons BY-NC-ND 3.0](http://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh)
+
 <p align="center"><a href="http://weibo.com/u/1692391497?s=6uyXnP" target="_blank"><img border="0" src="http://service.t.sina.com.cn/widget/qmd/1692391497/b46c844b/1.png"/></a></p>
 

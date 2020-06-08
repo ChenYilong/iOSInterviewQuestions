@@ -7,6 +7,7 @@
 //
 
 #import "NSOperationQueueIVARBlock.h"
+#import "CYLBaseViewController+CYLBaseViewControllerExtension.h"
 
 @interface NSOperationQueueIVARBlock ()
 
@@ -16,6 +17,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self cyl_test];                                       //分类实例方法：必须在子类中手动 import 父类的分类, 否则抛 编译错误❌
+    [self performSelector:@selector(cyl_test)];            //分类实例方法：必须在子类中手动 import 父类的分类, 否则抛 warning⚠️
+    [[self class] cyl_testClass];                          //分类类方法：  必须在子类中手动 import 父类的分类, 否则编译错误   ❌
+    [[self class]performSelector:@selector(cyl_testClass)];//分类类方法：  必须在子类中手动 import 父类的分类, 否则抛 warning⚠️
+
     // Do any additional setup after loading the view.
 //    _mainQueue = [[NSOperationQueue mainQueue] addOperationWithBlock:^{ self.someProperty = xyz; }];
 }
