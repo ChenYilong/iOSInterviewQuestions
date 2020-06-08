@@ -709,9 +709,16 @@ self.block = ^{
 
 如果对MRC下的循环引用解决方案感兴趣，可参见讨论  [《issue#50 -- 37 题 block 循环引用问题》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/50 ) 
 
+
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1gfl2fg3anyj31jy0m3dlu.jpg)
+
+在 [《iOS面试题集锦（附答案）》]( https://github.com/ChenYilong/iOSInterviewQuestions ) 中有这样一道题目： 
+在block内如何修改block外部变量？（38题）答案如下：
+
 ### 38. 在block内如何修改block外部变量？
 
-注：本题代码请在仓库中查看以 Demo38 开头的工程
+
+注：本题代码请在仓库中查看以 Demo38 开头的工程（公众号请点击原文查看 GitHub 仓库）
  
 先描述下问题：
 
@@ -781,7 +788,8 @@ Block 的类 | 副本源的配置存储域| 复制效果
 
 ![https://github.com/ChenYilong](https://tva1.sinaimg.cn/large/007S8ZIlly1gfkx49l2xxj30u012bqfs.jpg)
 
-![https://github.com/ChenYilong](https://tva1.sinaimg.cn/large/007S8ZIlly1gfl1dgwue0j30wq0lkqai.jpg)
+
+![https://github.com/ChenYilong](https://tva1.sinaimg.cn/large/007S8ZIlly1gfl31akk5hj30zg0lojz9.jpg)
 
  在 `block` 内为什么不能修改 `block` 外部变量
 -------------
@@ -1182,7 +1190,7 @@ int main(int argc, char * argv[]) {
 
 以上都是在使用变量而非修改变量，所以不会编译报错。
 
-
+![](https://tva1.sinaimg.cn/large/007S8ZIlly1gfl28fzqzhj31k40m2amd.jpg)
 
 
 ### 39. 使用系统的某些block api（如UIView的block版本写动画时），是否也考虑引用循环问题？ 
