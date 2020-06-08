@@ -762,7 +762,7 @@ Block 类型| 环境
 Block 的类 | 副本源的配置存储域| 复制效果
 :-------------:|:-------------:|:-------------:
 `_NSConcreteGlobalBlock`| 程序的数据区域 | 什么也不做
-`_NSConcreteStackBlock` | 栈|  从核复制到堆
+`_NSConcreteStackBlock` | 栈|  从栈复制到堆
 `_NSConcreteMallocBlock`| 堆 | 引用计数增加
 
 
