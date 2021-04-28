@@ -251,6 +251,8 @@ typedef NS_ENUM(NSInteger, CYLGender) {
  ```
  属性的参数应该按照下面的顺序排列： 原子性，读写 和 内存管理。 这样做你的属性更容易修改正确，并且更好阅读。这在[《禅与Objective-C编程艺术 >》](https://github.com/oa414/objc-zen-book-cn#属性定义)里有介绍。而且习惯上修改某个属性的修饰符时，一般从属性名从右向左搜索需要修动的修饰符。最可能从最右边开始修改这些属性的修饰符，根据经验这些修饰符被修改的可能性从高到底应为：内存管理 > 读写权限 >原子操作。
 
+讨论区： [《个人认为，UserModel还是比起User的命名方式好些 #21》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/21) 
+
 #### ***硬伤部分***
 
  1. 在-和(void)之间应该有一个空格
@@ -297,7 +299,7 @@ age 设计为 NSUInteger类型，外部只读，
 
 Objective-C 中诸如 NSArray 中的 count 返回的是 NSUInteger 是一个非常不优雅的设计， Swift 中的 Array 的 count 就选择使用 Int 。强制要用 `NSUInteger` 的地方就是 `bitmask` ， Objective-C 中叫 NS_OPTION ，因为要消除不同的编译器的 `right shift` 到底是 `arithmetic right shift` 还是 `logical right shift` 的歧义。
 
-
+如果对硬伤部分有疑问，欢迎参与讨论： [《硬伤部分 #49》](https://github.com/ChenYilong/iOSInterviewQuestions/issues/49) 
 
 ### 2. 什么情况使用 weak 关键字，相比 assign 有什么不同？
 什么情况使用 weak 关键字？
@@ -309,12 +311,12 @@ Objective-C 中诸如 NSArray 中的 count 返回的是 NSUInteger 是一个非�
 
 不同点：
  
- 1. `weak` 此特质表明该属性定义了一种“非拥有关系” (nonowning relationship)。为这种属性设置新值时，设置方法既不保留新值，也不释放旧值。此特质同assign类似，
-然而在属性所指的对象遭到摧毁时，属性值也会清空(nil out)。
-而 `assign` 的“设置方法”只会执行针对“纯量类型” (scalar type，例如 CGFloat 或 
-NSlnteger 等)的简单赋值操作。
+ 1. `weak` 修饰符表明该属性定义了一种“非拥有关系” (nonowning relationship)。在为这种属性设置新值时，设置方法既不保留新值，也不释放旧值。此行为与 assign 类似，不同之处在于，在 weak 属性所指的对象遭到销毁、释放时，该属性值也会清空(nil out)。而 `assign` 的“设置方法”只会执行针对“纯量类型/基本数据类型” (scalar type，例如 CGFloat 或 
+NSInteger 等)的简单赋值操作。
 
  2. assign 可以用非 OC 对象,而 weak 必须用于 OC 对象
+
+其他讨论见： [《第2题 #89》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/89 ) 
 
 ### 3. 怎么用 copy 关键字？
 用途：
@@ -421,6 +423,8 @@ self.mutableArray = array;
 因此，开发iOS程序时一般都会使用 nonatomic 属性。但是在开发 Mac OS X 程序时，使用
  atomic 属性通常都不会有性能瓶颈。
 
+如果对题有疑问，可参考讨论区： [《第四题 #62》](https://github.com/ChenYilong/iOSInterviewQuestions/issues/62) 
+
 ### 5. 如何让自己的类用 copy 修饰符？如何重写带 copy 关键字的 setter？
 
 
@@ -479,6 +483,7 @@ self.mutableArray = array;
 	return copy;
 }
 ```
+
 但在实际的项目中，不可能这么简单，遇到更复杂一点，比如类对象中的数据结构可能并未在初始化方法中设置好，需要另行设置。举个例子，假如 CYLUser 中含有一个数组，与其他 CYLUser 对象建立或解除朋友关系的那些方法都需要操作这个数组。那么在这种情况下，你得把这个包含朋友对象的数组也一并拷贝过来。下面列出了实现此功能所需的全部代码:
 
 ```Objective-C
@@ -556,16 +561,6 @@ typedef NS_ENUM(NSInteger, CYLGender) {
     return copy;
 }
 
-- (id)deepCopy {
-    CYLUser *copy = [[[self class] alloc]
-                     initWithName:_name
-                     age:_age
-                     gender:_gender];
-    copy->_friends = [[NSMutableSet alloc] initWithSet:_friends
-                                             copyItems:YES];
-    return copy;
-}
-
 @end
 
  ```
@@ -591,6 +586,8 @@ typedef NS_ENUM(NSInteger, CYLGender) {
 }
 
  ```
+
+注意：由于上文中 `CYLUser` 的 `-copyWithZone` 方法里，`_friends` 成员的的赋值使用的 `- mutableCopy` 是浅拷贝，只是创建了`NSMutableSet` 对象； 导致 `- deepCopy` 方法中， `_friends` 的每一个对象的 `_friends` 列表并未创建实例。如需继续优化，还需要改造。参见这里的讨论：https://github.com/ChenYilong/iOSInterviewQuestions/pull/24  欢迎大家可以在链接 issue 中贡献自己的想法进行讨论
 
 至于***如何重写带 copy 关键字的 setter***这个问题，
 
@@ -620,7 +617,7 @@ typedef NS_ENUM(NSInteger, CYLGender) {
 
 
 
-这样真得高效吗？不见得！这种写法“看上去很美、很合理”，但在实际开发中，它更像下图里的做法：
+这样真得高效吗？不见得！这种写法“看上去很美、很合理”，但在 ARC 时代的实际开发中，它更像下图里的做法：
 
 ![https://github.com/ChenYilong](http://i.imgur.com/UwV9oSn.jpeg)
 
@@ -632,8 +629,6 @@ typedef NS_ENUM(NSInteger, CYLGender) {
 
 
 > 老百姓 copy 一下，咋就这么难？
-
-
 
 
 你可能会说：
@@ -662,11 +657,12 @@ typedef NS_ENUM(NSInteger, CYLGender) {
 [a setX:[a x]];   //队友咆哮道：你在干嘛？！！
 ```
 
-> 不要在 setter 里进行像 `if (_obj != newObj)` 这样的判断。（该观点参考链接：[ ***How To Write Cocoa Object Setters： Principle 3: Only Optimize After You Measure*** ](http://vgable.com/blog/tag/autorelease/)
+> ARC时代下，不要在 setter 里进行像 `if (_obj != newObj)` 这样的判断。（该观点参考链接：[ ***How To Write Cocoa Object Setters： Principle 3: Only Optimize After You Measure*** ](http://vgable.com/blog/tag/autorelease/)
 ）
 
 
-什么情况会在 copy setter 里做 if 判断？
+ARC时代下，什么情况会在 copy setter 里做 if 判断？
+
 例如，车速可能就有最高速的限制，车速也不可能出现负值，如果车子的最高速为300，则 setter 的方法就要改写成这样：
 
  
@@ -700,7 +696,11 @@ typedef NS_ENUM(NSInteger, CYLGender) {
  ```
 
 
-	
+讨论区：
+
+-  [《set中，对if (_name != name)的描述 #10》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/10 ) 
+- [《更新问题 “如何让自己的类用 copy 修饰符？如何重写带 copy 关键字的 setter？” 的答案 #24》]( https://github.com/ChenYilong/iOSInterviewQuestions/pull/24 ) 
+
 ### 6. @property 的本质是什么？ivar、getter、setter 是如何生成并添加到这个类中的
 
 **@property 的本质是什么？**
@@ -744,6 +744,8 @@ typedef NS_ENUM(NSInteger, CYLGender) {
 - (void)setLastName:(NSString *)lastName;
 @end
  ```
+ 
+对上面这一句有疑问，可参考讨论区： [《第6题 上述代码写出来的类与下面这种写法等效： #86》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/86 ) 
 
 **更新**：
 
@@ -802,12 +804,29 @@ typedef struct {
 
  1. `OBJC_IVAR_$类名$属性名称` ：该属性的“偏移量” (offset)，这个偏移量是“硬编码” (hardcode)，表示该变量距离存放对象的内存区域的起始地址有多远。
  2. setter 与 getter 方法对应的实现函数
- 2. `ivar_list` ：成员变量列表
- 2. `method_list` ：方法列表
- 2. `prop_list` ：属性列表
+ 3. `ivar_list` ：成员变量列表
+ 4. `method_list` ：方法列表
+ 5. `prop_list` ：属性列表
 
 
-也就是说我们每次在增加一个属性,系统都会在 `ivar_list` 中添加一个成员变量的描述,在 `method_list` 中增加 setter 与 getter 方法的描述,在属性列表中增加一个属性的描述,然后计算该属性在对象中的偏移量,然后给出 setter 与 getter 方法对应的实现,在 setter 方法中从偏移量的位置开始赋值,在 getter 方法中从偏移量开始取值,为了能够读取正确字节数,系统对象偏移量的指针类型进行了类型强转.
+也就是说我们每次在增加一个属性,系统都会在 `ivar_list` 中添加一个成员变量的描述,在 `method_list` 中增加 setter 与 getter 方法的描述,在属性列表中增加一个属性的描述,然后计算该属性在对象中的偏移量,然后给出 setter 与 getter 方法对应的实现,在 setter 方法中从偏移量的位置开始赋值,在 getter 方法中从偏移量开始取值,为了能够读取正确字节数,系统对象偏移量的指针类型进行了类型强转。
+
+注意：其中 prop_list 存在哪里？
+
+ ```c
+//objc-runtime-new.h中
+struct objc_class : objc_object {
+//...
+class_data_bits_t bits;//在bits.data()里面
+//...
+}
+ ```
+ 
+ 讨论见： [《第六题 prop_list 存在哪里？ #108》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/108 ) 
+
+ 
+ 
+
 
 ### 7. @protocol 和 category 中如何使用 @property
 
@@ -816,6 +835,8 @@ typedef struct {
 
   1. `objc_setAssociatedObject`
   2. `objc_getAssociatedObject`
+
+对该回答有疑问，可参考讨论区 [《第7题，在代理里定义属性，好像没有使用场景吧 #83》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/83 ) 
 
 ### 8. runtime 如何实现 weak 属性
 
@@ -889,7 +910,8 @@ struct weak_table_t {
 
 `objc_storeWeak`函数把第二个参数--赋值对象（b）的内存地址作为键值key，将第一个参数--weak修饰的属性变量（a）的内存地址（&a）作为value，注册到 weak 表中。如果第二个参数（b）为0（nil），那么把变量（a）的内存地址（&a）从weak表中删除，
 
-你可以把`objc_storeWeak(&a, b)`理解为：`objc_storeWeak(value, key)`，并且当key变nil，将value置nil。
+你可以把`objc_storeWeak(&a, b)`理解为：`objc_storeWeak(value, key)`，并且当key变nil，将value置nil。(如对这句话有疑问，可以参考讨论 [《第8题 感觉objc_storeWeak(&a, b) 理解有点问题 #98》](https://github.com/ChenYilong/iOSInterviewQuestions/issues/98) )
+
 
 在b非nil时，a和b指向同一个内存地址，在b变nil时，a变nil。此时向a发送消息不会崩溃：在Objective-C中向nil发送消息是安全的。
 
@@ -1254,6 +1276,8 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
  2. @synthesize 的语义是如果你没有手动实现 setter 方法和 getter 方法，那么编译器会自动为你加上这两个方法。
  3. @dynamic 告诉编译器：属性的 setter 与 getter 方法由用户自己实现，不自动生成。（当然对于 readonly 的属性只需提供 getter 即可）。假如一个属性被声明为 @dynamic var，然后你没有提供 @setter方法和 @getter 方法，编译的时候没问题，但是当程序运行到 `instance.var = someVar`，由于缺 setter 方法会导致程序崩溃；或者当运行到 `someVar = var` 时，由于缺 getter 方法同样会导致崩溃。编译时没问题，运行时才执行相应的方法，这就是所谓的动态绑定。
 
+讨论区： [《上篇第11题，@dynamic那里说明有点问题 #26》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/26 ) 
+
 ### 12. ARC下，不显式指定任何属性关键字时，默认的关键字都有哪些？
 
 1 对应基本数据类型默认关键字是
@@ -1329,6 +1353,11 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
 
  1. 对非集合类对象的 copy 与 mutableCopy 操作；
  2. 对集合类对象的 copy 与 mutableCopy 操作。
+
+讨论区： 
+
+- [《13题好像只有NSString符合你说的前两点特性 #29》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/29 ) 
+-  [《第13题 疑问 对非集合类对象的copy操作 #19》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/19 ) 
 
 #### 1. 对非集合类对象的copy操作：
 
@@ -1553,7 +1582,7 @@ Person * motherInlaw = [[aPerson spouse] mother];
 ```
 
 
- 如果 spouse 对象为 nil，那么发送给 nil 的消息 mother 也将返回 nil。
+ 如果 spouse 方法的返回值为 nil，那么发送给 nil 的消息 mother 也将返回 nil。
 
 2、 如果方法返回值为指针类型，其指针大小为小于或者等于sizeof(void*)，float，double，long double 或者 long long 的整型标量，发送给 nil 的消息将返回0。
 
@@ -1861,6 +1890,7 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
 
 我在仓库里也给出了一个相应的 Demo（名字叫：Demo_21题_下面的代码输出什么）。有兴趣可以跑起来看一下，主要看下他是怎么打印的，思考下为什么这么打印。
 
+如果对这个例子有疑问：可以参与讨论区讨论 [《21题“不推荐在 init 方法中使用点语法” #75》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/75 ) 
 
 接下来让我们利用 runtime 的相关知识来验证一下 super 关键字的本质，使用clang重写命令:
 
