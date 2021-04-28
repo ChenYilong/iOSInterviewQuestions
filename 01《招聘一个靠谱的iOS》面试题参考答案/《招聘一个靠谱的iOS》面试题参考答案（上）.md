@@ -69,19 +69,20 @@
 // https://github.com/ChenYilong
 // 修改完的代码，这是第一种修改方法，后面会给出第二种修改方法
 
-typedef NS_ENUM(NSInteger, CYLSex) {
-    CYLSexMan,
-    CYLSexWoman
+typedef NS_ENUM(NSInteger, CYLGender) {
+    CYLGenderUndefined,
+    CYLGenderMale,
+    CYLGenderFemale
 };
 
 @interface CYLUser : NSObject<NSCopying>
 
 @property (nonatomic, readonly, copy) NSString *name;
 @property (nonatomic, readonly, assign) NSUInteger age;
-@property (nonatomic, readonly, assign) CYLSex sex;
+@property (nonatomic, readonly, assign) CYLGender gender;
 
-- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
-+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
+- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age gender:(CYLGender)gender;
++ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age gender:(CYLGender)gender;
 
 @end
  ```
@@ -100,9 +101,10 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 
  ```objective-c
 //定义一个枚举
-	typedef NS_ENUM(NSInteger, CYLSex) {
-	    CYLSexMan,
-	    CYLSexWoman
+	typedef NS_ENUM(NSInteger, CYLGender) {
+	    CYLGenderUndefined,
+	    CYLGenderMale,
+	    CYLGenderFemale
 	};
  ```
  （仅仅让性别包含男和女可能并不严谨，最严谨的做法可以参考 [这里](https://github.com/ChenYilong/iOSInterviewQuestions/issues/9) 。）
@@ -147,7 +149,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 ```
 
  7. 由于字符串值可能会改变，所以要把相关属性的“内存管理语义”声明为 copy 。(原因在下文有详细论述：***用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？***)
- 8. “性别”(sex）属性的：该类中只给出了一种“初始化方法” (initializer)用于设置“姓名”(Name)和“年龄”(Age)的初始值，那如何对“性别”(Sex）初始化？
+ 8. “性别”(gender）属性的：该类中只给出了一种“初始化方法” (initializer)用于设置“姓名”(Name)和“年龄”(Age)的初始值，那如何对“性别”(gender）初始化？
 
  Objective-C 有 designated 和 secondary 初始化方法的观念。 designated 初始化方法是提供所有的参数，secondary 初始化方法是一个或多个，并且提供一个或者更多的默认参数来调用 designated 初始化方法的初始化方法。举例说明：
 
@@ -165,18 +167,18 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 
     - (instancetype)initWithName:(NSString *)name
                              age:(NSUInteger)age
-                             sex:(CYLSex)sex {
+                             gender:(CYLGender)gender {
         if(self = [super init]) {
             _name = [name copy];
             _age = age;
-            _sex = sex;
+            _gender = gender;
         }
         return self;
     }
 
     - (instancetype)initWithName:(NSString *)name
                              age:(NSUInteger)age {
-        return [self initWithName:name age:age sex:nil];
+        return [self initWithName:name age:age gender:nil];
     }
 
     @end
@@ -187,9 +189,9 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 
 
 
- 上面的代码中initWithName:age:sex: 就是 designated 初始化方法，另外的是 secondary 初始化方法。因为仅仅是调用类实现的 designated 初始化方法。
+ 上面的代码中initWithName:age:gender: 就是 designated 初始化方法，另外的是 secondary 初始化方法。因为仅仅是调用类实现的 designated 初始化方法。
 
-  因为出题者没有给出 `.m` 文件，所以有两种猜测：1：本来打算只设计一个 designated 初始化方法，但漏掉了“性别”(sex）属性。那么最终的修改代码就是上文给出的第一种修改方法。2：不打算初始时初始化“性别”(sex）属性，打算后期再修改，如果是这种情况，那么应该把“性别”(sex）属性设为 readwrite 属性，最终给出的修改代码应该是：
+  因为出题者没有给出 `.m` 文件，所以有两种猜测：1：本来打算只设计一个 designated 初始化方法，但漏掉了“性别”(gender）属性。那么最终的修改代码就是上文给出的第一种修改方法。2：不打算初始时初始化“性别”(gender）属性，打算后期再修改，如果是这种情况，那么应该把“性别”(gender）属性设为 readwrite 属性，最终给出的修改代码应该是：
 
 
 
@@ -202,20 +204,21 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 	// https://github.com/ChenYilong
 	// 第二种修改方法（基于第一种修改方法的基础上）
 
-	typedef NS_ENUM(NSInteger, CYLSex) {
-	    CYLSexMan,
-	    CYLSexWoman
+	typedef NS_ENUM(NSInteger, CYLGender) {
+	    CYLGenderUndefined,
+	    CYLGenderMale,
+	    CYLGenderFemale
 	};
 
 	@interface CYLUser : NSObject<NSCopying>
 
 	@property (nonatomic, readonly, copy) NSString *name;
 	@property (nonatomic, readonly, assign) NSUInteger age;
-	@property (nonatomic, readwrite, assign) CYLSex sex;
+	@property (nonatomic, readwrite, assign) CYLGender gender;
 
-	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
+	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age gender:(CYLGender)gender;
 	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age;
-	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
+	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age gender:(CYLGender)gender;
 
 	@end
 ```
@@ -225,21 +228,21 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 
 
    - 按照接口设计的惯例，如果设计了“初始化方法” (initializer)，也应当搭配一个快捷构造方法。而快捷构造方法的返回值，建议为 instancetype，为保持一致性，init 方法和快捷构造方法的返回类型最好都用 instancetype。
-   - 如果基于第一种修改方法：既然该类中已经有一个“初始化方法” (initializer)，用于设置“姓名”(Name)、“年龄”(Age)和“性别”(Sex）的初始值:
+   - 如果基于第一种修改方法：既然该类中已经有一个“初始化方法” (initializer)，用于设置“姓名”(Name)、“年龄”(Age)和“性别”(Gender）的初始值:
 那么在设计对应 `@property` 时就应该尽量使用不可变的对象：其三个属性都应该设为“只读”。用初始化方法设置好属性值之后，就不能再改变了。在本例中，仍需声明属性的“内存管理语义”。于是可以把属性的定义改成这样
 
 
  ```Objective-C
         @property (nonatomic, readonly, copy) NSString *name;
         @property (nonatomic, readonly, assign) NSUInteger age;
-        @property (nonatomic, readonly, assign) CYLSex sex;
+        @property (nonatomic, readonly, assign) CYLGender gender;
  ```
 
       由于是只读属性，所以编译器不会为其创建对应的“设置方法”，即便如此，我们还是要写上这些属性的语义，以此表明初始化方法在设置这些属性值时所用的方式。要是不写明语义的话，该类的调用者就不知道初始化方法里会拷贝这些属性，他们有可能会在调用初始化方法之前自行拷贝属性值。这种操作多余而且低效。
       
- 9. `initUserModelWithUserName` 如果改为 `initWithName` 会更加简洁，而且足够清晰。
+ 9. `initUserModelWithUserName` 如果改为 `initWithName` 或者 `initWithUsername` 会更加简洁，而且足够清晰。
  10. `UserModel` 如果改为 `User` 会更加简洁，而且足够清晰。
- 11. `UserSex`如果改为`Sex` 会更加简洁，而且足够清晰。
+ 11. `UserSex`如果改为`Gender` 会更加简洁，而且足够清晰。
  12. 第二个 `@property` 中 assign 和 nonatomic 调换位置。
  推荐按照下面的格式来定义属性
 
@@ -413,7 +416,7 @@ self.mutableArray = array;
 
 在iOS开发中，你会发现，几乎所有属性都声明为 nonatomic。
 
-一般情况下并不要求属性必须是“原子的”，因为这并不能保证“线程安全” ( thread safety)，若要实现“线程安全”的操作，还需采用更为深层的锁定机制才行。例如，一个线程在连续多次读取某属性值的过程中有别的线程在同时改写该值，那么即便将属性声明为 atomic，也还是会读到不同的属性值。
+一般情况下并不要求属性必须是“原子的”，因为这并不能保证“线程安全” ( thread safety)，若要实现“线程安全”的操作，还需采用更为深层的加锁机制才行。例如，一个线程在连续多次读取某属性值的过程中有别的线程在同时改写该值，那么即便将属性声明为 atomic，也还是会读到不同的属性值。
 
 因此，开发iOS程序时一般都会使用 nonatomic 属性。但是在开发 Mac OS X 程序时，使用
  atomic 属性通常都不会有性能瓶颈。
@@ -445,19 +448,20 @@ self.mutableArray = array;
 	// https://github.com/ChenYilong
 	// 修改完的代码
 
-	typedef NS_ENUM(NSInteger, CYLSex) {
-	    CYLSexMan,
-	    CYLSexWoman
+	typedef NS_ENUM(NSInteger, CYLGender) {
+	    CYLGenderUndefined,
+	    CYLGenderMale,
+	    CYLGenderFemale
 	};
 
 	@interface CYLUser : NSObject<NSCopying>
 
 	@property (nonatomic, readonly, copy) NSString *name;
 	@property (nonatomic, readonly, assign) NSUInteger age;
-	@property (nonatomic, readonly, assign) CYLSex sex;
+	@property (nonatomic, readonly, assign) CYLGender gender;
 
-	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
-	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
+	- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age gender:(CYLGender)gender;
+	+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age gender:(CYLGender)gender;
 
 	@end
  ```
@@ -471,7 +475,7 @@ self.mutableArray = array;
 	CYLUser *copy = [[[self class] allocWithZone:zone] 
 		             initWithName:_name
  							      age:_age
-						          sex:_sex];
+						          gender:_gender];
 	return copy;
 }
 ```
@@ -483,19 +487,20 @@ self.mutableArray = array;
 // https://github.com/ChenYilong
 // 以第一题《风格纠错题》里的代码为例
 
-typedef NS_ENUM(NSInteger, CYLSex) {
-    CYLSexMan,
-    CYLSexWoman
+typedef NS_ENUM(NSInteger, CYLGender) {
+    CYLGenderUndefined,
+    CYLGenderMale,
+    CYLGenderFemale
 };
 
 @interface CYLUser : NSObject<NSCopying>
 
 @property (nonatomic, readonly, copy) NSString *name;
 @property (nonatomic, readonly, assign) NSUInteger age;
-@property (nonatomic, readonly, assign) CYLSex sex;
+@property (nonatomic, readonly, assign) CYLGender gender;
 
-- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
-+ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age sex:(CYLSex)sex;
+- (instancetype)initWithName:(NSString *)name age:(NSUInteger)age gender:(CYLGender)gender;
++ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age gender:(CYLGender)gender;
 - (void)addFriend:(CYLUser *)user;
 - (void)removeFriend:(CYLUser *)user;
 
@@ -522,11 +527,11 @@ typedef NS_ENUM(NSInteger, CYLSex) {
 
 - (instancetype)initWithName:(NSString *)name
                          age:(NSUInteger)age
-                         sex:(CYLSex)sex {
+                         gender:(CYLGender)gender {
     if(self = [super init]) {
         _name = [name copy];
         _age = age;
-        _sex = sex;
+        _gender = gender;
         _friends = [[NSMutableSet alloc] init];
     }
     return self;
@@ -544,7 +549,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
     CYLUser *copy = [[[self class] allocWithZone:zone]
                      initWithName:_name
                      age:_age
-                     sex:_sex];
+                     gender:_gender];
     copy->_friends = [_friends mutableCopy];
     return copy;
 }
@@ -553,7 +558,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
     CYLUser *copy = [[[self class] alloc]
                      initWithName:_name
                      age:_age
-                     sex:_sex];
+                     gender:_gender];
     copy->_friends = [[NSMutableSet alloc] initWithSet:_friends
                                              copyItems:YES];
     return copy;
@@ -577,7 +582,7 @@ typedef NS_ENUM(NSInteger, CYLSex) {
     CYLUser *copy = [[[self class] alloc]
                      initWithName:_name
                      age:_age
-                     sex:_sex];
+                     gender:_gender];
     copy->_friends = [[NSMutableSet alloc] initWithSet:_friends
                                              copyItems:YES];
     return copy;
@@ -680,11 +685,11 @@ typedef NS_ENUM(NSInteger, CYLSex) {
  ```Objective-C
 	- (instancetype)initWithName:(NSString *)name 
 								 age:(NSUInteger)age 
-								 sex:(CYLSex)sex {
+								 gender:(CYLGender)gender {
 	     if(self = [super init]) {
 	     	_name = [name copy];
 	     	_age = age;
-	     	_sex = sex;
+	     	_gender = gender;
 	     	_friends = [[NSMutableSet alloc] init];
 	     }
 	     return self;
@@ -818,8 +823,16 @@ typedef struct {
 
 那么 runtime 如何实现 weak 变量的自动置nil？
 
+举例说明：
 
-> runtime 对注册的类， 会进行布局，对于 weak 对象会放入一个 hash 表中。 用 weak 指向的对象内存地址作为 key，当此对象的引用计数为0的时候会 dealloc，假如 weak 指向的对象内存地址是a，那么就会以a为键， 在这个 weak 表中搜索，找到所有以a为键的 weak 对象，从而设置为 nil。
+ ```Objective-C
+    id obj0 = [NSObject new];
+    __weak id obj1 = obj0;
+    __weak id objA = obj0;
+
+ ```
+
+> runtime 对注册的类，会进行布局，对于 weak 对象会放入一个 hash 表中。 用 weak 指针(obj1、objA)指向的对象(obj0)内存地址作为 key，当此对象的引用计数为0的时候会反向找到 weak 指针(obj1、objA) 并 dealloc。假如 weak 指针(obj1、objA)指向的对象(obj0)内存地址是a，那么就会以a为键， 在这个 weak 表中搜索，找到所有以a为键的 weak 对象(obj1、objA)，从而设置为 nil。
 
 （注：在下文的《使用runtime Associate方法关联的对象，需要在主对象dealloc的时候释放么？》里给出的“对象的内存销毁时间表”也提到`__weak`引用的解除时间。）
 
@@ -919,7 +932,7 @@ obj_storeWeak(&obj1, obj);
 
 >  weak 修饰的指针默认值是 nil （在Objective-C中向nil发送消息是安全的）
 
-
+(同时， weak 修饰的指针可能随时变为 nil)
 
 
 然后`obj_destroyWeak`函数将0（nil）作为参数，调用`objc_storeWeak`函数。
@@ -927,7 +940,6 @@ obj_storeWeak(&obj1, obj);
 `objc_storeWeak(&obj1, 0);`
 
 前面的源代码与下列源代码相同。
-
 
 
 ```Objective-C
@@ -1202,6 +1214,7 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
  ```
 
 ### 10. weak属性需要在dealloc中置nil么？
+
 不需要。
 
 
@@ -1230,9 +1243,6 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
 也即:
 
 > 在属性所指的对象遭到摧毁时，属性值也会清空(nil out)。
-
-
-
 
 
 
@@ -1376,13 +1386,14 @@ NSMutableArray *mCopyArray = [array mutableCopy];
 
  ```Objective-C
 [immutableObject copy] // 浅复制
-[immutableObject mutableCopy] //单层深复制
-[mutableObject copy] //单层深复制
-[mutableObject mutableCopy] //单层深复制
+[immutableObject mutableCopy] //浅拷贝，也可以称之为“单层深复制”。
+[mutableObject copy] //浅拷贝，也可以称之为“单层深复制”。
+[mutableObject mutableCopy] //浅拷贝，也可以称之为“单层深复制”。
  ```
 
+这个代码结论和非集合类的结论有区别，注意分辨。
 
-这个代码结论和非集合类的非常相似。
+注意：“深拷贝”前面为什么要加一个“单层”? 原因如下：对于集合对象的 copy 操作是否属于深拷贝这里有争议，因为 copy 操作后，集合对象内部的元素实际并没有变更指针地址，所以严格意义上来说，集合对象的 copy 操作也可以称之为浅拷贝。上文中，所谓的深拷贝，没有考虑集合内部元素层面，仅仅考虑了该集合对象的指针。所以仅仅是“单层深复制”，也可以称之为浅拷贝。但考虑到集合对象我们更关注元素，而非集合本身，我们更倾向于认为这个就是浅拷贝。
 
 参考链接：[iOS 集合的深复制与浅复制](https://www.zybuluo.com/MicroCai/note/50592)
 

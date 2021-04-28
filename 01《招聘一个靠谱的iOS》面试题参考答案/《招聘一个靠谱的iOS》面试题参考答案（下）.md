@@ -586,7 +586,7 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
  就是所谓的：当前作用域大括号结束时释放。
  2. 系统自动去释放--不手动指定 `autoreleasepool`
 
-  Autorelease对象出了作用域之后，会被添加到最近一次创建的自动释放池中，并会在当前的 runloop 迭代结束时释放。
+  Autorelease对象出了作用域之后，会被添加到最近一次创建的自动释放池中，并会在当前的 runloop 迭代结束时执行pop函数时释放。
 
 释放的时机总结起来，可以用下图来表示：
 
@@ -600,6 +600,7 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
 从程序启动到加载完成是一个完整的运行循环，然后会停下来，等待用户交互，用户的每一次交互都会启动一次运行循环，来处理用户所有的点击事件、触摸事件。
 
 我们都知道：
+
 **所有 autorelease 的对象，在出了作用域之后，会被自动添加到最近创建的自动释放池中。**
 
 但是如果每次都放进应用程序的 `main.m` 中的 autoreleasepool 中，迟早有被撑满的一刻。这个过程中必定有一个释放的动作。何时？
@@ -619,15 +620,40 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
 
 @autoreleasepool 当自动释放池被销毁或者耗尽时，会向自动释放池中的所有对象发送 release 消息，释放自动释放池中的所有对象。
 
-
-
  如果在一个vc的viewDidLoad中创建一个 Autorelease对象，那么该对象会在 viewDidAppear 方法执行前就被销毁了。
 
-
-
-
-
 参考链接：[《黑幕背后的Autorelease》](http://blog.sunnyxx.com/2014/10/15/behind-autorelease/)
+
+拓展问题：
+
+下面的对象 ，分别在什么地方被释放 ?
+
+ ```Objective-C
+/**
+ * 下面的对象 ，分别在什么地方被释放 ?
+ */
+- (void)weakLifeCycleTest {
+    id obj0 = @"iTeaTime(技术清谈)";
+    __weak id obj1 = obj0;
+    id obj2 = [NSObject new];
+    __weak id obj3 = [NSObject new];
+    {
+        id obj4 = [NSObject new];
+    }
+    __autoreleasing id obj5 = [NSObject new];
+    __unsafe_unretained id obj6 = self;
+    NSLog(@"obj0=%@, obj1=%@, obj2=%@, obj3=%@, obj5=%@, obj6=%@", obj0, obj1, obj2, obj3, obj5, obj6);
+    // Lots of code ...
+}
+ ```
+
+- obj0 字符串属于常量区，不会释放
+- obj1 指向的对象在常量区，不会释放
+- obj2 没有修复符，默认为 `__strong` ，会在对象被使用结束时释放。如果下方没有使用该对象，根据编译器是否优化，可能在下一行直接销毁，最晚可以在方法结束时销毁。
+- obj3 警告 “Assigning retained object to weak variable; object will be released after assignment” ，new 结束后，等号右侧对象立马被释放，左侧指针也立即销毁，下方打印也是 null
+- obj4 出了最近的括号销毁
+- obj5 出了最近的一个 autoreleasePool 时被释放
+- obj6 类似于基本数据结构的修饰符号 assign ，不会对修饰对象的生命周期产生影响，随着self的释放，obj6也会随之释放。比如 self 被其它线程释放，那么obj6也会随之释放。
 
 ###  35. BAD_ACCESS在什么情况下出现？
 访问了悬垂指针，比如对一个已经释放的对象执行了release、访问已经释放对象的成员变量或者发消息。
@@ -681,7 +707,7 @@ ARC 下的解决方法是：
 ```Objective-C
 __block id weakSelf = self;
 self.block = ^{
-    printf ("%p", weakself);
+    NSLog(@"%@", @[weakSelf]);
     weakSelf = nil;
 };
 self.block();
@@ -694,7 +720,8 @@ MRC下可使用 `unsafe_unretained` 和 `__block` 进行解决，`__weak` 不能
 ```Objective-C
 unsafe_unretained id weakSelf = self;
 self.block = ^{
-    printf ("%p", weakself);
+    NSLog(@"%@", @[weakSelf]);
+
 };
 ```
 
@@ -703,9 +730,29 @@ self.block = ^{
 ```Objective-C
 __block id weakSelf = self;
 self.block = ^{
-    printf ("%p", weakself);
+    NSLog(@"%@", @[weakself]);
+
 };
 ```
+
+其中最佳实践为 weak-strong dance 解法：
+
+```Objective-C
+__weak __typeof(self) weakSelf = self;
+self.block = ^{
+    __strong typeof(self) strongSelf = weakSelf;
+    if (!strongSelf) {
+         return;
+    }
+    NSLog(@"%@", @[strongSelf]);
+};
+self.block();
+```
+
+- weakSelf 是保证 block 内部(作用域内)不会产生循环引用
+- strongSelf 是保证 block 内部(作用域内) self 不会被 block释放
+- `if (!strongSelf) { return;}` 该代码作用：因为 weak 指针指向的对象，是可能被随时释放的。为了防止 self 在 block 外部被释放，比如其它线程内被释放。
+
 
 如果对MRC下的循环引用解决方案感兴趣，可参见讨论  [《issue#50 -- 37 题 block 循环引用问题》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/50 ) 
 
@@ -1267,15 +1314,14 @@ int main(int argc, char * argv[]) {
  
   - UIView 层
   - Layer 层
-   - data 数据层
+  - data 数据层
   
   其中
   
   - UIView 层的`block` 仅仅是提供了类似快照 data 的变化。
-  - 当真正执行  `Animation` 动画时才会将
-“原有状态”与“执行完 `block` 的状态”做一个差值，来去做动画。
+  - 当真正执行  `Animation` 动画时才会将“原有状态”与“执行完 `block` 的状态”做一个差值，来去做动画。
  
-这个问题关于循环引用的部分已经解答完毕，下面我们来扩展一下，探究一下系统API相关的内存泄漏问题。
+这个问题关于循环引用的部分已经解答完毕，下面我们来扩展一下，探究一下系统 API 相关的内存泄漏问题。
 
 
 -------------
