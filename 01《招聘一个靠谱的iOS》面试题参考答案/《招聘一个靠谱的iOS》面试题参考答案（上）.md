@@ -168,7 +168,7 @@ typedef NS_ENUM(NSInteger, CYLGender) {
     - (instancetype)initWithName:(NSString *)name
                              age:(NSUInteger)age
                              gender:(CYLGender)gender {
-        if(self = [super init]) {
+        if (self = [super init]) {
             _name = [name copy];
             _age = age;
             _gender = gender;
@@ -521,20 +521,22 @@ typedef NS_ENUM(NSInteger, CYLGender) {
     NSMutableSet *_friends;
 }
 
-- (void)setName:(NSString *)name {
-    _name = [name copy];
-}
-
 - (instancetype)initWithName:(NSString *)name
                          age:(NSUInteger)age
                          gender:(CYLGender)gender {
-    if(self = [super init]) {
+    if (self = [super init]) {
         _name = [name copy];
         _age = age;
         _gender = gender;
         _friends = [[NSMutableSet alloc] init];
     }
     return self;
+}
+
++ (instancetype)userWithName:(NSString *)name age:(NSUInteger)age gender:(CYLGender)gender {
+    CYLUser *user = [[CYLUser alloc] initWithName:name age:age gender:gender];
+    user->_friends = [[NSMutableSet alloc] init];
+    return user;
 }
 
 - (void)addFriend:(CYLUser *)user {
@@ -660,7 +662,7 @@ typedef NS_ENUM(NSInteger, CYLGender) {
 [a setX:[a x]];   //队友咆哮道：你在干嘛？！！
 ```
 
-> 不要在 setter 里进行像 `if(_obj != newObj)` 这样的判断。（该观点参考链接：[ ***How To Write Cocoa Object Setters： Principle 3: Only Optimize After You Measure*** ](http://vgable.com/blog/tag/autorelease/)
+> 不要在 setter 里进行像 `if (_obj != newObj)` 这样的判断。（该观点参考链接：[ ***How To Write Cocoa Object Setters： Principle 3: Only Optimize After You Measure*** ](http://vgable.com/blog/tag/autorelease/)
 ）
 
 
@@ -670,8 +672,8 @@ typedef NS_ENUM(NSInteger, CYLGender) {
  
 ```Objective-C
 -(void)setSpeed:(int)speed {
-    if(speed < 0) speed = 0;
-    if(speed > 300) speed = 300;
+    if (speed < 0) speed = 0;
+    if (speed > 300) speed = 300;
    _speed = speed;
 }
 ```
@@ -686,7 +688,7 @@ typedef NS_ENUM(NSInteger, CYLGender) {
 	- (instancetype)initWithName:(NSString *)name 
 								 age:(NSUInteger)age 
 								 gender:(CYLGender)gender {
-	     if(self = [super init]) {
+	     if ((self = [super init]) {
 	     	_name = [name copy];
 	     	_age = age;
 	     	_gender = gender;
