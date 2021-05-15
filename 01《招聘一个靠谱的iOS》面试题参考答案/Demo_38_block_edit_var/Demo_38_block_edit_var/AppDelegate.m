@@ -9,14 +9,29 @@
 #import "AppDelegate.h"
 
 @interface AppDelegate ()
+@property (nonatomic, strong) NSString *nso;
+
 
 @end
 
 @implementation AppDelegate
 
+int age1 = 20;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    int a = 10;
+    NSLog(@"数据段：age %p", &age1);
+    NSLog(@"栈: a %p", &a);
+    NSLog(@"堆：obj %p", [[NSObject alloc] init]);
+    NSLog(@"class：obj %p", NSClassFromString(@"NSObject"));
+    NSLog(@"class %p",  [NSObject class]);
+//    for (int i = 0; i < 100000; ++i) {
+//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//            id o =[NSString stringWithFormat:@"%@%@",  @"iTeaTime(技术清谈)", @(i)];
+//               self.nso = o;
+//        });
+//    }
     return YES;
 }
 
