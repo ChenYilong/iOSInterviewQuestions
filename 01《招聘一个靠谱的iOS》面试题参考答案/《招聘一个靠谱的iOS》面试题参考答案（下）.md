@@ -265,15 +265,14 @@ int main(int argc, char * argv[]) {
 
  1. 调用`resolveInstanceMethod:`方法 (或 `resolveClassMethod:`)。允许用户在此时为该 Class 动态添加实现。如果有实现了，则调用并返回YES，那么重新开始`objc_msgSend`流程。这一次对象会响应这个选择器，一般是因为它已经调用过`class_addMethod`。如果仍没实现，继续下面的动作。
 
- 2. 调用`forwardingTargetForSelector:`方法，尝试找到一个能响应该消息的对象。如果获取到，则直接把消息转发给它，返回非 nil 对象。否则返回 nil ，继续下面的动作。注意，这里不要返回 self ，否则会形成死循环。
+ 2. 调用`forwardingTargetForSelector:`方法，尝试找到一个能响应该消息的对象。如果获取到，则直接把消息转发给它，返回非 nil 对象。否则返回 nil ，继续下面的动作。注意，这里不要返回 self ，否则会形成死循环。(讨论见： [《forwardingTargetForSelector返回self不会死循环吧。 #64》](https://github.com/ChenYilong/iOSInterviewQuestions/issues/64) 
 
- 3. 调用`methodSignatureForSelector:`方法，尝试获得一个方法签名。如果获取不到，则直接调用`doesNotRecognizeSelector`抛出异常。如果能获取，则返回非nil：创建一个 NSlnvocation 并传给`forwardInvocation:`。
+ 3. 调用`methodSignatureForSelector:`方法，尝试获得一个方法签名。如果获取不到，则直接调用`doesNotRecognizeSelector`抛出异常。如果能获取，则返回非nil：创建一个 NSInvocation 并传给`forwardInvocation:`。
 
- 4. 调用`forwardInvocation:`方法，将第3步获取到的方法签名包装成 Invocation 传入，如何处理就在这里面了，并返回非nil。
-
+ 4. 调用`forwardInvocation:`方法，将第3步获取到的方法签名包装成 Invocation 传入，如何处理就在这里面了。(讨论见： [《_objc_msgForward问题 #106》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/106 ) 
  5. 调用`doesNotRecognizeSelector:` ，默认的实现是抛出异常。如果第3步没能获得一个方法签名，执行该步骤。
 
-上面前4个方法均是模板方法，开发者可以override，由 runtime 来调用。最常见的实现消息转发：就是重写方法3和4，吞掉一个消息或者代理给其他对象都是没问题的
+上面前4个方法均是模板方法，开发者可以重写(override)，由 runtime 来调用。最常见的实现消息转发：就是重写方法3和4，吞掉一个消息或者代理给其他对象都是没问题的
 
 也就是说`_objc_msgForward`在进行消息转发的过程中会涉及以下这几个方法：
 
@@ -359,7 +358,9 @@ typedef void (*voidIMP)(id, SEL, ...)
 在b非nil时，a和b指向同一个内存地址，在b变nil时，a变nil。此时向a发送消息不会崩溃：在Objective-C中向nil发送消息是安全的。
 
 而如果a是由assign修饰的，则：
-在b非nil时，a和b指向同一个内存地址，在b变nil时，a还是指向该内存地址，变野指针。此时向a发送消息极易崩溃。
+在b非nil时，a和b指向同一个内存地址，在b变nil时，a还是指向该内存地址，变野指针。此时向a发送消息会产生崩溃。
+
+参考讨论区 ： [《有一点说的很容易误导人 #6》](https://github.com/ChenYilong/iOSInterviewQuestions/issues/6) 
 
 
 下面我们将基于`objc_storeWeak(&a, b)`函数，使用伪代码模拟“runtime如何实现weak属性”：
@@ -495,6 +496,8 @@ model 主要是用来指定事件在运行循环中的优先级的，分为：
  1. NSDefaultRunLoopMode（kCFRunLoopDefaultMode）
  2. NSRunLoopCommonModes（kCFRunLoopCommonModes）
 
+讨论区： [《https://github.com/ChenYilong/iOSInterviewQuestions/issues/36》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/36 ) 
+
 ### 30. 以+ scheduledTimerWithTimeInterval...的方式触发的timer，在滑动页面上的列表时，timer会暂定回调，为什么？如何解决？
 
 RunLoop只能运行在一种mode下，如果要换mode，当前的loop也需要停下重启成新的。利用这个机制，ScrollView滚动过程中NSDefaultRunLoopMode（kCFRunLoopDefaultMode）的mode会切换到UITrackingRunLoopMode来保证ScrollView的流畅滑动：只能在NSDefaultRunLoopMode模式下处理的事件会影响ScrollView的滑动。
@@ -526,6 +529,7 @@ NSTimer *timer = [NSTimer timerWithTimeInterval:1.0
 [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
 ```
 
+如果对本回答有疑问，欢迎参与讨论：  [《第30题，使用dispatch source替换NSTimer #45》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/45 ) 
 
 ### 31. 猜想runloop内部是如何实现的？
 
@@ -569,8 +573,47 @@ NSTimer *timer = [NSTimer timerWithTimeInterval:1.0
 
 ### 32. objc使用什么机制管理对象内存？
 
-通过 `retainCount` 的机制来决定对象是否需要释放。
-每次 `runloop` 的时候，都会检查对象的 `retainCount`，如果 `retainCount` 为 0，说明该对象没有地方需要继续使用了，可以释放掉了。
+- 通过 `retainCount` 的机制来决定对象是否需要释放。
+- ~~每次 `runloop` 的时候，都会检查对象的 `retainCount`，如果 `retainCount` 为 0，说明该对象没有地方需要继续使用了，可以释放掉了。(正解：retainCount 不可能依赖 runloop 检查。runloop 只是自动管理了一个 autoreleasepool，autoreleasepool pop 时可能会导致 retainCount 为 0 从而导致对象释放)~~
+- 每次 release 时检查 retainCount 减一，当为0时候释放对象。
+
+release 对象的各种情况如下：
+
+一、对象成员变量
+
+这个对象 dealloc 时候，成员变量 `objc_storeStrong(&ivar,nil)` release
+
+二、局部变量变量的释放
+分情况：
+
+1、strong obj变量，出了作用域`{}`，就  `objc_storeStrong(obj,nil)` release 对象；
+
+ ```C
+void
+objc_storeStrong(id *location, id obj)
+{
+
+id prev = *location;
+if (obj == prev) {
+    return;
+}
+objc_retain(obj);
+*location = obj;
+objc_release(prev);
+}
+ ```
+
+
+2、weak obj变量，出了作用域，objc_destroyWeak 将变量（obj）的地址从weak表中删除。；
+
+3、autorelease obj变量，交给 autoreleasePool对象管理，
+（1）主动使用 `@autoreleasepool{}`，出了 `{}` 对象release
+（2）不使用 `@autoreleasepool{}`，交给线程管理
+
+①线程开启`runloop`，在每次 `kCFRunLoopBeforeWaiting` 休眠时候，执行`PoolPop`（release对象）再PoolPush，
+②线程没有开启`runloop`，在线程结束时候执行 `PoolPop`（release对象）
+
+详细讨论见： [《32. objc使用什么机制管理对象内存？ #92》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/92 ) 
 
 ### 33. ARC通过什么方式帮助开发者管理内存？
  <p><del>编译时根据代码上下文，插入 retain/release
@@ -578,6 +621,10 @@ NSTimer *timer = [NSTimer timerWithTimeInterval:1.0
 ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单。应该是编译期和运行期两部分共同帮助开发者管理内存。
 
 在编译期，ARC用的是更底层的C接口实现的retain/release/autorelease，这样做性能更好，也是为什么不能在ARC环境下手动retain/release/autorelease，同时对同一上下文的同一对象的成对retain/release操作进行优化（即忽略掉不必要的操作）；ARC也包含运行期组件，这个地方做的优化比较复杂，但也不能被忽略。【TODO:后续更新会详细描述下】
+
+讨论区：
+ [《第33题，答案可能不是很准确 #15》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/15 ) 
+ 
 ###  34. 不手动指定autoreleasepool的前提下，一个autorealese对象在什么时刻释放？（比如在一个vc的viewDidLoad中创建）
 分两种情况：手动干预释放时机、系统自动去释放。
 
@@ -586,7 +633,7 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
  就是所谓的：当前作用域大括号结束时释放。
  2. 系统自动去释放--不手动指定 `autoreleasepool`
 
-  Autorelease对象出了作用域之后，会被添加到最近一次创建的自动释放池中，并会在当前的 runloop 迭代结束时释放。
+  Autorelease对象出了作用域之后，会被添加到最近一次创建的自动释放池中，并会在当前的 runloop 迭代结束时执行pop函数时释放。
 
 释放的时机总结起来，可以用下图来表示：
 
@@ -600,6 +647,7 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
 从程序启动到加载完成是一个完整的运行循环，然后会停下来，等待用户交互，用户的每一次交互都会启动一次运行循环，来处理用户所有的点击事件、触摸事件。
 
 我们都知道：
+
 **所有 autorelease 的对象，在出了作用域之后，会被自动添加到最近创建的自动释放池中。**
 
 但是如果每次都放进应用程序的 `main.m` 中的 autoreleasepool 中，迟早有被撑满的一刻。这个过程中必定有一个释放的动作。何时？
@@ -619,16 +667,44 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
 
 @autoreleasepool 当自动释放池被销毁或者耗尽时，会向自动释放池中的所有对象发送 release 消息，释放自动释放池中的所有对象。
 
-
-
  如果在一个vc的viewDidLoad中创建一个 Autorelease对象，那么该对象会在 viewDidAppear 方法执行前就被销毁了。
-
-
-
-
 
 参考链接：[《黑幕背后的Autorelease》](http://blog.sunnyxx.com/2014/10/15/behind-autorelease/)
 
+拓展问题：
+
+下面的对象 ，分别在什么地方被释放 ?
+
+ ```Objective-C
+/**
+ * 下面的对象 ，分别在什么地方被释放 ?
+ */
+- (void)weakLifeCycleTest {
+    id obj0 = @"iTeaTime(技术清谈)";
+    __weak id obj1 = obj0;
+    id obj2 = [NSObject new];
+    __weak id obj3 = [NSObject new];
+    {
+        id obj4 = [NSObject new];
+    }
+    __autoreleasing id obj5 = [NSObject new];
+    __unsafe_unretained id obj6 = self;
+    NSLog(@"obj0=%@, obj1=%@, obj2=%@, obj3=%@, obj5=%@, obj6=%@", obj0, obj1, obj2, obj3, obj5, obj6);
+    // Lots of code ...
+}
+ ```
+
+- obj0 字符串属于常量区，不会释放 (类似的例子可以参考 [《第34题，autorelease对象的释放时机，对iOS9、10系统不适用 #90》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/90 ) )
+- obj1 指向的对象在常量区，不会释放 (类似的例子可以参考 [《第34题，autorelease对象的释放时机，对iOS9、10系统不适用 #90》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/90 ) )
+- obj2 没有修复符，默认为 `__strong` ，会在对象被使用结束时释放。如果下方没有使用该对象，根据编译器是否优化，可能在下一行直接销毁，最晚可以在方法结束时销毁。
+- obj3 警告 “Assigning retained object to weak variable; object will be released after assignment” ，new 结束后，等号右侧对象立马被释放，左侧指针也立即销毁，下方打印也是 null
+- obj4 出了最近的括号销毁
+- obj5 出了最近的一个 autoreleasePool 时被释放
+- obj6 类似于基本数据结构的修饰符号 assign ，不会对修饰对象的生命周期产生影响，随着self的释放，obj6也会随之释放。比如 self 被其它线程释放，那么obj6也会随之释放。
+
+讨论区：
+ [《关于第 34 题关于 NSOperation 中需要手动添加 Autorelease Pool 的部分的疑问 #25》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/25 ) 
+ 
 ###  35. BAD_ACCESS在什么情况下出现？
 访问了悬垂指针，比如对一个已经释放的对象执行了release、访问已经释放对象的成员变量或者发消息。
 死循环
@@ -681,7 +757,7 @@ ARC 下的解决方法是：
 ```Objective-C
 __block id weakSelf = self;
 self.block = ^{
-    printf ("%p", weakself);
+    NSLog(@"%@", @[weakSelf]);
     weakSelf = nil;
 };
 self.block();
@@ -694,7 +770,8 @@ MRC下可使用 `unsafe_unretained` 和 `__block` 进行解决，`__weak` 不能
 ```Objective-C
 unsafe_unretained id weakSelf = self;
 self.block = ^{
-    printf ("%p", weakself);
+    NSLog(@"%@", @[weakSelf]);
+
 };
 ```
 
@@ -703,12 +780,35 @@ self.block = ^{
 ```Objective-C
 __block id weakSelf = self;
 self.block = ^{
-    printf ("%p", weakself);
+    NSLog(@"%@", @[weakself]);
+
 };
 ```
 
-如果对MRC下的循环引用解决方案感兴趣，可参见讨论  [《issue#50 -- 37 题 block 循环引用问题》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/50 ) 
+其中最佳实践为 weak-strong dance 解法：
 
+```Objective-C
+__weak __typeof(self) weakSelf = self;
+self.block = ^{
+    __strong typeof(self) strongSelf = weakSelf;
+    if (!strongSelf) {
+         return;
+    }
+    NSLog(@"%@", @[strongSelf]);
+};
+self.block();
+```
+
+- weakSelf 是保证 block 内部(作用域内)不会产生循环引用
+- strongSelf 是保证 block 内部(作用域内) self 不会被 block释放
+- `if (!strongSelf) { return;}` 该代码作用：因为 weak 指针指向的对象，是可能被随时释放的。为了防止 self 在 block 外部被释放，比如其它线程内被释放。
+
+
+
+讨论区 ：
+
+- 如果对MRC下的循环引用解决方案感兴趣，可参见讨论  [《issue#50 -- 37 题 block 循环引用问题》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/50 ) 
+- [《建议增加一个问题：__block和__weak的区别 #7》](https://github.com/ChenYilong/iOSInterviewQuestions/issues/7) 
 
 ![](https://tva1.sinaimg.cn/large/007S8ZIlly1gfl2fg3anyj31jy0m3dlu.jpg)
 
@@ -1267,15 +1367,14 @@ int main(int argc, char * argv[]) {
  
   - UIView 层
   - Layer 层
-   - data 数据层
+  - data 数据层
   
   其中
   
   - UIView 层的`block` 仅仅是提供了类似快照 data 的变化。
-  - 当真正执行  `Animation` 动画时才会将
-“原有状态”与“执行完 `block` 的状态”做一个差值，来去做动画。
+  - 当真正执行  `Animation` 动画时才会将“原有状态”与“执行完 `block` 的状态”做一个差值，来去做动画。
  
-这个问题关于循环引用的部分已经解答完毕，下面我们来扩展一下，探究一下系统API相关的内存泄漏问题。
+这个问题关于循环引用的部分已经解答完毕，下面我们来扩展一下，探究一下系统 API 相关的内存泄漏问题。
 
 
 -------------
@@ -1562,7 +1661,9 @@ observer中需要实现一下方法：
  3. 格式 @"@sum.age"或 @"集合属性.@max.age"
 
 ### 49. KVC和KVO的keyPath一定是属性么？
+
 KVC 支持实例变量，KVO 只能手动支持[手动设定实例变量的KVO实现监听](https://yq.aliyun.com/articles/30483)
+
 ### 50. 如何关闭默认的KVO的默认实现，并进入自定义的KVO实现？
 
 
@@ -1678,7 +1779,12 @@ KVO 在实现中通过 ` isa 混写（isa-swizzling）` 把这个对象的 isa �
 > 因为既然有外链那么视图在xib或者storyboard中肯定存在，视图已经对它有一个强引用了。
 
 
-不过这个回答漏了个重要知识，使用storyboard（xib不行）创建的vc，会有一个叫`_topLevelObjectsToKeepAliveFromStoryboard` 的私有数组强引用所有 top level 的对象，所以这时即便outlet声明成weak也没关系
+不过这个回答漏了个重要知识，使用storyboard（xib不行）创建的vc，会有一个叫`_topLevelObjectsToKeepAliveFromStoryboard` 的私有数组强引用所有 top level 的对象，所以这时即便 outlet 声明成weak也没关系
+
+如果对本回答有疑问，欢迎参与讨论： 
+
+- [《第52题 IBOutlet连出来的视图属性为什么可以被设置成weak? #51》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/51 ) 
+- [《关于weak的一个问题 #39》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/39 ) 
 
 ### 53. IB中User Defined Runtime Attributes如何使用？ 
 
