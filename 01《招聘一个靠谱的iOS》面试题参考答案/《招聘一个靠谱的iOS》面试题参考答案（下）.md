@@ -633,7 +633,7 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
  就是所谓的：当前作用域大括号结束时释放。
  2. 系统自动去释放--不手动指定 `autoreleasepool`
 
-  Autorelease对象出了作用域之后，会被添加到最近一次创建的自动释放池中，并会在当前的 runloop 迭代结束时执行pop函数时释放。
+`__autoreleasing` 修饰的 `autorelease` 对象，是在创建好之后调用`objc_autorelease` 会被添加到最近一次创建的自动释放池中，并会在当前的 runloop 迭代结束时执行pop函数时释放。
 
 释放的时机总结起来，可以用下图来表示：
 
@@ -703,15 +703,17 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
 - obj6 类似于基本数据结构的修饰符号 assign ，不会对修饰对象的生命周期产生影响，随着self的释放，obj6也会随之释放。比如 self 被其它线程释放，那么obj6也会随之释放。
 
 讨论区：
- [《关于第 34 题关于 NSOperation 中需要手动添加 Autorelease Pool 的部分的疑问 #25》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/25 ) 
- 
+
+- [《关于第 34 题关于 NSOperation 中需要手动添加 Autorelease Pool 的部分的疑问 #25》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/25 ) 
+- [《34题-36题-题目中很多对AutoreleasePool的理解都是有问题的 #112》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/112 ) 
+
+
 ###  35. BAD_ACCESS在什么情况下出现？
 访问了悬垂指针，比如对一个已经释放的对象执行了release、访问已经释放对象的成员变量或者发消息。
 死循环
 ###  36. 苹果是如何实现autoreleasepool的？ 
 
-autoreleasepool 以一个队列数组的形式实现,主要通过下列三个函数完成.
-
+AutoreleasePool 是以 AutoreleasePoolPage 为结点的双向链表来实现的，主要通过下列三个函数完成：
 
  1. `objc_autoreleasepoolPush`
  2. `objc_autoreleasepoolPop`
@@ -724,6 +726,9 @@ autoreleasepool 以一个队列数组的形式实现,主要通过下列三个函
  
  <p align="center"><a href="https://mp.weixin.qq.com/s/A4e5h3xgIEh6PInf1Rjqsw"><img src="http://ww1.sinaimg.cn/large/006y8mN6gy1g71molq31cj30ad0iojse.jpg"></a></p>
 
+讨论区：
+
+- [《34题-36题-题目中很多对AutoreleasePool的理解都是有问题的 #112》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/112 ) 
 
 
 ### 37. 使用block时什么情况会发生引用循环，如何解决？
