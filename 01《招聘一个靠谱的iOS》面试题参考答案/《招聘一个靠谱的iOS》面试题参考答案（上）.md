@@ -1192,7 +1192,7 @@ NSObject *foo = [[NSObject alloc] init];
 
 
 注意：很多人会认为如果属性具备 nonatomic 特质，则不使用
-“同步锁”。其实在属性设置方法中使用的是互斥锁（atomic 的底层实现，老版本是自旋锁，iOS10开始是互斥锁--spinlock底层实现改变了。），互斥锁（atomic 的底层实现，老版本是自旋锁，iOS10开始是互斥锁--spinlock底层实现改变了。）相关代码如下：
+“同步锁”。其实在属性设置方法中使用的是互斥锁（atomic 的底层实现，老版本是自旋锁，iOS10开始是互斥锁--spinlock底层实现改变了。），相关代码如下：
 
 
  ```Objective-C
@@ -1291,6 +1291,11 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
   - `atomic`
   - `readwrite`
   - `strong`
+
+
+Objective-C 对象默认是 strong，因为你 `class_copyPropertyList` 后再`property_getAttributes` 得到的是`T@"NSString",&,V_name`，其中`&`表示strong（c表示copy等）；
+
+普通对象是 `assign`，这个获取不到文档说明，但是我们可以从 runtime 源码中找到相关的逻辑，你看看 `objc_AssociationPolicy` 枚举的定义以及内部处理的逻辑就知道了，还有一点就是属性加不加 assign 用 `property_getAttributes` 得到的都是一样的值，可以返推回去结论成立。
 
 参考链接：
 
@@ -1711,6 +1716,7 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
  - 每一个对象内部都有一个isa指针,指向他的类对象,类对象中存放着本对象的
 
 
+
   1. 对象方法列表（对象能够接收的消息列表，保存在它所对应的类对象中）
   2. 成员变量的列表,
   2. 属性列表,
@@ -1736,6 +1742,8 @@ objc在向一个对象发送消息时，runtime库会根据对象的isa指针找
  - 根对象就是NSObject，它的superclass指针指向nil
 
  - 类对象既然称为对象，那它也是一个实例。类对象中也有一个isa指针指向它的元类(meta class)，即类对象是元类的实例。元类内部存放的是类方法列表，根元类的isa指针指向自己，superclass指针指向NSObject类。
+ -  类对象 是放在数据段(数据区)上的, 和全局变量放在一个地方. 这也就是为什么: 同一个类对象的不同实例对象,的isa指针是一样的.
+ -  实例对象存放在堆中
 
 
 
