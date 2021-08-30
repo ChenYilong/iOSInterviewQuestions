@@ -626,6 +626,8 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
  [《第33题，答案可能不是很准确 #15》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/15 ) 
  
 ###  34. 不手动指定autoreleasepool的前提下，一个autorealese对象在什么时刻释放？（比如在一个vc的viewDidLoad中创建）
+
+
 分两种情况：手动干预释放时机、系统自动去释放。
 
 
@@ -633,7 +635,7 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
  就是所谓的：当前作用域大括号结束时释放。
  2. 系统自动去释放--不手动指定 `autoreleasepool`
 
-`__autoreleasing` 修饰的 `autorelease` 对象，是在创建好之后调用`objc_autorelease` 会被添加到最近一次创建的自动释放池中，并会在当前的 runloop 迭代结束时执行pop函数时释放。
+`__autoreleasing` 修饰的 `autorelease` 对象，是在创建好之后调用`objc_autorelease` 会被添加到最近一次创建的自动释放池中，并且autorelease对象什么时候调用release，是由RunLoop来控制的：会在当前的 runloop 休眠之前，执行pop函数、调用 release 时释放。
 
 释放的时机总结起来，可以用下图来表示：
 
@@ -648,26 +650,27 @@ ARC相对于MRC，不是在编译时添加retain/release/autorelease这么简单
 
 我们都知道：
 
-**所有 autorelease 的对象，在出了作用域之后，会被自动添加到最近创建的自动释放池中。**
+`__autoreleasing` 修饰的 `autorelease` 对象，是在创建好之后调用`objc_autorelease`加入到释放池。
 
 但是如果每次都放进应用程序的 `main.m` 中的 autoreleasepool 中，迟早有被撑满的一刻。这个过程中必定有一个释放的动作。何时？
 
-在一次完整的运行循环结束之前，会被销毁。
+在一次完整的 RunLoop 休眠之前，会被销毁。
 
-那什么时间会创建自动释放池？运行循环检测到事件并启动后，就会创建自动释放池。 
+那什么时间会创建自动释放池？ RunLoop 检测到事件并启动后，就会创建自动释放池。 
 
 ~~“子线程的 runloop 默认是不工作，无法主动创建，必须手动创建。”（表述不准确， 见 issue#82 #https://github.com/ChenYilong/iOSInterviewQuestions/issues/82）~~
 
-从 `RunLoop` 源代码中可知，子线程默认是没有 `RunLoop` 的，如果需要在子线程开启 `RunLoop` ，则需要调用 `[NSRunLoop CurrentRunLoop]` 方法，它内部实现是先检查线程，如果发现是子线程，以懒加载的形式 创建一个子线程的 `RunLoop`。并存储在一个全局的 可变字典里。编程人员在调用 `[NSRunLoop CurrentRunLoop]` 时，是自动创建 `RunLoop` 的，而没法手动创建。
+从 `RunLoop` 源代码中可知，子线程默认是没有 `RunLoop` 的，如果需要在子线程开启 `RunLoop` ，则需要调用 `[NSRunLoop CurrentRunLoop]` 方法，它内部实现是先检查线程，如果发现是子线程，以懒加载的形式 创建一个子线程的 `RunLoop`。并存储在一个全局的 可变字典里。开发者在调用 `[NSRunLoop CurrentRunLoop]` 时，是系统自动创建 `RunLoop` 的，而没法手动创建。
 
 自定义的 NSOperation 和 NSThread 需要手动创建自动释放池。比如： 自定义的 NSOperation 类中的 main 方法里就必须添加自动释放池。否则出了作用域后，自动释放对象会因为没有自动释放池去处理它，而造成内存泄露。
 
-但对于 blockOperation 和 invocationOperation 这种默认的Operation ，系统已经帮我们封装好了，不需要手动创建自动释放池。
-
+但对于 blockOperation 和 invocationOperation 这种默认的 Operation ，系统已经帮我们封装好了，不需要手动创建自动释放池。
 
 @autoreleasepool 当自动释放池被销毁或者耗尽时，会向自动释放池中的所有对象发送 release 消息，释放自动释放池中的所有对象。
 
- 如果在一个vc的viewDidLoad中创建一个 Autorelease对象，那么该对象会在 viewDidAppear 方法执行前就被销毁了。
+举一个例子: 如果在一个vc的viewDidLoad中创建一个 Autorelease对象，那么该对象会在 viewDidAppear 方法执行前就被销毁了。
+
+注意: 本次论述, 并不适用于 TaggedPointer 类型.
 
 参考链接：[《黑幕背后的Autorelease》](http://blog.sunnyxx.com/2014/10/15/behind-autorelease/)
 
@@ -1437,12 +1440,13 @@ int main(int argc, char * argv[]) {
 
 情况二这里出现内存泄漏问题实际上是因为：
 
- - `[NSNoficationCenter defaultCenter]` 持有了 `block`, 
+ - `[NSNoficationCenter defaultCenter]` 持有了 `block`
  - 这个 `block` 持有了 `self`; 
  - 而 `[NSNoficationCenter defaultCenter]` 是一个单例，因此这个单例持有了 `self`, 从而导致 `self` 不被释放。
 
 ![https://github.com/ChenYilong](https://tva1.sinaimg.cn/large/007S8ZIlgy1gfcrlp0gn0j30z40lwag6.jpg)
 
+这个结论可参考参考issue中讨论：[《第39题的一些疑问 #138》](https://github.com/ChenYilong/iOSInterviewQuestions/issues/138) 
 
 
 
@@ -1475,11 +1479,21 @@ addObserverForName:object:queue:usingBlock:]( https://developer.apple.com/docume
 [[NSOperationQueue mainQueue] addOperationWithBlock:^{ self.someProperty = xyz; }]; 
  ```
  
- 这个因为 `[NSOperationQueue mainQueue]` 并非单例，所以并没有内存泄漏。
+ <p><del> 这个因为 `[NSOperationQueue mainQueue]` 并非单例，所以并没有内存泄漏。
  见下图:
  
- ![https://github.com/ChenYilong](https://tva1.sinaimg.cn/large/007S8ZIlgy1gfct4s2979j30y00lq0y0.jpg)
+https://tva1.sinaimg.cn/large/007S8ZIlgy1gfct4s2979j30y00lq0y0.jpg
+ (此图有问题, 请忽略, 请参考下文的正确描述)
  
+ </del></p>
+ 
+在 Gnustep 源码中可以证实
+`[NSOperationQueue mainQueue]` 是单例，然后参考 `addOperationWithBlock` 源码可知：
+
+虽然是单例，但它并不持有 `block`，不会造成循环引用，传递完成后就销毁了，不会造成无法释放的内存泄漏问题。
+
+参考issue中讨论：[《第39题的一些疑问 #138》](https://github.com/ChenYilong/iOSInterviewQuestions/issues/138) 
+
 -------------
 
 针对情况四 `GCD` 的问题，实际上，self确实持有了queue; 而block也确实持有了self; 但是并没有证据或者文档表明这个queue一定会持有block; 而且即使queue持有了block, 在block执行完毕的时候，由于需要将任务从队列中移除，因此完全可以解除queue对block的持有关系，所以实际上这里也不存在循环引用。下面的测试代码可以验证这一点(其中`CYLUser`有一个属性name):

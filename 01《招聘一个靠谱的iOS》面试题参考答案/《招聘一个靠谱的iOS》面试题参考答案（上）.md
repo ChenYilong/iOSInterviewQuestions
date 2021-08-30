@@ -1145,7 +1145,11 @@ NSObject *foo = [[NSObject alloc] init];
 
 参考博文： [***Fun With the Objective-C Runtime: Run Code at Deallocation of Any Object***](http://stackoverflow.com/a/31560217/3395008)
 
+更多疑问, 可以参与issue讨论: 
 
+- [《第8题 感觉objc_storeWeak(&a, b)哪里理解有点问题 #98》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/98 ) 
+- [《第8题 有一点说的很容易误导人 #6》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/6 ) 
+- 
 ### 9. @property中有哪些属性关键字？/ @property 后面可以有哪些修饰符？
 属性可以拥有的特质分为四类:
  
@@ -1485,9 +1489,22 @@ NSMutableArray *mCopyArray = [array mutableCopy];
  4 如果是 `@synthesize foo = _foo;` 就不会生成成员变量了.
 
 假如 property 名为 foo，存在一个名为 `_foo` 的实例变量，那么还会自动合成新变量么？
-不会。如下图：
+
+ <p><del>不会。如下图：</del></p>
+
+与编译环境有关, 低版本不会, 高版本会
+
+低版本:
 
 ![https://github.com/ChenYilong](http://i.imgur.com/t28ge4W.png)
+
+
+而在 Xcode 12.5，如果存在一个名为 `_object` 实例变量，有个property名为`_object`，会合成新变量 `__object`
+
+同时如果没有显示定义 `_objcect` 实例变量，定义属性 `_object` 也会生成 `__object` 实例变量
+
+![](https://i.loli.net/2021/08/31/okeqdpgbRt1u74V.png)
+
 
 
 ### 15. 在有了自动合成属性实例变量之后，@synthesize还有哪些使用场景？
