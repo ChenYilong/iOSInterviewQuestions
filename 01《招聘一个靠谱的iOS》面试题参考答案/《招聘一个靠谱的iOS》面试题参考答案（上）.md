@@ -1370,13 +1370,24 @@ Objective-C 对象默认是 strong，因为你 `class_copyPropertyList` 后再`p
 
 #### 1. 对非集合类对象的copy操作：
 
+先说结论:
+
 在非集合类对象中：对 immutable 对象进行 copy 操作，是指针复制，mutableCopy 操作时内容复制；对 mutable 对象进行 copy 和 mutableCopy 都是内容复制。用代码简单表示如下：
 
- - [immutableObject copy] // 浅复制
- - [immutableObject mutableCopy] //深复制
- - [mutableObject copy] //深复制
- - [mutableObject mutableCopy] //深复制
+ ```Objective-C
+ [immutableObject copy] // 浅复制
+ [immutableObject mutableCopy] //深复制
+ [mutableObject copy] //深复制
+ [mutableObject mutableCopy] //深复制
+ ```
 	
+根据上面的结论，我们也可以总结出规律：
+
+对于非集合类对象而言，从不可变转换到另一个不可变，因为没必要创建一个新对象出来， 所以是浅拷贝。
+而不可变与可变对象的互相转换过程中、从一个可变到另一个可变， 为了不影响可变对象的可变特性，必须要创建一个新对象出来，所以是深拷贝。
+
+下面详细讲下: 
+
 比如以下代码：
 
 
@@ -1400,6 +1411,23 @@ stringCopy 的值也不会因此改变，但是如果不使用 copy，stringCopy
 > 用 @property 声明 NSString、NSArray、NSDictionary 经常使用 copy 关键字，是因为他们有对应的可变类型：NSMutableString、NSMutableArray、NSMutableDictionary，他们之间可能进行赋值操作，为确保对象中的字符串值不会无意间变动，应该在设置新属性值时拷贝一份。
 
 #### 2、集合类对象的copy与mutableCopy
+
+先说结论:
+
+从集合内的元素的角度而言, 对任何集合对象(可变和不可变集合)进行的 copy 与 mutableCopy 操作都可以称之为浅拷贝。
+
+ ```Objective-C
+[immutableCollectionObject copy] // 浅拷贝
+[immutableCollectionObject mutableCopy] //浅拷贝
+[mutableCollectionObject copy] //浅拷贝
+[mutableCollectionObject mutableCopy] //浅拷贝
+ ```
+ 
+因为无论是进行copy还是进行mutableCopy, 集合内部的元素仍然是指针拷贝。
+
+考虑到集合对象我们更关注内部元素，而非集合本身，我更倾向于认为这个就是浅拷贝。
+
+当然如果从集合本身的角度，这里就会有一些争议，我们可以详细讲下：
 
 集合类对象是指 NSArray、NSDictionary、NSSet ... 之类的对象。下面先看集合类immutable对象使用 copy 和 mutableCopy 的一个例子：
 
@@ -1425,10 +1453,10 @@ NSMutableArray *mCopyArray = [array mutableCopy];
 
 
  ```Objective-C
-[immutableObject copy] // 浅复制
-[immutableObject mutableCopy] //浅拷贝，也可以称之为“单层深复制”。
-[mutableObject copy] //浅拷贝，也可以称之为“单层深复制”。
-[mutableObject mutableCopy] //浅拷贝，也可以称之为“单层深复制”。
+[immutableCollectionObject copy] // 浅拷贝
+[immutableCollectionObject mutableCopy] //浅拷贝，也可以称之为“单层深拷贝”。
+[mutableCollectionObject copy] //浅拷贝，也可以称之为“单层深拷贝”。
+[mutableCollectionObject mutableCopy] //浅拷贝，也可以称之为“单层深拷贝”。
  ```
 
 这个代码结论和非集合类的结论有区别，注意分辨。
