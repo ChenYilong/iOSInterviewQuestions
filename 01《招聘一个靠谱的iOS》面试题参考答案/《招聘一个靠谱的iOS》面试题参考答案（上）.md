@@ -822,6 +822,13 @@ class_data_bits_t bits;//在bits.data()里面
 }
  ```
  
+
+注意在iOS 10, Xcode 8推出的class关键字中, 与本题中关于 `@property` 的讨论, 有一些差异, 比如
+ 
+class关键字表示永远不会自动合成，所以类变量、类存取方法，都要自己手动实现；
+
+下文中的第9题会涉及这个关键字的用法，可以参考下文。
+
  讨论见： [《第六题 prop_list 存在哪里？ #108》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/108 ) 
 
  
@@ -957,7 +964,6 @@ obj_storeWeak(&obj1, obj);
 >  weak 修饰的指针默认值是 nil （在Objective-C中向nil发送消息是安全的）
 
 (同时， weak 修饰的指针可能随时变为 nil)
-
 
 然后`obj_destroyWeak`函数将0（nil）作为参数，调用`objc_storeWeak`函数。
 
@@ -1149,7 +1155,7 @@ NSObject *foo = [[NSObject alloc] init];
 
 - [《第8题 感觉objc_storeWeak(&a, b)哪里理解有点问题 #98》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/98 ) 
 - [《第8题 有一点说的很容易误导人 #6》]( https://github.com/ChenYilong/iOSInterviewQuestions/issues/6 ) 
-- 
+
 ### 9. @property中有哪些属性关键字？/ @property 后面可以有哪些修饰符？
 属性可以拥有的特质分为四类:
  
@@ -1157,9 +1163,9 @@ NSObject *foo = [[NSObject alloc] init];
 
     在默认情况下，由编译器合成的方法会通过锁定机制确保其原子性(atomicity)。如果属性具备 nonatomic 特质，则不使用互斥锁（atomic 的底层实现，老版本是自旋锁，iOS10开始是互斥锁--spinlock底层实现改变了。）。请注意，尽管没有名为“atomic”的特质(如果某属性不具备 nonatomic 特质，那它就是“原子的” ( atomic) )，但是仍然可以在属性特质中写明这一点，编译器不会报错。若是自己定义存取方法，那么就应该遵从与属性特质相符的原子性。
 
- 2. 读/写权限---`readwrite(读写)`、`readonly (只读)`
- 3. 内存管理语义---`assign`、`strong`、 `weak`、`unsafe_unretained`、`copy`
- 4. 方法名---`getter=<name>` 、`setter=<name>`
+ 1. 读/写权限---`readwrite(读写)`、`readonly (只读)`
+ 2. 内存管理语义---`assign`、`strong`、 `weak`、`unsafe_unretained`、`copy`、`class`
+ 3. 方法名---`getter=<name>` 、`setter=<name>`
    
   `getter=<name>`的样式：
 
@@ -1192,7 +1198,7 @@ NSObject *foo = [[NSObject alloc] init];
 - (NSString *)initBy __attribute__((objc_method_family(none)));
  ```
 
- 3. 不常用的：`nonnull`,`null_resettable`,`nullable`
+ 1. 其他：`nonnull`,`null_resettable`,`nullable`
 
 
 注意：很多人会认为如果属性具备 nonatomic 特质，则不使用
@@ -1241,6 +1247,37 @@ void objc_setProperty(id self, SEL _cmd, ptrdiff_t offset, id newValue, BOOL ato
 }
  ```
 
+补充说明:
+
+其中内存管理语义中的class关键字， 是在 iOS 10, Xcode 8 后推出的， 可以与 Swift 里的 static 和 class 关键字进行桥接， 
+
+class 关键字表示永远不会自动合成，所以类变量、类存取方法，都要自己手动实现；常常与 `@dynamic` 搭配使用。
+
+主要用法可以参考如下：
+
+好处就是单例的 get 方法(sharedInstance方法)可以有智能提示：
+
+ ```Objective-C
+@interface Foo : NSObject
+@property (nonatomic, class, readonly) Foo *sharedFoo;
+@end
+
+@implementation Foo
+/**
+ * 作用与下面的写法一致: 
+ * + (instancetype)sharedInstance 
+ */
++ (Foo *)sharedInstance {
+    static Foo *_sharedFoo = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedFoo = [[self alloc] init];
+    });
+    return _sharedFoo;
+}
+
+ ```
+ 
 ### 10. weak属性需要在dealloc中置nil么？
 
 不需要。
