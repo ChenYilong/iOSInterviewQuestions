@@ -127,7 +127,7 @@ class OrderListViewController: UIViewController, UITableViewDataSource, UITableV
     
     func cellPressed(order: Order) {
         let detailOrderViewController = ViewController();
-        let productsList = order.products as Array<Product>;
+        let productsList = order.products;
         detailOrderViewController.viewModel.productsList = productsList;
         detailOrderViewController.view.backgroundColor = UIColor.white;
         detailOrderViewController.title = order.descriptionString();
