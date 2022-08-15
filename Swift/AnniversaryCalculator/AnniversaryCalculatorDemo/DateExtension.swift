@@ -31,8 +31,8 @@ extension Date {
         let theCalendar = Calendar.current
         guard let nextDate = theCalendar.date(byAdding: dayComponent, to: Date()) else { return Date() }
         
-        let dateComponents: DateComponents? = theCalendar.dateComponents([.year, .month, .day], from: nextDate)
-        guard let date = theCalendar.date(from: dateComponents ?? DateComponents()) else { return Date() }
+        let dateComponents = theCalendar.dateComponents([.year, .month, .day], from: nextDate)
+        guard let date = theCalendar.date(from: dateComponents) else { return Date() }
         return date;
     }
     
@@ -49,9 +49,9 @@ extension Date {
         
         let calendar = Calendar.current
         
-        var dateComponents: DateComponents? = calendar.dateComponents([.year, .month, .day], from: pastDate)
-        dateComponents?.year =  Calendar.current.component(.year, from: Date())
-        guard let date = calendar.date(from: dateComponents ?? DateComponents()) else { return Date() }
+        var dateComponents = calendar.dateComponents([.year, .month, .day], from: pastDate)
+        dateComponents.year =  Calendar.current.component(.year, from: Date())
+        guard let date = calendar.date(from: dateComponents) else { return Date() }
         return date;
     }
     

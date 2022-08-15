@@ -17,8 +17,7 @@ struct Couple {
         }
         
         let anniversaryAtStr = anniversary
-        var anniversaryAt: Date = Date.dateFromISOString(string: anniversaryAtStr) ?? Date()
-        
+        guard var anniversaryAt = Date.dateFromISOString(string: anniversaryAtStr) else { return false }
         if anniversaryAt >= Date() {
             return false
         }

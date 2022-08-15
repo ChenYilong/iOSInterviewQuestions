@@ -10,10 +10,10 @@ import XCTest
 
 
 class TestViewModel {
-
+    
     var couples: [Couple] = []
     var couplesToRemind: [Couple] = [];
-
+    
     init() {
         let Couple_1 = Couple(
             coupleId: "1",
@@ -22,7 +22,7 @@ class TestViewModel {
         let Couple_2 = Couple(
             coupleId: "2",
             anniversary: Date.ISOStringFromDate(date: Date().after(days: (-365+2)))
-           
+            
         )
         let Couple_3 = Couple(
             coupleId: "3",
@@ -51,21 +51,21 @@ class TestViewModel {
             Couple_6
         ]
     }
-
+    
 }
 
 var testViewModel: TestViewModel = TestViewModel()
 
 class AnniversaryCalculatorDemoTests: XCTestCase {
-
+    
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
-
+    
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
+    
     func testExample() throws {
         
         for couple in testViewModel.couples {
@@ -73,12 +73,12 @@ class AnniversaryCalculatorDemoTests: XCTestCase {
             
         }
     }
-
+    
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
         self.measure {
             // Put the code you want to measure the time of here.
         }
     }
-
+    
 }
