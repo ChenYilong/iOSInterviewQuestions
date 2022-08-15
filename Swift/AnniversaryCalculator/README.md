@@ -24,18 +24,20 @@ The details of the test are below. If anything is unclear, don't hesitate to con
 
 ***Additionally, anniversaries celebrating a multiple of 5 years should be sent a reminder 1 week earlier than the normal case. Finally, anniversaries that are a multiple of 10 years should be sent a reminder 2 weeks earlier than the normal case.***
 
+![Architecture](Architecture.png)
+
 ## INPUT LIMIT
 
 - array is not null
 - date is past
-- overyear?
+- ~~overyear?~~
 
 ## out limit:
 
 output:
 
-- if year/5==0 then day+7
-- if year/10==0 then day+14
+- if year%5==0 then day+7
+- if year%10==0 then day+14
 
 ## Unit Test Cases
 
