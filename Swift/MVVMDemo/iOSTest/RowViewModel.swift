@@ -2,7 +2,7 @@
 //  RowViewModel.swift
 //  iOSTest
 //
-//  Created by Vishnu Sasikumar on 10/11/21.
+//  Created by ChenYilong on 10/11/21.
 //
 
 import Foundation
