@@ -14,12 +14,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        for couple in self.viewModel.couples {
+        for couple in viewModel.couples {
             if couple.shouldAnniversaryToRemind() {
-                self.viewModel.couplesToRemind.append(couple)
+                viewModel.couplesToRemind.append(couple)
             }
         }
-        print("shouldAnniversaryToRemind: " , self.viewModel.couplesToRemind)
+        print(viewModel.couplesToRemind)
     }
 
 

@@ -11,36 +11,36 @@ import XCTest
 
 class TestViewModel {
 
-    var couples : Array = Array<Couple>();
-    var couplesToRemind : Array = Array<Couple>();
+    var couples: [Couple] = []
+    var couplesToRemind: [Couple] = [];
 
     init() {
         let Couple_1 = Couple(
             coupleId: "1",
-            anniversary: Date.ISOStringFromDate(date: Date().afterDays(days: (-365+1)))
+            anniversary: Date.ISOStringFromDate(date: Date().after(days: (-365+1)))
         )
         let Couple_2 = Couple(
             coupleId: "2",
-            anniversary: Date.ISOStringFromDate(date: Date().afterDays(days: (-365+2)))
+            anniversary: Date.ISOStringFromDate(date: Date().after(days: (-365+2)))
            
         )
         let Couple_3 = Couple(
             coupleId: "3",
-            anniversary: Date.ISOStringFromDate(date: Date().afterDays(days: (-365*5-6)))//"2017-8-08T03:07:33.457Z"
+            anniversary: Date.ISOStringFromDate(date: Date().after(days: (-365*5-6)))//"2017-8-08T03:07:33.457Z"
             
         )
         let Couple_4 = Couple(
             coupleId: "4",
-            anniversary: Date.ISOStringFromDate(date: Date().afterDays(days: (-365*5-5)))//"2017-8-22T03:07:33.457Z"
+            anniversary: Date.ISOStringFromDate(date: Date().after(days: (-365*5-5)))//"2017-8-22T03:07:33.457Z"
             
         )
         let Couple_5 = Couple(
             coupleId: "5",
-            anniversary: Date.ISOStringFromDate(date: Date().afterDays(days:(-365*10-13)))//"2012-8-01T03:07:33.457Z"
+            anniversary: Date.ISOStringFromDate(date: Date().after(days:(-365*10-13)))//"2012-8-01T03:07:33.457Z"
         )
         let Couple_6 = Couple(
             coupleId: "6",
-            anniversary: Date.ISOStringFromDate(date: Date().afterDays(days: (-365*10-12)))//"2012-8-15T03:07:33.457Z"
+            anniversary: Date.ISOStringFromDate(date: Date().after(days: (-365*10-12)))//"2012-8-15T03:07:33.457Z"
         )
         couples = [
             Couple_1,

@@ -8,9 +8,8 @@
 import Foundation
 
 class ViewModel {
-
-    var couples : Array = Array<Couple>();
-    var couplesToRemind : Array = Array<Couple>();
+    var couples: [Couple] = []
+    var couplesToRemind: [Couple] = [];
 
     init() {
         let Couple_1 = Couple(

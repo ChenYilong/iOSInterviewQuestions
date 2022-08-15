@@ -25,18 +25,15 @@ extension Date {
         return dateFormatter.date(from: string)
     }
     
-    func afterDays(days: Int) -> Date {
-        var dayComponent    = DateComponents()
-        dayComponent.day    = days // For removing one day (yesterday): -1
-        let theCalendar     = Calendar.current
-        let nextDate : Date = theCalendar.date(byAdding: dayComponent, to: Date())!
-        
+    func after(days: Int) -> Date {
+        var dayComponent = DateComponents()
+        dayComponent.day = days // For removing one day (yesterday): -1
+        let theCalendar = Calendar.current
+        guard let nextDate = theCalendar.date(byAdding: dayComponent, to: Date()) else { return Date() }
         
         let dateComponents: DateComponents? = theCalendar.dateComponents([.year, .month, .day], from: nextDate)
-
-        let date: Date? = theCalendar.date(from: dateComponents!)
-        
-        return date!;
+        guard let date = theCalendar.date(from: dateComponents ?? DateComponents()) else { return Date() }
+        return date;
     }
     
     static func gapYears(date: Date) -> Int {
@@ -53,12 +50,9 @@ extension Date {
         let calendar = Calendar.current
         
         var dateComponents: DateComponents? = calendar.dateComponents([.year, .month, .day], from: pastDate)
-        
-        //         dateComponents?.day = 17
-        //         dateComponents?.month = 5
         dateComponents?.year =  Calendar.current.component(.year, from: Date())
-        let date: Date? = calendar.date(from: dateComponents!)
-        return date!;
+        guard let date = calendar.date(from: dateComponents ?? DateComponents()) else { return Date() }
+        return date;
     }
     
 }
