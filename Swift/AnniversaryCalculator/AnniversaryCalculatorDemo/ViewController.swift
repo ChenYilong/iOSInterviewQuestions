@@ -8,12 +8,12 @@
 import UIKit
 
 class ViewController: UIViewController {
-    let viewModel: ViewModel = ViewModel()
-    
+    let viewModel: ViewModel = .init()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+
         for couple in viewModel.couples {
             if couple.shouldAnniversaryToRemind() {
                 viewModel.couplesToRemind.append(couple)
@@ -21,7 +21,4 @@ class ViewController: UIViewController {
         }
         print(viewModel.couplesToRemind)
     }
-    
-    
 }
-

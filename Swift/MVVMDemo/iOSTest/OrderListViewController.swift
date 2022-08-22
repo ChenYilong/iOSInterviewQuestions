@@ -8,8 +8,8 @@
 import UIKit
 
 class OrderListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    let viewModel: ViewModel = ViewModel()
-  
+    let viewModel: ViewModel = .init()
+
     lazy var loadingIndicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView(style: .gray)
         indicator.translatesAutoresizingMaskIntoConstraints = false
@@ -17,11 +17,11 @@ class OrderListViewController: UIViewController, UITableViewDataSource, UITableV
         self.view.addSubview(indicator)
         NSLayoutConstraint.activate([
             indicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            indicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
+            indicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
         ])
         return indicator
     }()
-    
+
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.delegate = self
@@ -29,7 +29,7 @@ class OrderListViewController: UIViewController, UITableViewDataSource, UITableV
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.estimatedRowHeight = 80
         tableView.rowHeight = UITableView.automaticDimension
-        
+
         view.addSubview(tableView)
         NSLayoutConstraint(item: tableView,
                            attribute: .centerX,
@@ -59,79 +59,76 @@ class OrderListViewController: UIViewController, UITableViewDataSource, UITableV
                            attribute: .bottom,
                            multiplier: 1.0,
                            constant: 0).isActive = true
-        
+
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
-        
-        //TODO:-  tableView.backgroundColor = Custom color of your choice
-        tableView.backgroundColor = UIColor.white;
+
+        // TODO: -  tableView.backgroundColor = Custom color of your choice
+        tableView.backgroundColor = UIColor.white
         return tableView
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         initView()
         initBinding()
     }
-    
-    func initView() {
-        //TODO:-  view.backgroundColor = Custom color of your choice
-        view.backgroundColor = UIColor.white;
-        self.title = "YILONG CHEN's Demo";
-        let orderListCell = UINib(nibName: "OrderListCell",
-                                      bundle: nil)
-        self.tableView.register(orderListCell, forCellReuseIdentifier: "Cell");
 
+    func initView() {
+        // TODO: -  view.backgroundColor = Custom color of your choice
+        view.backgroundColor = UIColor.white
+        title = "YILONG CHEN's Demo"
+        let orderListCell = UINib(nibName: "OrderListCell",
+                                  bundle: nil)
+        tableView.register(orderListCell, forCellReuseIdentifier: "Cell")
     }
-    
+
     func initBinding() {
-        viewModel.orders.addObserver(fireNow: true) { [weak self] (orders) in
-            let sortedOrders = orders.sorted { $0.id < $1.id };
+        viewModel.orders.addObserver(fireNow: true) { [weak self] orders in
+            let sortedOrders = orders.sorted { $0.id < $1.id }
             for order in sortedOrders {
-                let orderListCellViewModel = OrderListCellViewModel(order: order);
+                let orderListCellViewModel = OrderListCellViewModel(order: order)
                 orderListCellViewModel.cellPressed = {
-                    self?.cellPressed(order: order);
+                    self?.cellPressed(order: order)
                 }
-                self?.viewModel.orderListCellViewModels.append(orderListCellViewModel);
+                self?.viewModel.orderListCellViewModels.append(orderListCellViewModel)
             }
             self?.tableView.reloadData()
         }
     }
-    
-    
+
     // MARK: - UITableViewDataSource, UITableViewDelegate
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.viewModel.orderListCellViewModels.count
+
+    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
+        return viewModel.orderListCellViewModels.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as? OrderListCell {
-            let orderListCellViewModel = self.viewModel.orderListCellViewModels[indexPath.row];
-            cell.cellViewModel = orderListCellViewModel;
-            print("order.descriptionString();", orderListCellViewModel.order.descriptionString());
+            let orderListCellViewModel = viewModel.orderListCellViewModels[indexPath.row]
+            cell.cellViewModel = orderListCellViewModel
+            print("order.descriptionString();", orderListCellViewModel.order.descriptionString())
 
-            return cell;
+            return cell
         }
-        
-        let cell = UITableViewCell();
-        return cell;
+
+        let cell = UITableViewCell()
+        return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        let orderListCellViewModel = self.viewModel.orderListCellViewModels[indexPath.row];
-        orderListCellViewModel.cellPressed?();
-        
+        let orderListCellViewModel = viewModel.orderListCellViewModels[indexPath.row]
+        orderListCellViewModel.cellPressed?()
     }
-    
+
     func cellPressed(order: Order) {
-        let detailOrderViewController = ViewController();
-        let productsList = order.products;
-        detailOrderViewController.viewModel.productsList = productsList;
-        detailOrderViewController.view.backgroundColor = UIColor.white;
-        detailOrderViewController.title = order.descriptionString();
-        self.navigationController?.pushViewController(detailOrderViewController, animated: true);
+        let detailOrderViewController = ViewController()
+        let productsList = order.products
+        detailOrderViewController.viewModel.productsList = productsList
+        detailOrderViewController.view.backgroundColor = UIColor.white
+        detailOrderViewController.title = order.descriptionString()
+        navigationController?.pushViewController(detailOrderViewController, animated: true)
     }
 }
-

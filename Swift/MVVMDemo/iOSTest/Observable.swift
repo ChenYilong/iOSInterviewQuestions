@@ -15,13 +15,13 @@ class Observable<T> {
             }
         }
     }
-    
+
     private var valueChanged: ((T) -> Void)?
-    
+
     init(value: T) {
         self.value = value
     }
-    
+
     /// Add closure as an observer and trigger the closure imeediately if fireNow = true
     func addObserver(fireNow: Bool = true, _ onChange: ((T) -> Void)?) {
         valueChanged = onChange
@@ -29,9 +29,8 @@ class Observable<T> {
             onChange?(value)
         }
     }
-    
+
     func removeObserver() {
         valueChanged = nil
     }
-    
 }

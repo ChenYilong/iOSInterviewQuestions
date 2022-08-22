@@ -11,5 +11,5 @@ protocol RowViewModel {}
 
 /// Conform this protocol to handles user press action
 protocol ViewModelClickable {
-    var cellPressed: (()->Void)? { get set }
+    var cellPressed: (() -> Void)? { get set }
 }

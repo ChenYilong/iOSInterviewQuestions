@@ -9,8 +9,8 @@ import Foundation
 
 class ViewModel {
     var couples: [Couple] = []
-    var couplesToRemind: [Couple] = [];
-    
+    var couplesToRemind: [Couple] = []
+
     init() {
         let Couple_1 = Couple(
             coupleId: "1",
@@ -42,8 +42,7 @@ class ViewModel {
             Couple_3,
             Couple_4,
             Couple_5,
-            Couple_6
+            Couple_6,
         ]
     }
-    
 }

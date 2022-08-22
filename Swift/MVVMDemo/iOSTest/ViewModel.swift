@@ -9,19 +9,19 @@ import Foundation
 
 class ViewModel: RowViewModel {
     var orders = Observable<[Order]>(value: [])
-    var productsList : Array<Product> = [];
-    var orderListCellViewModels : Array<OrderListCellViewModel> = Array();
+    var productsList: [Product] = []
+    var orderListCellViewModels: [OrderListCellViewModel] = Array()
 
     init() {
         let PRODUCT_1 = Product(
-            productCode: 136341,
+            productCode: 136_341,
             description: "Chicken Balls Garlic",
             brand: "Caterer's Choice",
             price: 15.47,
             quantity: 2.0
         )
         let PRODUCT_2 = Product(
-            productCode: 172488,
+            productCode: 172_488,
             description: "Beef Rump G/Fed",
             brand: "Meat",
             price: 17.87,
@@ -35,7 +35,7 @@ class ViewModel: RowViewModel {
             quantity: 1.0
         )
         let PRODUCT_4 = Product(
-            productCode: 183968,
+            productCode: 183_968,
             description: "Chips 10mm French Fries Straight Cut",
             brand: "Jeffersons",
             price: 26.10,
@@ -49,7 +49,7 @@ class ViewModel: RowViewModel {
             quantity: 5.0
         )
 
-        orders = Observable<[Order]>(value:[
+        orders = Observable<[Order]>(value: [
             Order(
                 id: 4937,
                 description: "Friday Order",
@@ -77,8 +77,7 @@ class ViewModel: RowViewModel {
                 orderDate: "2020-06-09",
                 deliveryDate: "2020-06-10",
                 products: [PRODUCT_1, PRODUCT_2, PRODUCT_3, PRODUCT_4, PRODUCT_5]
-            )
+            ),
         ])
     }
-
 }

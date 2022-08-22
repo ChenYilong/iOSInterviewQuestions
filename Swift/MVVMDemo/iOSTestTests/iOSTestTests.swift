@@ -5,8 +5,8 @@
 //  Created by ChenYilong on 10/11/21.
 //
 
-import XCTest
 @testable import iOSTest
+import XCTest
 
 class iOSTestTests: XCTestCase {
     var orderListViewController: OrderListViewController!
@@ -14,7 +14,7 @@ class iOSTestTests: XCTestCase {
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-         let navController = storyboard.instantiateViewController(identifier: "NavigationController") as? UINavigationController;
+        let navController = storyboard.instantiateViewController(identifier: "NavigationController") as? UINavigationController
         orderListViewController = navController?.viewControllers[0] as? OrderListViewController
         orderListViewController.loadViewIfNeeded()
     }
@@ -54,25 +54,22 @@ class iOSTestTests: XCTestCase {
                 )
      */
     func testGetOrderTotal() throws {
-        
         XCTAssertEqual(orderListViewController.viewModel.orders.value.count, 4)
 
-        
-        let orders = orderListViewController.viewModel.orders.value;
+        let orders = orderListViewController.viewModel.orders.value
         XCTAssertEqual(orders[0].getOrderTotal(), 39.22)
         XCTAssertEqual(orders[0].getGSTTotal(), 5.883)
 
         XCTAssertEqual(orders[1].getOrderTotal(), 39.22)
         XCTAssertEqual(orders[1].getGSTTotal(), 5.883)
-        
+
         XCTAssertEqual(orders[2].getOrderTotal(), 50.7)
         XCTAssertEqual(orders[2].getGSTTotal(), 7.605)
 
         XCTAssertEqual(orders[3].getOrderTotal(), 173.204)
         XCTAssertEqual(orders[3].getGSTTotal(), 25.9806)
-
     }
-    
+
     func testExample() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
@@ -80,9 +77,8 @@ class iOSTestTests: XCTestCase {
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
-        self.measure {
+        measure {
             // Put the code you want to measure the time of here.
         }
     }
-
 }
