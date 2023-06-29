@@ -151,7 +151,7 @@ typedef NS_ENUM(NSInteger, CYLGender) {
  7. 由于字符串值可能会改变，所以要把相关属性的“内存管理语义”声明为 copy 。(原因在下文有详细论述：***用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？***)
  8. “性别”(gender）属性的：该类中只给出了一种“初始化方法” (initializer)用于设置“姓名”(Name)和“年龄”(Age)的初始值，那如何对“性别”(gender）初始化？
 
- Objective-C 有 designated 和 secondary 初始化方法的观念。 designated 初始化方法是提供所有的参数，secondary 初始化方法是一个或多个，并且提供一个或者更多的默认参数来调用 designated 初始化方法的初始化方法。举例说明：
+ Objective-C 有 designated 和 secondary 初始化方法的观念。 designated 初始化方法是提供所有的参数， 可以翻译为 "指定初始化方法" 或 "主要初始化方法"。secondary 初始化方法是一个或多个，并且提供一个或者更多的默认参数来调用 designated 初始化方法的初始化方法。举例说明：
 
  
 
@@ -189,7 +189,11 @@ typedef NS_ENUM(NSInteger, CYLGender) {
 
 
 
- 上面的代码中initWithName:age:gender: 就是 designated 初始化方法，另外的是 secondary 初始化方法。因为仅仅是调用类实现的 designated 初始化方法。
+ 上面的代码中 `initWithName:age:gender:` 就是 designated 初始化方法，另外的初始化方法, 在 Objective-C 中我们可以起一个名字叫二级初始化方法 (Secondary Initializer)。因为仅仅是调用类实现的 designated 初始化方法。
+ 
+  而在 Swift 中， Apple 给二级初始化方法 (Secondary Initializer)  给出了官方的定义，叫做 Convenience Initializer, 也常常简写为 Convenience Init，详见 [《The Swift Programming Language - Designated Initializers and Convenience Initializers》](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization/#Designated-Initializers-and-Convenience-Initializers) 
+
+详见下文, 本题的 Swift 版本的代码。
 
   因为出题者没有给出 `.m` 文件，所以有两种猜测：1：本来打算只设计一个 designated 初始化方法，但漏掉了“性别”(gender）属性。那么最终的修改代码就是上文给出的第一种修改方法。2：不打算初始时初始化“性别”(gender）属性，打算后期再修改，如果是这种情况，那么应该把“性别”(gender）属性设为 readwrite 属性，最终给出的修改代码应该是：
 
@@ -225,6 +229,46 @@ typedef NS_ENUM(NSInteger, CYLGender) {
 
 
   `.h` 中暴露 designated 初始化方法，是为了方便子类化 （想了解更多，请戳--》 [***《禅与 Objective-C 编程艺术 （Zen and the Art of the Objective-C Craftsmanship 中文翻译）》***](http://is.gd/OQ49zk)。）
+
+对应的 Swift 版本如下:
+
+
+ ```Swift
+import Foundation
+
+enum CYLGender: Int {
+    case undefined
+    case male
+    case female
+}
+
+class CYLUser: NSObject, NSCopying {
+
+    let name: String
+    let age: Int
+    var gender: CYLGender
+
+    init(name: String, age: Int, gender: CYLGender) {
+        self.name = name
+        self.age = age
+        self.gender = gender
+    }
+
+    convenience init(name: String, age: Int) {
+        self.init(name: name, age: age, gender: .undefined)
+    }
+
+    static func user(name: String, age: Int, gender: CYLGender) -> CYLUser {
+        return CYLUser(name: name, age: age, gender: gender)
+    }
+
+    func copy(with zone: NSZone? = nil) -> Any {
+        let copy = CYLUser(name: name, age: age, gender: gender)
+        return copy
+    }
+}
+
+ ```
 
 
    - 按照接口设计的惯例，如果设计了“初始化方法” (initializer)，也应当搭配一个快捷构造方法。而快捷构造方法的返回值，建议为 instancetype，为保持一致性，init 方法和快捷构造方法的返回类型最好都用 instancetype。
@@ -1198,7 +1242,8 @@ NSObject *foo = [[NSObject alloc] init];
 - (NSString *)initBy __attribute__((objc_method_family(none)));
  ```
 
- 1. 其他：`nonnull`,`null_resettable`,`nullable`
+
+5. 其他：`nonnull`,`null_resettable`,`nullable`
 
 
 注意：很多人会认为如果属性具备 nonatomic 特质，则不使用
