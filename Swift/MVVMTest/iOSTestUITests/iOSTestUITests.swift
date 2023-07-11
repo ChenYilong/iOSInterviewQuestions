@@ -2,14 +2,12 @@
 //  iOSTestUITests.swift
 //  iOSTestUITests
 //
-//  Created by chenyilong on 2023/7/2.
+//  Created by ChenYilong on 10/11/21.
 //
 
 import XCTest
-@testable import iOSTest
 
-final class iOSTestUITests: XCTestCase {
-
+class iOSTestUITests: XCTestCase {
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
@@ -28,6 +26,7 @@ final class iOSTestUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
+        // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
 

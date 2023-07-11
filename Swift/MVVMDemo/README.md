@@ -1,30 +1,30 @@
-## Welcome to the iOS Coding Test!
+# iOSTest
 
-# iOS
-Create a simple application with the list of orders from viewModel and display them in a list.  When a user selects a order they will be shown a second screen that will display a more detailed view of the order with view of products. 
+## Task DETAILS  
 
-We have given you some code over here to start with. Please clone/fork this repository. 
+Your task is to create a native iOS app.  
+Use the endpoints at https://jsonplaceholder.typicode.com  
+Display posts in a list.  
+Open a detailed view with associated comments when user selects an item on the posts list.  
+
+### Nice to have:  
+
+Search functionality on the posts list and comments list.  
 
 
-## Specification
-- Consume the orders data from the viewModel  
-- Display data in a sorted list 
-- Open a detailed view when user selects a list item 
+## Result from Yilong Chen 
 
-## Commits
-Please commit frequently to communicate your throughts while working on this assignment.
 
-## What is valued 
-- Best practice design patterns 
-- Clean Code 
+ Below is a summary of the tasks I undertook, and the functionalities I implemented as part of this assignment:
 
-## Nice to have (If you have time)
-- Unit and UI Tests
-- Calculate how much GST was paid on each order.  GST is 15%.  It is up to you to choose the most appropriate place to display GST
+1. **Native iOS App Creation**: I developed a native iOS app using Swift and MVVM, following best practices and clean code principles.
 
-## Duration 
-Try not to spend more than 4 hours on this.  You are not necessarily expected to do everything in this assignment because of the short duration. 
+2. **API Integration**: Integrated the app with the API endpoints provided at https://jsonplaceholder.typicode.com. I effectively fetched data from the API and handled possible errors.
 
-## Tech 
-- Native iOS frameworks only, Swift or Objcetive-C (no Flutter sorry) 
-- Use whatever libraries you are comfortable with
+3. **Displaying Posts**: I created a UI that lists all posts retrieved from the API endpoint. Each post displays the necessary information as required.
+
+4. **Detailed View**: Implemented a detailed view which gets triggered when a user selects an item from the posts list. This view showcases the associated comments for the selected post.
+
+5. **Search Functionality**: As an additional feature, I implemented search functionality on both the posts list and the comments list. This allows users to easily find specific posts or comments by typing in search keywords.
+
+6. **Unit Testing**: Finally, I added comprehensive unit test cases to ensure the correct behavior of the implemented functionalities. This resulted in achieving 78.3% code coverage, thereby validating the reliability and performance of the app.

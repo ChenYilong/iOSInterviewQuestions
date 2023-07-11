@@ -7,14 +7,6 @@
 
 import UIKit
 
-class OrderCellViewModel: RowViewModel, ViewModelClickable {
-    var cellPressed: (() -> Void)?
-    var product: Product
-    init(product: Product) {
-        self.product = product
-    }
-}
-
 class OrderCell: UITableViewCell {
     @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet var brandLabel: UILabel!

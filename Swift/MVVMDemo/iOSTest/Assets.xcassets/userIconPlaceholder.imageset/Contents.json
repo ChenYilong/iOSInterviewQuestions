@@ -1,6 +1,7 @@
 {
-  "colors" : [
+  "images" : [
     {
+      "filename" : "userIconPlaceholder.jpg",
       "idiom" : "universal"
     }
   ],
