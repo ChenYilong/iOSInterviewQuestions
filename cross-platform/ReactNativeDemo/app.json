@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "react-native-random-color-generator",
+    "slug": "react-native-random-color-generator",
+    "version": "0.0.1",
+    "description": "random color generator API for React Native on iOS, Android and Windows",
+    "sdkVersion": "46.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.anonymous.react-native-random-color-generator"
+    }
+  }
+}

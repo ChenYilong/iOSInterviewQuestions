@@ -1,0 +1,91 @@
+{
+  "name": "react-native-random-color-generator",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "random color generator API for React Native on iOS, Android and Windows",
+  "author": "YILONG CHEN <luohanchenyilong@gmail.com>",
+  "homepage": "https://github.com/ChenYilong/ReactNativeDemo",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ChenYilong/ReactNativeDemo.git"
+  },
+  "keywords": [
+    "react-native",
+    "react native",
+    "react-native-windows"
+  ],
+  "types": "dist/typescript/index.d.ts",
+  "main": "dist/commonjs/index.js",
+  "module": "dist/module/index.js",
+  "files": [
+    "/android",
+    "!/android/build",
+    "/dist",
+    "/ios",
+    "/windows",
+    "/src",
+    "/*.podspec",
+    "mock.js"
+  ],
+  "scripts": {
+    "format": "prettier '**/*' -u -w",
+    "lint": "eslint \"./**/*.{js,ts,tsx}\"",
+    "setup-hooks": "git config --local core.hooksPath .hooks",
+    "prepack": "bob build",
+    "typecheck": "tsc --project ./ --noEmit",
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "dist",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "lint-staged": {
+    "**/*.{js,ts,tsx}": "eslint",
+    "*": "prettier -u -w"
+  },
+  "peerDependencies": {
+    "react": ">=16.13.1",
+    "react-native": ">=0.63.3",
+    "react-native-windows": ">=0.62.0"
+  },
+  "peerDependenciesMeta": {
+    "react-native-windows": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.9",
+    "@types/jest": "^29.0.0",
+    "@types/react": "^18.0.18",
+    "@types/react-native": "^0.69.6",
+    "@types/react-test-renderer": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
+    "eslint": "^8.20.0",
+    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "prettier-plugin-organize-imports": "^3.0.0",
+    "react": "^18.0.0",
+    "react-native": "^0.69.2",
+    "react-native-builder-bob": "^0.18.3",
+    "typescript": "^4.8.2"
+  },
+  "dependencies": {
+    "expo": "~46.0.9",
+    "expo-splash-screen": "~0.16.2",
+    "expo-status-bar": "~1.4.0",
+    "react": "18.0.0",
+    "react-dom": "18.0.0",
+    "react-native": "0.69.5",
+    "react-native-web": "~0.18.7"
+  }
+}
