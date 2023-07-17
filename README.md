@@ -29,7 +29,7 @@
 <p align="center"><a href="https://mp.weixin.qq.com/s/A4e5h3xgIEh6PInf1Rjqsw"><img src="http://ww4.sinaimg.cn/large/006tNc79ly1g5zsnmaw40g30go04ck08.gif"></a></p>
 
 <p align="center">
- <a href="http://ww2.sinaimg.cn/large/006tNc79ly1g5et6q6sm5j30go0goaar.jpg"><img src="http://ww1.sinaimg.cn/large/006tNc79ly1g5esb5j4oaj300w00rdfn.jpg"></a>
+ <a href="http://ww2.sinaimg.cn/large/006tNc79ly1g5et6q6sm5j30go0goaar.jpg"><img src="https://mp.weixin.qq.com/s/A4e5h3xgIEh6PInf1Rjqsw"></a>
 <a href="http://weibo.com/luohanchenyilong"><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6um2edt3jj300w00q3y9.jpg"></a>
 <a href="https://twitter.com/iOSChenYilong"><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g5erhikv2kj300w00wgld.jpg"></a>
 <a href="https://github.com/ChenYilong"><img src="http://ww3.sinaimg.cn/large/006tNc79gy1g5ercvzgxzj300w00wmwx.jpg"></a> 
@@ -44,11 +44,11 @@
 
 
 
+## iOS面试题集锦（附答案）
 
 ![https://github.com/ChenYilong](banner.png)
 
 
-## iOS面试题集锦（附答案）
 
 
 第一篇  ： [《招聘一个靠谱的 iOS》—参考答案（上）](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（上）.md)
@@ -64,6 +64,8 @@
 
 ## iOS Programming Challenge
 
+
+![https://github.com/ChenYilong](banner-coding-challenge.png)
 
  - [Swift Demo]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/Swift/MVVMDemo "") 
  - [SwiftUI Demo]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/SwiftUI/SwiftUIDemo "") 
