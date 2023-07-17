@@ -69,7 +69,7 @@
 
  - [Swift Demo]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/Swift/MVVMDemo "") 
  - [SwiftUI Demo]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/SwiftUI/SwiftUIDemo "") 
- - [technical design document demo]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/TechnicalDesignDocumentDemo/Hungry%20Hippo%20app%20Technical%20Design%20Docs%2050ebd0e21e7441d189bf648d1591f952.md "")  
+ - [Technical design document demo]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/Other/TechnicalDesignDocumentDemo "")  
  
 ## 技术清谈面试题系列（附答案）
 
