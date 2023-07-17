@@ -1,4 +1,5 @@
 # iOSTest
+Source code: [Swift Demo]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/Swift/MVVMDemo "") 
 
 ## Task DETAILS  
 
@@ -14,6 +15,7 @@ Search functionality on the posts list and comments list.
 
 ## Result from Yilong Chen 
 
+![https://github.com/ChenYilong](preview.gif)
 
  Below is a summary of the tasks I undertook, and the functionalities I implemented as part of this assignment:
 

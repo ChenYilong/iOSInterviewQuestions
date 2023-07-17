@@ -1,5 +1,7 @@
 ## iOS Programming Challenge: Interactive Post Viewer
 
+Source Code: [SwiftUI Demo]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/SwiftUI/SwiftUIDemo "") 
+
 **Description:**
 
 Your task is to create a native iOS application using Swift, SwiftUI, UIKit, WebKit, and Combine. The application should provide an interactive interface for browsing and viewing posts, comments, and associated user details from a JSONPlaceholder API.
@@ -53,3 +55,4 @@ Search functionality on the posts list and comments list.
 
 
 ## Result from Yilong Chen 
+![https://github.com/ChenYilong](preview.gif)
