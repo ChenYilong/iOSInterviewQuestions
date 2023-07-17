@@ -3,65 +3,65 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9AA398C028B2EE2C00838C1E /* PhotoAlbumGeneratorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA398BF28B2EE2C00838C1E /* PhotoAlbumGeneratorApp.swift */; };
-		9AA398C228B2EE2C00838C1E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA398C128B2EE2C00838C1E /* ContentView.swift */; };
-		9AA398C428B2EE2D00838C1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9AA398C328B2EE2D00838C1E /* Assets.xcassets */; };
-		9AA398C728B2EE2D00838C1E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9AA398C628B2EE2D00838C1E /* Preview Assets.xcassets */; };
-		9AA398D128B2EE2E00838C1E /* PhotoAlbumGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA398D028B2EE2E00838C1E /* PhotoAlbumGeneratorTests.swift */; };
-		9AA398DB28B2EE2E00838C1E /* PhotoAlbumGeneratorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA398DA28B2EE2E00838C1E /* PhotoAlbumGeneratorUITests.swift */; };
-		9AA398DD28B2EE2E00838C1E /* PhotoAlbumGeneratorUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA398DC28B2EE2E00838C1E /* PhotoAlbumGeneratorUITestsLaunchTests.swift */; };
+		9A04F61C2A64C4BD000F8B74 /* SwiftUITestApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F61B2A64C4BD000F8B74 /* SwiftUITestApp.swift */; };
+		9A04F61E2A64C4BD000F8B74 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F61D2A64C4BD000F8B74 /* ContentView.swift */; };
+		9A04F6202A64C4C0000F8B74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A04F61F2A64C4C0000F8B74 /* Assets.xcassets */; };
+		9A04F6232A64C4C0000F8B74 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A04F6222A64C4C0000F8B74 /* Preview Assets.xcassets */; };
+		9A04F62D2A64C4C0000F8B74 /* SwiftUITestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F62C2A64C4C0000F8B74 /* SwiftUITestTests.swift */; };
+		9A04F6372A64C4C0000F8B74 /* SwiftUITestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F6362A64C4C0000F8B74 /* SwiftUITestUITests.swift */; };
+		9A04F6392A64C4C0000F8B74 /* SwiftUITestUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F6382A64C4C0000F8B74 /* SwiftUITestUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		9AA398CD28B2EE2E00838C1E /* PBXContainerItemProxy */ = {
+		9A04F6292A64C4C0000F8B74 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 9AA398B428B2EE2C00838C1E /* Project object */;
+			containerPortal = 9A04F6102A64C4BD000F8B74 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 9AA398BB28B2EE2C00838C1E;
-			remoteInfo = PhotoAlbumGenerator;
+			remoteGlobalIDString = 9A04F6172A64C4BD000F8B74;
+			remoteInfo = SwiftUITest;
 		};
-		9AA398D728B2EE2E00838C1E /* PBXContainerItemProxy */ = {
+		9A04F6332A64C4C0000F8B74 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 9AA398B428B2EE2C00838C1E /* Project object */;
+			containerPortal = 9A04F6102A64C4BD000F8B74 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 9AA398BB28B2EE2C00838C1E;
-			remoteInfo = PhotoAlbumGenerator;
+			remoteGlobalIDString = 9A04F6172A64C4BD000F8B74;
+			remoteInfo = SwiftUITest;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9AA398BC28B2EE2C00838C1E /* PhotoAlbumGenerator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoAlbumGenerator.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9AA398BF28B2EE2C00838C1E /* PhotoAlbumGeneratorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumGeneratorApp.swift; sourceTree = "<group>"; };
-		9AA398C128B2EE2C00838C1E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		9AA398C328B2EE2D00838C1E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9AA398C628B2EE2D00838C1E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		9AA398CC28B2EE2E00838C1E /* PhotoAlbumGeneratorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoAlbumGeneratorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9AA398D028B2EE2E00838C1E /* PhotoAlbumGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumGeneratorTests.swift; sourceTree = "<group>"; };
-		9AA398D628B2EE2E00838C1E /* PhotoAlbumGeneratorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoAlbumGeneratorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9AA398DA28B2EE2E00838C1E /* PhotoAlbumGeneratorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumGeneratorUITests.swift; sourceTree = "<group>"; };
-		9AA398DC28B2EE2E00838C1E /* PhotoAlbumGeneratorUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumGeneratorUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		9A04F6182A64C4BD000F8B74 /* SwiftUITest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUITest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A04F61B2A64C4BD000F8B74 /* SwiftUITestApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUITestApp.swift; sourceTree = "<group>"; };
+		9A04F61D2A64C4BD000F8B74 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		9A04F61F2A64C4C0000F8B74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9A04F6222A64C4C0000F8B74 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		9A04F6282A64C4C0000F8B74 /* SwiftUITestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUITestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A04F62C2A64C4C0000F8B74 /* SwiftUITestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUITestTests.swift; sourceTree = "<group>"; };
+		9A04F6322A64C4C0000F8B74 /* SwiftUITestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUITestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A04F6362A64C4C0000F8B74 /* SwiftUITestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUITestUITests.swift; sourceTree = "<group>"; };
+		9A04F6382A64C4C0000F8B74 /* SwiftUITestUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUITestUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		9AA398B928B2EE2C00838C1E /* Frameworks */ = {
+		9A04F6152A64C4BD000F8B74 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9AA398C928B2EE2E00838C1E /* Frameworks */ = {
+		9A04F6252A64C4C0000F8B74 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9AA398D328B2EE2E00838C1E /* Frameworks */ = {
+		9A04F62F2A64C4C0000F8B74 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -71,179 +71,179 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9AA398B328B2EE2C00838C1E = {
+		9A04F60F2A64C4BD000F8B74 = {
 			isa = PBXGroup;
 			children = (
-				9AA398BE28B2EE2C00838C1E /* PhotoAlbumGenerator */,
-				9AA398CF28B2EE2E00838C1E /* PhotoAlbumGeneratorTests */,
-				9AA398D928B2EE2E00838C1E /* PhotoAlbumGeneratorUITests */,
-				9AA398BD28B2EE2C00838C1E /* Products */,
+				9A04F61A2A64C4BD000F8B74 /* SwiftUITest */,
+				9A04F62B2A64C4C0000F8B74 /* SwiftUITestTests */,
+				9A04F6352A64C4C0000F8B74 /* SwiftUITestUITests */,
+				9A04F6192A64C4BD000F8B74 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		9AA398BD28B2EE2C00838C1E /* Products */ = {
+		9A04F6192A64C4BD000F8B74 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9AA398BC28B2EE2C00838C1E /* PhotoAlbumGenerator.app */,
-				9AA398CC28B2EE2E00838C1E /* PhotoAlbumGeneratorTests.xctest */,
-				9AA398D628B2EE2E00838C1E /* PhotoAlbumGeneratorUITests.xctest */,
+				9A04F6182A64C4BD000F8B74 /* SwiftUITest.app */,
+				9A04F6282A64C4C0000F8B74 /* SwiftUITestTests.xctest */,
+				9A04F6322A64C4C0000F8B74 /* SwiftUITestUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		9AA398BE28B2EE2C00838C1E /* PhotoAlbumGenerator */ = {
+		9A04F61A2A64C4BD000F8B74 /* SwiftUITest */ = {
 			isa = PBXGroup;
 			children = (
-				9AA398BF28B2EE2C00838C1E /* PhotoAlbumGeneratorApp.swift */,
-				9AA398C128B2EE2C00838C1E /* ContentView.swift */,
-				9AA398C328B2EE2D00838C1E /* Assets.xcassets */,
-				9AA398C528B2EE2D00838C1E /* Preview Content */,
+				9A04F61B2A64C4BD000F8B74 /* SwiftUITestApp.swift */,
+				9A04F61D2A64C4BD000F8B74 /* ContentView.swift */,
+				9A04F61F2A64C4C0000F8B74 /* Assets.xcassets */,
+				9A04F6212A64C4C0000F8B74 /* Preview Content */,
 			);
-			path = PhotoAlbumGenerator;
+			path = SwiftUITest;
 			sourceTree = "<group>";
 		};
-		9AA398C528B2EE2D00838C1E /* Preview Content */ = {
+		9A04F6212A64C4C0000F8B74 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				9AA398C628B2EE2D00838C1E /* Preview Assets.xcassets */,
+				9A04F6222A64C4C0000F8B74 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		9AA398CF28B2EE2E00838C1E /* PhotoAlbumGeneratorTests */ = {
+		9A04F62B2A64C4C0000F8B74 /* SwiftUITestTests */ = {
 			isa = PBXGroup;
 			children = (
-				9AA398D028B2EE2E00838C1E /* PhotoAlbumGeneratorTests.swift */,
+				9A04F62C2A64C4C0000F8B74 /* SwiftUITestTests.swift */,
 			);
-			path = PhotoAlbumGeneratorTests;
+			path = SwiftUITestTests;
 			sourceTree = "<group>";
 		};
-		9AA398D928B2EE2E00838C1E /* PhotoAlbumGeneratorUITests */ = {
+		9A04F6352A64C4C0000F8B74 /* SwiftUITestUITests */ = {
 			isa = PBXGroup;
 			children = (
-				9AA398DA28B2EE2E00838C1E /* PhotoAlbumGeneratorUITests.swift */,
-				9AA398DC28B2EE2E00838C1E /* PhotoAlbumGeneratorUITestsLaunchTests.swift */,
+				9A04F6362A64C4C0000F8B74 /* SwiftUITestUITests.swift */,
+				9A04F6382A64C4C0000F8B74 /* SwiftUITestUITestsLaunchTests.swift */,
 			);
-			path = PhotoAlbumGeneratorUITests;
+			path = SwiftUITestUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9AA398BB28B2EE2C00838C1E /* PhotoAlbumGenerator */ = {
+		9A04F6172A64C4BD000F8B74 /* SwiftUITest */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9AA398E028B2EE2E00838C1E /* Build configuration list for PBXNativeTarget "PhotoAlbumGenerator" */;
+			buildConfigurationList = 9A04F63C2A64C4C0000F8B74 /* Build configuration list for PBXNativeTarget "SwiftUITest" */;
 			buildPhases = (
-				9AA398B828B2EE2C00838C1E /* Sources */,
-				9AA398B928B2EE2C00838C1E /* Frameworks */,
-				9AA398BA28B2EE2C00838C1E /* Resources */,
+				9A04F6142A64C4BD000F8B74 /* Sources */,
+				9A04F6152A64C4BD000F8B74 /* Frameworks */,
+				9A04F6162A64C4BD000F8B74 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = PhotoAlbumGenerator;
-			productName = PhotoAlbumGenerator;
-			productReference = 9AA398BC28B2EE2C00838C1E /* PhotoAlbumGenerator.app */;
+			name = SwiftUITest;
+			productName = SwiftUITest;
+			productReference = 9A04F6182A64C4BD000F8B74 /* SwiftUITest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		9AA398CB28B2EE2E00838C1E /* PhotoAlbumGeneratorTests */ = {
+		9A04F6272A64C4C0000F8B74 /* SwiftUITestTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9AA398E328B2EE2E00838C1E /* Build configuration list for PBXNativeTarget "PhotoAlbumGeneratorTests" */;
+			buildConfigurationList = 9A04F63F2A64C4C0000F8B74 /* Build configuration list for PBXNativeTarget "SwiftUITestTests" */;
 			buildPhases = (
-				9AA398C828B2EE2E00838C1E /* Sources */,
-				9AA398C928B2EE2E00838C1E /* Frameworks */,
-				9AA398CA28B2EE2E00838C1E /* Resources */,
+				9A04F6242A64C4C0000F8B74 /* Sources */,
+				9A04F6252A64C4C0000F8B74 /* Frameworks */,
+				9A04F6262A64C4C0000F8B74 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				9AA398CE28B2EE2E00838C1E /* PBXTargetDependency */,
+				9A04F62A2A64C4C0000F8B74 /* PBXTargetDependency */,
 			);
-			name = PhotoAlbumGeneratorTests;
-			productName = PhotoAlbumGeneratorTests;
-			productReference = 9AA398CC28B2EE2E00838C1E /* PhotoAlbumGeneratorTests.xctest */;
+			name = SwiftUITestTests;
+			productName = SwiftUITestTests;
+			productReference = 9A04F6282A64C4C0000F8B74 /* SwiftUITestTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		9AA398D528B2EE2E00838C1E /* PhotoAlbumGeneratorUITests */ = {
+		9A04F6312A64C4C0000F8B74 /* SwiftUITestUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9AA398E628B2EE2E00838C1E /* Build configuration list for PBXNativeTarget "PhotoAlbumGeneratorUITests" */;
+			buildConfigurationList = 9A04F6422A64C4C0000F8B74 /* Build configuration list for PBXNativeTarget "SwiftUITestUITests" */;
 			buildPhases = (
-				9AA398D228B2EE2E00838C1E /* Sources */,
-				9AA398D328B2EE2E00838C1E /* Frameworks */,
-				9AA398D428B2EE2E00838C1E /* Resources */,
+				9A04F62E2A64C4C0000F8B74 /* Sources */,
+				9A04F62F2A64C4C0000F8B74 /* Frameworks */,
+				9A04F6302A64C4C0000F8B74 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				9AA398D828B2EE2E00838C1E /* PBXTargetDependency */,
+				9A04F6342A64C4C0000F8B74 /* PBXTargetDependency */,
 			);
-			name = PhotoAlbumGeneratorUITests;
-			productName = PhotoAlbumGeneratorUITests;
-			productReference = 9AA398D628B2EE2E00838C1E /* PhotoAlbumGeneratorUITests.xctest */;
+			name = SwiftUITestUITests;
+			productName = SwiftUITestUITests;
+			productReference = 9A04F6322A64C4C0000F8B74 /* SwiftUITestUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		9AA398B428B2EE2C00838C1E /* Project object */ = {
+		9A04F6102A64C4BD000F8B74 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1340;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
 				TargetAttributes = {
-					9AA398BB28B2EE2C00838C1E = {
-						CreatedOnToolsVersion = 13.4.1;
+					9A04F6172A64C4BD000F8B74 = {
+						CreatedOnToolsVersion = 14.2;
 					};
-					9AA398CB28B2EE2E00838C1E = {
-						CreatedOnToolsVersion = 13.4.1;
-						TestTargetID = 9AA398BB28B2EE2C00838C1E;
+					9A04F6272A64C4C0000F8B74 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 9A04F6172A64C4BD000F8B74;
 					};
-					9AA398D528B2EE2E00838C1E = {
-						CreatedOnToolsVersion = 13.4.1;
-						TestTargetID = 9AA398BB28B2EE2C00838C1E;
+					9A04F6312A64C4C0000F8B74 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 9A04F6172A64C4BD000F8B74;
 					};
 				};
 			};
-			buildConfigurationList = 9AA398B728B2EE2C00838C1E /* Build configuration list for PBXProject "PhotoAlbumGenerator" */;
-			compatibilityVersion = "Xcode 13.0";
+			buildConfigurationList = 9A04F6132A64C4BD000F8B74 /* Build configuration list for PBXProject "SwiftUITest" */;
+			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 9AA398B328B2EE2C00838C1E;
-			productRefGroup = 9AA398BD28B2EE2C00838C1E /* Products */;
+			mainGroup = 9A04F60F2A64C4BD000F8B74;
+			productRefGroup = 9A04F6192A64C4BD000F8B74 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9AA398BB28B2EE2C00838C1E /* PhotoAlbumGenerator */,
-				9AA398CB28B2EE2E00838C1E /* PhotoAlbumGeneratorTests */,
-				9AA398D528B2EE2E00838C1E /* PhotoAlbumGeneratorUITests */,
+				9A04F6172A64C4BD000F8B74 /* SwiftUITest */,
+				9A04F6272A64C4C0000F8B74 /* SwiftUITestTests */,
+				9A04F6312A64C4C0000F8B74 /* SwiftUITestUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		9AA398BA28B2EE2C00838C1E /* Resources */ = {
+		9A04F6162A64C4BD000F8B74 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AA398C728B2EE2D00838C1E /* Preview Assets.xcassets in Resources */,
-				9AA398C428B2EE2D00838C1E /* Assets.xcassets in Resources */,
+				9A04F6232A64C4C0000F8B74 /* Preview Assets.xcassets in Resources */,
+				9A04F6202A64C4C0000F8B74 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9AA398CA28B2EE2E00838C1E /* Resources */ = {
+		9A04F6262A64C4C0000F8B74 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9AA398D428B2EE2E00838C1E /* Resources */ = {
+		9A04F6302A64C4C0000F8B74 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -253,55 +253,55 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		9AA398B828B2EE2C00838C1E /* Sources */ = {
+		9A04F6142A64C4BD000F8B74 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AA398C228B2EE2C00838C1E /* ContentView.swift in Sources */,
-				9AA398C028B2EE2C00838C1E /* PhotoAlbumGeneratorApp.swift in Sources */,
+				9A04F61E2A64C4BD000F8B74 /* ContentView.swift in Sources */,
+				9A04F61C2A64C4BD000F8B74 /* SwiftUITestApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9AA398C828B2EE2E00838C1E /* Sources */ = {
+		9A04F6242A64C4C0000F8B74 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AA398D128B2EE2E00838C1E /* PhotoAlbumGeneratorTests.swift in Sources */,
+				9A04F62D2A64C4C0000F8B74 /* SwiftUITestTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9AA398D228B2EE2E00838C1E /* Sources */ = {
+		9A04F62E2A64C4C0000F8B74 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AA398DB28B2EE2E00838C1E /* PhotoAlbumGeneratorUITests.swift in Sources */,
-				9AA398DD28B2EE2E00838C1E /* PhotoAlbumGeneratorUITestsLaunchTests.swift in Sources */,
+				9A04F6392A64C4C0000F8B74 /* SwiftUITestUITestsLaunchTests.swift in Sources */,
+				9A04F6372A64C4C0000F8B74 /* SwiftUITestUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		9AA398CE28B2EE2E00838C1E /* PBXTargetDependency */ = {
+		9A04F62A2A64C4C0000F8B74 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9AA398BB28B2EE2C00838C1E /* PhotoAlbumGenerator */;
-			targetProxy = 9AA398CD28B2EE2E00838C1E /* PBXContainerItemProxy */;
+			target = 9A04F6172A64C4BD000F8B74 /* SwiftUITest */;
+			targetProxy = 9A04F6292A64C4C0000F8B74 /* PBXContainerItemProxy */;
 		};
-		9AA398D828B2EE2E00838C1E /* PBXTargetDependency */ = {
+		9A04F6342A64C4C0000F8B74 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 9AA398BB28B2EE2C00838C1E /* PhotoAlbumGenerator */;
-			targetProxy = 9AA398D728B2EE2E00838C1E /* PBXContainerItemProxy */;
+			target = 9A04F6172A64C4BD000F8B74 /* SwiftUITest */;
+			targetProxy = 9A04F6332A64C4C0000F8B74 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		9AA398DE28B2EE2E00838C1E /* Debug */ = {
+		9A04F63A2A64C4C0000F8B74 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -345,7 +345,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -355,13 +355,13 @@
 			};
 			name = Debug;
 		};
-		9AA398DF28B2EE2E00838C1E /* Release */ = {
+		9A04F63B2A64C4C0000F8B74 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
@@ -399,7 +399,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -409,14 +409,14 @@
 			};
 			name = Release;
 		};
-		9AA398E128B2EE2E00838C1E /* Debug */ = {
+		9A04F63D2A64C4C0000F8B74 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"PhotoAlbumGenerator/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"SwiftUITest/Preview Content\"";
 				DEVELOPMENT_TEAM = A34NNDTR9F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -430,7 +430,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.PhotoAlbumGenerator.chenyilong.PhotoAlbumGenerator;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chenyilong.SwiftUITest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -438,14 +438,14 @@
 			};
 			name = Debug;
 		};
-		9AA398E228B2EE2E00838C1E /* Release */ = {
+		9A04F63E2A64C4C0000F8B74 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"PhotoAlbumGenerator/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"SwiftUITest/Preview Content\"";
 				DEVELOPMENT_TEAM = A34NNDTR9F;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -459,7 +459,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.PhotoAlbumGenerator.chenyilong.PhotoAlbumGenerator;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chenyilong.SwiftUITest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -467,7 +467,7 @@
 			};
 			name = Release;
 		};
-		9AA398E428B2EE2E00838C1E /* Debug */ = {
+		9A04F6402A64C4C0000F8B74 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -476,18 +476,18 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = A34NNDTR9F;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.PhotoAlbumGenerator.chenyilong.PhotoAlbumGeneratorTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chenyilong.SwiftUITestTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotoAlbumGenerator.app/PhotoAlbumGenerator";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftUITest.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SwiftUITest";
 			};
 			name = Debug;
 		};
-		9AA398E528B2EE2E00838C1E /* Release */ = {
+		9A04F6412A64C4C0000F8B74 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -496,18 +496,18 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = A34NNDTR9F;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.PhotoAlbumGenerator.chenyilong.PhotoAlbumGeneratorTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chenyilong.SwiftUITestTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PhotoAlbumGenerator.app/PhotoAlbumGenerator";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftUITest.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SwiftUITest";
 			};
 			name = Release;
 		};
-		9AA398E728B2EE2E00838C1E /* Debug */ = {
+		9A04F6432A64C4C0000F8B74 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -516,16 +516,16 @@
 				DEVELOPMENT_TEAM = A34NNDTR9F;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.PhotoAlbumGenerator.chenyilong.PhotoAlbumGeneratorUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chenyilong.SwiftUITestUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PhotoAlbumGenerator;
+				TEST_TARGET_NAME = SwiftUITest;
 			};
 			name = Debug;
 		};
-		9AA398E828B2EE2E00838C1E /* Release */ = {
+		9A04F6442A64C4C0000F8B74 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
@@ -534,55 +534,55 @@
 				DEVELOPMENT_TEAM = A34NNDTR9F;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.PhotoAlbumGenerator.chenyilong.PhotoAlbumGeneratorUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chenyilong.SwiftUITestUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = PhotoAlbumGenerator;
+				TEST_TARGET_NAME = SwiftUITest;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9AA398B728B2EE2C00838C1E /* Build configuration list for PBXProject "PhotoAlbumGenerator" */ = {
+		9A04F6132A64C4BD000F8B74 /* Build configuration list for PBXProject "SwiftUITest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9AA398DE28B2EE2E00838C1E /* Debug */,
-				9AA398DF28B2EE2E00838C1E /* Release */,
+				9A04F63A2A64C4C0000F8B74 /* Debug */,
+				9A04F63B2A64C4C0000F8B74 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9AA398E028B2EE2E00838C1E /* Build configuration list for PBXNativeTarget "PhotoAlbumGenerator" */ = {
+		9A04F63C2A64C4C0000F8B74 /* Build configuration list for PBXNativeTarget "SwiftUITest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9AA398E128B2EE2E00838C1E /* Debug */,
-				9AA398E228B2EE2E00838C1E /* Release */,
+				9A04F63D2A64C4C0000F8B74 /* Debug */,
+				9A04F63E2A64C4C0000F8B74 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9AA398E328B2EE2E00838C1E /* Build configuration list for PBXNativeTarget "PhotoAlbumGeneratorTests" */ = {
+		9A04F63F2A64C4C0000F8B74 /* Build configuration list for PBXNativeTarget "SwiftUITestTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9AA398E428B2EE2E00838C1E /* Debug */,
-				9AA398E528B2EE2E00838C1E /* Release */,
+				9A04F6402A64C4C0000F8B74 /* Debug */,
+				9A04F6412A64C4C0000F8B74 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9AA398E628B2EE2E00838C1E /* Build configuration list for PBXNativeTarget "PhotoAlbumGeneratorUITests" */ = {
+		9A04F6422A64C4C0000F8B74 /* Build configuration list for PBXNativeTarget "SwiftUITestUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9AA398E728B2EE2E00838C1E /* Debug */,
-				9AA398E828B2EE2E00838C1E /* Release */,
+				9A04F6432A64C4C0000F8B74 /* Debug */,
+				9A04F6442A64C4C0000F8B74 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 9AA398B428B2EE2C00838C1E /* Project object */;
+	rootObject = 9A04F6102A64C4BD000F8B74 /* Project object */;
 }

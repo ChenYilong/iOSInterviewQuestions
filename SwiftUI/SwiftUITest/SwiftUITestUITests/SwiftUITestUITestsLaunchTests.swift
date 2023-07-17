@@ -1,13 +1,14 @@
 //
-//  PhotoAlbumGeneratorUITestsLaunchTests.swift
-//  PhotoAlbumGeneratorUITests
+//  SwiftUITestUITestsLaunchTests.swift
+//  SwiftUITestUITests
 //
-//  Created by chenyilong on 2022/8/22.
+//  Created by chenyilong on 2023/7/17.
 //
 
 import XCTest
 
-class PhotoAlbumGeneratorUITestsLaunchTests: XCTestCase {
+final class SwiftUITestUITestsLaunchTests: XCTestCase {
+
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
     }

@@ -1,14 +1,15 @@
 //
-//  PhotoAlbumGeneratorTests.swift
-//  PhotoAlbumGeneratorTests
+//  SwiftUITestTests.swift
+//  SwiftUITestTests
 //
-//  Created by chenyilong on 2022/8/22.
+//  Created by chenyilong on 2023/7/17.
 //
 
-@testable import PhotoAlbumGenerator
 import XCTest
+@testable import SwiftUITest
 
-class PhotoAlbumGeneratorTests: XCTestCase {
+final class SwiftUITestTests: XCTestCase {
+
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
@@ -27,8 +28,9 @@ class PhotoAlbumGeneratorTests: XCTestCase {
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
-        measure {
+        self.measure {
             // Put the code you want to measure the time of here.
         }
     }
+
 }
