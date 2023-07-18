@@ -1,6 +1,8 @@
 # iOSTest
 Source code: [Swift Demo]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/Swift/MVVMDemo "") 
-![https://github.com/ChenYilong](banner.png)
+
+<p align="center"><a href="https://github.com/ChenYilong/iOSInterviewQuestions/tree/master/Swift/MVVMDemo"><img src="banner.png"></a></p>
+
 
 ## Task DETAILS  
 
