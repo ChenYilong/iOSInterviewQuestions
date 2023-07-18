@@ -29,7 +29,7 @@
 <p align="center"><a href="https://mp.weixin.qq.com/s/A4e5h3xgIEh6PInf1Rjqsw"><img src="http://ww4.sinaimg.cn/large/006tNc79ly1g5zsnmaw40g30go04ck08.gif"></a></p>
 
 <p align="center">
- <a href="http://ww2.sinaimg.cn/large/006tNc79ly1g5et6q6sm5j30go0goaar.jpg"><img src="https://mp.weixin.qq.com/s/A4e5h3xgIEh6PInf1Rjqsw"></a>
+ <a href="https://mp.weixin.qq.com/s/A4e5h3xgIEh6PInf1Rjqsw"><img src="http://ww1.sinaimg.cn/large/006tNc79ly1g5esb5j4oaj300w00rdfn.jpg"></a>
 <a href="http://weibo.com/luohanchenyilong"><img src="https://tva1.sinaimg.cn/large/006y8mN6ly1g6um2edt3jj300w00q3y9.jpg"></a>
 <a href="https://twitter.com/iOSChenYilong"><img src="http://ww3.sinaimg.cn/large/006tNc79ly1g5erhikv2kj300w00wgld.jpg"></a>
 <a href="https://github.com/ChenYilong"><img src="http://ww3.sinaimg.cn/large/006tNc79gy1g5ercvzgxzj300w00wmwx.jpg"></a> 
@@ -46,7 +46,8 @@
 
 ## iOS面试题集锦（附答案）
 
-![https://github.com/ChenYilong](banner.png)
+
+<p align="center"><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01%E3%80%8A%E6%8B%9B%E8%81%98%E4%B8%80%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84iOS%E3%80%8B%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/%E3%80%8A%E6%8B%9B%E8%81%98%E4%B8%80%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84iOS%E3%80%8B%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88%EF%BC%88%E4%B8%8A%EF%BC%89.md"><img src="banner.png"></a></p>
 
 
 
@@ -65,7 +66,8 @@
 ## iOS Programming Challenge
 
 
-![https://github.com/ChenYilong](banner-coding-challenge.png)
+<p align="center"><a href="https://github.com/ChenYilong/iOSInterviewQuestions/tree/master/Swift/MVVMDemo"><img src="banner-coding-challenge.png"></a></p>
+
 
  - [Swift Demo]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/Swift/MVVMDemo "") 
  - [SwiftUI Demo]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/SwiftUI/SwiftUIDemo "") 

@@ -1,6 +1,7 @@
-[《招聘一个靠谱的 iOS》](http://blog.sunnyxx.com/2015/07/04/ios-interview/)—参考答案（上）
+# [《招聘一个靠谱的 iOS》](http://blog.sunnyxx.com/2015/07/04/ios-interview/)—参考答案（上）
 
-![https://github.com/ChenYilong](../banner.png)
+<p align="center"><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01%E3%80%8A%E6%8B%9B%E8%81%98%E4%B8%80%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84iOS%E3%80%8B%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/%E3%80%8A%E6%8B%9B%E8%81%98%E4%B8%80%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84iOS%E3%80%8B%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88%EF%BC%88%E4%B8%8B%EF%BC%89.md"><img src="../banner.png"></a></p>
+
 
 说明：面试题来源是[微博@我就叫Sunny怎么了](http://weibo.com/u/1364395395)的这篇博文：[《招聘一个靠谱的 iOS》](http://blog.sunnyxx.com/2015/07/04/ios-interview/)，其中共55题，除第一题为纠错题外，其他54道均为简答题。
 
@@ -2221,9 +2222,13 @@ runtime部分主要参考[Apple官方文档：Declared Properties](https://devel
 
 ----------
 
-下一篇文章已经发布在[这里](https://github.com/ChenYilong/iOSInterviewQuestions)，会对以下问题进行总结，并将本篇文章的勘误一并列出，欢迎指正！请持续关注[微博@iOS程序犭袁](http://weibo.com/luohanchenyilong/)
+下一篇文章已经发布在[这里](https://github.com/ChenYilong/iOSInterviewQuestions)，(点击下图封面访问)。会对以下问题进行总结，并将本篇文章的勘误一并列出，欢迎指正！请持续关注[微博@iOS程序犭袁](http://weibo.com/luohanchenyilong/)
+
+<p align="center"><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01%E3%80%8A%E6%8B%9B%E8%81%98%E4%B8%80%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84iOS%E3%80%8B%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88/%E3%80%8A%E6%8B%9B%E8%81%98%E4%B8%80%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84iOS%E3%80%8B%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88%EF%BC%88%E4%B8%8A%EF%BC%89.md"><img src="../banner.png"></a></p>
 
 ----------
+
+下篇的题目一览:
 
 ### 25. `_objc_msgForward`函数是做什么的，直接调用它将会发生什么？
 
