@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A04F67E2A6848D3000F8B74 /* main-in-cpp.zip in Resources */ = {isa = PBXBuildFile; fileRef = 9A04F67D2A6848D3000F8B74 /* main-in-cpp.zip */; };
 		9AC995372487DC510097E1D6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC995362487DC510097E1D6 /* AppDelegate.m */; };
 		9AC9953A2487DC510097E1D6 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC995392487DC510097E1D6 /* SceneDelegate.m */; };
 		9AC9953D2487DC510097E1D6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC9953C2487DC510097E1D6 /* ViewController.m */; };
@@ -36,8 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9A8257FD2488D9550025AFEA /* main-03.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "main-03.cpp"; sourceTree = "<group>"; };
-		9A8257FF2488DB4B0025AFEA /* main-04.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "main-04.cpp"; sourceTree = "<group>"; };
+		9A04F67D2A6848D3000F8B74 /* main-in-cpp.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "main-in-cpp.zip"; sourceTree = "<group>"; };
 		9AC995322487DC510097E1D6 /* Demo_38_block_edit_var.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo_38_block_edit_var.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AC995352487DC510097E1D6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		9AC995362487DC510097E1D6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -56,8 +56,6 @@
 		9AC995582487DC530097E1D6 /* Demo_38_block_edit_varUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Demo_38_block_edit_varUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AC9955C2487DC530097E1D6 /* Demo_38_block_edit_varUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Demo_38_block_edit_varUITests.m; sourceTree = "<group>"; };
 		9AC9955E2487DC530097E1D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9AC9956A2487E2E80097E1D6 /* main-01.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "main-01.cpp"; sourceTree = "<group>"; };
-		9AC9956C2487F1EB0097E1D6 /* main-02.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "main-02.cpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,10 +117,7 @@
 				9AC995432487DC520097E1D6 /* LaunchScreen.storyboard */,
 				9AC995462487DC520097E1D6 /* Info.plist */,
 				9AC995472487DC520097E1D6 /* main.m */,
-				9AC9956A2487E2E80097E1D6 /* main-01.cpp */,
-				9AC9956C2487F1EB0097E1D6 /* main-02.cpp */,
-				9A8257FD2488D9550025AFEA /* main-03.cpp */,
-				9A8257FF2488DB4B0025AFEA /* main-04.cpp */,
+				9A04F67D2A6848D3000F8B74 /* main-in-cpp.zip */,
 			);
 			path = Demo_38_block_edit_var;
 			sourceTree = "<group>";
@@ -251,6 +246,7 @@
 				9AC995452487DC520097E1D6 /* LaunchScreen.storyboard in Resources */,
 				9AC995422487DC520097E1D6 /* Assets.xcassets in Resources */,
 				9AC995402487DC510097E1D6 /* Main.storyboard in Resources */,
+				9A04F67E2A6848D3000F8B74 /* main-in-cpp.zip in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
