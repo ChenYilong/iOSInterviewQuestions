@@ -14,6 +14,20 @@
 		9A04F6632A64D066000F8B74 /* SwiftUIDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F6622A64D066000F8B74 /* SwiftUIDemoTests.swift */; };
 		9A04F66D2A64D066000F8B74 /* SwiftUIDemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F66C2A64D066000F8B74 /* SwiftUIDemoUITests.swift */; };
 		9A04F66F2A64D066000F8B74 /* SwiftUIDemoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F66E2A64D066000F8B74 /* SwiftUIDemoUITestsLaunchTests.swift */; };
+		9A04F6802A6A056E000F8B74 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9A04F67F2A6A056B000F8B74 /* README.md */; };
+		9A04F6922A6A0C06000F8B74 /* ContentCellViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F6822A6A0C05000F8B74 /* ContentCellViewModelProtocol.swift */; };
+		9A04F6932A6A0C06000F8B74 /* CommentCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F6832A6A0C05000F8B74 /* CommentCellViewModel.swift */; };
+		9A04F6942A6A0C06000F8B74 /* PostListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F6842A6A0C05000F8B74 /* PostListViewModel.swift */; };
+		9A04F6952A6A0C06000F8B74 /* CommentListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F6852A6A0C05000F8B74 /* CommentListViewModel.swift */; };
+		9A04F6962A6A0C06000F8B74 /* PostCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F6862A6A0C05000F8B74 /* PostCellViewModel.swift */; };
+		9A04F6972A6A0C06000F8B74 /* ContentListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F6872A6A0C05000F8B74 /* ContentListViewModelProtocol.swift */; };
+		9A04F6982A6A0C06000F8B74 /* RowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F6882A6A0C05000F8B74 /* RowViewModel.swift */; };
+		9A04F6992A6A0C06000F8B74 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F68A2A6A0C05000F8B74 /* Comment.swift */; };
+		9A04F69A2A6A0C06000F8B74 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F68B2A6A0C05000F8B74 /* Post.swift */; };
+		9A04F69B2A6A0C06000F8B74 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F68D2A6A0C05000F8B74 /* Repository.swift */; };
+		9A04F69C2A6A0C06000F8B74 /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F68E2A6A0C05000F8B74 /* ContentModel.swift */; };
+		9A04F69D2A6A0C06000F8B74 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F6902A6A0C06000F8B74 /* UIColor+Extension.swift */; };
+		9A04F69E2A6A0C06000F8B74 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A04F6912A6A0C06000F8B74 /* Observable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +58,20 @@
 		9A04F6682A64D066000F8B74 /* SwiftUIDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUIDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A04F66C2A64D066000F8B74 /* SwiftUIDemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIDemoUITests.swift; sourceTree = "<group>"; };
 		9A04F66E2A64D066000F8B74 /* SwiftUIDemoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIDemoUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		9A04F67F2A6A056B000F8B74 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		9A04F6822A6A0C05000F8B74 /* ContentCellViewModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentCellViewModelProtocol.swift; sourceTree = "<group>"; };
+		9A04F6832A6A0C05000F8B74 /* CommentCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentCellViewModel.swift; sourceTree = "<group>"; };
+		9A04F6842A6A0C05000F8B74 /* PostListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostListViewModel.swift; sourceTree = "<group>"; };
+		9A04F6852A6A0C05000F8B74 /* CommentListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentListViewModel.swift; sourceTree = "<group>"; };
+		9A04F6862A6A0C05000F8B74 /* PostCellViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCellViewModel.swift; sourceTree = "<group>"; };
+		9A04F6872A6A0C05000F8B74 /* ContentListViewModelProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentListViewModelProtocol.swift; sourceTree = "<group>"; };
+		9A04F6882A6A0C05000F8B74 /* RowViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RowViewModel.swift; sourceTree = "<group>"; };
+		9A04F68A2A6A0C05000F8B74 /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		9A04F68B2A6A0C05000F8B74 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		9A04F68D2A6A0C05000F8B74 /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		9A04F68E2A6A0C05000F8B74 /* ContentModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentModel.swift; sourceTree = "<group>"; };
+		9A04F6902A6A0C06000F8B74 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		9A04F6912A6A0C06000F8B74 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +102,7 @@
 		9A04F6452A64D063000F8B74 = {
 			isa = PBXGroup;
 			children = (
+				9A04F67F2A6A056B000F8B74 /* README.md */,
 				9A04F6502A64D063000F8B74 /* SwiftUIDemo */,
 				9A04F6612A64D066000F8B74 /* SwiftUIDemoTests */,
 				9A04F66B2A64D066000F8B74 /* SwiftUIDemoUITests */,
@@ -94,6 +123,9 @@
 		9A04F6502A64D063000F8B74 /* SwiftUIDemo */ = {
 			isa = PBXGroup;
 			children = (
+				9A04F68F2A6A0C06000F8B74 /* Helpers */,
+				9A04F6892A6A0C05000F8B74 /* Model */,
+				9A04F6812A6A0C05000F8B74 /* ViewModel */,
 				9A04F6512A64D063000F8B74 /* SwiftUIDemoApp.swift */,
 				9A04F6532A64D063000F8B74 /* ContentView.swift */,
 				9A04F6552A64D065000F8B74 /* Assets.xcassets */,
@@ -125,6 +157,48 @@
 				9A04F66E2A64D066000F8B74 /* SwiftUIDemoUITestsLaunchTests.swift */,
 			);
 			path = SwiftUIDemoUITests;
+			sourceTree = "<group>";
+		};
+		9A04F6812A6A0C05000F8B74 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				9A04F6822A6A0C05000F8B74 /* ContentCellViewModelProtocol.swift */,
+				9A04F6832A6A0C05000F8B74 /* CommentCellViewModel.swift */,
+				9A04F6842A6A0C05000F8B74 /* PostListViewModel.swift */,
+				9A04F6852A6A0C05000F8B74 /* CommentListViewModel.swift */,
+				9A04F6862A6A0C05000F8B74 /* PostCellViewModel.swift */,
+				9A04F6872A6A0C05000F8B74 /* ContentListViewModelProtocol.swift */,
+				9A04F6882A6A0C05000F8B74 /* RowViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		9A04F6892A6A0C05000F8B74 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9A04F68A2A6A0C05000F8B74 /* Comment.swift */,
+				9A04F68B2A6A0C05000F8B74 /* Post.swift */,
+				9A04F68C2A6A0C05000F8B74 /* API */,
+				9A04F68E2A6A0C05000F8B74 /* ContentModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		9A04F68C2A6A0C05000F8B74 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				9A04F68D2A6A0C05000F8B74 /* Repository.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		9A04F68F2A6A0C06000F8B74 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				9A04F6902A6A0C06000F8B74 /* UIColor+Extension.swift */,
+				9A04F6912A6A0C06000F8B74 /* Observable.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,6 +305,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A04F6802A6A056E000F8B74 /* README.md in Resources */,
 				9A04F6592A64D065000F8B74 /* Preview Assets.xcassets in Resources */,
 				9A04F6562A64D065000F8B74 /* Assets.xcassets in Resources */,
 			);
@@ -257,8 +332,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A04F6932A6A0C06000F8B74 /* CommentCellViewModel.swift in Sources */,
+				9A04F69E2A6A0C06000F8B74 /* Observable.swift in Sources */,
+				9A04F69A2A6A0C06000F8B74 /* Post.swift in Sources */,
+				9A04F6922A6A0C06000F8B74 /* ContentCellViewModelProtocol.swift in Sources */,
+				9A04F6982A6A0C06000F8B74 /* RowViewModel.swift in Sources */,
+				9A04F69C2A6A0C06000F8B74 /* ContentModel.swift in Sources */,
+				9A04F6972A6A0C06000F8B74 /* ContentListViewModelProtocol.swift in Sources */,
+				9A04F6952A6A0C06000F8B74 /* CommentListViewModel.swift in Sources */,
+				9A04F69D2A6A0C06000F8B74 /* UIColor+Extension.swift in Sources */,
+				9A04F6992A6A0C06000F8B74 /* Comment.swift in Sources */,
+				9A04F6942A6A0C06000F8B74 /* PostListViewModel.swift in Sources */,
 				9A04F6542A64D063000F8B74 /* ContentView.swift in Sources */,
+				9A04F6962A6A0C06000F8B74 /* PostCellViewModel.swift in Sources */,
 				9A04F6522A64D063000F8B74 /* SwiftUIDemoApp.swift in Sources */,
+				9A04F69B2A6A0C06000F8B74 /* Repository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
