@@ -59,3 +59,8 @@ Search functionality on the posts list and comments list.
 
 ## Result from Yilong Chen 
 ![https://github.com/ChenYilong](preview.gif)
+
+## SwiftUI 
+
+![SwiftUI vs UIKit Lifecycle Methods Difference](/assets/SwiftUI%20vs%20UIKit%20Lifecycle%20Methods%20Difference.jpg)
+
