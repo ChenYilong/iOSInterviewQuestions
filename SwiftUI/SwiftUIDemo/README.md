@@ -62,5 +62,5 @@ Search functionality on the posts list and comments list.
 
 ## SwiftUI 
 
-![SwiftUI vs UIKit Lifecycle Methods Difference](/assets/SwiftUI%20vs%20UIKit%20Lifecycle%20Methods%20Difference.jpg)
+![SwiftUI vs UIKit Lifecycle Methods Difference](.../assets/SwiftUI_vs_UIKit_Lifecycle_Methods_Difference.jpg)
 
