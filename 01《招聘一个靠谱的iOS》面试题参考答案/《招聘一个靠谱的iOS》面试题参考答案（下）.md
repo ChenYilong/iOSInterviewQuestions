@@ -31,6 +31,8 @@
  - [37. 使用block时什么情况会发生引用循环，如何解决？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（下）.md#37-使用block时什么情况会发生引用循环如何解决)
  - [38. 在block内如何修改block外部变量？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（下）.md#38-在block内如何修改block外部变量) 
  - [39. 使用系统的某些block api（如UIView的block版本写动画时），是否也考虑引用循环问题？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（下）.md#39-使用系统的某些block-api如uiview的block版本写动画时是否也考虑引用循环问题) 
+    
+    ![](https://tva1.sinaimg.cn/large/008vOhrAgy1hgc9ypbakpj30u016fgr6.jpg)
  - [40. GCD的队列（dispatch_queue_t）分哪两种类型？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（下）.md#40-gcd的队列dispatch_queue_t分哪两种类型) 
  - [41. 如何用GCD同步若干个异步调用？（如根据若干个url异步加载多张图片，然后在都下载完成后合成一张整图）](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（下）.md#41-如何用gcd同步若干个异步调用如根据若干个url异步加载多张图片然后在都下载完成后合成一张整图) 
  - [42. dispatch_barrier_async的作用是什么？](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/01《招聘一个靠谱的iOS》面试题参考答案/《招聘一个靠谱的iOS》面试题参考答案（下）.md#42-dispatch_barrier_async的作用是什么) 
