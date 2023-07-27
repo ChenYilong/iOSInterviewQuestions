@@ -39,6 +39,7 @@
 		9AC962172A51018D00B43724 /* iOSTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC962162A51018D00B43724 /* iOSTestTests.swift */; };
 		9AC962212A51018D00B43724 /* iOSTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC962202A51018D00B43724 /* iOSTestUITests.swift */; };
 		9AC962232A51018D00B43724 /* iOSTestUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC962222A51018D00B43724 /* iOSTestUITestsLaunchTests.swift */; };
+		9AD289E42A730E1B00A24D55 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD289E32A730E1B00A24D55 /* UITableView+Extension.swift */; };
 		9AFEAA122A52EA460000BA3B /* PostListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFEAA112A52EA460000BA3B /* PostListViewController.swift */; };
 		9AFEAA142A52ED480000BA3B /* ContentListViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFEAA132A52ED480000BA3B /* ContentListViewModelProtocol.swift */; };
 		9AFEAA162A53A20B0000BA3B /* ContentCellViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AFEAA152A53A20A0000BA3B /* ContentCellViewModelProtocol.swift */; };
@@ -100,6 +101,7 @@
 		9AC9621C2A51018D00B43724 /* iOSTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AC962202A51018D00B43724 /* iOSTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSTestUITests.swift; sourceTree = "<group>"; };
 		9AC962222A51018D00B43724 /* iOSTestUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSTestUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		9AD289E32A730E1B00A24D55 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		9AFEAA112A52EA460000BA3B /* PostListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostListViewController.swift; sourceTree = "<group>"; };
 		9AFEAA132A52ED480000BA3B /* ContentListViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentListViewModelProtocol.swift; sourceTree = "<group>"; };
 		9AFEAA152A53A20A0000BA3B /* ContentCellViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentCellViewModelProtocol.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				9A0EE8622A510A1300BE4CE6 /* PostListTableViewCell.swift */,
 				9A0EE8862A51A69900BE4CE6 /* CommentListTableViewCell.swift */,
 				9AC6A8862A6F231400D78B3D /* ClassIdenfifiable.swift */,
+				9AD289E32A730E1B00A24D55 /* UITableView+Extension.swift */,
 				9AC6A8882A6F236400D78B3D /* BaseCell.swift */,
 			);
 			path = View;
@@ -405,6 +408,7 @@
 				9A0EE8872A51A69900BE4CE6 /* CommentListTableViewCell.swift in Sources */,
 				9AFEAA142A52ED480000BA3B /* ContentListViewModelProtocol.swift in Sources */,
 				9A0EE88C2A51ABA200BE4CE6 /* CommentCellViewModel.swift in Sources */,
+				9AD289E42A730E1B00A24D55 /* UITableView+Extension.swift in Sources */,
 				9A0EE8892A51AA5B00BE4CE6 /* CommentListViewController.swift in Sources */,
 				9A0EE8712A51244700BE4CE6 /* RowViewModel.swift in Sources */,
 				9AFEAA122A52EA460000BA3B /* PostListViewController.swift in Sources */,

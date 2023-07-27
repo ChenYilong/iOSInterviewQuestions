@@ -20,7 +20,7 @@ final class PostListViewController: BaseContentListViewController<Post, PostList
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "iOS Test from ChenYilong"
-        tableView.register(PostListTableViewCell.self, forCellReuseIdentifier: PostListTableViewCell.reuseIdentifier)
+        tableView.register(cellType: PostListTableViewCell.self)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -30,7 +30,7 @@ final class PostListViewController: BaseContentListViewController<Post, PostList
             return EmptyViewTableViewCell()
             
         case .loaded:
-            let cell = tableView.dequeueReusableCell(withIdentifier: PostListTableViewCell.reuseIdentifier, for: indexPath) as! PostListTableViewCell
+            let cell: PostListTableViewCell = tableView.dequeueReusableCell(for: indexPath)
             let post = viewModel.contentCellViewModels[indexPath.item].content
             cell.configure(with: post)
             return cell

@@ -15,6 +15,9 @@ extension ClassIdenfifiable {
     static var reuseIdentifier: String {
         return String(describing: self)
     }
+    //不在 Protocol requirements 中声明
+    static var reuseIdentifier2: String {
+        return "A"
+    }
 }
-
 

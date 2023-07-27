@@ -20,7 +20,7 @@ final class CommentListViewController: BaseContentListViewController<Comment, Co
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Comments"
-        tableView.register(CommentListTableViewCell.self, forCellReuseIdentifier: CommentListTableViewCell.reuseIdentifier)
+        tableView.register(cellType: CommentListTableViewCell.self)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -30,7 +30,9 @@ final class CommentListViewController: BaseContentListViewController<Comment, Co
             return EmptyViewTableViewCell()
             
         case .loaded:
-            let cell = tableView.dequeueReusableCell(withIdentifier: CommentListTableViewCell.reuseIdentifier, for: indexPath) as! CommentListTableViewCell
+//            let cell = tableView.dequeueReusableCell(withIdentifier: CommentListTableViewCell.reuseIdentifier, for: indexPath) as! CommentListTableViewCell
+            let cell: CommentListTableViewCell = tableView.dequeueReusableCell(for: indexPath)
+
             let comment = viewModel.contentCellViewModels[indexPath.item].content
             cell.configure(with: comment)
             return cell
