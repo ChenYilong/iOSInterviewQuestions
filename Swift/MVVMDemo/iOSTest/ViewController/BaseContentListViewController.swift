@@ -60,8 +60,7 @@ class BaseContentListViewController<Content, ViewModelType: ContentListViewModel
         tableView.tableHeaderView = searchController.searchBar
         definesPresentationContext = true
         
-        tableView.register(cellType: EmptyViewTableViewCell.self)
-        tableView.register(cellType: BaseCell.self)
+        tableView.register(EmptyViewTableViewCell.self)
 
         refreshTriggered()
         self.view.addSubview(activityIndicator)

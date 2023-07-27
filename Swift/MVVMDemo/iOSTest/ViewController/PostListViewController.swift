@@ -20,7 +20,7 @@ final class PostListViewController: BaseContentListViewController<Post, PostList
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "iOS Test from ChenYilong"
-        tableView.register(cellType: PostListTableViewCell.self)
+        tableView.register(PostListTableViewCell.self)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
