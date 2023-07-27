@@ -1304,7 +1304,7 @@ int main(int argc, char * argv[]) {
 
  ```Objective-C
 //判断如下几种情况,是否有循环引用? 是否有内存泄漏?
-//2020-06-01 16:34:43 @iTeaTime(技术清谈)@ChenYilong 
+//[2023-07-28 05:33:46] @iTeaTime(技术清谈)@ChenYilong 
 
  //情况❶ UIViewAnimationsBlock
 [UIView animateWithDuration:duration animations:^{ [self.superview layoutIfNeeded]; }]; 
@@ -1332,16 +1332,34 @@ int main(int argc, char * argv[]) {
 //情况❺ NSOperationQueueBlock
 [[NSOperationQueue mainQueue] addOperationWithBlock:^{ self.someProperty = xyz; }]; 
 
+//情况❻ Swift Concurrent
+Task {
+  print(self.title ?? "")
+}
+//情况❼ Swift Concurrent
+self.updateTask = Task { 
+    print(self.title ?? "")
+}
  ```
 
 
 情况 | 循环引用 | 内存泄漏
 :-------------:|:-------------:|:-------------:
-情况 1 |不会循环应用 | 不会发生内存泄漏
+情况 1 |不会循环引用 | 不会发生内存泄漏
 情况 2 |不会循环引用 | 会发生内存泄漏
-情况 3 |会循环引用   |会发生内存泄漏
+情况 3 |不会循环引用   |会发生内存泄漏
 情况 4 |不会循环引用 |不会发生内存泄漏
 情况 5 |不会循环引用 |不会发生内存泄漏
+情况 6 |不会循环引用 |不会发生内存泄漏
+情况 7 |会循环引用 |会发生内存泄漏
+
+1. 情况 1: 动画结束后，引用自动解除，不会有循环引用和内存泄漏。
+2. 情况 2: 通知中心持有 block 和 self，如果没有手动移除观察者，会导致内存泄漏，但是并没有循环引用。
+3. 情况 3: NSNotificationCenter 持有 block，而 block 强引用了 self，但 self 没有强引用 block 或 observer，所以没有形成循环引用。但如果没有在适当的时机移除观察者，会导致内存泄漏。
+4. 情况 4: GCD 任务结束后，引用自动解除，没有循环引用和内存泄漏。
+5. 情况 5: mainQueue 并不持有 block，不会形成循环引用，任务完成后就会销毁，不会导致内存泄漏。
+6. 情况 6: Swift 的 Concurrent 特性，在 Task 结束后自动解除引用，没有循环引用和内存泄漏。
+7. 情况 7: self 强引用 Task，Task 强引用 self，形成循环引用，导致内存泄漏。
 
 
 
@@ -1457,9 +1475,30 @@ addObserverForName:object:queue:usingBlock:]( https://developer.apple.com/docume
 
 其中情况三:
 
-存在循环引用
+不存在循环引用
 
-![](https://tva1.sinaimg.cn/large/007S8ZIlgy1gfd5sf6tbbj31c00u0npd.jpg)
+
+_observer并不会持有block，而是由NSNotificationCenter持有。因此，这里同样没有形成循环引用，但是如果没有在合适的时机移除监听，将会导致内存泄漏。
+
+
+
+
+在情况三中，NSNotificationCenter默认不会自动移除观察者，所以需要在合适的时机手动移除，以避免内存泄漏。通常来说，我们会在控制器的 `dealloc` 方法或者 `viewDidDisappear` 方法中移除观察者，具体选择哪个方法取决于你的业务需求。
+
+以下是如何在 Objective-C 中解决这个问题的代码示例：
+
+```Objective-C
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self.observer];
+}
+
+@end
+
+```
+
+比如我们可以首先在 `viewDidLoad` 中注册了一个观察者，并将其保存在一个属性中。然后，在 `dealloc` 方法中，我们移除了这个观察者，以确保它不会在对象销毁后继续存在。
+
+
 
 ![https://github.com/ChenYilong](https://i.loli.net/2020/06/02/pDLde8Hgkt4X69u.gif)
 
@@ -1473,14 +1512,7 @@ addObserverForName:object:queue:usingBlock:]( https://developer.apple.com/docume
 [[NSOperationQueue mainQueue] addOperationWithBlock:^{ self.someProperty = xyz; }]; 
  ```
  
- <p><del> 这个因为 `[NSOperationQueue mainQueue]` 并非单例，所以并没有内存泄漏。
- 见下图:
- 
-https://tva1.sinaimg.cn/large/007S8ZIlgy1gfct4s2979j30y00lq0y0.jpg
- (此图有问题, 请忽略, 请参考下文的正确描述)
- 
- </del></p>
- 
+  
 在 Gnustep 源码中可以证实
 `[NSOperationQueue mainQueue]` 是单例，然后参考 `addOperationWithBlock` 源码可知：
 
@@ -1518,6 +1550,69 @@ https://tva1.sinaimg.cn/large/007S8ZIlgy1gfct4s2979j30y00lq0y0.jpg
 - ![https://github.com/ChenYilong](https://i.loli.net/2020/06/02/pDLde8Hgkt4X69u.gif)
 - 使用 Facebook 开源的一个检测工具  [***FBRetainCycleDetector***](https://github.com/facebook/FBRetainCycleDetector) 。
 
+
+
+**情况6:**
+```swift
+Task {
+  print(self.title ?? "")
+}
+```
+
+在这种情况下，在闭包中使用了`self`，因为但这个`Task`并没有被任何对象强引用，因此在`Task`执行结束后会被销毁，此时并不会存在循环引用或内存泄漏问题。
+
+
+但也需要注意, 在某些极端情况下，如果这个任务在类实例被销毁之后仍然存活，或者这个任务在闭包中捕获了对`self`的强引用并且`self`也强引用了这个任务，那么可能存在内存泄漏。但这并不是这段代码的问题，因为单从本段代码来看`Task`并没有被任何对象强引用。
+
+以下是一个极端的问题场景，展示了并发任务如何可能引发内存泄漏：
+
+
+```swift
+class MyClass {
+    var title: String?
+    var task: Task.Handle<Void, Never>?
+    
+    init() {
+        title = "Hello, World!"
+        task = Task {
+            while true {
+                print(self.title ?? "")
+                await Task.sleep(1_000_000_000) // sleep for 1 second
+            }
+        }
+    }
+    
+    deinit {
+        task?.cancel()
+    }
+}
+```
+
+在这个例子中，`MyClass`实例创建了一个无限循环的并发任务，这个任务捕获并持有了对`self`的强引用。由于任务是无限循环的，所以它将一直持有对`self`的强引用，即使`MyClass`实例被销毁。这就导致了内存泄漏，因为`MyClass`实例将永远不会被正确的销毁。
+
+解决这个问题的方法是在`deinit`方法中取消任务。然而，这仍然需要你在`MyClass`实例被销毁前取消任务，否则内存泄漏将会发生。
+
+再次强调，原始代码示例（情况6）并不会引起这个问题，因为任务在执行结束后就会被销毁，而且它没有被任何对象强引用。这个示例仅仅是为了展示一个可能的内存泄漏场景。
+
+
+
+
+**情况7:**
+```swift
+self.updateTask = Task { 
+    print(self.title ?? "")
+}
+```
+
+在这个例子中，`self`强引用了`updateTask`，而`updateTask`的闭包中又捕获并持有对`self`的强引用，形成了一个强引用循环，导致内存泄漏。要解决这个问题，可以使用捕获列表创建对`self`的 `weak` (弱引用) 或 `unowned` (无主引用)，以打破这个循环，例如：
+
+```swift
+self.updateTask = Task { [weak self] in 
+    print(self?.title ?? "")
+}
+```
+
+结合在情况6和7， 总的来说，应始终注意在闭包和并发任务中可能存在的强引用循环，以及它们可能导致的内存泄漏问题。 并可通过使用 `weak` (弱引用) 或 `unowned` (无主引用)，或在适当的时候取消任务，来避免这些问题。
 
 ### 40. GCD的队列（`dispatch_queue_t`）分哪两种类型？
 
