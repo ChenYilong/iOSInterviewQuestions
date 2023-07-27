@@ -16,6 +16,9 @@ class ViewController: UIViewController {
         print("aType.reuseIdentifier is ", aType.reuseIdentifier)
         print("aType.reuseIdentifier2 is ", aType.reuseIdentifier2)
         
+        //       ClassIdenfifiable is Existential type
+        //
+        let cell: ClassIdenfifiable = BaseCell()
         print("BaseCell.reuseIdentifier is ", BaseCell.reuseIdentifier)
         print("BaseCell.reuseIdentifier2 is ", BaseCell.reuseIdentifier2)
     }

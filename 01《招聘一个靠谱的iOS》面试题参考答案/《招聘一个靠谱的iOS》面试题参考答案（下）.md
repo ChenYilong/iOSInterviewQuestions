@@ -1612,6 +1612,35 @@ self.updateTask = Task { [weak self] in
 }
 ```
 
+并且可以在必要时, cancel 并设置为 nil:
+
+ ```swift
+func applicationDidEnterBackground(_ application: UIApplication) {
+    self.updateTask?.cancel()
+    self.updateTask = nil
+}
+
+func applicationWillEnterForeground(_ application: UIApplication) {
+    self.updateTask = Task { [weak self] in
+        guard let self = self else { return }
+        for i in 1...10 {
+            if Task.isCancelled { 
+                self.updateTask = nil
+                break 
+            }
+            print(self.title ?? "")
+            await Task.sleep(1_000_000_000) // sleep for 1 second
+        }
+    }
+} 
+
+deinit {
+    updateTask?.cancel()
+    updateTask = nil
+}
+
+ ```
+
 结合在情况6和7， 总的来说，应始终注意在闭包和并发任务中可能存在的强引用循环，以及它们可能导致的内存泄漏问题。 并可通过使用 `weak` (弱引用) 或 `unowned` (无主引用)，或在适当的时候取消任务，来避免这些问题。
 
 ### 40. GCD的队列（`dispatch_queue_t`）分哪两种类型？

@@ -71,11 +71,6 @@ class BaseContentListViewController<Content, ViewModelType: ContentListViewModel
         ])
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        updateTask?.cancel()
-    }
-    
     @objc
     private func refreshTriggered() {
         refreshControl?.beginRefreshing()
@@ -90,6 +85,10 @@ class BaseContentListViewController<Content, ViewModelType: ContentListViewModel
                 viewModel.contents.addObserver(fireNow: true) { [weak self] contents in
                     var contentCellViewModels: [ViewModelType.ContentCellViewModel] = []
                     for content in contents {
+                        if Task.isCancelled {
+                            self?.updateTask = nil
+                            break
+                        }
                         if var homeContentCellViewModel = self?.viewModel.contentCellViewModel(for: content) {
                             homeContentCellViewModel.cellPressed = {
                                 self?.cellPressed(content: content)
@@ -138,10 +137,12 @@ class BaseContentListViewController<Content, ViewModelType: ContentListViewModel
     // MARK: update task life cycle
     deinit {
         updateTask?.cancel()
+        updateTask = nil
     }
     
     @objc func appDidEnterBackground() {
         updateTask?.cancel()
+        updateTask = nil
     }
     
     @objc func appWillEnterForeground() {
