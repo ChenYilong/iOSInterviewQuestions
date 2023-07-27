@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PostListTableViewCell: UITableViewCell {
+final class PostListTableViewCell: BaseCell {
     
     private let titleLabel = UILabel()
     private let subtitleLabel = UILabel()
@@ -48,9 +48,5 @@ final class PostListTableViewCell: UITableViewCell {
             stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-    }
-    
-    static var reuseIdentifier: String {
-        String(describing: self)
     }
 }

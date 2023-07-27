@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class EmptyViewTableViewCell: UITableViewCell {
+final class EmptyViewTableViewCell: BaseCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -35,9 +35,5 @@ final class EmptyViewTableViewCell: UITableViewCell {
             label.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
-    }
-
-    static var reuseIdentifier: String {
-        String(describing: self)
     }
 }

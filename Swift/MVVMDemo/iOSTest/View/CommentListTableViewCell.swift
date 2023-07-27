@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class CommentListTableViewCell: UITableViewCell {
+final class CommentListTableViewCell: BaseCell {
     
     private let userIconImageView: UIImageView = {
         let imageView = UIImageView()
@@ -77,9 +77,5 @@ final class CommentListTableViewCell: UITableViewCell {
             containerStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             containerStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
         ])
-    }
-    
-    static var reuseIdentifier: String {
-        String(describing: self)
     }
 }
