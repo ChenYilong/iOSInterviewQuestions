@@ -53,7 +53,7 @@ class NetworkService {
         self.session = urlSession
     }
 
-    func fetchData<R: Request>(request: R) async throws -> R.RequestResponse where R.RequestResponse: Response {
+    func request<R: Request>(request: R) async throws -> R.RequestResponse where R.RequestResponse: Response {
         let (data, response) = try await session.data(from: request.url)
         guard let httpResponse = response as? HTTPURLResponse else {
             throw ApiError.urlError

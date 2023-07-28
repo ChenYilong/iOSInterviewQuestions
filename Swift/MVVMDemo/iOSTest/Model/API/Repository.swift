@@ -89,13 +89,13 @@ class ApiRepository: Repository {
 
     func fetchPosts() async throws -> [Post] {
         let request = PostRequest()
-        let response: PostResponse = try await networkService.fetchData(request: request)
+        let response: PostResponse = try await networkService.request(request: request)
         return response.posts
     }
 
     func fetchComments(id: Int) async throws -> [Comment] {
         let request = CommentRequest(id: id)
-        let response: CommentResponse = try await networkService.fetchData(request: request)
+        let response: CommentResponse = try await networkService.request(request: request)
         return response.comments
     }
 }
