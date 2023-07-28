@@ -7,9 +7,9 @@
 
 import UIKit
 
-final class PostListViewController: BaseContentListViewController<Post, PostListViewModel, PostCellViewModel> {
-    
-    required init(viewModel: PostListViewModel = PostListViewModel()) {
+final class PostListViewController: BaseContentListViewController<Post, PostListViewModel<DefaultNetworking<PostRequest>>, PostCellViewModel> {
+
+    required init(viewModel: PostListViewModel<DefaultNetworking<PostRequest>> = PostListViewModel()) {
         super.init(viewModel: viewModel)
     }
     

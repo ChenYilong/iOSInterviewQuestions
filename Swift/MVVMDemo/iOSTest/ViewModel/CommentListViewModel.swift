@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class CommentListViewModel: ContentListViewModelProtocol {
+final class CommentListViewModel<N: Networking>: ContentListViewModelProtocol where N.R == CommentRequest {
     
     typealias Content = Comment
     
@@ -50,17 +50,20 @@ final class CommentListViewModel: ContentListViewModelProtocol {
         contents.value = allComments
     }
         
-    private var repository: Repository
+    private var networking: N
     
-    init(postId: Int, repository: ApiRepository = ApiRepository()) {
+    init(postId: Int, networking: N = DefaultNetworking<CommentRequest>()) {
         self.postId = postId
-        self.repository = repository as! any Repository
+        self.networking = networking
         setupSearchTextObserver()
     }
     
     func update() async throws {
         do {
-            let contents = try await repository.fetchComments(id: postId)
+            
+            let request = CommentRequest(id: postId)
+            let response: CommentResponse = try await networking.request(request: request)
+            let contents = response.comments
             if contents.isEmpty {
                 self.viewState.value = .loading
             } else {

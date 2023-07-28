@@ -9,8 +9,9 @@ import XCTest
 @testable import iOSTest
 
 final class iOSTestTests: XCTestCase {
-    var apiRepository: ApiRepository!
-    var homeRowViewModel: PostListViewModel!
+    var postNetworking: DefaultNetworking<PostRequest>!
+    var commentNetworking: DefaultNetworking<CommentRequest>!
+    var homeRowViewModel: PostListViewModel<DefaultNetworking<PostRequest>>!
     var detailVC: PostDetailViewController!
     var post: Post!
     var emptyData : Data!
@@ -19,14 +20,14 @@ final class iOSTestTests: XCTestCase {
     var nilData : Data!
     var rightCommentData : Data!
     var urlSession: URLSession!
-    var commentRowViewModel: CommentListViewModel!
+    var commentRowViewModel: CommentListViewModel<DefaultNetworking<CommentRequest>>!
     var comment: Comment!
     var viewController: PostListViewController!
     var rootNavigationController: UINavigationController!
     var timeoutForExpectationFulfilled: TimeInterval!
-
+    
     override func setUpWithError() throws {
-
+        
         timeoutForExpectationFulfilled = 60.0
         
         post = Post(id: 1, userId: 1, title: "Test Title", body: "Test Body") // or fetch a post from API
@@ -38,11 +39,12 @@ final class iOSTestTests: XCTestCase {
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [MockURLProtocol.self]
         let urlSession = URLSession(configuration: configuration)
-        let networkService = Networking(urlSession: urlSession)
+        
+        postNetworking = DefaultNetworking<PostRequest>(urlSession: urlSession)
+        commentNetworking = DefaultNetworking<CommentRequest>(urlSession: urlSession)
+        
         // API Injected with custom url session for mocking
-        apiRepository = ApiRepository(networkService: networkService)
-
-        homeRowViewModel = PostListViewModel(repository: apiRepository)
+        homeRowViewModel = PostListViewModel(networking: postNetworking)
         
         emptyData = try loadJson(filename: "emptyData")
         errorData = try loadJson(filename: "errorData")
@@ -52,7 +54,7 @@ final class iOSTestTests: XCTestCase {
         nilData = try loadJson(filename: "nilData")
         
         
-        commentRowViewModel = CommentListViewModel(postId: post.id, repository: apiRepository)
+        commentRowViewModel = CommentListViewModel(postId: post.id, networking: commentNetworking)
         comment = Comment(postId: 1, id: 1, name: "id labore ex et quam laborum", body: "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium", email: "Eliseo@gardner.biz")
         
         let window = UIWindow(frame: UIScreen.main.bounds)
@@ -68,7 +70,8 @@ final class iOSTestTests: XCTestCase {
     
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
-        apiRepository = nil
+        postNetworking = nil
+        commentNetworking = nil
         homeRowViewModel = nil
         post = nil
         detailVC = nil
@@ -82,7 +85,7 @@ final class iOSTestTests: XCTestCase {
         viewController = nil
         rootNavigationController = nil
     }
-
+    
     func loadJson(filename fileName: String) throws -> Data {
         guard let pathString = Bundle(for: type(of: self)).path(forResource: fileName, ofType: "json") else {
             fatalError("UnitTestData.json not found")
@@ -113,7 +116,9 @@ final class iOSTestTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Download contents from api")
         Task {
             do {
-                let contents = try await apiRepository.fetchPosts()
+                let postRequetResponse = try await postNetworking.request(request: PostRequest())
+                let contents = postRequetResponse.posts
+                
                 // use contents here
                 XCTAssertFalse(contents.isEmpty, "Posts array should not be empty")
             } catch {
@@ -144,7 +149,9 @@ final class iOSTestTests: XCTestCase {
         
         Task {
             do {
-                let contents = try await apiRepository.fetchPosts()
+                let postRequest = PostRequest() // ensure this is well-formed
+                let postRequestResponse = try await postNetworking.request(request: postRequest)
+                let contents = postRequestResponse.posts
                 // use contents here
                 XCTAssertTrue(contents.isEmpty, "Posts array should be empty")
             } catch {
@@ -174,7 +181,8 @@ final class iOSTestTests: XCTestCase {
         // Make mock network request to get result from local file
         Task {
             do {
-                let contents = try await apiRepository.fetchPosts()
+                let postRequetResponse = try await postNetworking.request(request: PostRequest())
+                let contents = postRequetResponse.posts
                 XCTAssertTrue(contents.isEmpty, "Posts array should be empty")
             } catch {
                 XCTAssertNotNil(error, "Posts array should be error")
@@ -203,8 +211,8 @@ final class iOSTestTests: XCTestCase {
         // Make mock network request to get result from local file
         Task {
             do {
-                let contents = try await apiRepository.fetchPosts()
-                // use contents here
+                let postRequetResponse = try await postNetworking.request(request: PostRequest())
+                let contents = postRequetResponse.posts                // use contents here
                 XCTAssertTrue(contents.isEmpty, "Posts array should be empty")
             } catch {
                 // handle error
@@ -232,7 +240,8 @@ final class iOSTestTests: XCTestCase {
         let expectation = XCTestExpectation(description: "response")
         Task {
             do {
-                let contents = try await apiRepository.fetchPosts()
+                let postRequetResponse = try await postNetworking.request(request: PostRequest())
+                let contents = postRequetResponse.posts
                 XCTAssertTrue(contents.isEmpty, "Posts array should be empty")
             } catch {
                 // handle error
@@ -408,7 +417,11 @@ final class iOSTestTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Download contents from api")
         Task {
             do {
-                let contents = try await apiRepository.fetchComments(id: post.id)
+                
+                let request = CommentRequest(id: post.id)
+                let response: CommentResponse = try await commentNetworking.request(request: request)
+                let contents = response.comments
+                
                 XCTAssertFalse(contents.isEmpty, "Comments array should not be empty")
             } catch {
                 XCTFail("Error: \(error.localizedDescription)")
@@ -435,7 +448,11 @@ final class iOSTestTests: XCTestCase {
         // Make mock network request to get result from local file
         Task {
             do {
-                let contents = try await apiRepository.fetchComments(id: post.id)
+                
+                let request = CommentRequest(id: post.id)
+                let response: CommentResponse = try await commentNetworking.request(request: request)
+                let contents = response.comments
+                
                 XCTAssertTrue(contents.isEmpty, "Comments array should be empty")
                 
             } catch {
@@ -466,7 +483,11 @@ final class iOSTestTests: XCTestCase {
         // Make mock network request to get result from local file
         Task {
             do {
-                let contents = try await apiRepository.fetchComments(id: post.id)
+                
+                let request = CommentRequest(id: post.id)
+                let response: CommentResponse = try await commentNetworking.request(request: request)
+                let contents = response.comments
+                
                 XCTAssertTrue(contents.isEmpty, "Posts array should be empty")
                 
             } catch {
@@ -498,7 +519,12 @@ final class iOSTestTests: XCTestCase {
         // Make mock network request to get result from local file
         Task {
             do {
-                let contents = try await apiRepository.fetchComments(id: post.id)
+                
+                
+                let request = CommentRequest(id: post.id)
+                let response: CommentResponse = try await commentNetworking.request(request: request)
+                let contents = response.comments
+                
                 XCTAssertTrue(contents.isEmpty, "Posts array should be empty")
                 
             } catch {
@@ -530,7 +556,11 @@ final class iOSTestTests: XCTestCase {
         // Make mock network request to get result from local file
         Task {
             do {
-                let contents = try await apiRepository.fetchComments(id: post.id)
+                
+                let request = CommentRequest(id: post.id)
+                let response: CommentResponse = try await commentNetworking.request(request: request)
+                let contents = response.comments
+                
                 XCTAssertTrue(contents.isEmpty, "Posts array should be empty")
                 
             } catch {
@@ -571,7 +601,7 @@ final class iOSTestTests: XCTestCase {
     func testCommentsListViewController() throws {
         let expectation = XCTestExpectation(description: "response")
         
-        let commentRowViewModel = CommentListViewModel(postId: post.id)
+        let commentRowViewModel = CommentListViewModel<DefaultNetworking<CommentRequest>>(postId: post.id)
         
         let commentListViewController = CommentListViewController(viewModel: commentRowViewModel)
         DispatchQueue.main.async {

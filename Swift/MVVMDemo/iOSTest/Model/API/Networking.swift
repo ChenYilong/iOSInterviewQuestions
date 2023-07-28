@@ -17,7 +17,7 @@ protocol Request {
     associatedtype RequestResponse: Response
     var url: URL { get }
     var method: String { get }
-
+    
     func handleResponse(data: Data, response: URLResponse) throws -> RequestResponse
 }
 
@@ -43,16 +43,24 @@ extension Response {
     }
 }
 
-class Networking {
-    // session to be used to make the API call
-    let session: URLSession
 
+protocol Networking {
+    associatedtype R: Request
+    func request(request: R) async throws -> R.RequestResponse
+}
+
+class DefaultNetworking<Req: Request>: Networking {
+    typealias R = Req
+    
+    //session to be used to make the API call
+    let session: URLSession
+    
     // Make the session shared by default.
     // In unit tests, a mock session can be injected
     init(urlSession: URLSession = .shared) {
         self.session = urlSession
     }
-
+    
     func request<R: Request>(request: R) async throws -> R.RequestResponse where R.RequestResponse: Response {
         let (data, response) = try await session.data(from: request.url)
         guard let httpResponse = response as? HTTPURLResponse else {
@@ -61,3 +69,5 @@ class Networking {
         return try request.handleResponse(data: data, response: httpResponse)
     }
 }
+
+

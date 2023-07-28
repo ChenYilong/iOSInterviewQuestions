@@ -7,23 +7,23 @@
 
 import Foundation
 
-final class PostListViewModel: ContentListViewModelProtocol {
+final class PostListViewModel<N: Networking>: ContentListViewModelProtocol where N.R == PostRequest {
     
     func contentCellViewModel(for post: Post) -> PostCellViewModel {
         let postCellViewModel = PostCellViewModel(content: post)
-           return postCellViewModel
-       }
-
+        return postCellViewModel
+    }
+    
     var contentCellViewModels: [PostCellViewModel] = Array()
     var contents = Observable<[Post]>(value: [])
     var allPosts: [Post] = []  // this would hold all your contents
     var viewState = Observable<ViewState>(value: .loading)
     var searchText = Observable<String>(value: "")
     
-    private var repository: Repository
+    private var networking: N
     
-    init(repository: ApiRepository = ApiRepository()) {
-        self.repository = repository
+    init(networking: N = DefaultNetworking()) {
+        self.networking = networking
         setupSearchTextObserver()
     }
     
@@ -56,7 +56,9 @@ final class PostListViewModel: ContentListViewModelProtocol {
     func update() async throws {
         do {
             viewState.value = .loading
-            let contents = try await repository.fetchPosts()
+            let request = PostRequest()
+            let response: PostResponse = try await networking.request(request: request)
+            let contents = response.posts
             if contents.isEmpty {
                 self.viewState.value = .loading
             } else {

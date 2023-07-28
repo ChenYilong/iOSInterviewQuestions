@@ -7,11 +7,6 @@
 
 import Foundation
 
-protocol Repository {
-    func fetchPosts() async throws -> [Post]
-    func fetchComments(id: Int) async throws -> [Comment]
-}
-
 class ContentRequest<DataType: Response>: Request {
     typealias RequestResponse = DataType
 
@@ -80,22 +75,3 @@ class CommentResponse: ContentResponse {
     }
 }
 
-class ApiRepository: Repository {
-    private let networkService: Networking
-
-    init(networkService: Networking = Networking()) {
-        self.networkService = networkService
-    }
-
-    func fetchPosts() async throws -> [Post] {
-        let request = PostRequest()
-        let response: PostResponse = try await networkService.request(request: request)
-        return response.posts
-    }
-
-    func fetchComments(id: Int) async throws -> [Comment] {
-        let request = CommentRequest(id: id)
-        let response: CommentResponse = try await networkService.request(request: request)
-        return response.comments
-    }
-}

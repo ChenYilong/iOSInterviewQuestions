@@ -7,9 +7,9 @@
 
 import UIKit
 
-final class CommentListViewController: BaseContentListViewController<Comment, CommentListViewModel, CommentCellViewModel> {
-    
-    required init(viewModel: CommentListViewModel) {
+final class CommentListViewController: BaseContentListViewController<Comment, CommentListViewModel<DefaultNetworking<CommentRequest>>, CommentCellViewModel> {
+
+    required init(viewModel: CommentListViewModel<DefaultNetworking<CommentRequest>>) {
         super.init(viewModel: viewModel)
     }
     
