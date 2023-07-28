@@ -111,7 +111,7 @@ final class iOSTestTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Download contents from api")
         Task {
             do {
-                let contents = try await apiRepository.fetchPostList()
+                let contents = try await apiRepository.fetchPosts()
                 // use contents here
                 XCTAssertFalse(contents.isEmpty, "Posts array should not be empty")
             } catch {
@@ -142,7 +142,7 @@ final class iOSTestTests: XCTestCase {
         
         Task {
             do {
-                let contents = try await apiRepository.fetchPostList()
+                let contents = try await apiRepository.fetchPosts()
                 // use contents here
                 XCTAssertTrue(contents.isEmpty, "Posts array should be empty")
             } catch {
@@ -172,7 +172,7 @@ final class iOSTestTests: XCTestCase {
         // Make mock network request to get result from local file
         Task {
             do {
-                let contents = try await apiRepository.fetchPostList()
+                let contents = try await apiRepository.fetchPosts()
                 XCTAssertTrue(contents.isEmpty, "Posts array should be empty")
             } catch {
                 XCTAssertNotNil(error, "Posts array should be error")
@@ -201,7 +201,7 @@ final class iOSTestTests: XCTestCase {
         // Make mock network request to get result from local file
         Task {
             do {
-                let contents = try await apiRepository.fetchPostList()
+                let contents = try await apiRepository.fetchPosts()
                 // use contents here
                 XCTAssertTrue(contents.isEmpty, "Posts array should be empty")
             } catch {
@@ -230,7 +230,7 @@ final class iOSTestTests: XCTestCase {
         let expectation = XCTestExpectation(description: "response")
         Task {
             do {
-                let contents = try await apiRepository.fetchPostList()
+                let contents = try await apiRepository.fetchPosts()
                 XCTAssertTrue(contents.isEmpty, "Posts array should be empty")
             } catch {
                 // handle error

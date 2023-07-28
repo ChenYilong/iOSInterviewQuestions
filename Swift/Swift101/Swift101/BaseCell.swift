@@ -20,7 +20,7 @@ class BaseCell: UITableViewCell {
 
 extension BaseCell: ClassIdenfifiable {
     static var reuseIdentifier: String {
-        return "ChenYilong"
+        return "default"
     }
     
     static var reuseIdentifier2: String {

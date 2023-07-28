@@ -13,7 +13,7 @@ final class PostListViewModel: ContentListViewModelProtocol {
         let postCellViewModel = PostCellViewModel(content: post)
            return postCellViewModel
        }
-//
+
     var contentCellViewModels: [PostCellViewModel] = Array()
     var contents = Observable<[Post]>(value: [])
     var allPosts: [Post] = []  // this would hold all your contents
@@ -56,7 +56,7 @@ final class PostListViewModel: ContentListViewModelProtocol {
     func update() async throws {
         do {
             viewState.value = .loading
-            let contents = try await repository.fetchPostList()
+            let contents = try await repository.fetchPosts()
             if contents.isEmpty {
                 self.viewState.value = .loading
             } else {
