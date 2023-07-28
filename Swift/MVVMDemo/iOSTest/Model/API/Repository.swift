@@ -81,9 +81,9 @@ class CommentResponse: ContentResponse {
 }
 
 class ApiRepository: Repository {
-    private let networkService: NetworkService
+    private let networkService: Networking
 
-    init(networkService: NetworkService = NetworkService()) {
+    init(networkService: Networking = Networking()) {
         self.networkService = networkService
     }
 

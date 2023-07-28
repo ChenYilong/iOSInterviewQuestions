@@ -38,7 +38,7 @@ final class iOSTestTests: XCTestCase {
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [MockURLProtocol.self]
         let urlSession = URLSession(configuration: configuration)
-        let networkService = NetworkService(urlSession: urlSession)
+        let networkService = Networking(urlSession: urlSession)
         // API Injected with custom url session for mocking
         apiRepository = ApiRepository(networkService: networkService)
 

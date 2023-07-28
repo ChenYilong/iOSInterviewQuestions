@@ -43,7 +43,7 @@ extension Response {
     }
 }
 
-class NetworkService {
+class Networking {
     // session to be used to make the API call
     let session: URLSession
 
