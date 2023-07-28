@@ -37,9 +37,11 @@ final class iOSTestTests: XCTestCase {
         // Set url session for mock networking
         let configuration = URLSessionConfiguration.ephemeral
         configuration.protocolClasses = [MockURLProtocol.self]
-        urlSession = URLSession(configuration: configuration)
+        let urlSession = URLSession(configuration: configuration)
+        let networkService = NetworkService(urlSession: urlSession)
         // API Injected with custom url session for mocking
-        apiRepository = ApiRepository(urlSession: urlSession)
+        apiRepository = ApiRepository(networkService: networkService)
+
         homeRowViewModel = PostListViewModel(repository: apiRepository)
         
         emptyData = try loadJson(filename: "emptyData")

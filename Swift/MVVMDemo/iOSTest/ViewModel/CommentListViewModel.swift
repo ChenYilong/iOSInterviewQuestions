@@ -54,7 +54,7 @@ final class CommentListViewModel: ContentListViewModelProtocol {
     
     init(postId: Int, repository: ApiRepository = ApiRepository()) {
         self.postId = postId
-        self.repository = repository
+        self.repository = repository as! any Repository
         setupSearchTextObserver()
     }
     

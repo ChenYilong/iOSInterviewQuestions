@@ -11,7 +11,8 @@ final class MockURLProtocol: URLProtocol {
     static var requestHandler: ((URLRequest) throws -> (HTTPURLResponse, Data?, Error?))?
     
     override class func canInit(with request: URLRequest) -> Bool {
-        true
+        print("MockURLProtocol canInit called")
+        return true
     }
     
     override class func canonicalRequest(for request: URLRequest) -> URLRequest {
@@ -19,6 +20,7 @@ final class MockURLProtocol: URLProtocol {
     }
     
     override func startLoading() {
+        print("MockURLProtocol startLoading called")
         guard let handler = MockURLProtocol.requestHandler else {
             let error = NSError(domain: "MockURLProtocol", code: 1, userInfo: [NSLocalizedDescriptionKey: "Request handler is missing"])
             client?.urlProtocol(self, didFailWithError: error)
@@ -48,5 +50,4 @@ final class MockURLProtocol: URLProtocol {
     }
     
     override func stopLoading() {}
-    
 }
