@@ -9,8 +9,9 @@ import Foundation
 
 final class Posts<N: Networking>: Contents where N.R == PostRequest {
     typealias Content = Post
-    var contents = Observable<[Post]>(value: [])
-    var allPosts: [Post] = []  // this would hold all your contents
+    
+    var contents = Observable<[Content]>(value: [])
+    var originalContents: [Content] = []  // this would hold all your contents
     
     private var networking: N
     
@@ -19,7 +20,7 @@ final class Posts<N: Networking>: Contents where N.R == PostRequest {
     }
 
     func setupAllContents() {
-        contents.value = allPosts
+        contents.value = originalContents
     }
     
     func loadEntity() async throws {
@@ -29,7 +30,7 @@ final class Posts<N: Networking>: Contents where N.R == PostRequest {
             let contents = response.posts
             if contents.isEmpty {
             } else {
-                self.allPosts = contents
+                self.originalContents = contents
                 setupAllContents()
             }
         } catch {
@@ -38,7 +39,7 @@ final class Posts<N: Networking>: Contents where N.R == PostRequest {
         }
     }
     
-    func updateEntity(_ newContents: [Post]) {
+    func updateEntity(_ newContents: [Content]) {
         contents.value = newContents
     }
     
@@ -48,8 +49,8 @@ final class Posts<N: Networking>: Contents where N.R == PostRequest {
             return
         }
         
-        let filteredPosts = allPosts.filter { (post: Post) -> Bool in
-            return post.title.lowercased().contains(searchText.lowercased())
+        let filteredPosts = originalContents.filter { (content: Post) -> Bool in
+            return content.title.lowercased().contains(searchText.lowercased())
         }
         contents.value = filteredPosts
     }

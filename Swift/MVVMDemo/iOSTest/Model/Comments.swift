@@ -9,8 +9,8 @@ import Foundation
 
 final class Comments<N: Networking>: Contents where N.R == CommentRequest {
     typealias Content = Comment
-    var contents = Observable<[Comment]>(value: [])
-    var allComments: [Comment] = []  // this would hold all your contents
+    var contents = Observable<[Content]>(value: [])
+    var originalContents: [Content] = []  // this would hold all your contents
     
     private var networking: N
     var post: Post
@@ -20,7 +20,7 @@ final class Comments<N: Networking>: Contents where N.R == CommentRequest {
     }
 
     func setupAllContents() {
-        contents.value = allComments
+        contents.value = originalContents
     }
     
     func loadEntity() async throws {
@@ -30,7 +30,7 @@ final class Comments<N: Networking>: Contents where N.R == CommentRequest {
             let contents = response.comments
             if contents.isEmpty {
             } else {
-                self.allComments = contents
+                self.originalContents = contents
                 setupAllContents()
             }
         } catch {
@@ -39,7 +39,7 @@ final class Comments<N: Networking>: Contents where N.R == CommentRequest {
         }
     }
     
-    func updateEntity(_ newContents: [Comment]) {
+    func updateEntity(_ newContents: [Content]) {
         contents.value = newContents
     }
     
@@ -48,8 +48,8 @@ final class Comments<N: Networking>: Contents where N.R == CommentRequest {
             self.resetFilters()
             return
         }
-        let filteredcontents = allComments.filter { (comment: Comment) -> Bool in
-            return comment.body.lowercased().contains(searchText.lowercased())
+        let filteredcontents = originalContents.filter { (content: Content) -> Bool in
+            return content.body.lowercased().contains(searchText.lowercased())
         }
         updateEntity(filteredcontents)
     }

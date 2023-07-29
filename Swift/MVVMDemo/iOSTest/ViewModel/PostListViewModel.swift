@@ -46,7 +46,7 @@ final class PostListViewModel<N: Networking>: ContentListViewModelProtocol where
         do {
             viewState.value = .loading
             try await self.posts.loadEntity()
-            let contents = self.posts.allPosts
+            let contents = self.posts.originalContents
             if contents.isEmpty {
                 self.viewState.value = .loading
             } else {

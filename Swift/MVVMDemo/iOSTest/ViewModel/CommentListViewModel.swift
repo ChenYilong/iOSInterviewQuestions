@@ -50,7 +50,7 @@ final class CommentListViewModel<N: Networking>: ContentListViewModelProtocol wh
     func refreshTriggered() async {
         do {
             try await comments.loadEntity()
-            let contents = comments.allComments
+            let contents = comments.originalContents
             if contents.isEmpty {
                 self.viewState.value = .loading
             } else {
