@@ -54,7 +54,7 @@ final class iOSTestTests: XCTestCase {
         nilData = try loadJson(filename: "nilData")
         
         
-        commentRowViewModel = CommentListViewModel(postId: post.id, networking: commentNetworking)
+        commentRowViewModel = CommentListViewModel(post: post, networking: commentNetworking)
         comment = Comment(postId: 1, id: 1, name: "id labore ex et quam laborum", body: "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium", email: "Eliseo@gardner.biz")
         
         let window = UIWindow(frame: UIScreen.main.bounds)
@@ -300,21 +300,21 @@ final class iOSTestTests: XCTestCase {
                 XCTAssertTrue(((homeRowViewModel.contents.value.isEmpty) == false), "Posts array should not be empty!")
                 
                 var filterString = String(describing: UInt8.max)
-                homeRowViewModel.filterContentForSearchText(filterString)
+                homeRowViewModel.posts.filterContentForSearchText(filterString)
                 XCTAssertTrue(((homeRowViewModel.contents.value.isEmpty) == true),  "Filter Posts array should not contain :" + filterString)
                 
-                homeRowViewModel.resetFilters()
+                homeRowViewModel.posts.resetFilters()
                 XCTAssertTrue(((homeRowViewModel.contents.value.isEmpty) == false), "Reset Posts array should not be empty")
                 
                 filterString = "s"
-                homeRowViewModel.filterContentForSearchText(filterString)
+                homeRowViewModel.posts.filterContentForSearchText(filterString)
                 for post in homeRowViewModel.contents.value  {
                     let isContain = post.title.lowercased().contains(filterString.lowercased())
                     XCTAssertTrue(isContain == true, post.title.lowercased() + "Filter Posts array should contain:" + filterString)
                 }
                 
                 filterString = ""
-                homeRowViewModel.filterContentForSearchText(filterString)
+                homeRowViewModel.posts.filterContentForSearchText(filterString)
                 XCTAssertTrue(((homeRowViewModel.contents.value.isEmpty) == false), "Reset Posts array should not be empty")
                 
                 let post : Post = (homeRowViewModel.contents.value[0])
@@ -362,21 +362,21 @@ final class iOSTestTests: XCTestCase {
                 XCTAssertTrue(((commentRowViewModel.contents.value.isEmpty) == false), "Posts array should not be empty!")
                 
                 var filterString = String(describing: UInt8.max)
-                commentRowViewModel.filterContentForSearchText(filterString)
+                commentRowViewModel.comments.filterContentForSearchText(filterString)
                 XCTAssertTrue(((commentRowViewModel.contents.value.isEmpty) == true),  "Filter Posts array should not contain :" + filterString)
                 
-                commentRowViewModel.resetFilters()
+                commentRowViewModel.comments.resetFilters()
                 XCTAssertTrue(((commentRowViewModel.contents.value.isEmpty) == false), "Reset Posts array should not be empty")
                 
                 filterString = "s"
-                commentRowViewModel.filterContentForSearchText(filterString)
+                commentRowViewModel.comments.filterContentForSearchText(filterString)
                 for comment in commentRowViewModel.contents.value  {
                     let isContain = comment.body.lowercased().contains(filterString.lowercased())
                     XCTAssertTrue(isContain == true, comment.body.lowercased() + "Filter Posts array should contain:" + filterString)
                 }
                 
                 filterString = ""
-                commentRowViewModel.filterContentForSearchText(filterString)
+                commentRowViewModel.comments.filterContentForSearchText(filterString)
                 XCTAssertTrue(((commentRowViewModel.contents.value.isEmpty) == false), "Reset Posts array should not be empty")
                 break
             default:
@@ -587,7 +587,7 @@ final class iOSTestTests: XCTestCase {
     func testCommentsListViewController() throws {
         let expectation = XCTestExpectation(description: "response")
         
-        let commentRowViewModel = CommentListViewModel<DefaultNetworking<CommentRequest>>(postId: post.id)
+        let commentRowViewModel = CommentListViewModel<DefaultNetworking<CommentRequest>>(post: post)
         
         let commentListViewController = CommentListViewController(viewModel: commentRowViewModel)
         DispatchQueue.main.async {

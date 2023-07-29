@@ -69,6 +69,6 @@ final class PostDetailViewController: BaseContentDetailViewController<Post> {
     }
     
     @objc func buttonAction(sender: UIButton!) {
-        navigationController?.pushViewController(CommentListViewController(viewModel: CommentListViewModel(postId: model.id)), animated: true)
+        navigationController?.pushViewController(CommentListViewController(viewModel: CommentListViewModel(post: model)), animated: true)
     }
 }
