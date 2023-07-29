@@ -7,23 +7,15 @@
 
 import Foundation
 
-final class Comments<N: Networking>: Contents where N.R == CommentRequest {
-    typealias Content = Comment
-    var contents = Observable<[Content]>(value: [])
-    var originalContents: [Content] = []  // this would hold all your contents
+final class Comments<N: Networking>: Contents<N, Comment, CommentRequest> where N.R == CommentRequest {
     
-    private var networking: N
     var post: Post
-    init(post:Post, networking: N = DefaultNetworking<CommentRequest>()) {
-        self.networking = networking
+    init(post:Post, networking: N) {
         self.post = post
-    }
-
-    func setupAllContents() {
-        contents.value = originalContents
+        super.init(networking: networking)
     }
     
-    func loadEntity() async throws {
+    override func loadEntity() async throws {
         do {
             let request = CommentRequest(id: post.id)
             let response: CommentResponse = try await networking.request(request: request)
@@ -39,11 +31,7 @@ final class Comments<N: Networking>: Contents where N.R == CommentRequest {
         }
     }
     
-    func updateEntity(_ newContents: [Content]) {
-        contents.value = newContents
-    }
-    
-    func filterContentForSearchText(_ searchText: String) {
+    override func filterContentForSearchText(_ searchText: String) {
         if searchText.isEmpty {
             self.resetFilters()
             return
@@ -52,10 +40,6 @@ final class Comments<N: Networking>: Contents where N.R == CommentRequest {
             return content.body.lowercased().contains(searchText.lowercased())
         }
         updateEntity(filteredcontents)
-    }
-    
-    func resetFilters() {
-        setupAllContents()
     }
     
     deinit {

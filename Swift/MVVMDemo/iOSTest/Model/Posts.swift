@@ -7,23 +7,13 @@
 
 import Foundation
 
-final class Posts<N: Networking>: Contents where N.R == PostRequest {
-    typealias Content = Post
-    
-    var contents = Observable<[Content]>(value: [])
-    var originalContents: [Content] = []  // this would hold all your contents
-    
-    private var networking: N
-    
-    init(networking: N = DefaultNetworking<PostRequest>()) {
-        self.networking = networking
+final class Posts<N: Networking>: Contents<N, Post, PostRequest> where N.R == PostRequest {
+
+    override init(networking: N) {
+        super.init(networking: networking)
     }
 
-    func setupAllContents() {
-        contents.value = originalContents
-    }
-    
-    func loadEntity() async throws {
+    override func loadEntity() async throws {
         do {
             let request = PostRequest()
             let response: PostResponse = try await networking.request(request: request)
@@ -38,28 +28,17 @@ final class Posts<N: Networking>: Contents where N.R == PostRequest {
             throw error
         }
     }
-    
-    func updateEntity(_ newContents: [Content]) {
-        contents.value = newContents
-    }
-    
-    func filterContentForSearchText(_ searchText: String) {
+
+    override func filterContentForSearchText(_ searchText: String) {
         guard !searchText.isEmpty else {
             self.resetFilters()
             return
         }
-        
+
         let filteredPosts = originalContents.filter { (content: Post) -> Bool in
             return content.title.lowercased().contains(searchText.lowercased())
         }
         contents.value = filteredPosts
     }
-    
-    func resetFilters() {
-        setupAllContents()
-    }
-    
-    deinit {
-        contents.removeObserver()
-    }
+
 }
