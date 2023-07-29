@@ -41,9 +41,6 @@ final class Comments<N: Networking>: Contents<N, Comment, CommentRequest> where 
         }
         updateEntity(filteredcontents)
     }
-    
-    deinit {
-        entity.removeObserver()
-    }
+
 }
 

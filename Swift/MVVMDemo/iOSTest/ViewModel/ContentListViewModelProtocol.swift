@@ -18,7 +18,6 @@ protocol ContentListViewModelProtocol {
     // MARK: Data bingding
     var contents: Observable<[Content]> { get }
     
-    
     // MARK: View State
     var viewState: Observable<ViewState> { get }
 
@@ -26,8 +25,12 @@ protocol ContentListViewModelProtocol {
     func refreshTriggered() async
     func searchTextChanged(_ searchText: String)
     func contentsFetched(_ contentCellViewModels: [ContentCellViewModel])
-    
+
+    func numberOfRowsInSection() -> Int
+    func contentForRowAt(at index: Int) -> Content
+    func didSelectRowAt(at index: Int)
+
     // MARK: sub View Model
-    var contentCellViewModels: [ContentCellViewModel] { get }
     func contentCellViewModel(for content: Content) -> ContentCellViewModel
+    
 }

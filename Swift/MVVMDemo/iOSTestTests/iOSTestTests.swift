@@ -50,9 +50,7 @@ final class iOSTestTests: XCTestCase {
         errorData = try loadJson(filename: "errorData")
         rightPostData = try loadJson(filename: "rightPostData")
         rightCommentData = try loadJson(filename: "rightCommentData")
-        
         nilData = try loadJson(filename: "nilData")
-        
         
         commentRowViewModel = CommentListViewModel(post: post, networking: commentNetworking)
         comment = Comment(postId: 1, id: 1, name: "id labore ex et quam laborum", body: "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium", email: "Eliseo@gardner.biz")

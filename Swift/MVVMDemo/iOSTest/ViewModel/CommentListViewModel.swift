@@ -13,14 +13,9 @@ final class CommentListViewModel<N: Networking>: ContentListViewModelProtocol wh
     
     typealias ContentCellViewModel = CommentCellViewModel
     
-    func contentCellViewModel(for content: Comment) -> CommentCellViewModel {
-        let commentCellViewModel = CommentCellViewModel(content: content)
-        return commentCellViewModel
-    }
-    
     var post: Post
     
-    var contentCellViewModels: [CommentCellViewModel] = Array()
+    private var contentCellViewModels: [CommentCellViewModel] = Array()
     
     var viewState = Observable<ViewState>(value: .loading)
     
@@ -67,6 +62,12 @@ final class CommentListViewModel<N: Networking>: ContentListViewModelProtocol wh
     }
 
     // MARK: ContentListViewModelProtocol
+    
+    func contentCellViewModel(for content: Comment) -> CommentCellViewModel {
+        let commentCellViewModel = CommentCellViewModel(content: content)
+        return commentCellViewModel
+    }
+    
     func searchTextChanged(_ searchTextValue: String) {
         searchText.value = searchTextValue
     }
@@ -75,4 +76,38 @@ final class CommentListViewModel<N: Networking>: ContentListViewModelProtocol wh
         contentCellViewModels = theContentCellViewModels
     }
     
+    private func contentCellViewModel(at index: Int) -> CommentCellViewModel {
+        let contentViewModel = contentCellViewModels[index]
+        return contentViewModel
+    }
+    
+    func numberOfRowsInSection() -> Int {
+        switch viewState.value {
+            
+        case .loading:
+            return 1
+            
+        case .loaded:
+            return contentCellViewModels.count
+            
+        default:
+            return 0
+        }
+    }
+    
+    func contentForRowAt(at index: Int) -> Content {
+        contentCellViewModels[index].content
+    }
+    
+    func didSelectRowAt(at index: Int) {
+        switch viewState.value {
+            
+        case .loaded:
+            let postViewModel = contentCellViewModel(at: index)
+            postViewModel.cellPressed?()
+            
+        default:
+            break
+        }
+    }
 }

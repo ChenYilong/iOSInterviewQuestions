@@ -31,7 +31,7 @@ final class PostListViewController: BaseContentListViewController<Post, PostList
             
         case .loaded:
             let cell: PostListTableViewCell = tableView.dequeueReusableCell(for: indexPath)
-            let post = viewModel.contentCellViewModels[indexPath.item].content
+            let post = viewModel.contentForRowAt(at: indexPath.item)
             cell.configure(with: post)
             return cell
             
@@ -41,17 +41,7 @@ final class PostListViewController: BaseContentListViewController<Post, PostList
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch viewModel.viewState.value {
-            
-        case .loading:
-            return 1
-            
-        case .loaded:
-            return viewModel.contentCellViewModels.count
-            
-        default:
-            return 0
-        }
+        viewModel.numberOfRowsInSection()
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -70,15 +60,7 @@ final class PostListViewController: BaseContentListViewController<Post, PostList
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        switch viewModel.viewState.value {
-            
-        case .loaded:
-            let postViewModel = viewModel.contentCellViewModels[indexPath.item]
-            postViewModel.cellPressed?()
-            
-        default:
-            break
-        }
+        viewModel.didSelectRowAt(at: indexPath.item)
     }
     
     override func cellPressed(content: Post) {

@@ -9,13 +9,13 @@ import Foundation
 
 class ContentRequest<DataType: Response>: Request {
     typealias RequestResponse = DataType
-
+    
     let url: URL
-
+    
     init(url: URL) {
         self.url = url
     }
-
+    
     func handleResponse(data: Data, response: URLResponse) throws -> DataType {
         guard let httpResponse = response as? HTTPURLResponse else {
             throw ApiError.urlError
@@ -28,13 +28,13 @@ class ContentResponse: Response {
     var statusCode: Int
     var data: Data
     var errMsg: String?
-
+    
     required init(statusCode: Int, data: Data, errMsg: String?) {
         self.statusCode = statusCode
         self.data = data
         self.errMsg = errMsg
     }
-
+    
     func decodeData<T: Decodable>() throws -> T {
         let decoder = JSONDecoder()
         return try decoder.decode(T.self, from: data)

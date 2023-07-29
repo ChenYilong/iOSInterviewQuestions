@@ -8,16 +8,12 @@
 import Foundation
 
 final class PostListViewModel<N: Networking>: ContentListViewModelProtocol where N.R == PostRequest {
+    typealias Content = Post
 
-    func contentCellViewModel(for post: Post) -> PostCellViewModel {
-        let postCellViewModel = PostCellViewModel(content: post)
-        return postCellViewModel
-    }
-    
-    var contentCellViewModels: [PostCellViewModel] = Array()
+    private var contentCellViewModels: [PostCellViewModel] = Array()
     var posts: Posts<N>
     
-    var contents: Observable<[Post]> {
+    var contents: Observable<[Content]> {
         posts.entity
     }
     
@@ -63,6 +59,7 @@ final class PostListViewModel<N: Networking>: ContentListViewModelProtocol where
     }
     
     // MARK: ContentListViewModelProtocol
+    
     func searchTextChanged(_ searchTextValue: String) {
         searchText.value = searchTextValue
     }
@@ -71,4 +68,43 @@ final class PostListViewModel<N: Networking>: ContentListViewModelProtocol where
         contentCellViewModels = theContentCellViewModels
     }
     
+    func contentCellViewModel(for post: Content) -> PostCellViewModel {
+        let postCellViewModel = PostCellViewModel(content: post)
+        return postCellViewModel
+    }
+    
+    private func contentCellViewModel(at index: Int) -> PostCellViewModel {
+        let contentViewModel = contentCellViewModels[index]
+        return contentViewModel
+    }
+    
+    func numberOfRowsInSection() -> Int {
+        switch viewState.value {
+            
+        case .loading:
+            return 1
+            
+        case .loaded:
+            return contentCellViewModels.count
+            
+        default:
+            return 0
+        }
+    }
+    
+    func contentForRowAt(at index: Int) -> Content {
+        contentCellViewModels[index].content
+    }
+    
+    func didSelectRowAt(at index: Int) {
+        switch viewState.value {
+            
+        case .loaded:
+            let postViewModel = contentCellViewModel(at: index)
+            postViewModel.cellPressed?()
+            
+        default:
+            break
+        }
+    }
 }

@@ -32,7 +32,7 @@ final class CommentListViewController: BaseContentListViewController<Comment, Co
         case .loaded:
             let cell: CommentListTableViewCell = tableView.dequeueReusableCell(for: indexPath)
 
-            let comment = viewModel.contentCellViewModels[indexPath.item].content
+            let comment = viewModel.contentForRowAt(at: indexPath.item)
             cell.configure(with: comment)
             return cell
             
@@ -42,17 +42,7 @@ final class CommentListViewController: BaseContentListViewController<Comment, Co
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch viewModel.viewState.value {
-            
-        case .loading:
-            return 1
-            
-        case .loaded:
-            return viewModel.contentCellViewModels.count
-            
-        default:
-            return 0
-        }
+        viewModel.numberOfRowsInSection()
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -71,15 +61,7 @@ final class CommentListViewController: BaseContentListViewController<Comment, Co
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        switch viewModel.viewState.value {
-            
-        case .loaded:
-            let postViewModel = viewModel.contentCellViewModels[indexPath.item]
-            postViewModel.cellPressed?()
-            
-        default:
-            break
-        }
+        viewModel.didSelectRowAt(at: indexPath.item)
     }
     
     override func cellPressed(content: Comment) {

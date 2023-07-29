@@ -40,5 +40,5 @@ final class Posts<N: Networking>: Contents<N, Post, PostRequest> where N.R == Po
         }
         entity.value = filteredPosts
     }
-    
+
 }

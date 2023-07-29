@@ -46,5 +46,10 @@ class Contents<N: Networking, T: Codable, R: Request>: ObservableObject, MVVMMod
     func resetFilters() {
         setupAllContents()
     }
+    
+    deinit {
+        entity.removeObserver()
+    }
+    
 }
 
