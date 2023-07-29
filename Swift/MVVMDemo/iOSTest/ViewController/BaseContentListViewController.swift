@@ -80,47 +80,43 @@ class BaseContentListViewController<Content, ViewModelType: ContentListViewModel
     
     func initBinding() {
         updateTask = Task { [weak self] in
-            do {
-                try await viewModel.refreshTriggered()
-                viewModel.contents.addObserver(fireNow: true) { [weak self] contents in
-                    var contentCellViewModels: [ViewModelType.ContentCellViewModel] = []
-                    for content in contents {
-                        if Task.isCancelled {
-                            self?.updateTask = nil
-                            break
-                        }
-                        if var homeContentCellViewModel = self?.viewModel.contentCellViewModel(for: content) {
-                            homeContentCellViewModel.cellPressed = {
-                                self?.cellPressed(content: content)
-                            }
-                            contentCellViewModels.append(homeContentCellViewModel)
-                        }
+            await viewModel.refreshTriggered()
+            viewModel.contents.addObserver(fireNow: true) { [weak self] contents in
+                var contentCellViewModels: [ViewModelType.ContentCellViewModel] = []
+                for content in contents {
+                    if Task.isCancelled {
+                        self?.updateTask = nil
+                        break
                     }
-                    
-                    self?.viewModel.contentsFetched(contentCellViewModels)
-                    
-                    await MainActor.run {
-                        self?.tableView.reloadData()
-                        self?.refreshControl?.endRefreshing()
+                    if var homeContentCellViewModel = self?.viewModel.contentCellViewModel(for: content) {
+                        homeContentCellViewModel.cellPressed = {
+                            self?.cellPressed(content: content)
+                        }
+                        contentCellViewModels.append(homeContentCellViewModel)
                     }
                 }
                 
-                viewModel.viewState.addObserver(fireNow: true) { [weak self] viewState in
-                    switch viewState {
-                        
-                    case .loading:
-                        self?.activityIndicator.startAnimating()
-                        break
-                        
-                    case .loaded, .error:
-                        self?.activityIndicator.stopAnimating()
-                        // Update your view to reflect the error state, using the provided error message
-                        break
-                        
-                    }
+                self?.viewModel.contentsFetched(contentCellViewModels)
+                
+                await MainActor.run {
+                    self?.tableView.reloadData()
+                    self?.refreshControl?.endRefreshing()
                 }
-            } catch {
-                print("Update error: \(error.localizedDescription)")
+            }
+            
+            viewModel.viewState.addObserver(fireNow: true) { [weak self] viewState in
+                switch viewState {
+                    
+                case .loading:
+                    self?.activityIndicator.startAnimating()
+                    break
+                    
+                case .loaded, .error:
+                    self?.activityIndicator.stopAnimating()
+                    // Update your view to reflect the error state, using the provided error message
+                    break
+                    
+                }
             }
         }
     }
