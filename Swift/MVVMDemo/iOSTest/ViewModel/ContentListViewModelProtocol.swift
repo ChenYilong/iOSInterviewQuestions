@@ -18,6 +18,7 @@ protocol ContentListViewModelProtocol {
     // MARK: Data bingding
     var contents: Observable<[Content]> { get }
     
+    
     // MARK: View State
     var viewState: Observable<ViewState> { get }
 
@@ -27,5 +28,6 @@ protocol ContentListViewModelProtocol {
     func contentsFetched(_ contentCellViewModels: [ContentCellViewModel])
     
     // MARK: sub View Model
+    var contentCellViewModels: [ContentCellViewModel] { get }
     func contentCellViewModel(for content: Content) -> ContentCellViewModel
 }

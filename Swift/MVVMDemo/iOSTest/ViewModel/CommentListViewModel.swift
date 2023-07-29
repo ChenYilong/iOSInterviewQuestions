@@ -20,9 +20,11 @@ final class CommentListViewModel<N: Networking>: ContentListViewModelProtocol wh
     
     var postId : Int
     var contentCellViewModels: [CommentCellViewModel] = Array()
+    
     var contents: Observable<[Content]> = Observable<[Comment]>(value: [])
-    var allComments: [Comment] = []  // this would hold all your contents
     var viewState = Observable<ViewState>(value: .loading)
+
+    var allComments: [Comment] = []  // this would hold all your contents
     var searchText = Observable<String>(value: "")
     
     func setupSearchTextObserver() {
@@ -60,7 +62,6 @@ final class CommentListViewModel<N: Networking>: ContentListViewModelProtocol wh
     
     func refreshTriggered() async {
         do {
-            
             let request = CommentRequest(id: postId)
             let response: CommentResponse = try await networking.request(request: request)
             let contents = response.comments
@@ -76,7 +77,6 @@ final class CommentListViewModel<N: Networking>: ContentListViewModelProtocol wh
             self.viewState.value = .error(string: error.localizedDescription)
         }
     }
-
     
     deinit {
         contents.removeObserver()
