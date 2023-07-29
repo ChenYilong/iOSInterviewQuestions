@@ -53,7 +53,7 @@ final class PostListViewModel<N: Networking>: ContentListViewModelProtocol where
         contents.value = allPosts
     }
     
-    func update() async throws {
+    func refreshTriggered() async {
         do {
             viewState.value = .loading
             let request = PostRequest()
@@ -69,7 +69,6 @@ final class PostListViewModel<N: Networking>: ContentListViewModelProtocol where
         } catch {
             // handle error
             self.viewState.value = .error(string: error.localizedDescription)
-            throw error
         }
     }
     
@@ -77,4 +76,14 @@ final class PostListViewModel<N: Networking>: ContentListViewModelProtocol where
         contents.removeObserver()
         viewState.removeObserver()
     }
+    
+    // MARK: ContentListViewModelProtocol
+    func searchTextChanged(_ searchTextValue: String) {
+        searchText.value = searchTextValue
+    }
+    
+    func contentsFetched(_ theContentCellViewModels: [PostCellViewModel]) {
+        contentCellViewModels = theContentCellViewModels
+    }
+    
 }

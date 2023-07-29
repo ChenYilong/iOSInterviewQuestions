@@ -291,7 +291,7 @@ final class iOSTestTests: XCTestCase {
         
         Task {
             do {
-                try await homeRowViewModel.update()
+                try await homeRowViewModel.refreshTriggered()
                 switch homeRowViewModel.viewState.value {
                     
                 case .loading:
@@ -357,7 +357,7 @@ final class iOSTestTests: XCTestCase {
         
         Task {
             do {
-                try await commentRowViewModel.update()
+                try await commentRowViewModel.refreshTriggered()
                 
                 switch commentRowViewModel.viewState.value {
                     

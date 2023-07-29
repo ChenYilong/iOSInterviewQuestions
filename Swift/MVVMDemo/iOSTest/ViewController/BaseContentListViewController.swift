@@ -81,7 +81,7 @@ class BaseContentListViewController<Content, ViewModelType: ContentListViewModel
     func initBinding() {
         updateTask = Task { [weak self] in
             do {
-                try await viewModel.update()
+                try await viewModel.refreshTriggered()
                 viewModel.contents.addObserver(fireNow: true) { [weak self] contents in
                     var contentCellViewModels: [ViewModelType.ContentCellViewModel] = []
                     for content in contents {
@@ -97,7 +97,7 @@ class BaseContentListViewController<Content, ViewModelType: ContentListViewModel
                         }
                     }
                     
-                    self?.viewModel.contentCellViewModels = contentCellViewModels
+                    self?.viewModel.contentsFetched(contentCellViewModels)
                     
                     await MainActor.run {
                         self?.tableView.reloadData()
@@ -131,7 +131,7 @@ class BaseContentListViewController<Content, ViewModelType: ContentListViewModel
     
     // MARK: UISearchResultsUpdating
     func updateSearchResults(for searchController: UISearchController) {
-        viewModel.searchText.value = searchController.searchBar.text ?? ""
+        viewModel.searchTextChanged(searchController.searchBar.text ?? "")
     }
     
     // MARK: update task life cycle

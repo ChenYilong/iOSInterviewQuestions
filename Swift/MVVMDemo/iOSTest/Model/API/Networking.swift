@@ -43,7 +43,6 @@ extension Response {
     }
 }
 
-
 protocol Networking {
     associatedtype R: Request
     func request(request: R) async throws -> R.RequestResponse

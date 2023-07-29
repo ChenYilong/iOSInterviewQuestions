@@ -33,3 +33,5 @@ Search functionality on the posts list and comments list.
 5. **Search Functionality**: As an additional feature, I implemented search functionality on both the posts list and the comments list. This allows users to easily find specific posts or comments by typing in search keywords.
 
 6. **Unit Testing**: Finally, I added comprehensive unit test cases to ensure the correct behavior of the implemented functionalities. This resulted in achieving 78.3% code coverage, thereby validating the reliability and performance of the app.
+
+![](https://tva1.sinaimg.cn/large/008vOhrAgy1hgduaf64xrj30hw0pamyj.jpg)

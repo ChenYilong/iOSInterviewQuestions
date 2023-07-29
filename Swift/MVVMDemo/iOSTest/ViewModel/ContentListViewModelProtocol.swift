@@ -14,12 +14,18 @@ enum ViewState {
 protocol ContentListViewModelProtocol {
     associatedtype Content
     associatedtype ContentCellViewModel: ContentCellViewModelProtocol where ContentCellViewModel.Content == Content
-    var contents: Observable<[Content]> { get set }
-    var contentCellViewModels: [ContentCellViewModel] { get set }
-    var viewState: Observable<ViewState> { get }
-    var searchText: Observable<String> { get }
     
-    func contentCellViewModel(for content: Content) -> ContentCellViewModel
-    func update() async throws
-}
+    // MARK: Data bingding
+    var contents: Observable<[Content]> { get }
+    
+    // MARK: View State
+    var viewState: Observable<ViewState> { get }
 
+    // MARK: commands
+    func refreshTriggered() async
+    func searchTextChanged(_ searchText: String)
+    func contentsFetched(_ contentCellViewModels: [ContentCellViewModel])
+    
+    // MARK: sub View Model
+    func contentCellViewModel(for content: Content) -> ContentCellViewModel
+}

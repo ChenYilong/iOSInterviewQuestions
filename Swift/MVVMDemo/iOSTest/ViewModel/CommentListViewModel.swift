@@ -30,7 +30,7 @@ final class CommentListViewModel<N: Networking>: ContentListViewModelProtocol wh
             self?.filterContentForSearchText(text)
         }
     }
-    
+
     func filterContentForSearchText(_ searchText: String) {
         if searchText.isEmpty {
             self.resetFilters()
@@ -58,7 +58,7 @@ final class CommentListViewModel<N: Networking>: ContentListViewModelProtocol wh
         setupSearchTextObserver()
     }
     
-    func update() async throws {
+    func refreshTriggered() async {
         do {
             
             let request = CommentRequest(id: postId)
@@ -74,7 +74,6 @@ final class CommentListViewModel<N: Networking>: ContentListViewModelProtocol wh
         } catch {
             // handle error
             self.viewState.value = .error(string: error.localizedDescription)
-            throw error
         }
     }
 
@@ -83,4 +82,14 @@ final class CommentListViewModel<N: Networking>: ContentListViewModelProtocol wh
         contents.removeObserver()
         viewState.removeObserver()
     }
+
+    // MARK: ContentListViewModelProtocol
+    func searchTextChanged(_ searchTextValue: String) {
+        searchText.value = searchTextValue
+    }
+    
+    func contentsFetched(_ theContentCellViewModels: [CommentCellViewModel]) {
+        contentCellViewModels = theContentCellViewModels
+    }
+    
 }
