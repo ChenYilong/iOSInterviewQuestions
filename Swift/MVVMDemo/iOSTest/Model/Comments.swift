@@ -31,19 +31,19 @@ final class Comments<N: Networking>: Contents<N, Comment, CommentRequest> where 
         }
     }
     
-    override func filterContentForSearchText(_ searchText: String) {
+    override func filterEntityForSearchText(_ searchText: String) {
         if searchText.isEmpty {
             self.resetFilters()
             return
         }
-        let filteredcontents = originalContents.filter { (content: Content) -> Bool in
+        let filteredcontents = originalContents.filter { (content: Entity) -> Bool in
             return content.body.lowercased().contains(searchText.lowercased())
         }
         updateEntity(filteredcontents)
     }
     
     deinit {
-        contents.removeObserver()
+        entity.removeObserver()
     }
 }
 

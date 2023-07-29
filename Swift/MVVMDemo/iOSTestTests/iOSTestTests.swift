@@ -300,21 +300,21 @@ final class iOSTestTests: XCTestCase {
                 XCTAssertTrue(((homeRowViewModel.contents.value.isEmpty) == false), "Posts array should not be empty!")
                 
                 var filterString = String(describing: UInt8.max)
-                homeRowViewModel.posts.filterContentForSearchText(filterString)
+                homeRowViewModel.posts.filterEntityForSearchText(filterString)
                 XCTAssertTrue(((homeRowViewModel.contents.value.isEmpty) == true),  "Filter Posts array should not contain :" + filterString)
                 
                 homeRowViewModel.posts.resetFilters()
                 XCTAssertTrue(((homeRowViewModel.contents.value.isEmpty) == false), "Reset Posts array should not be empty")
                 
                 filterString = "s"
-                homeRowViewModel.posts.filterContentForSearchText(filterString)
+                homeRowViewModel.posts.filterEntityForSearchText(filterString)
                 for post in homeRowViewModel.contents.value  {
                     let isContain = post.title.lowercased().contains(filterString.lowercased())
                     XCTAssertTrue(isContain == true, post.title.lowercased() + "Filter Posts array should contain:" + filterString)
                 }
                 
                 filterString = ""
-                homeRowViewModel.posts.filterContentForSearchText(filterString)
+                homeRowViewModel.posts.filterEntityForSearchText(filterString)
                 XCTAssertTrue(((homeRowViewModel.contents.value.isEmpty) == false), "Reset Posts array should not be empty")
                 
                 let post : Post = (homeRowViewModel.contents.value[0])
@@ -362,21 +362,21 @@ final class iOSTestTests: XCTestCase {
                 XCTAssertTrue(((commentRowViewModel.contents.value.isEmpty) == false), "Posts array should not be empty!")
                 
                 var filterString = String(describing: UInt8.max)
-                commentRowViewModel.comments.filterContentForSearchText(filterString)
+                commentRowViewModel.comments.filterEntityForSearchText(filterString)
                 XCTAssertTrue(((commentRowViewModel.contents.value.isEmpty) == true),  "Filter Posts array should not contain :" + filterString)
                 
                 commentRowViewModel.comments.resetFilters()
                 XCTAssertTrue(((commentRowViewModel.contents.value.isEmpty) == false), "Reset Posts array should not be empty")
                 
                 filterString = "s"
-                commentRowViewModel.comments.filterContentForSearchText(filterString)
+                commentRowViewModel.comments.filterEntityForSearchText(filterString)
                 for comment in commentRowViewModel.contents.value  {
                     let isContain = comment.body.lowercased().contains(filterString.lowercased())
                     XCTAssertTrue(isContain == true, comment.body.lowercased() + "Filter Posts array should contain:" + filterString)
                 }
                 
                 filterString = ""
-                commentRowViewModel.comments.filterContentForSearchText(filterString)
+                commentRowViewModel.comments.filterEntityForSearchText(filterString)
                 XCTAssertTrue(((commentRowViewModel.contents.value.isEmpty) == false), "Reset Posts array should not be empty")
                 break
             default:

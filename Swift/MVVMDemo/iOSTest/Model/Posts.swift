@@ -8,11 +8,11 @@
 import Foundation
 
 final class Posts<N: Networking>: Contents<N, Post, PostRequest> where N.R == PostRequest {
-
+    
     override init(networking: N) {
         super.init(networking: networking)
     }
-
+    
     override func loadEntity() async throws {
         do {
             let request = PostRequest()
@@ -28,17 +28,17 @@ final class Posts<N: Networking>: Contents<N, Post, PostRequest> where N.R == Po
             throw error
         }
     }
-
-    override func filterContentForSearchText(_ searchText: String) {
+    
+    override func filterEntityForSearchText(_ searchText: String) {
         guard !searchText.isEmpty else {
             self.resetFilters()
             return
         }
-
+        
         let filteredPosts = originalContents.filter { (content: Post) -> Bool in
             return content.title.lowercased().contains(searchText.lowercased())
         }
-        contents.value = filteredPosts
+        entity.value = filteredPosts
     }
-
+    
 }

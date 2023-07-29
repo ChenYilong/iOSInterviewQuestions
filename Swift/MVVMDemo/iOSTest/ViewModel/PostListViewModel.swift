@@ -18,7 +18,7 @@ final class PostListViewModel<N: Networking>: ContentListViewModelProtocol where
     var posts: Posts<N>
     
     var contents: Observable<[Post]> {
-        return posts.contents
+        posts.entity
     }
     
     var viewState = Observable<ViewState>(value: .loading)
@@ -34,7 +34,7 @@ final class PostListViewModel<N: Networking>: ContentListViewModelProtocol where
     
     func setupSearchTextObserver() {
         searchText.addObserver { [weak self] text in
-            self?.posts.filterContentForSearchText(text)
+            self?.posts.filterEntityForSearchText(text)
         }
     }
     

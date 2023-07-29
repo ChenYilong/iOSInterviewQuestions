@@ -7,22 +7,20 @@
 
 import Foundation
 
-protocol ContentsProtocol {
-    associatedtype Content
-    var contents: Observable<[Content]> { get }
-    func setupAllContents()
+protocol MVVMModelProtocol {
+    associatedtype Entity
+    var entity: Observable<[Entity]> { get }
     func loadEntity() async throws
-    func updateEntity(_ newContents: [Content])
-    func filterContentForSearchText(_ searchText: String)
-    func resetFilters()
+    func updateEntity(_ newEntity: [Entity])
+    func filterEntityForSearchText(_ searchText: String)
 }
 
-class Contents<N: Networking, T: Codable, R: Request>: ObservableObject, ContentsProtocol where N.R == R {
+class Contents<N: Networking, T: Codable, R: Request>: ObservableObject, MVVMModelProtocol where N.R == R {
     
-    typealias Content = T
+    typealias Entity = T
     
-    @Published var contents: Observable<[Content]> = Observable<[Content]>(value: [])
-    var originalContents: [Content] = []
+    @Published var entity: Observable<[Entity]> = Observable<[Entity]>(value: [])
+    var originalContents: [Entity] = []
     var networking: N
     
     init(networking: N) {
@@ -30,19 +28,18 @@ class Contents<N: Networking, T: Codable, R: Request>: ObservableObject, Content
     }
     
     func setupAllContents() {
-        contents.value = originalContents
+        entity.value = originalContents
     }
     
     func loadEntity() async throws {
         fatalError("please override this method")
-
     }
     
-    func updateEntity(_ newContents: [Content]) {
-        contents.value = newContents
+    func updateEntity(_ newEntity: [Entity]) {
+        entity.value = newEntity
     }
     
-    func filterContentForSearchText(_ searchText: String) {
+    func filterEntityForSearchText(_ searchText: String) {
         fatalError("please override this method")
     }
     

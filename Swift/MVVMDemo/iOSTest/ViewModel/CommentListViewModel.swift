@@ -27,14 +27,14 @@ final class CommentListViewModel<N: Networking>: ContentListViewModelProtocol wh
     var comments: Comments<N>
     
     var contents: Observable<[Comment]> {
-        return comments.contents
+        comments.entity
     }
     
     var searchText = Observable<String>(value: "")
     
     func setupSearchTextObserver() {
         searchText.addObserver { [weak self] text in
-            self?.comments.filterContentForSearchText(text)
+            self?.comments.filterEntityForSearchText(text)
         }
     }
         
