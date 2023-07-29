@@ -290,46 +290,41 @@ final class iOSTestTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Download contents from api")
         
         Task {
-            do {
-                try await homeRowViewModel.refreshTriggered()
-                switch homeRowViewModel.viewState.value {
-                    
-                case .loading:
-                    break
-                    
-                case .loaded:
-                    XCTAssertTrue(((homeRowViewModel.contents.value.isEmpty) == false), "Posts array should not be empty!")
-                    
-                    var filterString = String(describing: UInt8.max)
-                    homeRowViewModel.filterContentForSearchText(filterString)
-                    XCTAssertTrue(((homeRowViewModel.contents.value.isEmpty) == true),  "Filter Posts array should not contain :" + filterString)
-                    
-                    homeRowViewModel.resetFilters()
-                    XCTAssertTrue(((homeRowViewModel.contents.value.isEmpty) == false), "Reset Posts array should not be empty")
-                    
-                    filterString = "s"
-                    homeRowViewModel.filterContentForSearchText(filterString)
-                    for post in homeRowViewModel.contents.value  {
-                        let isContain = post.title.lowercased().contains(filterString.lowercased())
-                        XCTAssertTrue(isContain == true, post.title.lowercased() + "Filter Posts array should contain:" + filterString)
-                    }
-                    
-                    filterString = ""
-                    homeRowViewModel.filterContentForSearchText(filterString)
-                    XCTAssertTrue(((homeRowViewModel.contents.value.isEmpty) == false), "Reset Posts array should not be empty")
-                    
-                    let post : Post = (homeRowViewModel.contents.value[0])
-                    //TODO: await?
-                    let detailVC = await PostDetailViewController(model: post)
-                    
-                    clickPostDetail(post: post, detailVC: detailVC)
-                    break
-                    
-                default:
-                    break
+            await homeRowViewModel.refreshTriggered()
+            switch homeRowViewModel.viewState.value {
+                
+            case .loading:
+                break
+                
+            case .loaded:
+                XCTAssertTrue(((homeRowViewModel.contents.value.isEmpty) == false), "Posts array should not be empty!")
+                
+                var filterString = String(describing: UInt8.max)
+                homeRowViewModel.filterContentForSearchText(filterString)
+                XCTAssertTrue(((homeRowViewModel.contents.value.isEmpty) == true),  "Filter Posts array should not contain :" + filterString)
+                
+                homeRowViewModel.resetFilters()
+                XCTAssertTrue(((homeRowViewModel.contents.value.isEmpty) == false), "Reset Posts array should not be empty")
+                
+                filterString = "s"
+                homeRowViewModel.filterContentForSearchText(filterString)
+                for post in homeRowViewModel.contents.value  {
+                    let isContain = post.title.lowercased().contains(filterString.lowercased())
+                    XCTAssertTrue(isContain == true, post.title.lowercased() + "Filter Posts array should contain:" + filterString)
                 }
-            } catch {
-                print("Update error: \(error.localizedDescription)")
+                
+                filterString = ""
+                homeRowViewModel.filterContentForSearchText(filterString)
+                XCTAssertTrue(((homeRowViewModel.contents.value.isEmpty) == false), "Reset Posts array should not be empty")
+                
+                let post : Post = (homeRowViewModel.contents.value[0])
+                let detailVC = await PostDetailViewController(model: post)
+                
+                clickPostDetail(post: post, detailVC: detailVC)
+                break
+                
+            default:
+                break
             }
             
             // Fulfill the expectation to indicate that the background task has finished successfully.
@@ -356,49 +351,40 @@ final class iOSTestTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Download contents from api")
         
         Task {
-            do {
-                try await commentRowViewModel.refreshTriggered()
+            await commentRowViewModel.refreshTriggered()
+            
+            switch commentRowViewModel.viewState.value {
                 
-                switch commentRowViewModel.viewState.value {
-                    
-                case .loading:
-                    break
-                    
-                case .loaded:
-                    XCTAssertTrue(((commentRowViewModel.contents.value.isEmpty) == false), "Posts array should not be empty!")
-                    
-                    var filterString = String(describing: UInt8.max)
-                    commentRowViewModel.filterContentForSearchText(filterString)
-                    XCTAssertTrue(((commentRowViewModel.contents.value.isEmpty) == true),  "Filter Posts array should not contain :" + filterString)
-                    
-                    commentRowViewModel.resetFilters()
-                    XCTAssertTrue(((commentRowViewModel.contents.value.isEmpty) == false), "Reset Posts array should not be empty")
-                    
-                    filterString = "s"
-                    commentRowViewModel.filterContentForSearchText(filterString)
-                    for comment in commentRowViewModel.contents.value  {
-                        let isContain = comment.body.lowercased().contains(filterString.lowercased())
-                        XCTAssertTrue(isContain == true, comment.body.lowercased() + "Filter Posts array should contain:" + filterString)
-                    }
-                    
-                    filterString = ""
-                    commentRowViewModel.filterContentForSearchText(filterString)
-                    XCTAssertTrue(((commentRowViewModel.contents.value.isEmpty) == false), "Reset Posts array should not be empty")
-                    //                let comment : Post = (self?.commentRowViewModel.contents.value[0])!
-                    //                let detailVC = CommentDetailViewController(model: comment)
-                    //                self?.clickPostDetail(post: comment, detailVC: detailVC)
-                    
-                    break
-                default:
-                    break
+            case .loading:
+                break
+                
+            case .loaded:
+                XCTAssertTrue(((commentRowViewModel.contents.value.isEmpty) == false), "Posts array should not be empty!")
+                
+                var filterString = String(describing: UInt8.max)
+                commentRowViewModel.filterContentForSearchText(filterString)
+                XCTAssertTrue(((commentRowViewModel.contents.value.isEmpty) == true),  "Filter Posts array should not contain :" + filterString)
+                
+                commentRowViewModel.resetFilters()
+                XCTAssertTrue(((commentRowViewModel.contents.value.isEmpty) == false), "Reset Posts array should not be empty")
+                
+                filterString = "s"
+                commentRowViewModel.filterContentForSearchText(filterString)
+                for comment in commentRowViewModel.contents.value  {
+                    let isContain = comment.body.lowercased().contains(filterString.lowercased())
+                    XCTAssertTrue(isContain == true, comment.body.lowercased() + "Filter Posts array should contain:" + filterString)
                 }
                 
-                // Fulfill the expectation to indicate that the background task has finished successfully.
-                expectation.fulfill()
-                
-            } catch {
-                print("Update error: \(error.localizedDescription)")
+                filterString = ""
+                commentRowViewModel.filterContentForSearchText(filterString)
+                XCTAssertTrue(((commentRowViewModel.contents.value.isEmpty) == false), "Reset Posts array should not be empty")
+                break
+            default:
+                break
             }
+            
+            // Fulfill the expectation to indicate that the background task has finished successfully.
+            expectation.fulfill()
         }
         // Wait until the expectation is fulfilled, with a timeout of seconds.
         wait(for: [expectation], timeout: timeoutForExpectationFulfilled)
