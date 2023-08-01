@@ -43,20 +43,12 @@ struct ContentView: View {
                     //In SwiftUI, you can use a ForEach loop directly in your List.
                     //This is equivalent to numberOfRowsInSection and cellForRowAt indexPath in UIKit.
                     ForEach(0..<5) { index in
-                        MyCustomCell(title: "Row \(index)", subtitle: "Subtitle \(index)")
+                        MyCustomCell(title: "Title \(index)", subtitle: "Subtitle \(index)", index: index)
                     }
                 }
             }
         }
         .environmentObject(settings) // Provide UserSettings as an environment object to the other views
-    }
-}
-
-struct DetailView: View {
-    var index: Int
-    
-    var body: some View {
-        Text("Detail view for row \(index)")
     }
 }
 

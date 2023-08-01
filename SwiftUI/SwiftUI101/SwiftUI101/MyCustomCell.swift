@@ -11,23 +11,30 @@ import SwiftUI
 struct MyCustomCell: View {
     var title: String
     var subtitle: String
+    var index: Int
+
+    var body: some View {
+        NavigationLink(destination: DetailView(index: index)) {
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(title)
+                        .font(.headline)
+                    Text(subtitle)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                Spacer()
+            }
+            .padding(.vertical, 8)
+        }
+    }
+}
+
+struct DetailView: View {
+    var index: Int
     
     var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text(title)
-                    .font(.headline)
-                    // In UIKit, you might set the textLabel?.text property of UITableViewCell
-                Text(subtitle)
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-                    // In UIKit, you might set the detailTextLabel?.text property of UITableViewCell
-            }
-            Spacer()
-        }
-        .padding(.vertical, 8)
-        .background(Color.blue)
-
+        Text("Detail view for row \(index)")
     }
-
 }
+
