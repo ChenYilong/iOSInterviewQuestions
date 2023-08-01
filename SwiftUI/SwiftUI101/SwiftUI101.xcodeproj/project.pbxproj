@@ -14,6 +14,7 @@
 		9A28A73B2A788C5B00478870 /* SwiftUI101Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A28A73A2A788C5B00478870 /* SwiftUI101Tests.swift */; };
 		9A28A7452A788C5B00478870 /* SwiftUI101UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A28A7442A788C5B00478870 /* SwiftUI101UITests.swift */; };
 		9A28A7472A788C5B00478870 /* SwiftUI101UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A28A7462A788C5B00478870 /* SwiftUI101UITestsLaunchTests.swift */; };
+		9AE4EB752A78C8100071A7C7 /* MyCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4EB742A78C8100071A7C7 /* MyCustomCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		9A28A7402A788C5B00478870 /* SwiftUI101UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUI101UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A28A7442A788C5B00478870 /* SwiftUI101UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI101UITests.swift; sourceTree = "<group>"; };
 		9A28A7462A788C5B00478870 /* SwiftUI101UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI101UITestsLaunchTests.swift; sourceTree = "<group>"; };
+		9AE4EB742A78C8100071A7C7 /* MyCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCustomCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			children = (
 				9A28A7292A788C5600478870 /* SwiftUI101App.swift */,
 				9A28A72B2A788C5700478870 /* ContentView.swift */,
+				9AE4EB742A78C8100071A7C7 /* MyCustomCell.swift */,
 				9A28A72D2A788C5A00478870 /* Assets.xcassets */,
 				9A28A72F2A788C5A00478870 /* Preview Content */,
 			);
@@ -257,6 +260,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AE4EB752A78C8100071A7C7 /* MyCustomCell.swift in Sources */,
 				9A28A72C2A788C5700478870 /* ContentView.swift in Sources */,
 				9A28A72A2A788C5600478870 /* SwiftUI101App.swift in Sources */,
 			);

@@ -15,7 +15,7 @@ class UserSettings: ObservableObject {
 struct ContentView: View {
     @State private var name = "Anonymous"
     @StateObject private var settings = UserSettings()
-
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -43,11 +43,7 @@ struct ContentView: View {
                     //In SwiftUI, you can use a ForEach loop directly in your List.
                     //This is equivalent to numberOfRowsInSection and cellForRowAt indexPath in UIKit.
                     ForEach(0..<5) { index in
-                        //NavigationLink corresponds to didSelectRowAt in UIKit.
-                        //It enables navigation to another view when a row is tapped.
-                        NavigationLink(destination: DetailView(index: index)) {
-                            Text("Row \(index)")
-                        }
+                        MyCustomCell(title: "Row \(index)", subtitle: "Subtitle \(index)")
                     }
                 }
             }
