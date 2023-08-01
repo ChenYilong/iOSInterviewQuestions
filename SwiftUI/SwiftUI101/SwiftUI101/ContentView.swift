@@ -14,11 +14,10 @@ class UserSettings: ObservableObject {
 
 struct ContentView: View {
     @State private var name = "Anonymous"
-    @StateObject var settings = UserSettings()
+    @StateObject private var settings = UserSettings()
 
     var body: some View {
         NavigationView {
-            
             VStack {
                 // State usage
                 TextField("Enter your name", text: $name).background(Color.red)
@@ -30,22 +29,25 @@ struct ContentView: View {
                 Button("Increase Score") {
                     settings.score += 1
                     name = "chenyilong" + String(settings.score)
-                    
                 }
                 
                 // Navigate to ChildView, passing the settings
                 NavigationLink(destination: ChildView(settings: settings, name: $name)) {
                     Text("Go to Second View")
                 }
+                
+                // Display the ScoreView using @EnvironmentObject
+                ScoreView().background(Color.green)
             }
         }
+        .environmentObject(settings) // Provide UserSettings as an environment object to the other views
     }
 }
 
 struct ChildView: View {
     @ObservedObject var settings: UserSettings
     @Binding var name: String
-    @Environment(\.presentationMode) var presentationMode
+    @Environment(\.presentationMode) private var presentationMode
     
     var body: some View {
         VStack {
@@ -61,4 +63,11 @@ struct ChildView: View {
     }
 }
 
-
+struct ScoreView: View {
+    // Access UserSettings using @EnvironmentObject
+    @EnvironmentObject var settings: UserSettings
+    
+    var body: some View {
+        Text("Your Score in ScoreView: \(settings.score)")
+    }
+}
