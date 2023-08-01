@@ -34,7 +34,7 @@ struct ContentView: View {
                 }
                 
                 // Navigate to ChildView, passing the settings
-                NavigationLink(destination: ChildView(settings: settings)) {
+                NavigationLink(destination: ChildView(settings: settings, name: $name)) {
                     Text("Go to Second View")
                 }
             }
@@ -44,11 +44,13 @@ struct ContentView: View {
 
 struct ChildView: View {
     @ObservedObject var settings: UserSettings
+    @Binding var name: String
     @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         VStack {
             Text("Score: \(settings.score)")
+            TextField("Change name", text: $name).background(Color.red)
             Button("Increase Score") {
                 settings.score += 1
             }
