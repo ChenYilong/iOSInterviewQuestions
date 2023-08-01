@@ -38,9 +38,29 @@ struct ContentView: View {
                 
                 // Display the ScoreView using @EnvironmentObject
                 ScoreView().background(Color.green)
+                
+                List {
+                    //In SwiftUI, you can use a ForEach loop directly in your List.
+                    //This is equivalent to numberOfRowsInSection and cellForRowAt indexPath in UIKit.
+                    ForEach(0..<5) { index in
+                        //NavigationLink corresponds to didSelectRowAt in UIKit.
+                        //It enables navigation to another view when a row is tapped.
+                        NavigationLink(destination: DetailView(index: index)) {
+                            Text("Row \(index)")
+                        }
+                    }
+                }
             }
         }
         .environmentObject(settings) // Provide UserSettings as an environment object to the other views
+    }
+}
+
+struct DetailView: View {
+    var index: Int
+    
+    var body: some View {
+        Text("Detail view for row \(index)")
     }
 }
 
