@@ -1935,16 +1935,36 @@ KVO 在实现中通过 ` isa 混写（isa-swizzling）` 把这个对象的 isa �
 ### 54. 如何调试BAD_ACCESS错误
 
 
- 1. 重写object的respondsToSelector方法，现实出现EXEC_BAD_ACCESS前访问的最后一个object
- 2. 通过 Zombie 
-![https://github.com/ChenYilong](http://i.stack.imgur.com/ZAdi0.png)
+ 1.启用Zombie对象：Zombie对象可以帮助你跟踪BAD_ACCESS错误，这些错误通常是因为你试图访问已经被释放的对象，也就是野指针。要启用Zombie对象，你需要在Xcode中进行以下操作：点击你的项目名 -> Edit Scheme -> Diagnostics -> 在Memory Management下面勾选✅ Zombie Objects。 
+ ![https://github.com/ChenYilong](assets/54_How%20to_debug_the_BAD_ACCESS_error_01.jpg)
 
- 3. 设置全局断点快速定位问题代码所在行
- 4. Xcode 7 已经集成了BAD_ACCESS捕获功能：**Address Sanitizer**。
-用法如下：在配置中勾选✅Enable Address Sanitizer
+ 
+BAD_ACCESS错误通常是因为你尝试访问了一个已经被释放的对象。当你启用Zombie Objects时，系统不会立即释放对象，而是把它变成一个“僵尸对象”。如果你试图访问一个僵尸对象，Xcode会抛出一个异常并告诉你哪个已经被释放的对象被访问了，这样你就可以找出问题所在。
 
-<p align="center"><a href="https://mp.weixin.qq.com/s/A4e5h3xgIEh6PInf1Rjqsw"><img src="http://ww4.sinaimg.cn/large/006y8mN6gy1g71n53zsvpj30qc09sdh7.jpg"></a></p>
+注意：
 
+"Zombie Objects" 主要用于 Objective-C，对 Swift 代码不起作用. 它们是一种调试技术，用于捕获对已经释放的实例发送的消息。在 Objective-C 中，如果你尝试对一个已经被释放的对象发送消息，你将会得到一个运行时错误。启用 "Zombie Objects" 会导致应用在尝试对已经被释放的对象发送消息时停止运行，并在控制台打印出有关该对象的信息，这对于找出程序中的内存问题非常有用。
+
+在 Swift 中，Zombie Objects 调试技术不起作用，因为 Swift 在设计时考虑到了内存安全。Swift 的内存管理通过自动引用计数（ARC）来处理，当一个对象不再被需要时，ARC 会释放该对象所使用的内存，以便用于其他目的。也就是说，实例被释放，访问实例的属性或调用其方法是无效的。
+
+这意味着，在 Swift 中，一旦一个对象被释放，我们就不能再发送任何消息给它，这就是为什么在 Swift 代码中启用 "Zombie Objects" 选项没有效果的原因。
+
+Swift 代码请采用下面的几种方案。
+
+ 2.设置全局断点快速定位问题代码所在行：在Xcode中设置异常断点可以在异常发生时立即停止代码运行。你可以在Xcode的断点导航器中点击左下角的加号 -> Exception Breakpoint -> Done来添加一个异常断点。
+ ![](assets/16909544760924.jpg)
+
+
+
+ 3.Xcode 7 已经集成了BAD_ACCESS捕获功能：**Address Sanitizer**。
+用法如下：在 Xcode 中点击你的项目名 -> Edit Scheme -> Diagnostics -> ✅勾选Address Sanitizer。<p align="center"><a href="https://mp.weixin.qq.com/s/A4e5h3xgIEh6PInf1Rjqsw"><img src="assets/54_How%20to_debug_the_BAD_ACCESS_error.jpg"></a></p>
+ 
+ 使用Address Sanitizer：Address Sanitizer是LLVM编译器的一种工具，可以检测各种内存访问错误。它使用了一种名为影子内存的技术来存储内存状态信息。每当你的程序访问内存时，Address Sanitizer都会检查影子内存中的对应项，看看是否存在问题，如读/写已释放的内存，堆缓冲区溢出等。如果有，它会立即停止程序并报告错误。
+![https://github.com/ChenYilong](assets/Screen%20Shot%202023-08-02%20at%2020.15.47.png)
+
+4.使用Instruments：Instruments是一个动态分析和性能调试工具，它可以帮助你找到BAD_ACCESS错误。你可以在Xcode中的Product菜单下选择Profile来打开Instruments，然后选择Leaks或者Zombies来检查内存问题。
+
+除了以上 Xcode 的配置之外, 也可以在改造代码, 来进行辅助, 比如: 重写object的respondsToSelector方法，现实出现EXEC_BAD_ACCESS前访问的最后一个object
 
 ### 55. lldb（gdb）常用的调试命令？
 
