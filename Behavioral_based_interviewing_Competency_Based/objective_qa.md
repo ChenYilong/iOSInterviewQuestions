@@ -1,6 +1,9 @@
 # 自我介绍类型Behavioral-based interviewing Competency-Based Interviewing
 
-![https://github.com/ChenYilong/iOSInterviewQuestions](assets/Untitled.png)
+
+![https://github.com/ChenYilong/iOSInterviewQuestions](/assets/mindmap_of_Behavioral_based_interviewing_Competency_Based.png)
+
+
 
 ## 视频介绍
 

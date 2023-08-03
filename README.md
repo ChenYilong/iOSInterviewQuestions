@@ -77,6 +77,15 @@
 
  [《技术清谈面试题系列》](https://github.com/iteatimeteam/Friday-QA) 
  
+ 
+## 行为面试题
+
+![https://github.com/ChenYilong/iOSInterviewQuestions](/assets/mindmap_of_Behavioral_based_interviewing_Competency_Based.png)
+
+
+-  [《自我介绍类型》]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/Behavioral_based_interviewing_Competency_Based/objective_qa.md ) 
+-  [《主观问题类型》]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/Behavioral_based_interviewing_Competency_Based/subjective_qa.md ) 
+
 -------------
 
 Posted by Posted by [微博@iOS程序犭袁](http://weibo.com/luohanchenyilong/) & [公众号@iTeaTime技术清谈](https://mp.weixin.qq.com/s/A4e5h3xgIEh6PInf1Rjqsw) 
