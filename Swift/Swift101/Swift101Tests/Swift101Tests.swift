@@ -7,6 +7,53 @@
 
 import XCTest
 @testable import Swift101
+class MyOperation: Operation {
+    private var _executing = false {
+        willSet {
+            willChangeValue(forKey: "isExecuting")
+        }
+        didSet {
+            didChangeValue(forKey: "isExecuting")
+        }
+    }
+
+    override var isExecuting: Bool {
+        return _executing
+    }
+
+    private var _finished = false {
+        willSet {
+            willChangeValue(forKey: "isFinished")
+        }
+        didSet {
+            didChangeValue(forKey: "isFinished")
+        }
+    }
+
+    override var isFinished: Bool {
+        return _finished
+    }
+
+    override func start() {
+        if isCancelled {
+            _finished = true
+            return
+        }
+        _executing = true
+        main()
+    }
+
+    override func main() {
+        DispatchQueue.global().asyncAfter(deadline: .now() + 2) {
+            print("MyOperation async done")
+
+            self._executing = false
+            self._finished = true
+        }
+    }
+}
+
+
 
 final class Swift101Tests: XCTestCase {
 
@@ -59,5 +106,24 @@ final class Swift101Tests: XCTestCase {
         let squaredNumbers = sampleNumbers.map { $0 * $0 }
         print("compactMap ", squaredNumbers) // Output: [1, 4, 9, 16]
 
+    }
+    
+    func testQueue() {
+        let op0 = MyOperation()
+        let op1 = MyOperation()
+
+        op0.addDependency(op1)
+
+        let queue = OperationQueue()
+        queue.addOperation(op0)
+        queue.addOperation(op1)
+
+        queue.waitUntilAllOperationsAreFinished()
+
+        print("after waitUntilAllOperationsAreFinished")
+        
+        queue.addBarrierBlock {
+            print("barrier block")
+        }
     }
 }
