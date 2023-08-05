@@ -33,7 +33,7 @@ Swift面试题共分为两篇:
 - 属性中，值属性，和计算属性有什么区别？
 - 声明⼀个只有⼀个参数没有返回值闭包的别名
 -  Principle of Dictionary?
-- What's the difference between `passthroughSubject` and `CurrentValueSubject`?
+
 ## **泛型：**
 
 - Q.什么是泛型，swift哪些地方使用了泛型？
@@ -89,6 +89,8 @@ Swift面试题共分为两篇:
 
 - Explain reactive programming and its advantages, mentioning frameworks like RxSwift and Combine. 如何在 Swift 中实现函数式编程？请举一个示例。
 - Q.Swift 是面向对象还是函数式的编程语言?
+- - What's the difference between `passthroughSubject` and `CurrentValueSubject`?
+
 
 ## **可选类型：**
 
@@ -811,10 +813,12 @@ let someClosuer: SomeClosuerType = { (name: String) in
 ```
 
 #### 2. Principle of Dictionary
+![5](assets/5-1.jpg)
+
 https://medium.com/swift-algorithms-extras/understanding-hash-tables-dictionaries-sets-with-swift-4605e905973e
 
-#### 5. What's the difference between `passthroughSubject` and `CurrentValueSubject`?
-https://www.avanderlee.com/combine/passthroughsubject-currentvaluesubject-explained/
+https://chat.openai.com/share/c7881993-fedb-4089-bf83-bf8e05f1cab4
+
 
 ## **泛型：**
 
@@ -835,10 +839,6 @@ https://www.avanderlee.com/combine/passthroughsubject-currentvaluesubject-explai
 [Swift 范型（Generics译文） - 掘金](https://juejin.cn/post/6870424765958455303)
 
 [Swift 初体验（10）- 泛型 【完结🎉🎉🎉】](https://www.freecodecamp.org/chinese/news/swift-getting-started-10/)
-
-![](../assets/16911994601308.jpg)
-
-![](../assets/16911994672006.jpg)
 
 ![](../assets/16911994768336.jpg)
 
@@ -881,9 +881,21 @@ Any 类型会避开类型的检查，具体⻅下⾯代码例⼦：*
 
 
 #### 7. What's the difference between `opaque type` and `generic`?
-https://docs.swift.org/swift-book/LanguageGuide/OpaqueTypes.html
+https://docs.swift.org/swift-book/documentation/the-swift-programming-language/opaquetypes/
+
+https://chat.openai.com/share/87bd8875-d80d-4567-97f6-fe869edc8f7b
+
+![4](assets/4-1.jpg)
 
 
+
+![7](assets/7-1.jpg)
+![1](assets/1-4.jpg)
+![2](assets/2-2.jpg)
+![3](assets/3-2.jpg)
+![4](assets/4-2.jpg)
+![5](assets/5-2.jpg)
+![6](assets/6-1.jpg)
 
 ## 内存管理、**性能优化和调试：**
 
@@ -1721,6 +1733,15 @@ Swift 既是面向对象的，又是函数式的编程语言。
 [一文读懂Swift函数式编程](https://zhuanlan.zhihu.com/p/192483039)
 
 拓展问题: 如何在 Swift 中实现函数式编程？请举一个示例。
+
+#### 5. What's the difference between `passthroughSubject` and `CurrentValueSubject`?
+
+https://chat.openai.com/share/390f02bf-7c26-461d-908a-172e53d9177f
+
+![3](assets/3-1.jpg)
+
+https://www.avanderlee.com/combine/passthroughsubject-currentvaluesubject-explained/
+
 
 ## **可选类型：**
 

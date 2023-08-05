@@ -52,7 +52,7 @@ Swift面试题共分为两篇:
 
 1. How do you securely store API keys in your Swift code without exposing them? Have you worked with making API calls that require API keys? How did you handle the secure storage of those keys?
 
-调试、版本管理、**项目管理：**
+调试、版本管理、项目管理：
 
 - If your app has performance issues, how would you identify them and how do you resolve them?
 1. Are you familiar with setting up CI/CD pipelines for Swift projects?
@@ -712,10 +712,43 @@ https://www.hackingwithswift.com/swift/5.5/structured-concurrency
 
 结构化并发（Structured Concurrency）：
 
-How to implement structured concurrency?
+Structured concurrency is a programming paradigm that aims to make concurrent execution more robust and manageable. In Swift, it was introduced with Swift 5.5 and provides a way to work with asynchronous code that simplifies error handling and resource management.
+
+Here's a brief overview of how structured concurrency works in Swift:
+
+1. **Task Management**: Structured concurrency in Swift lets you create and manage concurrent tasks within a specific scope, ensuring that the tasks are properly canceled or completed before moving on. This helps to avoid resource leaks and unexpected behaviors.
+
+2. **Async/Await Pattern**: Using the `async` and `await` keywords, you can write code that appears synchronous, but can execute concurrently. This makes the code more readable and understandable, as it removes the need for callback closures, which can lead to "callback hell."
+
+3. **Child Tasks**: You can create child tasks within a parent task, and they will be automatically managed within the context of that parent. This provides a clear hierarchy and ownership of tasks, which aids in proper resource management and error handling.
+
+4. **Actors**: Swift’s structured concurrency also introduces actors, which are reference types that protect access to their mutable state. An actor class ensures that only one task is accessing its mutable state at any given time, helping to prevent data races.
+
+5. **Cancellation**: Tasks can be easily canceled within their structured context, which ensures that all resources are properly cleaned up.
+
+6. **Error Propagation**: Errors from child tasks can be easily propagated to parent tasks, making it simple to handle errors across different levels of the task hierarchy.
+
+Here's an example of using async/await in Swift:
+
+```swift
+func fetchData() async throws -> Data {
+    // ...
+}
+
+async {
+    do {
+        let data = try await fetchData()
+        // Process data
+    } catch {
+        // Handle error
+    }
+}
+```
+
+Structured concurrency in Swift provides a safer and more intuitive way to write concurrent code, reducing common pitfalls associated with traditional concurrent programming practices.
 
 
-**网络编程：**
+## 网络编程
 
 ## 16. How does the device register for push notifications, and how do notifications come from the server side?
 
