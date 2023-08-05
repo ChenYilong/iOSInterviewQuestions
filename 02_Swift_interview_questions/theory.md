@@ -1,5 +1,8 @@
 # 理论篇: Swift/ObjC 语言基础
 
+<p align="center"><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/theory.md"><img src="assets/Swift_theory_Interview_Questions.jpg"></a></p>
+
+
 ## 代码优化题
 
 1. 优化判断题
@@ -224,13 +227,13 @@ class Test {
 
 [https://chat.openai.com/share/eef4d254-7ff5-4b37-b58e-431fb10e4e97](https://chat.openai.com/share/eef4d254-7ff5-4b37-b58e-431fb10e4e97)
 
-![](assets/16911993105830.jpg)
+![](../assets/16911993105830.jpg)
 
-![](assets/16911993775698.jpg)
+![](../assets/16911993775698.jpg)
 
-![](assets/16911993939541.jpg)
+![](../assets/16911993939541.jpg)
 
-![](assets/16911994019477.jpg)
+![](../assets/16911994019477.jpg)
 
 
 ## 介绍一下 Swift 相关的重要变更事件
@@ -290,7 +293,7 @@ Swift Concurrency 不是建⽴在 GCD 上，⽽是使⽤的⼀个全新的线程
 In Swift, **Array, String, and Dictionary are all value types**. They behave much like a simple int value in C, acting as a unique instance of that data. Reference Type : Copying a reference on the other hand implicitly creates a shared instance.
 
 ## struct VS class?
-![](assets/16911997093380.jpg)
+![](../assets/16911997093380.jpg)
 
 
 [Getting to Know Enum, Struct and Class Types in Swift](https://www.kodeco.com/7320-getting-to-know-enum-struct-and-class-types-in-swift)
@@ -387,7 +390,7 @@ struct 是赋值， class是引用
 
 在struct 的[计算属性](https://so.csdn.net/so/search?q=%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7&spm=1001.2101.3001.7020)（computed property）里，不允许改变成员变量
 
-![](assets/16911994188320.jpg)
+![](../assets/16911994188320.jpg)
 
 
 加上 **@State 就可以改变了**
@@ -398,10 +401,10 @@ struct 是赋值， class是引用
 
 [Mutating Readonly Structs](https://learn.microsoft.com/en-us/archive/blogs/ericlippert/mutating-readonly-structs)
 
-![](assets/16911994290631.jpg)
+![](../assets/16911994290631.jpg)
 
 
-![](assets/16911994377956.jpg)
+![](../assets/16911994377956.jpg)
 
 
 [Swift: Mutating Function](https://youtu.be/lXp3MNT_EZc)
@@ -645,17 +648,17 @@ let someClosuer: SomeClosuerType = { (name: String) in
 
 [Swift 初体验（10）- 泛型 【完结🎉🎉🎉】](https://www.freecodecamp.org/chinese/news/swift-getting-started-10/)
 
-![](assets/16911994601308.jpg)
+![](../assets/16911994601308.jpg)
 
-![](assets/16911994672006.jpg)
+![](../assets/16911994672006.jpg)
 
-![](assets/16911994768336.jpg)
+![](../assets/16911994768336.jpg)
 
-![](assets/16911994872119.jpg)
+![](../assets/16911994872119.jpg)
 
 
 
-![](assets/16911994941254.jpg)
+![](../assets/16911994941254.jpg)
 
 
 [https://chat.openai.com/share/faa41aed-9f00-4070-b6f1-ab3be7dbb238](https://chat.openai.com/share/faa41aed-9f00-4070-b6f1-ab3be7dbb238)
@@ -913,8 +916,8 @@ ARC 优化 - 虽然和 ObjC ⼀样都是使⽤ ARC，Swift 通过编译器优�
 
 [https://chat.openai.com/share/05a875de-5e3b-4257-b68b-f296c218f16d](https://chat.openai.com/share/05a875de-5e3b-4257-b68b-f296c218f16d)
 
-![swift_map_type_diff_en](assets/swift_map_type_diff_en.jpg)
-![swift_map_type_diff_cn](assets/swift_map_type_diff_cn.jpg)
+![swift_map_type_diff_en](../assets/swift_map_type_diff_en.jpg)
+![swift_map_type_diff_cn](../assets/swift_map_type_diff_cn.jpg)
 
 
 
@@ -1073,20 +1076,16 @@ runtime 之消息转发:
 - 动态⽅法解析（动态缓存，class_addMethod 添加）
 - 消息转发 （forwardingTargetForSelector / methodSignatureForSelector / doesNotRecognizeSelector）
 
-![](assets/16911995736181.jpg)
+![](../assets/16911995736181.jpg)
 
 
-| Swift ⽅法派发  | 直接派发 Direct Dispatch  | 函数表派发 Table Dispatch | 消息机制 Message Dispatch
-转化为 objc_msgSend |
+| Swift ⽅法派发  | 直接派发 Direct Dispatch  | 函数表派发 Table Dispatch | 消息机制 Message Dispatch 转化为 objc_msgSend |
 | --- | --- | --- | --- |
-| NSObject |  @nonobjc or final  | Initial Declaration
-函数内部调⽤ | Extensions dynamic |
-| Class | Extensions final |   Initial Declaration 函数内部调⽤
- | dynamic |
-| Protocol  | Extensions |  Initial Declaration 函数内部调⽤
- |  @objc |
+| NSObject |  @nonobjc or final  | Initial Declaration函数内部调⽤ | Extensions dynamic |
+| Class | Extensions final |   Initial Declaration 函数内部调⽤ | dynamic |
+| Protocol  | Extensions |  Initial Declaration 函数内部调⽤ |  @objc |
 | Value Type 值类型 |  All methods | N/A | N/A |
-|  |  |  |  |
+
 
 [https://chat.openai.com/share/5ed1d819-48e0-4755-8e8c-5d3a6d0e7db6](https://chat.openai.com/share/5ed1d819-48e0-4755-8e8c-5d3a6d0e7db6)
 
@@ -1176,17 +1175,17 @@ class ViewController: UIViewController {
 
  **let** cell: ClassIdenfifiable = BaseCell()
 
-![](assets/16911995859741.jpg)
+![](../assets/16911995859741.jpg)
 
-![](assets/16911995927355.jpg)
+![](../assets/16911995927355.jpg)
 
-![](assets/16911996015251.jpg)
+![](../assets/16911996015251.jpg)
 
 
 
 ### **43. What is polymorphism?**
 
-![](assets/16911996112667.jpg)
+![](../assets/16911996112667.jpg)
 
 
 Polymorphism is an essential building block of any object-oriented programming language. It uses a single symbol to represent many different kinds of entities or the availability of a single interface to entities of diverse types. With polymorphism, your code can operate on either the parent class or one of its offspring, depending on the supported hierarchy (family of objects).
@@ -1225,8 +1224,8 @@ What is a protocol and how can we benefit from it?
 
 [What is protocol extension? Why Swift called as Protocol Oriented Language?](https://www.iosiqa.com/2020/04/what-is-protocol-extension-why-swift.html)
 
-![](assets/16911996216316.jpg)
-![](assets/16911996296998.jpg)
+![](../assets/16911996216316.jpg)
+![](../assets/16911996296998.jpg)
 
 
 
@@ -1264,7 +1263,7 @@ Collection：
 IndexingIterator，类似 IteratorProtocol；
 （下⽂ Sequence 部分有更详细的说明）
 
-![](assets/16911996385220.jpg)
+![](../assets/16911996385220.jpg)
 
 
 ## **闭包：**
@@ -1272,10 +1271,10 @@ IndexingIterator，类似 IteratorProtocol；
 ## Closure in Swift
 
  
-![](assets/16911996525270.jpg)
+![](../assets/16911996525270.jpg)
 
 
-![](assets/16911996457612.jpg)
+![](../assets/16911996457612.jpg)
 
 
 ## 11、Swift 的闭包（Clouse） 和 OC 的 Block
@@ -1370,19 +1369,19 @@ Swift 既是面向对象的，又是函数式的编程语言。
 optional == wrapped 包
 
 when use  optional == unwrapped 解包
-![](assets/16911996627336.jpg)
+![](../assets/16911996627336.jpg)
 
 
 [Difference between optional values in swift?](https://stackoverflow.com/a/29054155/3395008)
-![](assets/16911996707498.jpg)
+![](../assets/16911996707498.jpg)
 
 
 Swift 5.7 introduces a new, more concise way to unwrap optional values using `if let` and `guard let` statements. Before, we always had to explicitly name each unwrapped value, for example like this:
 
 [Swift 5.7’s new optional unwrapping syntax | Swift by Sundell](https://www.swiftbysundell.com/articles/swifts-new-shorthand-optional-unwrapping-syntax/)
-![](assets/16911996765839.jpg)
+![](../assets/16911996765839.jpg)
 
-![](assets/16911996818935.jpg)
+![](../assets/16911996818935.jpg)
 
 
 1. 4. What is the difference between if let and guard let?
