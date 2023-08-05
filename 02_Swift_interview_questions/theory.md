@@ -1,6 +1,6 @@
 # 理论篇: Swift/ObjC 语言基础
 
-<p align="center"><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/theory.md"><img src="../assets/Swift_theory_Interview_Questions.jpg"></a></p>
+<p align="center"><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/practical.md"><img src="../assets/Swift_theory_Interview_Questions.jpg"></a></p>
 
 
 ## 代码优化题
@@ -73,7 +73,7 @@
 - Swift 的闭包（Clouse） 和 OC 的 Block
 - 请解释 Swift 中的闭包是什么，并描述一个闭包在实际编程中的应用场景？
 
-## **函数式编程：**
+## **函数式与响应式编程：**
 
 - Explain reactive programming and its advantages, mentioning frameworks like RxSwift and Combine. 如何在 Swift 中实现函数式编程？请举一个示例。
 - Q.Swift 是面向对象还是函数式的编程语言?
@@ -1664,9 +1664,12 @@ Swift最简单的闭包形式是嵌套函数，也就是定义在其他函数的
 
 ```
 
-## **函数式编程**
+## **函数式与响应式编程**
 
-1. 20. Explain reactive programming and its advantages, mentioning frameworks like RxSwift and Combine.
+
+Explain reactive programming and its advantages, mentioning frameworks like RxSwift and Combine.
+
+ [Answer from AI]( https://chat.openai.com/share/8e77bb97-fdf9-405a-bd44-9c769777211f "") 
 
 Combine跟Rx没啥区别.一个类Redux的架构
 
@@ -1681,7 +1684,7 @@ Swift 既是面向对象的，又是函数式的编程语言。
 
 [一文读懂Swift函数式编程](https://zhuanlan.zhihu.com/p/192483039)
 
-1. 如何在 Swift 中实现函数式编程？请举一个示例。
+拓展问题: 如何在 Swift 中实现函数式编程？请举一个示例。
 
 ## **可选类型：**
 
@@ -1750,3 +1753,7 @@ SequenceWrapper 保存了原始序列和变换（transform）；
 LazySequence  的 Interator 在 next() ⽅法中，实现了延迟调⽤变换（transform）；*
 
 1. 请解释 Swift 中的 lazy 关键字是怎么实现的？在什么情况下会使用它？
+
+------
+
+<p align="center"><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/practical.md"><img src="../assets/Swift_practical_Interview_Questions.jpg"></a></p>
