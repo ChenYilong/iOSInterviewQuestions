@@ -1,6 +1,6 @@
 # 理论篇: Swift/ObjC 语言基础
 
-<p align="center"><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/theory.md"><img src="assets/Swift_theory_Interview_Questions.jpg"></a></p>
+<p align="center"><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/theory.md"><img src="../assets/Swift_theory_Interview_Questions.jpg"></a></p>
 
 
 ## 代码优化题
