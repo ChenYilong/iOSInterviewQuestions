@@ -1,8 +1,15 @@
-··
 # 实战篇: iOS项目开发技能
 
 <p align="center"><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/theory.md"><img src="../assets/Swift_practical_Interview_Questions.jpg"></a></p>
 
+Swift面试题共分为两篇:
+
+- [《理论篇: Swift/ObjC 语言基础》](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/theory.md) 
+ - [《实战篇: iOS项目开发技能》]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/practical.md ) 
+
+是我自己在国外面试时准备的笔记, 所以很多是英文的, 后续有时间再翻译. 
+
+# 目录
 
  **UI布局：**
 
@@ -52,19 +59,15 @@
 2. Can you tell me more about how you manage libraries and codebases in your project?
 3. How do you debug crash issues in your daily work?
 
-### Unit Test
-#### 1. How to mock data
+ Unit Test
+1. How to mock data
+1. How to separate production env and mock
+2. How to test the view model with SwiftUI?
+3. How to inject mocked networking logic?
+4. What's Test-driven development?
 
 
-#### 2. How to separate production env and mock
-
-#### 3. How to test the view model with SwiftUI?
-
-#### 4. How to inject mocked networking logic?
-
-#### 5. What's Test-driven development?
-
-
+# 正文
 
 
  **UI布局：**
@@ -163,6 +166,7 @@ https://www.hackingwithswift.com/quick-start/swiftui/whats-the-difference-betwee
 
 
 **设计模式：**
+![1](assets/1-1.jpg)
 
 ## MVC vs MVP vs MVVM
 
@@ -202,9 +206,10 @@ state，action本身内部内聚很高, 类似声明. 一旦类似delegate的act
 
 clean喜欢把protocol化可注入的层叫use case，命名一般叫xxxRepository
 
+![2](assets/2-1.jpg)
+
 ## 18. What kind of code typically resides in view models in MVVM?
 
-**并发和多线程开发：**
 
 What is the difference between clean and MVVM architecture?
 
@@ -245,7 +250,7 @@ What is the difference between clean and MVVM architecture?
 需要注意的是，ViewModel 不应该直接访问 View，所有的交互都应该通过数据绑定和命令来完成。这样可以确保 ViewModel 和 View 的解耦，使得 ViewModel 可以方便的进行单元测试。
 
 ```swift
-//下面是一段 MVVM 中的 ViewModel 代码. 请指出下面的代码中, 分别对应着 ViewModel 的哪些指责:
+//下面是一段 MVVM 中的 ViewModel 代码. 请指出下面的代码中, 分别对应着 ViewModel 的哪些职责?
 // [2023-07-28 16:43:05] @iTeaTime(技术清谈)@ChenYilong
 enum ViewState {
     case loading
@@ -416,8 +421,9 @@ https://synoptek.com/insights/it-blogs/greenfield-vs-brownfield-software-develop
 https://www.avanderlee.com/swift/async-await/
 
 ## 19. How can you wait for multiple network calls to complete before calling a function that relies on the results?
+![1](assets/1.jpg)
 
-这个题就是给Task.group量身定制的么. 过去可能得用Semaphore吧，话说reactive的方式里有啥能实现这个的？比如combine和Rx，有专门的operator么？我就想到了dispatchGroup
+这个题就是给Task.group量身定制的么. 过去可能得用Semaphore吧.
 
 it depends, if we do the network request in swift concurrency. I would use TaskGroup.
 
@@ -426,6 +432,7 @@ otherwise, use simple dispatch_group_t
 [https://chat.openai.com/share/79258fec-cf51-41b4-adaf-64a7f91627b4](https://chat.openai.com/share/79258fec-cf51-41b4-adaf-64a7f91627b4)
 
 在 Swift 5.5 及以后的版本，可以使用 `async/await` 以及 `TaskGroup` 来实现你所说的多个请求同时发出，然后等待所有的结果都回来。以下是一个基本的示例：
+![3](assets/3.jpg)
 
 ```swift
 import Foundation
@@ -469,6 +476,170 @@ async {
 注意，这个代码应该在某个 `async` 函数或者闭包中运行。在这个示例中，我们使用 `async {}` 创建了一个异步闭包来运行这段代码。如果你在你自己的代码中使用这个模式，你应该把这段代码放在一个 `async` 函数中。
 
 最后，请注意处理可能会抛出的错误。在这个示例中，我们使用 `do-catch` 来捕获并打印可能会发生的错误。
+
+在 Swift 中，如果你不使用 async/await，你可以使用 `DispatchGroup` 来管理多个并发的任务。以下是一个基本的示例：
+
+```swift
+import Foundation
+
+// 模拟一个异步的网络请求函数
+func fetchSomething(id: Int, completion: @escaping (Int) -> Void) {
+    DispatchQueue.global().asyncAfter(deadline: .now() + .seconds(Int.random(in: 1...3))) {
+        completion(id)
+    }
+}
+
+// 创建一个新的调度组
+let group = DispatchGroup()
+
+for i in 1...5 {
+    group.enter()  // 在启动新任务前调用
+
+    fetchSomething(id: i) { result in
+        print("结果: \(result)")
+        group.leave()  // 在任务完成后调用
+    }
+}
+
+// 等待所有的结果
+group.notify(queue: .main) {
+    print("所有结果都已回来")
+}
+```
+
+在这个示例中，`fetchSomething(id:completion:)` 是一个模拟的异步网络请求函数。它接受一个 `id` 参数和一个完成回调，然后在一段随机的时间后调用这个回调并传入这个 `id`。
+
+然后，我们创建一个 `DispatchGroup`，并向这个调度组添加5个异步任务。每个任务都会调用 `fetchSomething(id:completion:)`，并传入不同的 `id` 和一个完成回调。
+
+在启动每个任务之前，我们调用 `group.enter()`。在每个任务完成后，我们在完成回调中调用 `group.leave()`。
+
+最后，我们使用 `group.notify(queue:)` 来等待所有的结果。当所有的结果都返回时，这个回调会被调用。
+
+如果你不使用 `DispatchGroup` 和 `async/await`，你可以使用 `OperationQueue` 和 `Operation`。你可以将每个网络请求封装为一个 `Operation`，并将这些 `Operation` 添加到一个 `OperationQueue` 中。然后，你可以创建一个完成操作，设置其依赖为所有的网络请求操作，以此来实现等待所有结果都返回的功能。
+![2](assets/2.jpg)
+
+以下是一个基本的示例：
+
+```swift
+import Foundation
+
+// 模拟一个异步的网络请求操作
+class FetchOperation: Operation {
+    let id: Int
+    var result: Int?
+
+    init(id: Int) {
+        self.id = id
+    }
+
+    override func main() {
+        // 在这里进行网络请求
+        Thread.sleep(forTimeInterval: TimeInterval(Int.random(in: 1...3)))
+        result = id
+    }
+}
+
+// 创建一个操作队列
+let queue = OperationQueue()
+
+// 创建网络请求操作
+var operations = [FetchOperation]()
+for i in 1...5 {
+    let operation = FetchOperation(id: i)
+    operations.append(operation)
+    queue.addOperation(operation)
+}
+
+// 创建一个完成操作
+let completionOperation = BlockOperation {
+    for operation in operations {
+        print("结果: \(operation.result ?? 0)")
+    }
+}
+
+// 设置完成操作的依赖
+for operation in operations {
+    completionOperation.addDependency(operation)
+}
+
+// 添加完成操作到队列
+queue.addOperation(completionOperation)
+```
+
+在这个示例中，`FetchOperation` 是一个自定义的 `Operation`，用于模拟网络请求。它有一个 `id` 属性来标识每个请求，以及一个 `result` 属性来存储每个请求的结果。
+
+然后，我们创建一个 `OperationQueue`，并向这个队列添加5个 `FetchOperation`。每个 `FetchOperation` 都会进行一个网络请求，并将结果存储在其 `result` 属性中。
+
+接着，我们创建一个 `BlockOperation` 来作为完成操作。这个完成操作会等待所有的网络请求操作都完成，然后打印所有的结果。
+
+为了实现这个功能，我们将所有的网络请求操作添加为这个完成操作的依赖。这样，只有当所有的网络请求操作都完成后，这个完成操作才会开始执行。
+
+最后，我们将这个完成操作添加到队列中。
+
+如果你不使用 `DispatchGroup`，`async/await`，和 `OperationQueue`，可以使用 `Semaphores` 一起配合 `DispatchQueue` 来实现等待所有结果返回。以下是一个基本的示例：
+
+```swift
+import Foundation
+
+var results = [Int]()
+let dispatchSemaphore = DispatchSemaphore(value: 0)
+let dispatchQueue = DispatchQueue(label: "com.example.queue", attributes: .concurrent)
+
+for i in 1...5 {
+    dispatchQueue.async {
+        // 在这里进行网络请求
+        Thread.sleep(forTimeInterval: TimeInterval(Int.random(in: 1...3)))
+        results.append(i)
+        dispatchSemaphore.signal()
+    }
+}
+
+for _ in 1...5 {
+    dispatchSemaphore.wait()
+}
+
+print("所有结果都已回来: \(results)")
+```
+
+在这个示例中，首先创建一个并行队列 `dispatchQueue` 和一个信号量 `dispatchSemaphore`。信号量的初始值为0，表示没有可以使用的资源。
+
+对于每个网络请求，我们都在 `dispatchQueue` 中创建一个新的任务。每个任务都会进行一个网络请求，并将结果添加到 `results` 数组中。当任务完成时，我们调用 `dispatchSemaphore.signal()` 来增加信号量的值，表示一个资源变为可用。
+
+然后，我们使用一个循环来等待所有的结果。在每次迭代中，我们都调用 `dispatchSemaphore.wait()` 来减少信号量的值，表示我们正在等待一个资源。当所有的资源都变为可用时（也就是所有的网络请求都完成时），这个循环就会结束。
+
+最后，我们打印所有的结果。
+
+
+
+Grand Central Dispatch (GCD) 的 `barrier` 可以被用来实现在特定的并行队列中创建一个临界区，这个临界区在所有的先前的任务都完成之后才开始执行，并且它完成之前不会开始执行任何后续的任务。你可以用 `barrier` 来确保所有的网络请求都完成后再执行依赖于这些请求结果的操作。
+
+下面是一个基本的示例：
+
+```swift
+import Foundation
+
+let concurrentQueue = DispatchQueue(label: "com.example.queue", attributes: .concurrent)
+var results = [Int]()
+
+for i in 1...5 {
+    concurrentQueue.async {
+        // 在这里进行网络请求
+        Thread.sleep(forTimeInterval: TimeInterval(Int.random(in: 1...3)))
+        results.append(i)
+    }
+}
+
+concurrentQueue.async(flags: .barrier) {
+    print("所有结果都已回来: \(results)")
+}
+```
+
+在这个示例中，首先创建一个并行队列 `concurrentQueue`。对于每个网络请求，我们都在 `concurrentQueue` 中创建一个新的任务。每个任务都会进行一个网络请求，并将结果添加到 `results` 数组中。
+
+然后，我们使用 `concurrentQueue.async(flags: .barrier) {}` 来创建一个 `barrier` 任务。这个任务会等待所有先前的网络请求任务都完成后才开始执行，而且它完成之前不会开始执行任何后续的任务。在这个任务中，我们打印所有的结果。
+
+注意：这个方法仅仅在自己创建的并行队列中有效，对于系统的全局并行队列并不起作用，因为全局并行队列不能被单个任务阻塞。
+
 
 #### 1. How to implement structured concurrency?
 https://www.hackingwithswift.com/swift/5.5/structured-concurrency
@@ -540,22 +711,13 @@ When using such services, you generally need to send the device token to your ow
 **安全相关：**
 
 ## 22 .How do you securely store API keys in your Swift code without exposing them? Have you worked with making API calls that require API keys? How did you handle the secure storage of those keys?
+![7](assets/7.jpg)
+![8](assets/8.jpg)
+![9](assets/9.jpg)
+![10](assets/10.jpg)
+![11](assets/11.jpg)
 
-这个我们是做了十六进制的混淆的，每次调用在runtime里decode一下
 
-'ll do some letters replacement trick.like I'll replace all a to A, then save it to the disk.like key chains.这种, 简单的反汇编看到的string不是最终的key.
-
-这个之前看到有些是放到单独的类，然后好像是把这个类从 Git 里移除.
-
-凯撒密码。。。。机械加密法是最原始的加密方式.还不如hash呢. 不, 前提是这个key是字符串本地的 . 不是remote下载的. 
-
-那就混合加密吧, 机械加密+DSA, 然后hash, 万无一失,
-
-比如现在告诉你, apple key id 是 "abcde" 让你存本地, 你会怎么存, 打包就会带上的, 转成ASCII，然后当string用.转成ascii的话. 如果我是想偷key的人, 我就会用反编译工具简单查看所有string.找到这个之后. 打眼一看就是ascii的. 无任何安全措施. 
-
-it depends,一方面是代码里面可以加密解密. 增加反编译的难度. 另一方面, 可以讲这些key存放在本地的一个文件中, 例如你可以把信息放进一个image中, 通过读取image, 再转换成string. 因为没人会知道一张图片是一个存放key的地方, 就算知道了, 也不知道key存在image哪里.让我想起了当年贴吧上的种图. 把片子的种子文件放在一个.rar文件里，然后跟一个image合并，上传贴吧 阿里的组件, 接入流程里, 会告诉你需要安全图片, 实际上就是存放 Key的地方. [https://baichuan.taobao.com/docs/doc.htm?spm=a3c0d.7662649.0.0.5608be48IxwIEA&treeId=129&articleId=118101&docType=1](https://baichuan.taobao.com/docs/doc.htm?spm=a3c0d.7662649.0.0.5608be48IxwIEA&treeId=129&articleId=118101&docType=1) 
-
-因为key高概率都是字母数字符号啥的. 基本都在0x7F内.  传统加密会遇到一些问题.你以为要加密, 所以要提供另一个key, 会引入新的安全问题. 但是当然key多了, 估计偷的人也傻逼了.hash一下呢. hash不可逆哦. 我们密码学课上老师讲过，没有破解不了的加密方式，但是你可以让破解成本趋近于无穷. hash之后, 偷的人不知道了, app自己也不知道了. base64也算一种hash. base64结构太典型, 一眼就能看出. 直接decode. 理论上md5都是可逆的。。。。
 
 [Secure Secrets in iOS app](https://medium.com/swift-india/secure-secrets-in-ios-app-9f66085800b4)
 
@@ -579,7 +741,24 @@ it depends,一方面是代码里面可以加密解密. 增加反编译的难度.
 5. 零知识证明：这是一种先进的密码学技术，可以使服务器验证用户的身份，而无需知道用户的凭证。这种方法可以用来替代传统的API密钥，进一步提高应用的安全性。
 6. 在客户端不存储密钥：最好的方法可能是不在客户端存储密钥，而是在服务器端进行存储，并通过安全的方法在需要的时候将其传输到客户端。例如，每次需要API密钥时，都可以向一个安全的服务器端点发送请求，然后服务器会返回一个临时密钥，这个密钥在一段时间后会过期。这种方法的优点是密钥不会被永久存储在客户端，从而减少了被攻击者获取的可能性。
 
-希望这些建议能够帮助您提高在Swift中安全存储API密钥的能力！
+
+上面是标准的答案, 下面谈一下之前在项目中的一些实际操作: 
+
+这个我们是做了十六进制的混淆的，每次调用在runtime里decode一下
+
+'ll do some letters replacement trick.like I'll replace all a to A, then save it to the disk.like key chains.这种, 简单的反汇编看到的string不是最终的key.
+
+这个之前看到有些是放到单独的类，然后好像是把这个类从 Git 里移除.
+
+凯撒密码。。。。机械加密法是最原始的加密方式.还不如hash呢. 不, 前提是这个key是字符串本地的 . 不是remote下载的. 
+
+那就混合加密吧, 机械加密+DSA, 然后hash, 万无一失,
+
+比如现在告诉你, apple key id 是 "abcde" 让你存本地, 你会怎么存, 打包就会带上的, 转成ASCII，然后当string用.转成ascii的话. 如果我是想偷key的人, 我就会用反编译工具简单查看所有string.找到这个之后. 打眼一看就是ascii的. 无任何安全措施. 
+
+it depends,一方面是代码里面可以加密解密. 增加反编译的难度. 另一方面, 可以讲这些key存放在本地的一个文件中, 例如你可以把信息放进一个image中, 通过读取image, 再转换成string. 因为没人会知道一张图片是一个存放key的地方, 就算知道了, 也不知道key存在image哪里.让我想起了当年贴吧上的种图. 把片子的种子文件放在一个.rar文件里，然后跟一个image合并，上传贴吧 阿里的组件, 接入流程里, 会告诉你需要安全图片, 实际上就是存放 Key的地方. [https://baichuan.taobao.com/docs/doc.htm?spm=a3c0d.7662649.0.0.5608be48IxwIEA&treeId=129&articleId=118101&docType=1](https://baichuan.taobao.com/docs/doc.htm?spm=a3c0d.7662649.0.0.5608be48IxwIEA&treeId=129&articleId=118101&docType=1) 
+
+因为key高概率都是字母数字符号啥的. 基本都在0x7F内.  传统加密会遇到一些问题.你以为要加密, 所以要提供另一个key, 会引入新的安全问题. 但是当然key多了, 估计偷的人也傻逼了.hash一下呢. hash不可逆哦. 我们密码学课上老师讲过，没有破解不了的加密方式，但是你可以让破解成本趋近于无穷. hash之后, 偷的人不知道了, app自己也不知道了. base64也算一种hash. base64结构太典型, 一眼就能看出. 直接decode. 理论上md5都是可逆的。。。。
 
 这个我们就是用的keystore而已，外加一个过期时间.这个策略也跟后台他们对token的验证策略有关. 
 

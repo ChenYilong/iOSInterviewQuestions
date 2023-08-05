@@ -153,6 +153,10 @@ The priority is that it's also good knowledge for me to learn more.
 Part, what part of your job do you think will make you feel stressed that's you can link that to your weaknesses. But, again, those questions are very similar.
 
 ## How would you handle conflict with a co-worker/ product owner / user experience?
+![4](assets/4-1.jpg)
+![5](assets/5-1.jpg)
+![6](assets/6-1.jpg)
+![7](assets/7-1.jpg)
 
 First, I would like to have a principle that says User Experience Always Has to Come First.
 

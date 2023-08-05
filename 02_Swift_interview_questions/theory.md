@@ -2,6 +2,14 @@
 
 <p align="center"><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/practical.md"><img src="../assets/Swift_theory_Interview_Questions.jpg"></a></p>
 
+Swift面试题共分为两篇:
+
+- [《理论篇: Swift/ObjC 语言基础》](https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/theory.md) 
+ - [《实战篇: iOS项目开发技能》]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/practical.md ) 
+
+ 是我自己在国外面试时准备的笔记, 所以很多是英文的, 后续有时间再翻译. 
+
+# 目录
 
 ## 代码优化题
 
@@ -94,6 +102,8 @@
 
 - 请解释 Swift 中的 lazy 关键字是怎么实现的？在什么情况下会使用它？
 - *lazy load 是怎么实现的？*
+
+# 正文
 
 ## 代码优化题
 
@@ -197,6 +207,7 @@ question6:152
 注意 与 copy on write 辨别  
 
 ## 代码题
+![5](assets/5.jpg)
 
 [https://chat.openai.com/share/29d0a44a-26cc-4685-a68a-92a134be6d3e](https://chat.openai.com/share/29d0a44a-26cc-4685-a68a-92a134be6d3e)
 
@@ -898,6 +909,7 @@ unowned 不会为空，可以使⽤ let 声明，性能损耗⽐ weak ⼩⼀点�
 要保证 unowned 的⽣命周期要和强引⽤对象同样或者更⻓，不然就会导致崩溃；
 
 ## 解决 retain cycle, 什么时候用unowned、weak、closure capture list??
+![1](assets/1-2.jpg)
 
 In Swift, both `weak` and `unowned` are ways to prevent strong reference cycles (also known as retain cycles) which can cause memory leaks in your application. When two instances of classes reference each other, and they both have strong references to each other, they can't be deallocated because each thinks that the other is still in use. This is where `weak` and `unowned` come into play.
 
@@ -1399,6 +1411,7 @@ O(n)
 ## 面向对象
 
 ## 1、Swift 对象和 OC 对象的区别
+![6](assets/6.jpg)
 
 1）初始化
 初始化 OC 默认置空，可以⽗类 -> ⼦类 （通过 super.init）
@@ -1550,6 +1563,7 @@ Polymorphism is an essential building block of any object-oriented programming l
 ## **面向协议编程：**
 
 What is a protocol and how can we benefit from it?
+![1](assets/1-3.jpg)
 
 **What is protocol extension? Why Swift called as Protocol Oriented Language?**
 
@@ -1572,6 +1586,7 @@ What is a protocol and how can we benefit from it?
 
 
 ## 2、Swift 的协议和 OC 的协议有什么区别
+![4](assets/4.jpg)
 
 1）OC 的协议⽤来实现代理；
 
