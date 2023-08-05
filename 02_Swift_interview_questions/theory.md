@@ -196,32 +196,199 @@ question6:152
 
 [https://chat.openai.com/share/29d0a44a-26cc-4685-a68a-92a134be6d3e](https://chat.openai.com/share/29d0a44a-26cc-4685-a68a-92a134be6d3e)
 
-// how to improve this code if animalsInEating number is big?
- 
+
+## 题目
+
+如果 carsInDriving 的数量很大，如何改进这段代码？
 
 ```swift
-struct Animal {
-    var eating = false
+struct Car {
+    var driving = false
 }
+
 class Test {
-    var animals: [Animal] = [...]
-    var animalsInEating: [Animal] {
-        animals.filter({$0.eating})
+    var cars: [Car] = []
+
+    var carsInDriving: [Car] {
+        cars.filter({$0.driving})
     }
-    
-    // how to improve this code if animalsInEating number is big?
+
     func loop() {
-        for animal in animalsInEating {
-            
+        for car in carsInDriving {
+            // ...
         }
-        
     }
 }
+
 ```
 
-[Swfit代码优化题](https://www.notion.so/Swfit-8f330a7abd3544029dbda2a5cc53cafc?pvs=21)
+## 答案
 
-[代码题备份](https://www.notion.so/4ff95fec111949789e2cdec3317a5bf0?pvs=21)
+**初始**方案 **：**
+
+```swift
+struct Car {
+    var driving = false
+}
+
+class Test {
+    var cars: [Car] = []
+
+    var carsInDriving: [Car] {
+        cars.filter({$0.driving})
+    }
+
+    func loop() {
+        for car in carsInDriving {
+            // ...
+        }
+    }
+}
+
+```
+
+在这段代码中，`carsInDriving` 的 getter 方法有 O(n) 的时间复杂度，其中 n 是 `cars` 数组的元素数量。这是因为我们需要检查数组中的每个元素以确定它是否在驾驶。然而，这个过滤操作只会在每次访问 `carsInDriving` 时执行一次，并且结果不会被存储，所以在同一个 `get` 调用中，复杂度是 O(n)。`loop` 方法的时间复杂度也是 O(n)，这是因为它在每次调用时都需要重新计算 `carsInDriving`，然后遍历所有正在驾驶的车。
+
+这里的数组不建议换成set. set主要用于去重的场景, 而且set是无序的.
+
+优化方案1**. 优化后的代码：**
+
+```swift
+struct Car {
+    var driving = false
+}
+
+class Test {
+    private var _carsInDriving: Set<Car>? = nil
+    var cars: [Car] {
+        didSet {
+            _carsInDriving = nil
+        }
+    }
+
+    var carsInDriving: Set<Car> {
+        if let carsInDriving = _carsInDriving {
+            return carsInDriving
+        } else {
+            let carsInDriving = Set(cars.filter({$0.driving}))
+            _carsInDriving = carsInDriving
+            return carsInDriving
+        }
+    }
+
+    func loop() {
+        for car in carsInDriving {
+            // ...
+        }
+    }
+}
+
+```
+
+在这段代码中，`carsInDriving` 的 getter 方法在 `_carsInDriving` 为空时具有 O(n) 的时间复杂度，否则它具有 O(1) 的时间复杂度。这是因为我们只在 `_carsInDriving` 为空时计算 `carsInDriving`，并将结果存储在 `_carsInDriving` 中。这样就创建了一个缓存机制。`loop` 方法的时间复杂度仍然是 O(n)，但如果 `carsInDriving` 被多次调用，并且 `cars` 没有发生改变，那么除了第一次计算外，其余的调用都具有 O(1) 的时间复杂度。
+
+**优化方案2：**
+
+```swift
+struct Car {
+    var driving = false
+}
+
+class Test {
+    var cars: [Car] = []
+
+    func loop() {
+        for car in cars where car.driving {
+            // ...
+        }
+    }
+}
+
+```
+
+在你的代码中，`loop` 方法的时间复杂度是 O(n)，这是因为你直接在 `loop` 方法中遍历 `cars`，并在遍历时过滤出正在驾驶的车辆。这个方法的优点是它在每次调用时都对 `cars` 进行实时的过滤，无需依赖额外的状态，但缺点是每次调用 `loop` 时都需要重新过滤 `cars`。
+
+总结起来，哪种方法更好取决于你的使用情况。如果 `cars` 集合经常变化，或者我们不需要频繁地访问正在驾驶的车辆，那么你的方法可能更好。如果我们需要频繁地访问正在驾驶的车辆，但 `cars` 集合不经常变化，那么第二种优化后的方法可能更好。
+
+方案的另一种写法:
+
+![](../assets/16912026477007.jpg)
+
+首先，我们需要理解`lazy`在Swift中的含义。当我们在集合类型（如数组）上调用`lazy`属性时，我们会得到一个特殊的集合视图，该视图会在需要时才进行计算，从而可能提高性能。这种懒惰的行为对于昂贵的计算操作（如我们的`.filter`操作）可能非常有用。
+
+```swift
+struct Car {
+    var driving = false
+}
+
+class Test {
+    var cars: [Car] = []
+
+    func loop() {
+        for car in cars.lazy.filter({$0.driving}) {
+            // ...
+        }
+    }
+}
+
+```
+
+在这个版本中，我们在`loop`函数内部使用了`lazy.filter`。这会创建一个可以延迟计算其过滤操作的集合视图。由于过滤操作是懒惰的，所以只有在循环中实际需要时，过滤操作才会执行。这种方法有助于避免创建一个新的数组（只包含正在驾驶的车辆），从而减少内存使用并提高性能，尤其是在`cars`数组非常大的情况下。
+
+除了lazy, 还加了一个暂存. 空间换时间.
+
+方案3: 
+
+```swift
+struct Car {
+    var driving = false
+}
+
+class Test {
+    var cars: [Car] = []
+
+    lazy var carsInDriving: [Car] = {
+        cars.filter({$0.driving})
+    }()
+
+    func loop() {
+        for car in carsInDriving {
+            // You can do something with each driving car here.
+        }
+    }
+}
+
+```
+
+在这个版本中，我们将 `Dog` 结构体替换为 `Car`，并将 `running` 属性替换为 `driving`，这样 `driving` 就表示这辆车是否正在行驶。类 `Test` 中的其他部分也进行了相应的修改。现在 `loop` 函数会遍历所有正在驾驶的车辆。
+
+方案4的另一种写法
+
+```swift
+struct Car {
+    var driving = false
+}
+
+class Test {
+    var cars: [Car] = []
+
+    lazy var carsInDriving: LazySequence<[Car]> = {
+        cars.lazy.filter({$0.driving})
+    }()
+
+    func loop() {
+        for car in carsInDriving {
+            // ...
+        }
+    }
+}
+
+```
+
+在这个版本中，`carsInDriving`是一个`lazy`属性，并且是一个`LazySequence`。当你第一次访问`carsInDriving`（在这里是在`loop`函数中）时，它将计算其值并将结果存储起来。与方法A相比，这种方法可以防止在每次调用`loop`函数时都进行过滤操作。但是，如果`cars`数组中车辆的`driving`状态经常发生变化，那么这种方法可能不能反映最新的状态，因为`carsInDriving`在第一次计算后就被存储了起来，不会再更新。
+
+所以，哪种方法更好取决于具体的使用场景。如果你的`cars`数组经常发生变化，那么方法A可能更好，因为它会在每次执行`loop`时反映最新的状态。然而，如果`cars`数组基本不变，但你需要频繁地执行`loop`，那么方法B可能更好，因为它可以避免不必要的重复计算。
+
 
 ## WHY Swift not ObjC?
 
@@ -445,7 +612,7 @@ SILGen/SILGenBuiltin.cpp
 ⾥⾯的实现：（SIL 的特点其⼆：检测不可达（未使⽤）的代码 & 在代码发送给 LLVM 前进⾏
 优化）
 
-复制代码
+
 
 ```swift
 "// This should only accept as an operand type single-refcounted-pointer types,
@@ -754,7 +921,162 @@ The primary difference between `weak` and `unowned` references is that `weak` re
 
 Therefore, you would typically use `weak` when there's a possibility the referenced object might be deallocated while still being weakly referenced (e.g. delegates). Conversely, you would use `unowned` when you know the referenced object will stick around for as long as the object holding the reference is around (e.g. closures referencing `self` where `self` will outlive the closure).
 
-[Swift 的 Capture List ](https://www.notion.so/Swift-Capture-List-f36d988c36d94b2e8bc98045bfdda2f6?pvs=21)
+![](../assets/16912025406113.jpg)
+
+相似之处：
+
+1. Swift 的 Capture List 和 Objective-C 的 __block 和 __weak 都是用来更改闭包或 block 对其外部变量的捕获方式，以便更好地管理内存和控制引用。
+2. 它们都可以防止循环引用的问题，从而避免内存泄漏。
+
+以下是一个使用捕获列表来避免循环引用的例子：
+
+```swift
+class MyClass {
+    var value = 0
+    var closure: (() -> Void)?
+
+    init() {
+        closure = { [weak self] in
+            guard let self = self else {
+                return
+            }
+            print(self.value)
+        }
+    }
+
+    deinit {
+        print("MyClass has been deinitialized")
+    }
+}
+
+do {
+    let instance = MyClass()
+    instance.value = 1
+    instance.closure?()
+} // MyClass has been deinitialized will be printed, indicating there's no retain cycle.
+
+```
+
+在这个例子中，我们将闭包的定义放在了类的初始化方法中，并且在闭包内部使用了 self。但是我们使用了 `[weak self]` 在捕获列表中指定了 self 的捕获方式，所以在闭包内部，self 是一个 Optional 类型。当 MyClass 的实例被释放时，由于我们打破了循环引用，所以 MyClass 的 deinit 方法会被调用，这证明我们避免了 retain cycle。
+
+区别：
+
+1. Swift 中，我们可以通过在闭包内部定义捕获列表来显式声明捕获方式，支持 unowned，weak 或值捕获。而在 Objective-C 中，我们需要在声明变量时使用 __block 或 __weak，它们只能使用这两种方式。
+2. 在 Swift 中，我们可以在捕获列表中捕获多个变量，每个变量的捕获方式可以不同。在 Objective-C 中，我们需要对每个需要捕获的变量单独使用 __block 或 __weak。
+3. Swift 的捕获列表提供了更多的灵活性和控制力，比如你可以在捕获列表中捕获变量的当前值，即使它在外部改变了，闭包内部的值也不会改变。在 Objective-C 中，__block 变量会共享值，即在 block 内部或外部改变，两边都会看到新的值。
+4. Swift 的语法更加现代和简洁，对于引用的管理也更加自动化，减少了手动内存管理的复杂性。在 Objective-C 中，开发者需要更加小心地管理内存和引用。
+
+## 举例说明 Capture List 的捕获变量后的特点
+
+Capture List , 变量捕获, 我举了下面的两个例子, 这样对比起来比较清晰, 能够看出来 捕获后, 变量外部改变不会引起闭包里改变的改变.
+
+第1个例子(命名为 "valueCaptureExample"):
+
+```swift
+var capturedValue: Int = 0
+
+func captureAndChange(_ closure: @escaping () -> ()) {
+    closure()
+}
+
+print(capturedValue)  // 打印0
+
+captureAndChange { capturedValue = 1 }
+
+print(capturedValue)  // 打印1
+
+```
+
+第2个例子(命名为 "valueCaptureListExample"):
+
+```swift
+var capturedValue: Int = 0
+
+let valueCaptureListClosure = { [capturedValue] in
+    print(capturedValue)
+}
+
+capturedValue = 1
+
+valueCaptureListClosure()  // 打印0，说明闭包看到的是捕获时的 capturedValue 的值，而不是当前的值
+
+```
+
+现在，我们来对比示例：
+
+- "valueCaptureExample"（值捕获示例）: 在这个例子中，`capturedValue` 是一个值类型，它被一个没有指定捕获列表的闭包捕获。这个闭包可以改变 `capturedValue` 的值，并且这个改变会影响到外部的 `capturedValue`。
+- "valueCaptureListExample"（值捕获列表示例）: 在这个例子中，`capturedValue` 是一个值类型，它被一个指定了捕获列表的闭包捕获。这个闭包捕获的是创建闭包时 `capturedValue` 的值，而不是这个变量本身。因此，即使在外部改变了 `capturedValue` 的值，闭包也无法看到这个改变。
+
+其中第二个例子, 和下面的写法是等价的: 
+
+也就是不使用Capture List 功能的写法, 显然Capture List 写法更加简洁:
+
+```swift
+var capturedValue: Int = 0
+let capturedValueForClosure = capturedValue  // 这里相当于 Capture List 中的 [capturedValue]
+
+let closure = {
+    var capturedValue = capturedValueForClosure
+    print(capturedValue)  // 在闭包中使用的是 capturedValueForClosure 的值
+}
+
+capturedValue = 1
+
+closure()  // 打印0，说明闭包看到的是捕获时的 capturedValue 的值，而不是当前的值
+```
+
+这里的 `capturedValueForClosure` 的行为模拟了 Capture List 中的 `capturedValue`。即，闭包内部使用的 `capturedValue` 实际上是在闭包创建时就被捕获的 `capturedValueForClosure`，而不是外部变量 `capturedValue`，这样就可以保证即使外部的 `capturedValue` 改变了，闭包内部的 `capturedValue` 也不会受影响。这例子也可以解释 Capture List 的工作原理。
+
+---
+
+第3个例子，我们将其命名为 "referenceCaptureExample":
+
+```swift
+class CapturedClass {
+    var value: Int = 0
+}
+
+var capturedInstance: CapturedClass? = CapturedClass()
+
+let referenceCaptureClosure = {
+    print(capturedInstance?.value ?? -1)
+}
+
+capturedInstance?.value = 1
+
+referenceCaptureClosure()  // 打印1，说明闭包看到的是 capturedInstance 的当前状态
+
+```
+
+- "referenceCaptureExample"（引用捕获示例）: 在这个例子中，`capturedInstance` 是一个引用类型（类的实例）。尽管没有指定捕获列表，但是由于它是引用类型，所以闭包捕获的是这个引用的副本。因此，即使在外部改变了这个实例的属性，闭包也能看到这个改变。
+
+---
+
+第四个例子: 
+
+```swift
+var capturedValue: Int = 0
+
+print(capturedValue)
+
+let closure = {
+    if capturedValue != 0 {
+        capturedValue = 2
+    }
+}
+
+capturedValue = 1
+
+closure()
+
+print(capturedValue)
+
+```
+
+这段代码和例子A的关键区别在于，这里的闭包 `closure` 并没有使用 Capture List 来捕获 `capturedValue` 的初始值，而是直接引用了 `capturedValue`。因此，闭包中的 `capturedValue` 和外部的 `capturedValue` 是同一个变量。所以，在调用 `closure()` 之后，`capturedValue` 的值被改变为2，而不是1。
+
+最后的 `print(capturedValue)` 将会打印出 `2`，而不是 `0`。所以，虽然这两个例子在某些方面看起来类似（都涉及到了闭包和变量的修改），但实际上它们的行为是不同的。这也是 Capture List 在 Swift 闭包中的重要性：使用 Capture List 可以控制闭包捕获变量的行为，使其在需要的时候独立于外部变量。
+
 
 ## What is memory leak ? how to solve?
 
@@ -1218,7 +1540,6 @@ What is a protocol and how can we benefit from it?
 ## 6. Can we add a property in a protocol? Can we put property in the protocol in Swift?
 
 **What is protocol extension? Why Swift called as Protocol Oriented Language?
-[Swift 常见⾯试题合集](https://www.notion.so/Swift-13c29d66f01444eb8d81ecefe03e6c82?pvs=21)** 
 
 [https://chat.openai.com/share/5ed1d819-48e0-4755-8e8c-5d3a6d0e7db6](https://chat.openai.com/share/5ed1d819-48e0-4755-8e8c-5d3a6d0e7db6)
 
