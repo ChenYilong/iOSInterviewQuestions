@@ -1,0 +1,1432 @@
+# 理论篇: Swift/ObjC 语言基础
+
+## 代码优化题
+
+1. 优化判断题
+2. 代码优化
+
+## 数据类型与结构
+
+- WHY Swift not ObjC?
+- 介绍一下 Swift 相关的重要变更事件
+- What is the difference between a struct and a class? 请比较 Swift 中的结构体和类的主要区别？class 和 struct 的区别.
+- Q: if a struct is an immutable value type, why we can mutate the size property?
+- Swift 的 Copy-on-Write 是怎么实现的
+- What are the basic categories of types in Swift?
+- What is a Tuple in Swift?
+- Is it possible to return multiple values from a function in Swift? If yes, how?
+- ﬁnal 是什么：
+- String 与 NSString 的关系与区别：
+- defer 使⽤场景：
+- struct 在堆区还是栈区？
+- 属性中，值属性，和计算属性有什么区别？
+- 声明⼀个只有⼀个参数没有返回值闭包的别名
+
+## **泛型：**
+
+- Q.什么是泛型，swift哪些地方使用了泛型？
+- Have you used generics in Swift?
+- 请解释 Swift 中的泛型是什么？并描述一下它的本质？
+- *泛型的本质*
+
+## 内存管理、**性能优化和调试：**
+
+- When do you use static variables in Swift?static 关键字和 class 关键字 修饰的类⽅法有什么区别？
+- Can you explain the difference between weak and unowned references in Swift?
+- What is memory leak ? how to solve?
+
+## 数据处理、语言安全、 **访问权限：**
+
+- Please implement a convenience init method for a subclass.
+- Swift 的安全性
+- 请解释 Swift 中的访问权限如何设置，以及不同访问级别之间的区别？
+- Swift Try catch 的原理？
+- Swift 的计算属性、存储属性、懒加载
+- How do you filter an array of instances to extract a specific property?
+- *Sequence / ⾼阶函数 / Collection*
+- 混编过程中遇到的 Crash
+
+## 面向对象
+
+- Swift 对象和 OC 对象的区别
+- What is polymorphism?
+- 不通过继承，代码复⽤ / 共享的⽅式有哪些？
+- 父类的分类中写了一个方法, 子类能否直接调用。告知原因。
+
+## **面向协议编程：**
+
+- What is a protocol and how can we benefit from it?
+- Can we add a property in a protocol? Can we put property in the protocol in Swift? And can we share the same property value through protocol in Swift?
+- 请描述什么是面向协议编程（Protocol-oriented Programming），并举例说明其在Swift中如何实现？
+- Swift 的协议和 OC 的协议有什么区别
+- **What is protocol extension? Why Swift called as Protocol Oriented Language?**
+
+## **闭包：**
+
+- Have you worked with closures in Swift?
+- When would you use a closure?
+- What are closures in Swift?
+- 请解释 Swift 中的闭包是什么，并描述一个闭包在实际编程中的应用场景？
+- Swift 的闭包（Clouse） 和 OC 的 Block
+- 请解释 Swift 中的闭包是什么，并描述一个闭包在实际编程中的应用场景？
+
+## **函数式编程：**
+
+- Explain reactive programming and its advantages, mentioning frameworks like RxSwift and Combine. 如何在 Swift 中实现函数式编程？请举一个示例。
+- Q.Swift 是面向对象还是函数式的编程语言?
+
+## **可选类型：**
+
+- What are the ways to unwrap an optional value in Swift?
+- How do you unwrap optionals?
+- Swift 中的可选型是什么？它的本质是什么？
+- What is the difference between if let and guard let?
+- *Optional（可选型） 是⽤什么实现的*
+
+## **lazy 关键字：**
+
+- 请解释 Swift 中的 lazy 关键字是怎么实现的？在什么情况下会使用它？
+- *lazy load 是怎么实现的？*
+
+## 代码优化题
+
+## Q: 代码题:
+
+```
+class Person {
+    var name: String
+
+    init(name: String) {
+        self.name = name
+    }
+}
+
+struct Company {
+    var size: Int
+    var manager: Person
+
+    mutating func increaseSize() {
+        self = Company(size: size + 1, manager: manager)
+    }
+
+    mutating func increaseSizeV2() {
+        size += 1
+    }
+}
+
+var companyA = Company(size: 100, manager: Person(name: "Peter"))
+
+var companyB = companyA
+companyA.size = 150  // if a struct is an immutable value type, why we can mutate the size property?
+print(companyA.size) // ? question1
+print(companyB.size) // ? question2
+
+companyA.manager.name = "Bob"
+print(companyA.manager.name) // ? question3
+print(companyB.manager.name) // ? question4
+
+companyA.increaseSize()
+print(companyA.size) // ? question5
+companyA.increaseSizeV2()
+print(companyA.size) // ? question6
+
+```
+
+A:
+
+```
+class Person {
+    var name: String
+
+    init(name: String) {
+        self.name = name
+    }
+}
+
+struct Company {
+    var size: Int
+    var manager: Person
+
+    mutating func increaseSize() {
+        self = Company(size: size + 1, manager: manager)
+    }
+
+    mutating func increaseSizeV2() {
+        size += 1
+    }
+}
+
+var companyA = Company(size: 100, manager: Person(name: "Peter"))
+
+var companyB = companyA
+companyA.size = 150  // if a struct is an immutable value type, why we can mutate the size property?
+print(companyA.size) // ? 150
+print(companyB.size) // ? 150
+
+companyA.manager.name = "Bob"
+print(companyA.manager.name) // ? Bob
+print(companyB.manager.name) // ? Bob
+
+companyA.increaseSize()
+print(companyA.size) // ? 151
+companyA.increaseSizeV2()
+print(companyA.size) // ? 152
+```
+
+```
+
+答案
+
+question1:150
+question2:100
+question3:Bob
+question4:Bob
+question5:151
+question6:152
+
+```
+
+
+注意 与 copy on write 辨别  
+
+## 代码题
+
+[https://chat.openai.com/share/29d0a44a-26cc-4685-a68a-92a134be6d3e](https://chat.openai.com/share/29d0a44a-26cc-4685-a68a-92a134be6d3e)
+
+// how to improve this code if animalsInEating number is big?
+ 
+
+```swift
+struct Animal {
+    var eating = false
+}
+class Test {
+    var animals: [Animal] = [...]
+    var animalsInEating: [Animal] {
+        animals.filter({$0.eating})
+    }
+    
+    // how to improve this code if animalsInEating number is big?
+    func loop() {
+        for animal in animalsInEating {
+            
+        }
+        
+    }
+}
+```
+
+[Swfit代码优化题](https://www.notion.so/Swfit-8f330a7abd3544029dbda2a5cc53cafc?pvs=21)
+
+[代码题备份](https://www.notion.so/4ff95fec111949789e2cdec3317a5bf0?pvs=21)
+
+## WHY Swift not ObjC?
+
+[https://chat.openai.com/share/eef4d254-7ff5-4b37-b58e-431fb10e4e97](https://chat.openai.com/share/eef4d254-7ff5-4b37-b58e-431fb10e4e97)
+
+![](assets/16911993105830.jpg)
+
+![](assets/16911993775698.jpg)
+
+![](assets/16911993939541.jpg)
+
+![](assets/16911994019477.jpg)
+
+
+## 介绍一下 Swift 相关的重要变更事件
+
+## Swift ⼤事记
+
+1）ABI 稳定
+swift 5 2019 发布， ABI 稳定，不会过⼤的增加包体积了；
+
+Swift 演进之路
+本篇主要是对[《A站 的 Swift 实践》]
+([https://ming1016.github.io/202](https://ming1016.github.io/202)[https://mp.weixin.qq.com/s/z4MKCSNXu7kBY7uU8KC1Aw](https://mp.weixin.qq.com/s/z4MKCSNXu7kBY7uU8KC1Aw)
+
+[https://ming1016.github.io/2022/02/10/swift-evolutionary-path/](https://ming1016.github.io/2022/02/10/swift-evolutionary-path/)
+
+2）SwiftUI、Combine、Concurrency（都开始于 iOS 13+）
+1」SwiftUI
+2」Combine
+Combine 是⼀种响应式编程范式，采⽤声明式的 Swift API。
+Combine 的三个核⼼概念 - 发布者 - 订阅者 - 操作符：
+
+```swift
+let pA = Just(0)
+let _ = pA.sink { v in
+    print("pA is: \(v)")
+}
+
+let pB = [7,90,16,11].publisher
+let _ = pB
+
+    .sink { v in
+
+        print("pB: \(v)")
+    }
+
+class AClass {
+    var p: Int = 0 {
+        didSet {
+            print("property update to \(p)")
+        }
+    }
+}
+let o = AClass()
+
+let _ = pB.assign(to: \.p, on: o)
+```
+
+3」Concurrency
+
+Swift Concurrency 的实现⽤了 LLVM的协程 把 async/await 函数转换为基于回调的代码
+Swift Concurrency 不是建⽴在 GCD 上，⽽是使⽤的⼀个全新的线程池。
+
+## What is the difference between a struct and a class in Swift?
+
+[https://chat.openai.com/share/9d33c809-8034-4ef2-a54b-5e6b20bc4178](https://chat.openai.com/share/9d33c809-8034-4ef2-a54b-5e6b20bc4178)
+
+In Swift, **Array, String, and Dictionary are all value types**. They behave much like a simple int value in C, acting as a unique instance of that data. Reference Type : Copying a reference on the other hand implicitly creates a shared instance.
+
+## struct VS class?
+![](assets/16911997093380.jpg)
+
+
+[Getting to Know Enum, Struct and Class Types in Swift](https://www.kodeco.com/7320-getting-to-know-enum-struct-and-class-types-in-swift)
+
+`class` performing faster than `struct` or the other way around
+
+## class 和 struct 的区别
+
+1）class 是引⽤类型，struct 是值类型；
+
+2）如果⾥⾯对象较少，使⽤ struct ⽐较节省性能。
+
+3）struct 不可被继承 -（另外加⼀条 enum 也是值类型）
+
+4）struct ⾥的 class，即使 struct 复制了，它也是引⽤类型 ；
+重要：例外，闭包⾥使⽤ Struct 是⼀份引⽤，除⾮明确的 copy ⼀份；
+
+5）⽬前 Swift 的 Foudation 基本全⽤ Struct 实现了，原因是？
+Why Choose Struct Over Class? 来⾃ StackOverFlow 
+
+[Why Choose Struct Over Class?](https://stackoverflow.com/questions/24232799/why-choose-struct-over-class)
+
+1」内存上，值引⽤在栈区，引⽤类型在堆区进⾏存储和操作，栈区的运⾏效率更⾼；
+2」多线程的环境下更安全，写时复制的操作可以最⼤限度的优化性能，也不⽤担⼼内存泄露（互相引⽤）；
+3」引申知识：为什么栈在⾼地址？这样栈的起始位置固定，扩展的时候不需要迁移整个栈的数据。
+
+关于为什么栈区操作⽐堆区操作快，可以看这篇⽂章：Swift 开发中，为什么要远离 Heap？
+
+[https://www.jianshu.com/p/aca50c5a9d64](https://www.jianshu.com/p/aca50c5a9d64) 
+
+[Swift 开发中，为什么要远离 Heap？](https://www.jianshu.com/p/aca50c5a9d64)
+
+Swift 的堆区是使⽤双向链表进⾏内存分配的，
+
+|  | heap | stack |
+| --- | --- | --- |
+| 结构 | Swift 基于双向链表 |  栈 |
+| 特点 |  ⼿动分配⼤⼩、随时释放空间，数据进出⽆序 | ⾃动分配⼤⼩，⾃动释放内存，数据先进后出
+| 操作  | 查询之后分配/释放，之后再做整合，复杂度⾼  | 依靠栈底指针移动来分配/释放，复杂度低
+| 对象  | 引⽤类型如 class。引⽤ 计数，变量类型等信息 | 值类型如 struct, enum, Int。函数返回值，局部变量
+| 场景  | C 中的 malloc 和 free 操作，java 中的garbage collection，iOS 中的MRC、ARC | 适⽤于撤销、保存操作 |
+| 线程 | 共享，多线程不安全  | 独享，多线程安全 |
+
+copy on write ⻅下⾯的说明；
+
+## Q: if a struct is an immutable value type, why we can mutate the size property?
+
+A: copy on write
+
+[Handling Mutable Structs in Swift](https://anshul-vyas380.medium.com/handling-mutable-structs-in-swift-7b95add387d)
+
+mutating 关键词的含义
+
+```jsx
+				struct Mutable {
+            var x: Int;
+            mutating func Mutate() -> Int {
+                x = x + 1;
+                return x;
+            }
+        }
+        var mutable = Mutable(x: 0)
+        print(mutable.Mutate())
+        print(mutable.Mutate())
+        print(mutable.Mutate())
+```
+
+There are a number of things this program could do. Does it:
+
+✅1) Print 1, 2, 3 -- because m is readonly, but the "readonly" only applies to m, not to its contents.
+❌2) Print 0, 0, 0 -- because m is readonly, x cannot be changed. It always has its default value of zero.
+❌3) Throw an exception at runtime, when the attempt is made to mutate the contents of a readonly field.
+❌4) Do something else
+
+In class, all func are mutating. But for struct and enum we need to specify.
+
+[Mutating function inside class](https://stackoverflow.com/a/46460684/3395008)
+
+[Does swift copy on write for all structs?](https://stackoverflow.com/a/43493749/3395008)
+
+在SwiftUI中的体现:
+
+```
+struct Point {
+   var x:Float = 0
+}
+
+var p1 = Point()
+var p2 = p1 //p1 and p2 share the same data under the hood
+p2.x += 1 //p2 now has its own copy of the data
+```
+
+struct 是赋值， class是引用
+
+在struct 的[计算属性](https://so.csdn.net/so/search?q=%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7&spm=1001.2101.3001.7020)（computed property）里，不允许改变成员变量
+
+![](assets/16911994188320.jpg)
+
+
+加上 **@State 就可以改变了**
+
+参考：
+
+[用狀態設計 SwiftUI 畫面 — 認識 State property](https://medium.com/%E5%BD%BC%E5%BE%97%E6%BD%98%E7%9A%84-swift-ios-app-%E9%96%8B%E7%99%BC%E5%95%8F%E9%A1%8C%E8%A7%A3%E7%AD%94%E9%9B%86/%E7%94%A8%E7%8B%80%E6%85%8B%E8%A8%AD%E8%A8%88-swiftui-%E7%95%AB%E9%9D%A2-%E8%AA%8D%E8%AD%98-state-property-binding-27fea6885ead)
+
+[Mutating Readonly Structs](https://learn.microsoft.com/en-us/archive/blogs/ericlippert/mutating-readonly-structs)
+
+![](assets/16911994290631.jpg)
+
+
+![](assets/16911994377956.jpg)
+
+
+[Swift: Mutating Function](https://youtu.be/lXp3MNT_EZc)
+
+[https://youtu.be/lXp3MNT_EZc](https://youtu.be/lXp3MNT_EZc)
+
+## 4、Swift 的 Copy-on-Write 是怎么实现的
+
+1、Swift 分 引⽤类型 (Class) 和值类型 (Struct / Enum)，值类型赋值、函数传值时，会触发 Copy 操作，此时对值类型写
+时复制就能提升性能；
+优势：
+1）读多写少的情况，可以提⾼读取效率；
+2）集合传值之后修改，不会改变原来的值；（OC 需要⽤ deep Copy）
+劣势：
+1）线程不安全，写时占内存
+2）⾃定义的结构体并不能⾃动拥有 写时复制 的属性
+Tips：
+1）引⽤类型不⽤ Copy-on-Write  ，是因为性能消耗⽐直接复制还⾼
+2）isKnownUniquelyReferenced 可以⽤来判断 Class 是否被唯⼀引⽤，从⽽进⾏ copy on write；
+3）Array、Dictionary、Set 等类型都是 Struct 实现的，值类型，⽀持 Copy-on-Write；
+写时复制，swift 的数组、字典等就是如此，原来是值类型，但是遇到写操作的时候，复制⼀份出来；
+isKnownUniquelyReferenced 源代码 。
+
+[](https://github.com/apple/swift/blob/ad0a5bf12b9f261263f20598bc4767494ff5d678/stdlib/public/core/ManagedBuffer.swift)
+
+调⽤了  Builtin.swift  
+
+[](https://github.com/apple/swift/blob/32811bac9fa18ffea4ba79c8618216f9e71dc1d0/stdlib/public/core/Builtin.swift)
+
+⾥⾯的 isUnique ⽅法：
+
+关于 Builtin：Swift Builtin
+
+SILGen/SILGenBuiltin.cpp 
+
+[](https://github.com/apple/swift/blob/74d7eacfe5afadb44b520f01211d00c6490a701f/lib/SILGen/SILGenBuiltin.cpp#L954)
+
+⾥⾯的实现：（SIL 的特点其⼆：检测不可达（未使⽤）的代码 & 在代码发送给 LLVM 前进⾏
+优化）
+
+复制代码
+
+```swift
+"// This should only accept as an operand type single-refcounted-pointer types,
+"// class existentials, or single-payload enums (optional). Type checking must be
+"// deferred until IRGen so Builtin.isUnique can be called from a transparent
+"// generic wrapper (we can only type check after specialization).
+static ManagedValue emitBuiltinIsUnique(SILGenFunction &SGF,
+                                        SILLocation loc,
+                                        SubstitutionMap subs,
+                                        ArrayRef<ManagedValue> args,
+                                        SGFContext C) {
+
+  assert(subs.getReplacementTypes().size() "== 1 "&&
+         "isUnique should have a single substitution");
+  assert(args.size() "== 1 "&& "isUnique should have a single argument");
+  assert((args[0].getType().isAddress() "&& !args[0].hasCleanup()) "&&
+         "Builtin.isUnique takes an address.");
+
+  return ManagedValue"::forUnmanaged(
+    SGF.B.createIsUnique(loc, args[0].getValue()));
+}
+```
+
+swift
+createIsUnique 
+
+[](https://github.com/apple/swift/blob/74d7eacfe5afadb44b520f01211d00c6490a701f/include/swift/SIL/SILBuilder.h#L2194)
+
+是⼀个 C++ ⽅法，应该在编译期就确定了（静态⽅法）
+
+下⾯是⼀个⾃⼰实现  Copy-on-Write 的例⼦
+
+```swift
+"// isKnownUniquelyReferenced 的使⽤
+isKnownUniquelyReferenced(&object: T)
+
+final class Box<A> {
+    var unbox:A
+    init(_ value:A) {
+        self.unbox = value
+    }
+}   
+var a = Box(NSMutableData())
+isKnownUniquelyReferenced(&a)"//true
+var b = a 
+isKnownUniquelyReferenced(&a)"//false
+
+"// 写时复制的代码原理
+final class Ref<T> {
+  var val : T
+  init(_ v : T) {val = v}
+}
+
+struct Box<T> {
+    var ref : Ref<T>
+    init(_ x : T) { ref = Ref(x) }
+
+    var value: T {
+        get { return ref.val }
+        set {
+          if (!isUniquelyReferencedNonObjC(&ref)) {
+            ref = Ref(newValue)
+            return
+          }
+          ref.val = newValue
+        }
+    }
+}
+```
+
+当进⾏ set 的时候判断是否有多个 reference，如果是多个 reference 则进⾏拷⻉，反之则不会。
+
+## Swift Copy-on-Write 是怎么去实现的?
+
+[Understanding Copy on Write](https://fabernovel.github.io/2020-10-30/Understanding-Copy-on-Write)
+
+原理和 KVO有点类似.
+
+```swift
+// Actual CoW implementation
+struct CoWSomeClass {
+    init(value: Int) {
+        storage = SomeClass(value: value)
+    }
+
+    private storage: SomeClass
+
+    var value: Int {
+        get {
+            storage.value
+        }
+        set {
+            if !isKnownUniquelyReferenced(&storage) {
+                storage = storage.copy()
+            }
+            storage.value = newValue
+        }
+    }
+}
+
+// Storage definition
+extension CoWSomeClass {
+    private class SomeClass {
+        var value: Int
+
+        init(value: Int) {
+            self.value = value
+        }
+
+        func copy() -> SomeClass {
+            SomeClass(value: value)
+        }
+    }
+}
+```
+
+---
+
+### **35. What are the basic categories of types in Swift?**
+
+Swift requires each object to have a type, which must be known during compilation. Swift types fall into two groups:
+
+- **Value types**, which are typically described as a struct, enum, or tuple and allow each instance to maintain a separate copy of its data.
+- **Reference types**, where a single copy of the data is shared by all instances, and where the type is often expressed as a class.
+
+### **26. What is a Tuple in Swift?**
+
+A tuple is a collection of many values combined into a single compound value. It contains elements in an organized list. You can access a tuple's object data in two ways: by name or position.
+
+A Swift tuple can accommodate two values, one of the string and one of the integer types.
+
+### **38. Is it possible to return multiple values from a function in Swift? If yes, how?**
+
+Like the majority of programming languages, Swift only allows each function to return a single value. If this element is a primitive type, you will only return one value.
+
+Additionally, a thing could be a complex type, such as a class, struct, tuple, or array. You can pack several values into a complex type in this situation. After that, you formally return a single item with numerous values kept inside this data structure.
+
+**Here’s how we can return multiple values kept inside a tuple:**
+
+```
+func functionWithMultipleReturnValues(
+val1: Int,
+val2: Int
+) -> (sum: Int, product: Int) {
+let sum = val1 + val2
+let prod = val1 * val2
+return (sum, prod)
+}
+let result = functionWithMultipleReturnValues(val1: 10, val2: 20)
+let s = result.sum
+let p = result.product
+```
+
+## ﬁnal 是什么：
+
+不能继承和重写,可⽤到 属性/函数/类；
+
+## String 与 NSString 的关系与区别：
+
+能够互相转换，⼀个值类型，⼀个引⽤类型；
+
+## defer 使⽤场景：
+
+defer ⾥的内容会在 { } 结束时执⾏；
+
+## struct 在堆区还是栈区？
+
+值引⽤，栈区
+
+## 属性中，值属性，和计算属性有什么区别？
+
+计算属性不占内存，值属性占⽤内存；
+
+## 声明⼀个只有⼀个参数没有返回值闭包的别名
+
+```swift
+typealias SomeClosuerType = (String) "-> ()
+let someClosuer: SomeClosuerType = { (name: String) in
+    print("hello,", name)
+}
+```
+
+## **泛型：**
+
+## Q.什么是泛型，swift哪些地方使用了泛型？
+
+答：
+泛型（generic）可以使我们在程序代码中定义一些可变的部分，在运行 runtime 的时候指定。使用泛型可以最大限度地重用代码、保护类型的安全以及提高性能。
+泛型可以将类型参数化，提高代码复用率，减少代码量。
+
+例如 optional 中的 map、flatMap 、?? (泛型加逃逸闭包的方式，做三目运算)
+
+## 
+
+## Generic in Swift ****泛型<T>****
+
+[An in depth look at generics in Swift — The Mobile Entity](https://www.themobileentity.com/home/an-in-depth-look-at-generics-in-swift)
+
+[Swift 范型（Generics译文） - 掘金](https://juejin.cn/post/6870424765958455303)
+
+[Swift 初体验（10）- 泛型 【完结🎉🎉🎉】](https://www.freecodecamp.org/chinese/news/swift-getting-started-10/)
+
+![](assets/16911994601308.jpg)
+
+![](assets/16911994672006.jpg)
+
+![](assets/16911994768336.jpg)
+
+![](assets/16911994872119.jpg)
+
+
+
+![](assets/16911994941254.jpg)
+
+
+[https://chat.openai.com/share/faa41aed-9f00-4070-b6f1-ab3be7dbb238](https://chat.openai.com/share/faa41aed-9f00-4070-b6f1-ab3be7dbb238)
+
+## 
+
+## *10、泛型的本质*
+
+*1）泛型的本质是 参数化类型 ，<T> ⾥⾯的 T 就是个占位符，系统这样就不会检查类型了；
+2）泛型可以让开发者灵活定义函数和类型，避免重复代码，使代码的表意更清晰和抽象；
+3）associatedtype（关联类型） 是在 protocol ⾥使⽤的泛型
+4）where 字句可以限定 关联类型（associatedtype Element // 关联类型）的具体类型, 如: extension ListProtcol where
+Element = Int
+5）T 和 Any 的区别？
+Any 类型会避开类型的检查，具体⻅下⾯代码例⼦：*
+
+```swift
+
+*1"//输⼊输出类型⼀致
+2func add<T>( input: T) "-> T {
+3    "//""...
+4    return input;
+5}
+6
+7"//输⼊输出类型会不⼀致
+8func anyAdd(* input: Any) "-> Any {
+9    "//""...
+10    return input;
+11}
+
+```
+
+## 内存管理、**性能优化和调试：**
+
+## When do you use static variables?
+
+[https://chat.openai.com/share/3ce697b3-5f00-41b9-be78-693a4bc9a8b0](https://chat.openai.com/share/3ce697b3-5f00-41b9-be78-693a4bc9a8b0)
+
+static 关键字和 class 关键字 修饰的类⽅法有什么区别？
+static 修饰的不能被继承，class 修饰 可以被继承；
+class 只能在类⾥⽤，不能在结构体、枚举中⽤；
+class 只能修饰计算属性，不能修饰值属性；
+
+## What is weak and unowned in Swift? What is their difference?
+
+iOS weak 和 unowned 区别? 
+
+swift weak 和 unowned 的区别
+
+weak 同 OC ，在没有引⽤技术的时候⾃动置空，必须被⽣命为 var；
+unowned 不会为空，可以使⽤ let 声明，性能损耗⽐ weak ⼩⼀点，
+要保证 unowned 的⽣命周期要和强引⽤对象同样或者更⻓，不然就会导致崩溃；
+
+## 解决 retain cycle, 什么时候用unowned、weak、closure capture list??
+
+In Swift, both `weak` and `unowned` are ways to prevent strong reference cycles (also known as retain cycles) which can cause memory leaks in your application. When two instances of classes reference each other, and they both have strong references to each other, they can't be deallocated because each thinks that the other is still in use. This is where `weak` and `unowned` come into play.
+
+`weak` and `unowned` references allow one instance in a reference cycle to refer to the other instance without keeping a strong hold on it, helping to prevent strong reference cycles.
+
+**Weak**
+
+A `weak` reference is a reference that doesn't keep the referenced object alive. The weak reference becomes `nil` as soon as the referenced object is deallocated. Because weak references can become `nil`, they must be declared as optional types.
+
+Here is an example of `weak`:
+
+```
+class MyClass {
+    weak var weakProperty: AnotherClass?
+}
+
+```
+
+In this case, `weakProperty` is a weak reference. If the `AnotherClass` instance it references is deallocated, `weakProperty` will be automatically set to `nil`.
+
+**Unowned**
+
+An `unowned` reference doesn't keep the referenced object alive, similar to a `weak` reference. However, unlike a weak reference, an unowned reference is assumed to always have a value; thus, it is non-optional. An unowned reference should be used when you know that the reference will always have a value and you don't want to deal with unwrapping an optional.
+
+Here is an example of `unowned`:
+
+```
+class MyClass {
+    unowned var unownedProperty: AnotherClass
+}
+
+```
+
+In this case, `unownedProperty` is an unowned reference. If the `AnotherClass` instance it references is deallocated, `unownedProperty` will still hold a reference to the now-deallocated object, leading to a runtime error if it is accessed.
+
+**Comparison**
+
+The primary difference between `weak` and `unowned` references is that `weak` references are optional and can become `nil`, while `unowned` references are always expected to have a value.
+
+Therefore, you would typically use `weak` when there's a possibility the referenced object might be deallocated while still being weakly referenced (e.g. delegates). Conversely, you would use `unowned` when you know the referenced object will stick around for as long as the object holding the reference is around (e.g. closures referencing `self` where `self` will outlive the closure).
+
+[Swift 的 Capture List ](https://www.notion.so/Swift-Capture-List-f36d988c36d94b2e8bc98045bfdda2f6?pvs=21)
+
+## What is memory leak ? how to solve?
+
+## 数据处理、语言安全、 **访问权限：**
+
+## Please implement a convenience init method for a subclass.
+
+Sure, let's assume that you have a parent class named `Person` and a subclass named `Employee`.
+
+```
+class Person {
+    var name: String
+    var age: Int
+
+    init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+    }
+}
+
+class Employee: Person {
+    var jobTitle: String
+    var salary: Int
+
+    init(name: String, age: Int, jobTitle: String, salary: Int) {
+        self.jobTitle = jobTitle
+        self.salary = salary
+        super.init(name: name, age: age)
+    }
+
+    // convenience init
+    convenience init(name: String, jobTitle: String) {
+        self.init(name: name, age: 0, jobTitle: jobTitle, salary: 0)
+    }
+}
+```
+
+The convenience initializer is used here to create a new `Employee` instance, and it only requires the `name` and `jobTitle` parameters. It calls the designated initializer with the provided name, jobTitle, and default values for `age` and `salary`.
+
+In this case, an interviewer may follow up by asking why you used a convenience initializer and what the benefits are. Here are some points you might mention:
+
+1. Convenience initializers can simplify the creation of an object by reducing the number of parameters that need to be passed when creating an object.
+2. They can provide default values for certain properties to allow for quick and simple object creation in specific cases.
+3. They promote code reusability, as you can have multiple convenience initializers that call the same designated initializer with different default parameters.
+4. They help make the code cleaner and more readable by abstracting away the complexity of fully initializing an object.
+
+please use convenience init to update those code below, and change objective-c code to swift code:
+
+```
+typedef NS_ENUM(NSInteger, CYLGender) {
+       CYLGenderUndefined,
+       CYLGenderMale,
+       CYLGenderFemale
+   };
+
+   @interface CYLUser : NSObject<NSCopying>
+
+   @property (nonatomic, readonly, copy) NSString *name;
+   @property (nonatomic, readonly, assign) NSUInteger age;
+   @property (nonatomic, readwrite, assign) CYLGender gender;
+
+   - (instancetype)initWithName:(NSString *)name age:(NSUInteger)age gender:(CYLGender)gender;
+   - (instancetype)initWithName:(NSString *)name age:(NSUInteger)age;
+   + (instancetype)userWithName:(NSString *)name age:(NSUInteger)age gender:(CYLGender)gender;
+
+   @end
+
+```
+
+Sure, I can help with that. Here is the equivalent Swift code:
+
+```
+import Foundation
+
+enum CYLGender: Int {
+    case undefined
+    case male
+    case female
+}
+
+class CYLUser: NSObject, NSCopying {
+
+    let name: String
+    let age: Int
+    var gender: CYLGender
+
+    init(name: String, age: Int, gender: CYLGender) {
+        self.name = name
+        self.age = age
+        self.gender = gender
+    }
+
+    convenience init(name: String, age: Int) {
+        self.init(name: name, age: age, gender: .undefined)
+    }
+
+    static func user(name: String, age: Int, gender: CYLGender) -> CYLUser {
+        return CYLUser(name: name, age: age, gender: gender)
+    }
+
+    func copy(with zone: NSZone? = nil) -> Any {
+        let copy = CYLUser(name: name, age: age, gender: gender)
+        return copy
+    }
+}
+
+```
+
+In this code:
+
+1. We define an enum `CYLGender` to represent the gender of a user, with cases for undefined, male, and female.
+2. We define a class `CYLUser` that has properties for `name`, `age`, and `gender`.
+3. We define an initializer that takes `name`, `age`, and `gender` as parameters and assigns them to the respective properties.
+4. We define a convenience initializer that takes `name` and `age` as parameters and calls the designated initializer with `gender` set to `undefined`.
+5. We define a static function `user` that takes `name`, `age`, and `gender` as parameters and returns a new instance of `CYLUser`.
+6. We also make `CYLUser` conform to the `NSCopying` protocol by providing an implementation of the `copy(with:)` method. In this method, we simply create and return a new `CYLUser` with the same `name`, `age`, and `gender` as the current instance.
+
+## 14、Swift 的安全性
+
+1）代码安全
+let 属性 - 使⽤ let 申明常量避免被修改。
+值类型 - 值类型可以避免在⽅法调⽤等参数传递过程中状态被修改。
+访问控制 - 通过 public 和 final 限制模块外使⽤ class 不能被继承和重写。
+强制异常处理 - ⽅法需要抛出异常时，需要申明为 throw ⽅法。当调⽤可能会 throw 异常的⽅法，需要强制捕获异
+常避免将异常暴露到上层。
+模式匹配 - 通过模式匹配检测 switch 中未处理的 case。
+2）类型安全
+强制类型转换 - 禁⽌隐式类型转换避免转换中带来的异常问题。同时类型转换不会带来额外的运⾏时消耗。。
+提示：编写ObjC代码时，我们通常会在编码时添加类型检查避免运⾏时崩溃导致Crash。
+KeyPath - KeyPath 相⽐使⽤字符串可以提供属性名和类型信息，可以利⽤编译器检查。
+泛型 - 提供泛型和协议关联类型，可以编写出类型安全的代码。相⽐ Any 可以更多利⽤编译时检查发现类型问题。
+Enum 关联类型 - 通过给特定枚举指定类型避免使⽤ Any。
+3）内存安全
+空安全 - 通过标识可选值避免空指针带来的异常问题
+ARC - 使⽤⾃动内存管理避免⼿动管理内存带来的各种内存问题
+强制初始化 - 变量使⽤前必须初始化
+内存独占访问 - 通过编译器检查发现潜在的内存冲突问题
+4）线程安全
+值类型 - 更多使⽤值类型减少在多线程中遇到的数据竞争问题
+async/await - 提供 async 函数使我们可以⽤结构化的⽅式编写并发操作。避免基于闭包的异步⽅式带来的内存循环
+引⽤和⽆法抛出异常的问题
+Actor - 提供 Actor 模型避免多线程开发中进⾏数据共享时发⽣的数据竞争问题，同时避免在使⽤锁时带来的死锁等
+问题
+5）快速
+值类型 - 相⽐ class 不需要额外的堆内存分配 / 释放和更少的内存消耗
+⽅法静态派发 - ⽅法调⽤⽀持静态调⽤相⽐原有 ObjC 消息转发调⽤性能更好
+编译器优化 - Swift 的静态性可以使编译器做更多优化。例如 Tree Shaking 相关优化移除未使⽤的类型 / ⽅法等减少
+⼆进制⽂件⼤⼩。使⽤静态派发 / ⽅法内联优化 / 泛型特化 / 写时复制等优化提⾼运⾏时性能
+提示：ObjC消息派发会导致编译器⽆法进⾏移除⽆⽤⽅法/类的优化，编译器并不知道是否可能被⽤到。
+ARC 优化 - 虽然和 ObjC ⼀样都是使⽤ ARC，Swift 通过编译器优化，可以进⾏更快的内存回收和更少的内存引⽤计
+数管理
+提示： 相⽐ObjC，Swift内部不需要使⽤autorelease进⾏管理。
+
+1. 请解释 Swift 中的访问权限如何设置，以及不同访问级别之间的区别？
+
+## 13、Swift Try catch 的原理？
+
+## 15. How do you filter an array of instances to extract a specific property in Swift?
+
+[https://chat.openai.com/share/05a875de-5e3b-4257-b68b-f296c218f16d](https://chat.openai.com/share/05a875de-5e3b-4257-b68b-f296c218f16d)
+
+![swift_map_type_diff_en](assets/swift_map_type_diff_en.jpg)
+![swift_map_type_diff_cn](assets/swift_map_type_diff_cn.jpg)
+
+
+
+
+## Difference between map, flatMap and compactMap in Swift
+
+这段代码⽤了哪些语法糖？ 
+
+```swift
+[1, 2, 3].map{ $0 * 2 }
+```
+
+1」快速创建数组；
+2」在没有声明参数列表时，第⼀个参数⽤ $0 代替，后⾯依次类推；
+3」闭包没有声明函数参数, 返回值类型, 数量, 依靠的是闭包类型的⾃动推断；
+4」闭包中语句只有⼀句时, ⾃动将这⼀句的结果作为返回值；
+
+Swift 中 map, flatMap and compactMap 的区别是什么?
+
+What is their difference? what is the  best situation to use on of them?
+
+The `flatMap` and `compactMap` functions in Swift are used to transform and filter optionals and collections.
+
+**flatMap**:
+
+In Swift, `flatMap` has two main use cases:
+
+1. It can be used with optionals. It works by transforming the optional if it is not `nil` or just returning `nil`. This use of `flatMap` was deprecated in Swift 4.1.
+2. It can be used with collections. `flatMap` operates on a collection (for example, an array of arrays), and "flattens" the result into a single array after applying a transformation. For example, given an array of arrays, it will apply the transformation to all elements and flatten the result into a single array.
+
+```
+let nestedArray = [[1, 2, 3], [4, 5, 6]]
+let flattenedArray = nestedArray.flatMap { $0 }
+print(flattenedArray) // Output: [1, 2, 3, 4, 5, 6]
+
+```
+
+**compactMap**:
+
+`compactMap` is used to transform the elements of a sequence while simultaneously unwrapping optionals and removing nil results. This makes `compactMap` a great choice when transforming a collection where the transformation might return an optional.
+
+Here's an example of `compactMap` in action:
+
+```
+let numbers = ["1", "2", "three", "4"]
+let mappedNumbers = numbers.compactMap { Int($0) }
+print(mappedNumbers) // Output: [1, 2, 4]
+
+```
+
+In this example, attempting to convert "three" to an `Int` results in `nil`, which `compactMap` removes from the final array.
+
+As to which to use, it depends on your needs:
+
+- If you have a transformation that returns an optional and you want to remove `nil` values, use `compactMap`.
+- If you need to flatten a collection of collections, use `flatMap`.
+- If you have an optional and want to transform it if it's not `nil`, you'd previously use `flatMap`, but this is now done using `Optional.map` as of Swift 4.1.
+
+Remember, both `flatMap` and `compactMap` do not mutate the original array. They return new arrays, which is a characteristic of functional programming.
+
+## 6、Swift 的计算属性、存储属性、懒加载
+
+1）计算属性（Computed Variable）
+仅有 get ( readOnly) 或有 get+set 的属性是计算型属性，真正赋值的过程是存在于 set ⽅法中并被底层包装掉的，如果
+我们⼿动实现了set ⽅法，就⽆法进⾏正确的赋值。（此处跟 OC 不⼀样）
+
+```swift
+1private var _squre: Double = 0.0
+2var squre: Double {
+3    get {
+4        return *squre
+5    }
+6    set {
+7        if (newValue "<= 0) {
+8            print("newValue = \(newValue)")
+9        } else {
+10            squre = newValue
+11        }
+12    }
+13}*
+```
+
+*2）存储属性（Sorted Variable）*
+
+```swift
+*1class Test {
+2    init(width: Double) {
+3        self.width = width "// 此处不会调⽤ willset 、didset ⽅法
+4        setValue(width, forKey: "width") "// KVC 可以调⽤
+5    }
+6    var width: Double {
+7        willSet {
+8            print("willSet⽅法被调⽤")
+9            print("在willSet中，width = \(width),newValue = \(newValue)")
+10        }
+11       
+12        didSet {
+13            print("didSet⽅法被调⽤")
+14            print("在didSet中，width = \(width),oldValue = \(oldValue)")
+15        }
+16    }
+17}*
+```
+
+*3）懒加载（Lazy Load） 和计算属性的区别*
+
+*计算属性：*
+
+- *每次都会计算*
+- *不分配独⽴空间*
+
+*懒加载*
+
+**
+
+- *本质是个闭包，分配内存空间*
+- *在⾸次执⾏时，返回闭包的值*
+
+*和 OC 不同的是， Swift 的懒加载，置空后不会重新调⽤。*
+
+**
+
+## *9、Sequence / ⾼阶函数 / Collection*
+
+*Swift 的 Collections （Sequence 协议）*
+
+**
+
+## 12、混编过程中遇到的 Crash
+
+1）@objc 别名 MBCCC ，对应 CCC xib，iOS 12 以下 闪退；
+2）混编  没加 nullable 到 swift 不做解包 会崩溃了；
+3）OC 有个 ivar，Swift abi 稳定，⼆进制有脆弱性；如果库的作者改变了对象内公共字段的⼤⼩或布局，偏移量就⽆效
+了，程序就没法正常运⾏；（解决⽅案：需要全量编译、或引⽤到这个库的上层库重新编译。）
+
+## 面向对象
+
+## 1、Swift 对象和 OC 对象的区别
+
+1）初始化
+初始化 OC 默认置空，可以⽗类 -> ⼦类 （通过 super.init）
+Swift 必须赋值，⼦类 -> ⽗类（必须给⼦类所有属性赋值，才能调⽤ super.init）
+其他：
+定义变量、属性、协议，两者类似。
+
+2）Swift 对象包括 class、enum、struct
+enum 和 struct 都是值引⽤ -> 可以引出问题：写时复制 / struct ⽐ class 有什么优势
+
+3）⽅法派发
+Swift 直接派发，没有 isa 那⼀段，OC 要通过 isa 查找；
+[https://www.jianshu.com/p/91bfe3f11eec](https://www.jianshu.com/p/91bfe3f11eec) ，Swift 的消息派发，浓缩在下⾯的表⾥了.
+
+runtime 之消息转发:
+
+- 消息发送（缓存+函数表查找，往⽗类查找）
+- 动态⽅法解析（动态缓存，class_addMethod 添加）
+- 消息转发 （forwardingTargetForSelector / methodSignatureForSelector / doesNotRecognizeSelector）
+
+![](assets/16911995736181.jpg)
+
+
+| Swift ⽅法派发  | 直接派发 Direct Dispatch  | 函数表派发 Table Dispatch | 消息机制 Message Dispatch
+转化为 objc_msgSend |
+| --- | --- | --- | --- |
+| NSObject |  @nonobjc or final  | Initial Declaration
+函数内部调⽤ | Extensions dynamic |
+| Class | Extensions final |   Initial Declaration 函数内部调⽤
+ | dynamic |
+| Protocol  | Extensions |  Initial Declaration 函数内部调⽤
+ |  @objc |
+| Value Type 值类型 |  All methods | N/A | N/A |
+|  |  |  |  |
+
+[https://chat.openai.com/share/5ed1d819-48e0-4755-8e8c-5d3a6d0e7db6](https://chat.openai.com/share/5ed1d819-48e0-4755-8e8c-5d3a6d0e7db6)
+
+```swift
+//请猜测打印的结果
+// [2023-07-28 14:45:39] @iTeaTime(技术清谈)@ChenYilong
+import UIKit
+
+class BaseCell: UITableViewCell {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension BaseCell: ClassIdenfifiable {
+    static var reuseIdentifier: String {
+        return "default"
+    }
+    
+    static var reuseIdentifier2: String {
+        return "B"
+    }
+}
+protocol ClassIdenfifiable {
+    static var reuseIdentifier: String { get }
+}
+
+extension ClassIdenfifiable {
+    static var reuseIdentifier: String {
+        return String(describing: self)
+    }
+    //不在 Protocol requirements 中声明
+    static var reuseIdentifier2: String {
+        return "A"
+    }
+}
+
+class ViewController: UIViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+        let aType: ClassIdenfifiable.Type = BaseCell.self
+        print("aType.reuseIdentifier is ", aType.reuseIdentifier)
+        print("aType.reuseIdentifier2 is ", aType.reuseIdentifier2)
+        
+        print("BaseCell.reuseIdentifier is ", BaseCell.reuseIdentifier)
+        print("BaseCell.reuseIdentifier2 is ", BaseCell.reuseIdentifier2)
+    }
+    
+}
+```
+
+协议声明的方法是一定有正确的行为的.所以无论是什么什么方式调用，id一定是default, 不对你可以找苹果. 至于id2， 其实是ub的, undefined behavior 换句话来说，你可以用 静态派发 来解释这个行为，但不能假定他一定会静态派发
+
+这就是为什么我说他是ub的，因为swift的团队都不知道怎么处理
+
+[](https://github.com/apple/swift/blob/main/docs/GenericsManifesto.md#maybe)
+
+考察的是Swift方法派发
+
+[](https://github.com/apple/swift/blob/main/docs/GenericsManifesto.md#dynamic-dispatch-for-members-of-protocol-extensions)
+
+| 区别 | 派发行为 | 别称 |
+| --- | --- | --- |
+| Protocol Default Implementation | Dynamic Dispatch | Table Dispatch |
+| 普通 Extension | Static Dispatch | Direct Dispatch |
+
+细节：
+1」 Swift  协议和类的 extension ⾥的⽅法使⽤直接派发，所以不能被重写；
+2」NSObject 的 extension 会使⽤消息机制进⾏派发，NSObject 作⽤域内的的是函数表派发；
+3」协议⾥声明的, 并且带有默认实现的函数会使⽤函数表进⾏派发；
+4」消息派发通过缓存来达到跟函数表派发⼀样的效率；
+5」OC 可以通过   `___**attribute__**((objc_direct))`   实现直接派发；
+6」Swift 的派发在 SIL（Swift Intermediate Language）中的表现：
+直接派发（Direct）：在 SIL ⽂件中，以 function_ref 的⽅式获取函数；
+函数表派发（Table）：在 SIL ⽂件中，以 class_method 的⽅式，通过 Vtable 获取函数；
+消息转发（Message）：在 SIL ⽂件中，以  objc_method 的⽅式获取函数；
+协议表调度（witness_method）：实现了协议的 Swift 类，通过 PWT 找到 Vtable 进⾏调度；
+7」函数表派发的 Vtable 存在 metaData 中；
+
+// ClassIdenfifiable is Existential type
+
+ **let** cell: ClassIdenfifiable = BaseCell()
+
+![](assets/16911995859741.jpg)
+
+![](assets/16911995927355.jpg)
+
+![](assets/16911996015251.jpg)
+
+
+
+### **43. What is polymorphism?**
+
+![](assets/16911996112667.jpg)
+
+
+Polymorphism is an essential building block of any object-oriented programming language. It uses a single symbol to represent many different kinds of entities or the availability of a single interface to entities of diverse types. With polymorphism, your code can operate on either the parent class or one of its offspring, depending on the supported hierarchy (family of objects).
+
+## 5、不通过继承，代码复⽤ / 共享的⽅式有哪些？
+
+1）swift ⽂件⾥的⽅法在包⾥ public / open 相当于全局函数；
+2）通过 protocol + protocol 的拓展默认实现，实现这个 protocol 就可以拥有这些代码的能⼒；
+
+## 父类的分类中写了一个方法, 子类能否直接调用。告知原因。
+
+| 调用演示 | 类别 | 注意事项 |
+| --- | --- | --- |
+| [self cyl_test]; | 分类实例方法 | 必须在子类中手动 import 父类的分类,否则抛 编译错误❌ |
+| [self performSelector:@selector(cyl_test)]; | 分类实例方法 | 必须在子类中手动 import 父类的分类,否则抛 warning⚠️ |
+| [[self class] cyl_testClass]; | 分类类方法 | 必须在子类中手动 import 父类的分类,否则编译错误 ❌ |
+| [[self class]performSelector:@selector(cyl_testClass)]; | 分类类方法 | 必须在子类中手动 import 父类的分类,否则抛 warning⚠️ |
+
+## **面向协议编程：**
+
+What is a protocol and how can we benefit from it?
+
+**What is protocol extension? Why Swift called as Protocol Oriented Language?**
+
+[What is protocol extension? Why Swift called as Protocol Oriented Language?](https://www.iosiqa.com/2020/04/what-is-protocol-extension-why-swift.html)
+
+1. 
+2. 
+
+## 6. Can we add a property in a protocol? Can we put property in the protocol in Swift?
+
+**What is protocol extension? Why Swift called as Protocol Oriented Language?
+[Swift 常见⾯试题合集](https://www.notion.so/Swift-13c29d66f01444eb8d81ecefe03e6c82?pvs=21)** 
+
+[https://chat.openai.com/share/5ed1d819-48e0-4755-8e8c-5d3a6d0e7db6](https://chat.openai.com/share/5ed1d819-48e0-4755-8e8c-5d3a6d0e7db6)
+
+[What is protocol extension? Why Swift called as Protocol Oriented Language?](https://www.iosiqa.com/2020/04/what-is-protocol-extension-why-swift.html)
+
+![](assets/16911996216316.jpg)
+![](assets/16911996296998.jpg)
+
+
+
+## 2、Swift 的协议和 OC 的协议有什么区别
+
+1）OC 的协议⽤来实现代理；
+
+2）Swift 协议定义了适合特定任务或功能的⽅法，属性。协议可以由类，结构或枚举实现，任何类型实现协议的要求
+⽅法称为遵守协议（⾯向协议、接⼝编程）；
+1」协议后加 : AnyObject 可以让协议只能被 Class 实现；
+2」使⽤类的拓展可以让现有的类实现协议；
+3」使⽤协议的拓展，可以让协议有默认实现；
+4」类似 OC 的 @optional 实现（对于 3」的应⽤）
+推荐在 protocol 的 extension ⾥实现默认⽅法，这样就不必写这个⽅法的实现了。
+混编的可以 @objc；
+
+3）⾯向协议编程与⾯向对象编程相⽐有什么优缺点？
+⾯向协议：可以实现多继承、代码量少，不会污染，代码耦合性低 ；缺点：可读性低
+
+4）常⽤协议：
+
+OptionSet , 实现该协议可以实现 [.a, .b, .c] 这样的枚举集合，类似 C 语⾔ enum 的按位枚举；
+Equatable，实现协议可以使⽤ !=、== , 与之相似的还有 Comparable；
+Codable，（混合了 Decodable 和 Encodable），encode / init decode ⽅法；
+1」实现了 Codable , 就可以⽤系统的 JSONEncoder().encode ⽅法；
+2」处理 空值，⽤可选把 null 转换成 nil；
+3」处理 ⽅法属性名映射，重写 enum:  private enum CodingKeys: String, CodingKey {
+case abc = “a_b_c"
+}；
+4」处理 系统类，如 CLLocationCoordinate2D，在 extension 中实现 Codable；
+Sequence / IteratorProtocol，实现了可以使⽤ for … in ，类似链表结构，IteratorProtocol 中包含 next() ⽅法，和
+currentIndex ⽅法；（下⽂ Sequence 部分有更详细的说明）
+Collection：
+在 Sequence 的基础上，实现了下标⽅法 Index，遵守 Comparable 协议；
+IndexingIterator，类似 IteratorProtocol；
+（下⽂ Sequence 部分有更详细的说明）
+
+![](assets/16911996385220.jpg)
+
+
+## **闭包：**
+
+## Closure in Swift
+
+ 
+![](assets/16911996525270.jpg)
+
+
+![](assets/16911996457612.jpg)
+
+
+## 11、Swift 的闭包（Clouse） 和 OC 的 Block
+
+本质上 OC 的 block 就是⼀个结构体，然后这个结构体⾥⾯有⼀个结构体成员专⻔⽤来保存捕捉对象，因此才会导致
+被 block 捕捉引⽤ +1  ，或者说 block 是⼀个带有⾃动变量（局部变量）的匿名函数。
+Block 的原理及其内存管理
+Swift 的闭包：（闭包是⼀个捕获了全局上下⽂的常量或者变量的函数）
+1、捕获值原理：在堆上开辟内存空间，并将捕获的值放到这个内存空间⾥
+2、修改捕获值时：实质是修改堆空间的值
+3、闭包是⼀个引⽤类型（引⽤类型是地址传递），闭包的底层结构（是结构体：函数地址 + 捕获变量的地址 == 闭
+包）
+4、函数也是⼀个引⽤类型（本质是⼀个结构体，其中只保存了函数的地址）
+参考：Swift-进阶 09：闭包（⼀）使⽤&捕获原理
+
+先看个经典的闭包优化
+
+```swift
+1"//2020 年在满帮分享 Swift 时我⽤到的闭包简化的例⼦：
+2results = OKRs.filter({ (s1: Int) "-> Bool in
+3      return s1 > 90
+4}) "//正常闭包
+5results = OKRs.filter({ s1 in return s1 > 90 }) "//类型推断
+6results = OKRs.filter({ s1 in s1 > 90 }) "//默认返回值
+7results = OKRs.filter({ $0 > 90 }) "//参数替换
+8results = OKRs.filter{ $0 > 90 } "//尾随闭包
+9results = OKRs.filter( $0 > 90 ) "//⾃动闭包 @autoclosure
+10"// @autoclosure 会把 $0 > 90 的表达式⾃动转换成 () "-> T
+11
+12"//a ？？b 中 b 的实现也是转换成了⼀个⾃动闭包 () "-> T
+
+```
+
+swift 闭包的优化，就是上⾯的代码
+1.根据上下⽂推断参数和返回值类型
+2.从单⾏表达式闭包中隐式返回（也就是闭包体只有⼀⾏代码，可以省略return）
+3.可以使⽤简化参数名，如$0, $1(从0开始，表示第i个参数...)
+4.提供了尾随闭包语法(Trailing closure syntax)
+
+闭包捕获值：
+闭包可以在其定义的上下⽂中捕获常量或变量。
+即使定义这些常量和变量的原域已经不存在，闭包仍然可以在闭包函数体内引⽤和修改这些值。
+Swift最简单的闭包形式是嵌套函数，也就是定义在其他函数的函数体内的函数。
+嵌套函数可以捕获其外部函数所有的参数以及定义的常量和变量。
+
+```swift
+1"//这个例⼦就是 嵌套函数 incrementor() 的本质是闭包， 闭包捕获了 amount 值，存储了起来，
+所以每次调⽤都会 + 10
+2func makeIncrementor(forIncrement amount: Int) "-> () "-> Int {
+3    var runningTotal = 0
+4    func incrementor() "-> Int {
+5        runningTotal += amount
+6        return runningTotal
+7    }
+8    return incrementor
+9}
+10
+11let incrementByTen = makeIncrementor(forIncrement: 10)
+12
+13"// 返回的值为10
+14print(incrementByTen())
+15"// 返回的值为20
+16print(incrementByTen())
+17"// 返回的值为30
+18print(incrementByTen())
+
+```
+
+## **函数式编程**
+
+1. 20. Explain reactive programming and its advantages, mentioning frameworks like RxSwift and Combine.
+
+Combine跟Rx没啥区别.一个类Redux的架构
+
+## Q.Swift 是面向对象还是函数式的编程语言?
+
+A:
+Swift 既是面向对象的，又是函数式的编程语言。
+说 Swift 是面向对象的语言，是因为 Swift 支持类的封装、继承、和多态，从这点上来看与 Java 这类纯面向对象的语言几乎毫无差别。
+说 Swift 是函数式编程语言，是因为 Swift 支持 map, reduce, filter, flatmap 这类去除中间状态、数学函数式的方法，更加强调运算结果而不是中间过程。
+
+函数式的编程，通俗易懂的讲解
+
+[一文读懂Swift函数式编程](https://zhuanlan.zhihu.com/p/192483039)
+
+1. 如何在 Swift 中实现函数式编程？请举一个示例。
+
+## **可选类型：**
+
+## What is optionals?
+
+optional == wrapped 包
+
+when use  optional == unwrapped 解包
+![](assets/16911996627336.jpg)
+
+
+[Difference between optional values in swift?](https://stackoverflow.com/a/29054155/3395008)
+![](assets/16911996707498.jpg)
+
+
+Swift 5.7 introduces a new, more concise way to unwrap optional values using `if let` and `guard let` statements. Before, we always had to explicitly name each unwrapped value, for example like this:
+
+[Swift 5.7’s new optional unwrapping syntax | Swift by Sundell](https://www.swiftbysundell.com/articles/swifts-new-shorthand-optional-unwrapping-syntax/)
+![](assets/16911996765839.jpg)
+
+![](assets/16911996818935.jpg)
+
+
+1. 4. What is the difference between if let and guard let?
+
+## *8、Optional（可选型） 是⽤什么实现的*
+
+*使⽤枚举（enum）的关联值 特性实现的。
+1）枚举的关联值和原始值：
+原始值： 就是 rawValue
+关联值：类似与下⽂ Optional some 的⽤法，可以根据不同枚举类型创建不同的枚举。Alamoﬁre 的回调也是这么⽤的。
+2）Optional 源码：*
+
+```swift
+*1"//使⽤枚举，Wrapped 的英⽂是 使""...包裹的意思
+2enum Optional<Wrapped> {
+3  case none
+4  case some(Wrapped)
+5}
+6
+7"//这是个语法糖，下⾯两种形式等价：
+8var name: Optional<String>
+9var name: String?*
+
+```
+
+*1） ! 或者 ？拆包  
+所谓的 nil 就是 Optional.None 
+使⽤的时候后需要使⽤ ! 来从 enum ⾥进⾏拆包 
+！⽤来求取 Optional.Some(T) 包装下的值，所以为 Optional 值 = nil 时会报错； -> 这⾥可以引出泛型相关问题*
+
+*2） 可选链
+a?.b?.c，如果前⾯的为 nil 了则结果直接为 nil；*
+
+*3）?? 来表示默认值
+4）除了 ! / ？ 拆包，还有 if let 可选绑定、隐式解析（a！= xxxx）两种处理 Optional 的形式；*
+
+## *7、lazy load 是怎么实现的？*
+
+*Swift 的 lazy 分：
+1」lazy 修饰属性（⻅上⼀条）；
+2」lazy 修饰⽅法（⻅上⼀条）；
+3」collection 中的 lazy：
+把 Sequence 替换成了 个 LazySequence（实现 SequenceWrapper 接⼝）；
+SequenceWrapper 保存了原始序列和变换（transform）；
+LazySequence  的 Interator 在 next() ⽅法中，实现了延迟调⽤变换（transform）；*
+
+1. 请解释 Swift 中的 lazy 关键字是怎么实现的？在什么情况下会使用它？

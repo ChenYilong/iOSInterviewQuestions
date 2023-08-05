@@ -25,8 +25,6 @@ I’m an iOS Developer and have been working as an **iOS Developer/mobile develo
 
 Yes, I had a COVID vaccine.
 
-![Untitled](%E8%87%AA%E6%88%91%E4%BB%8B%E7%BB%8D%E7%B1%BB%E5%9E%8BBehavioral-based%20interviewing%20Competency-Bas%20a728c50a5ba244188e1c66e28d34dd1c/Untitled%201.png)
-
 ## What visa are you holding?
 
 ## What visa do you hold? Is it valid to work in NZ?
