@@ -1,7 +1,7 @@
 
 # 实战篇: iOS项目开发技能
 
-<p align="center"><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/practical.md"><img src="../assets/Swift_practical_Interview_Questions.jpg"></a></p>
+<p align="center"><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/theory.md"><img src="../assets/Swift_practical_Interview_Questions.jpg"></a></p>
 
 
  **UI布局：**
@@ -198,7 +198,6 @@ What is the difference between clean and MVVM architecture?
 ![](../assets/mvvm_architecture_design_pattern/mvvm_architecture_design_pattern_cn.jpg)
 
 
-https://www.notion.so/chenyilong/iOS-mvvm-37284cd352bc4074999244a9ee6cc806
 
 然后这是几个系统设计或者客户端设计相关的repo：
 [https://github.com/donnemartin/system-design-primer](https://github.com/donnemartin/system-design-primer)
@@ -618,4 +617,4 @@ CocoaPods和Swift Package Manager（SPM）都是iOS开发中常用的依赖管�
 
 ----
 
-<p align="center"><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/practical.md"><img src="../assets/Swift_theory_Interview_Questions.jpg"></a></p>
+<p align="center"><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/theory.md"><img src="../assets/Swift_theory_Interview_Questions.jpg"></a></p>
