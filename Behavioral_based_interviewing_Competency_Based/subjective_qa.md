@@ -379,3 +379,112 @@ One of my companies has values saying that have a hug with the change, which mea
 //TODO:STAR
 
 I'm a professional developer, and I have a lot of experience in the software engineering industry, so I think I can use my experience to solve challenging problems in the company. In addition, I'm a person who would love to provide outstanding, excellent service to the customer, and I think I can enhance customer performance and satisfaction. Those are my abilities.
+
+
+
+
+### Relationship
+#### 1. How's your relationship with your colleagues?
+I had a good relationship with my former colleagues, we always had lunch together, and talked about some common topics about hobbies and life after work. Sometimes I invited my colleagues to my home and played PS4 and Nintendo Switch together. 
+
+#### 2. How do you coordinate with the project manager?
+Although a member of the architecture team our demand came from other developers instead of the project manager, I still keep a good relationship with them. In a refactoring task, we ordered all features in our project with project managers together. We had a daily 10 min standing-up meeting to check the progress and quality of every feature with project managers. Besides, we used JIRA, to assign every subtask to the sprint board to manage.
+
+#### 3. If you have a conflict with your colleagues/boss/co-workers, how do you deal with it?
+Generally speaking, conflict with colleagues is hard to avoid, because people always stand on their own to think about work. I believe exchanging views can enhance mutual understanding and recognition, and more communication instead of silence can solve a conflict. For example, once my boss gave me a task and ask me to finish it in one month. But I thought the time limit for the task is too short, and the time to accomplish it is impossible. My boss thought I have a negative attitude toward the project. So I decided to talk to him about it. I showed all timetables of every developer and the blueprint of this task. I expressed we can't finish it in one month though we work overtime every day. You need to give us one more month. He also explained the project is an emergency. Eventually, we mutually compromised, he gave me one more month to do that, and I worked overtime for this task. 
+
+#### 4. How do you collaborate with teammates tough to deal with?
+https://hbr.org/2017/04/how-to-work-with-someone-who-isnt-a-team-player
+
+Principles to Remember:
+Do:
+Inquire about your colleague’s interests, priorities, and motivations to better understand their perspective and the causes of their behavior.
+Use this opportunity to revisit the team’s purpose and goals.
+Look for opportunities to better utilize the uncooperative team member’s specific skill set.
+Don’t:
+Develop an explanation for the colleague’s behavior without talking to them first.
+Ostracize the team member in question. Promote more interactions to create better group cohesion.
+Assume everyone knows what they’re supposed to be working on. Clarify team members’ roles so that people know what is expected of them.
+### Career experience & expectation
+#### 1. What are your most important career accomplishments?
+In Weibo, I was involved in the peak-cutter plan. Our third-party Cloud for live streaming calculates prices by peak data. It would cost us billions of Chinese yuan (equivalent to hundreds of million of Euros) in just one year. Obviously, we can't afford that. My team members and discussed if we could reduce the data during rush hour, we would save a large amount of money. Of course, the process was not easy. We investigated kinds of other apps' solutions for video baseline profiles and did group-controlled trials. Eventually, we made a balance solution, keeping good picture quality and lower data. As a bonus from our company, every team member got 1k euros. 
+
+#### 2. What's your favorite work environment/ideal company culture?
+1. I wish I could work in a company with a relaxed vibe. Every staff could freely share their ideas and manage up, which would keep everyone’s growing space. 
+2. The flat hierarchy is better since communication efficiency would be higher. 
+3. I hope all products and plans are driven by data. This is an age of big data, data can help us solve problems more accurately.
+4. I like to work in an enthusiastic team. The colleges don’t only work together, but also play together out of work.
+
+#### 3. What's your career plan for the future?
+I'd like to play the role of mentor in an open team. From my perspective, I like to share my experience and technical skills with other people. I organized sharing workshops in my previous company, that helped many colleagues improve themselves. Though I believe I have good management skills and leadership, frankly, I don't want to play a manager role. Because I think keeping enough time to write code makes me happier. I can find joy in creation and innovation. Through this, I can have enough content to share with people. 
+
+#### 4. How do you handle a challenge? / Please describe the biggest challenge in your career.
+To see the question about stress.
+
+#### 5. What does make you feel achievement at work?
+In my previous jobs, we have a task that is to revisit our users. I felt achieved when I heard my users' positive feedback or thanks since I help them solve problems. I could feel my work's value, which makes people have a better life.
+
+#### 6. Where do you see yourself in 3-5 years? 
+1. I hope I could follow the updating of technology. You know, it's a field that develops very fast. I would feel satisfied if I could learn about the more new architecture and deeper cool technologies. I also hope to share things I learn with other developers. It's a good thing I can grow up with others together.
+2. I hope to help more users with the apps I developed. This is the original intention of why I become a developer.
+
+
+### Workplace ability
+#### 1. What's your biggest strength/advantage?
+I'd always like to try different new technologies. When SwiftUI was just published, I create some interesting projects with it. Besides, I like to share my fresh ideas with other people. My previous company makes a live streaming video app, I thought maybe we can add real-time voice recognition when the influencer is speaking some keywords, the app can recognize it and display a relative advertisement. I shared the idea with other colleagues and attempted it. Although it's a failure, it's still interesting to explore.
+
+#### 2. What's your biggest weakness/disadvantage?
+I have to admit I'm a lazy guy. The simple repetitive work always makes me bored. Yes, laziness is my weakness. But I believe laziness usually lets people come up with better ways to optimize life and work. My laziness pushes me to create excellent and elegant architecture to enhance code reuse and reduce code lines. I like to use innovations including new technologies, and new devices to make my work brief and efficient instead of repeating and repeating the same thing.
+
+#### 3. How do you describe what the API is to a six-year-old child?
+I believe most children have used smartphones to play games nowadays. I can tell the kid the API is like iPhone's lightning port that is standard and universal, it can be connected by all lightning cables.
+
+#### 4. How did you handle the mistake?
+I think I should report it to your team in time and figure it out in the shortest time if I find my mistake in the project. I have had this experience in my career. Once I made a mistake in our project in that I wrote the wrong Boolean logic values, so the business logic completes the opposite. Meanwhile, our QAs and I didn't find these mistakes before the release. The first day after release, I reviewed my code for preparing a new feature and found this mistake. Then I reported it immediately and made the emergency solution. On that day, we fixed it together and republished our app. Fortunately, my fault didn't cause a big loss. So the best way to handle the mistake is emergency response instead of concealing it or passing the buck. After remedying it, also need to make a summary of it.
+
+#### 5. What do you think will make you feel stressed? What sort of thing stresses you out at work?
+Answer 1:
+If I don't have enough time and sufficient resources to finish my task, I will feel stressed. For example, I had a refactoring task at my previous company. I designed a new architecture for the iOS client and other businesses need to be integrated into the new one. Our new features also must release, so we demand lots of time and resources. However, from our company aspect, if the duration of refactoring is too long, it will affect the process of new features. So, I was only allowed to finish this work within one month. It's a really hard time for me, I must consider how to organize people to involve in this task in a short time. I tried to get more time and manpower from my boss, we borrowed staff from the other company and worked overtime every day. Finally, we did it together. When we released our App, I felt more relaxed than ever.
+Answer 2:
+If I became an outcast among my teammates, I would feel stressed. To see the question work with a teammate who is tough to deal with.
+
+
+#### 6. Do you prefer to work independently or on a team?
+I think working on a team is better for me. I feel that working with a technical vibe increases efficiency. I can find people to discuss together in the group if I have some questions or encounter issues. The fresh ideas from team members can always inspire me when I get into difficult problems or decisions. Though sometimes I also need an independent and silent space to think about something or make designs, I can't work leaving with my team members.
+
+#### 7. Tell us about a time when you had to solve a problem on your own.
+My team members and I usually solved many problems together, and we talked about them and shared different ideas, but once I had a problem that only can be solved by myself. It's in Weibo, I was developing a new feature and needed to invoke some very old foundation APIs of our App. However, I found some functions didn't work as the document said. I asked my colleagues, they said the API's author has left our company. But he left the wrong documents and no comment in the code. Meanwhile, I couldn't find one who was familiar with these codes, since it's too old, written many years ago. So I just fix it by myself. I commented on and debug the foundation API's source code, and tried to find what is wrong. Fortunately, I found the mistake: the code reversed the **if condition** compared with the document and comment. Eventually, I verified the description of the document, and the comment are written in the opposite. It spent a lot of time and let me work overtime for two days. So, good documents and good comments are vital for a project.
+
+#### 8. How do you describe technical issues to people who don't know about technology?
+To see the question about describing API to a six-year-old child.
+
+#### 9. What does make you depressed at work?
+To see the question about stress.
+
+#### 10. If you would have started working in our company, after several months, you felt the company is not as same as your exception, what would you do?
+
+Talk about my feeling with colleagues.
+
+
+### Questions for the interviewer
+#### 1. How many staffs in the team to which I apply?
+#### 2. Could you introduce the hierarchy of the development department?
+#### 3. Do you have some events and activities for developers, such as sharing workshops, and hackathons?
+#### 4. Do you provide sponsorship for a working visa?
+#### 5. Is it a job on-site, remote, or hybrid?
+
+### Amazon Leadership Principles
+1. Customer obsession
+2. Ownership
+3. Invent and Simplify
+4. Are Right, A Lot
+5. Learn and Be Curious
+6. Hire and Develop the Best
+7. Insist on the Highest Standards
+8. Think Big
+9. Bias for Action
+10. Frugality
+11. Earn Trust
+12. Dive Deep
+13. Have Backbone; Disagree and Commit
+14. Deliver Results

@@ -11,6 +11,21 @@
 
 ## 正文
 
+
+## Behaviour (HR interview)
+### About Position & Company
+#### 1. Why did you apply for this position? What are you interested in this position?
+According to the company's business and tech stack to talk about. 
+#### 2. Do you learn about our company?
+If you have used the app, it's better.
+#### 3. Could you tell me your expected salary?
+
+#### 4. When can you start your work?
+I will start my work in 2 months if I get the offer.
+#### 5. Do you need us to offer sponsorship(working visa)?
+Yes.
+
+
 ## How do you handle the pressure?
 
 ## Please introduce yourself to us?
@@ -175,3 +190,32 @@ Describe your personality in five words. How would you describe yourself?
 - honesty //TODO: reason:
 - flexible, Are you adaptable to changes
 - Reflective ability
+
+
+
+### Personal
+#### 1. What are your hobbies outside of work?
+I usually play computer games outside of work. My favourite games are Starcraft II and Civilization 6. Besides, I have a Nintendo Switch, and sometimes I play Ring fit to keep fit, and Mario with my family. In China, I invited my former colleagues to my home, and play Switch and PS4 together. It's a great way to foster relationships with colleagues.
+
+#### 2. Do you like our country? Why do you intend to move to this country?/Why did you apply for a job in our country?
+If you have never been to this country, HR maybe ask you this question.
+Take Berlin for example:
+I like the vibe of a startup company so much because I can feel the vitality of a company and group up with it together. I worked in Beijing before, there are a lot of startup companies. However, the country's wave of entrepreneurship has waned due to the recent economic situation. I know the startup atmosphere in Berlin is excellent, many Unicoms emerge in this city. I think that is suitable for my career plan, so I intend to develop in Berlin and witness the development of the Internet industry.
+Moreover, Some of my former colleagues and friends in technical groups are working there. They told me the price isn't expensive and I can find all kinds of food, especially since there are many Chinese restaurants. These points attract me, so I must choose Berlin as my first choice. 
+
+#### 3. Do you have friends and/or family here? Or do you have relocation plans?
+To see the above answer.
+#### 4 What's your plan on the first day of working if you could join us?
+I will be familiar with team members and company rules. I believe someone will introduce them to me, but I have a little bit face blind, so I need some time. Perhaps lunch or playing games together can help me be familiar with them soon.
+If I can get my work computer on the first day, I'll config my development environments, such as installing necessary tools. I hope they can fit my habits and keep good working efficiency.  
+
+#### 5. Do you prefer to work in a startup company or a big company?
+I prefer to work in a startup company. There are 3 points of startup companies attracting me.
+1. I worked in startup companies. I can feel the startup team is more enthusiastic and innovative. Teammates can feel the achievement that everyone creates together.
+2. The hierarchy is flatter than big companies. I believe this makes communication more efficient. 
+3. The startup means more opportunities to me, including promotion, and stock sharing. The more important thing is that I can witness a project and a company growing up with my colleagues.
+
+
+#### 6. What does work-life balance mean to you?
+The work-life balance means more flexible spare time to me. I can spend them on many things. I can rest and have amusement to restore my energy; I can have more time to be company with my family. Of course, I prefer to spend some time learning new technology or other technical space, such as backend, and AI. I believe my spare time can bring me more possibilities, which lets me have fresh ideas instead of blocking into fixed thinking.
+

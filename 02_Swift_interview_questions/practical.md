@@ -1,4 +1,4 @@
-
+··
 # 实战篇: iOS项目开发技能
 
 <p align="center"><a href="https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/theory.md"><img src="../assets/Swift_practical_Interview_Questions.jpg"></a></p>
@@ -31,7 +31,10 @@
 
 1. How can you avoid data racing issues when using the singleton pattern in a multi-threaded environment?
 2. Can you give examples of different types of locks used in concurrent programming?
-3. How can you wait for multiple network calls to complete before calling a function that relies on the results?
+3. Can you describe what async/await is?
+4. How can you wait for multiple network calls to complete before calling a function that relies on the results?
+5. 结构化并发（Structured Concurrency）：How to implement structured concurrency?
+
 
 **网络编程：**
 
@@ -49,9 +52,20 @@
 2. Can you tell me more about how you manage libraries and codebases in your project?
 3. How do you debug crash issues in your daily work?
 
-**行为面试相关：**
+### Unit Test
+#### 1. How to mock data
 
-1. How do you keep up to date with your Swift and iOS knowledge?
+
+#### 2. How to separate production env and mock
+
+#### 3. How to test the view model with SwiftUI?
+
+#### 4. How to inject mocked networking logic?
+
+#### 5. What's Test-driven development?
+
+
+
 
  **UI布局：**
 
@@ -102,6 +116,9 @@ Keep in mind that if your cell is showing different kind of data based on differ
 **SwiftUI** 
 
 ## What’s the difference between @ObservedObject, @State, and @EnvironmentObject?
+
+https://www.hackingwithswift.com/quick-start/swiftui/whats-the-difference-between-observedobject-state-and-environmentobject
+
 
 你说的有点老了，现在是Observation框架，性能更好了，不过写法不同了.
 
@@ -334,8 +351,49 @@ final class PostListViewModel: ContentListViewModelProtocol {
 ![](../assets/mvvm_architecture_design_pattern.png)
 
 
+### Architecture, Pattern, and System Design
 
-## 
+#### 1. Pattern
+
+**VIPER**
+https://github.com/adib/ViperMovieDemo
+
+https://github.com/unwire/viper-demo-ios
+
+**MVVM**:
+
+Clean MVVM: https://www.vadimbulavin.com/modern-mvvm-ios-app-architecture-with-combine-and-swiftui/
+
+https://github.com/kudoleh/iOS-Clean-Architecture-MVVM
+
+Modern MVVM: https://www.vadimbulavin.com/modern-mvvm-ios-app-architecture-with-combine-and-swiftui/
+
+**Redux**:
+
+Redux: https://www.raywenderlich.com/22096649-getting-a-redux-vibe-into-swiftui
+
+#### 2. Describe binding in MVVM.
+
+#### 3. Mobile System Design
+https://github.com/donnemartin/system-design-primer
+
+https://github.com/weeeBox/mobile-system-design
+
+https://github.com/skyming/Trip-to-iOS-Design-Patterns
+
+#### 4. What's the Clean Architecture?
+https://indiespark.top/programming/how-implement-viper-clean-architecture-ios/
+
+## Software Engineering
+https://www.whizlabs.com/blog/agile-scrum-interview-questions/
+
+https://www.interviewbit.com/agile-interview-questions/
+
+#### 1. What's the difference between Greenfield and Brownfield?
+https://synoptek.com/insights/it-blogs/greenfield-vs-brownfield-software-development/
+
+#### 2. What do you think of refactoring?
+
 
 **并发和多线程开发：**
 
@@ -343,12 +401,19 @@ final class PostListViewModel: ContentListViewModelProtocol {
 
 是不是现在所有swift里的线程问题，都可以通过actor解决？我回答的, 是用GCD, 重写 getter和setter, 实现异步读取, 同步写入.只要保证setter和getter在一个队列里就行. setter是同步, getter同步和异步都行.
 
-赞👍, 每天跟着博哥学习新知识. 还 没用过actor.
+#### 9. How do let functions run in the main queue?
+@MainActor, DispatchQueue.main, Runloop.main
+
+
 
 1. 12. Can you give examples of different types of locks used in concurrent programming?
 2. 
 
 [https://chat.openai.com/share/6843abbf-37fe-46bc-94aa-fb8f9aea2d5b](https://chat.openai.com/share/6843abbf-37fe-46bc-94aa-fb8f9aea2d5b)
+
+
+#### 10. Can you describe what async/await is?
+https://www.avanderlee.com/swift/async-await/
 
 ## 19. How can you wait for multiple network calls to complete before calling a function that relies on the results?
 
@@ -404,6 +469,15 @@ async {
 注意，这个代码应该在某个 `async` 函数或者闭包中运行。在这个示例中，我们使用 `async {}` 创建了一个异步闭包来运行这段代码。如果你在你自己的代码中使用这个模式，你应该把这段代码放在一个 `async` 函数中。
 
 最后，请注意处理可能会抛出的错误。在这个示例中，我们使用 `do-catch` 来捕获并打印可能会发生的错误。
+
+#### 1. How to implement structured concurrency?
+https://www.hackingwithswift.com/swift/5.5/structured-concurrency
+
+
+结构化并发（Structured Concurrency）：
+
+How to implement structured concurrency?
+
 
 **网络编程：**
 
@@ -614,6 +688,23 @@ CocoaPods和Swift Package Manager（SPM）都是iOS开发中常用的依赖管�
 6. **二进制框架支持**：CocoaPods支持使用二进制框架，这可以显著减少编译时间。然而，直到Swift 5.3，SPM才开始支持二进制框架。
 
 在选择CocoaPods还是Swift Package Manager时，需要考虑到上述的一些因素，以及项目的具体需求。
+
+### Unit Test
+#### 1. How to mock data
+https://ocmock.org
+#### 2. How to separate production env and mock
+protocol
+#### 3. How to test the view model with SwiftUI?
+https://www.youtube.com/watch?v=kHtEtAP4DNA
+
+#### 4. How to inject mocked networking logic?
+https://www.avanderlee.com/swift/dependency-injection/
+
+#### 5. What's Test-driven development?
+https://blog.cleancoder.com/uncle-bob/2013/05/27/TheTransformationPriorityPremise.html
+
+https://www.codecademy.com/article/tdd-red-green-refactor
+
 
 ----
 

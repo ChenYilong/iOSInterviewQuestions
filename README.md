@@ -97,6 +97,13 @@
 
 -  [《自我介绍类型》]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/Behavioral_based_interviewing_Competency_Based/objective_qa.md ) 
 -  [《主观问题类型》]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/Behavioral_based_interviewing_Competency_Based/subjective_qa.md ) 
+-  [《软件工程类型》]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/Behavioral_based_interviewing_Competency_Based/technical_qa.md) 
+
+
+## Other
+
+ - [《软件开发术语》]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/Software_Development_Terminology.md) 
+
 
 -------------
 

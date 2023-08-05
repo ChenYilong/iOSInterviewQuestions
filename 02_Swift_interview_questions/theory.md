@@ -24,13 +24,16 @@
 - struct 在堆区还是栈区？
 - 属性中，值属性，和计算属性有什么区别？
 - 声明⼀个只有⼀个参数没有返回值闭包的别名
-
+-  Principle of Dictionary?
+- What's the difference between `passthroughSubject` and `CurrentValueSubject`?
 ## **泛型：**
 
 - Q.什么是泛型，swift哪些地方使用了泛型？
 - Have you used generics in Swift?
 - 请解释 Swift 中的泛型是什么？并描述一下它的本质？
 - *泛型的本质*
+-  What's the difference between `opaque type` and `generic`?
+
 
 ## 内存管理、**性能优化和调试：**
 
@@ -46,6 +49,7 @@
 - Swift Try catch 的原理？
 - Swift 的计算属性、存储属性、懒加载
 - How do you filter an array of instances to extract a specific property?
+- The time complexity of the map, filter, and reduce?
 - *Sequence / ⾼阶函数 / Collection*
 - 混编过程中遇到的 Crash
 
@@ -795,6 +799,12 @@ let someClosuer: SomeClosuerType = { (name: String) in
 }
 ```
 
+#### 2. Principle of Dictionary
+https://medium.com/swift-algorithms-extras/understanding-hash-tables-dictionaries-sets-with-swift-4605e905973e
+
+#### 5. What's the difference between `passthroughSubject` and `CurrentValueSubject`?
+https://www.avanderlee.com/combine/passthroughsubject-currentvaluesubject-explained/
+
 ## **泛型：**
 
 ## Q.什么是泛型，swift哪些地方使用了泛型？
@@ -858,6 +868,12 @@ Any 类型会避开类型的检查，具体⻅下⾯代码例⼦：*
 
 ```
 
+
+#### 7. What's the difference between `opaque type` and `generic`?
+https://docs.swift.org/swift-book/LanguageGuide/OpaqueTypes.html
+
+
+
 ## 内存管理、**性能优化和调试：**
 
 ## When do you use static variables?
@@ -870,6 +886,8 @@ class 只能在类⾥⽤，不能在结构体、枚举中⽤；
 class 只能修饰计算属性，不能修饰值属性；
 
 ## What is weak and unowned in Swift? What is their difference?
+
+https://www.advancedswift.com/strong-weak-unowned-in-swift/
 
 iOS weak 和 unowned 区别? 
 
@@ -1299,6 +1317,9 @@ As to which to use, it depends on your needs:
 - If you have an optional and want to transform it if it's not `nil`, you'd previously use `flatMap`, but this is now done using `Optional.map` as of Swift 4.1.
 
 Remember, both `flatMap` and `compactMap` do not mutate the original array. They return new arrays, which is a characteristic of functional programming.
+
+#### 3. The time complexity of the map, filter, and reduce
+O(n)
 
 ## 6、Swift 的计算属性、存储属性、懒加载
 
@@ -1741,6 +1762,9 @@ a?.b?.c，如果前⾯的为 nil 了则结果直接为 nil；*
 
 *3）?? 来表示默认值
 4）除了 ! / ？ 拆包，还有 if let 可选绑定、隐式解析（a！= xxxx）两种处理 Optional 的形式；*
+
+#### 4. How to unwrap optionals in Swift?
+https://www.hackingwithswift.com/sixty/10/2/unwrapping-optionals
 
 ## *7、lazy load 是怎么实现的？*
 
