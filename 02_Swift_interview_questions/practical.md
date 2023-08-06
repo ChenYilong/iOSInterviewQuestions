@@ -123,7 +123,7 @@ Keep in mind that if your cell is showing different kind of data based on differ
 https://www.hackingwithswift.com/quick-start/swiftui/whats-the-difference-between-observedobject-state-and-environmentobject
 
 
-你说的有点老了，现在是Observation框架，性能更好了，不过写法不同了.
+我写的有点老了，现在iOS17 是Observation框架，性能更好了，不过写法不同了. 等忙完这段时间, 我完善下. 先看下iOS17 以前的写法.
 
 [https://chat.openai.com/share/cd46dff5-9d7e-4990-8fe9-595e2aa65080](https://chat.openai.com/share/cd46dff5-9d7e-4990-8fe9-595e2aa65080)
 
@@ -900,9 +900,12 @@ Debugging crash issues in iOS development can be done using several different to
 
 In general, the approach to debugging will depend on the nature of the issue. If the issue is reproducible, you can use the debugger to step through the code and find where the problem is. If the issue is not easily reproducible, you might rely more on crash logs and other diagnostic information.
 
-1. 21. Are you familiar with setting up CI/CD pipelines for Swift projects?
+
+## Are you familiar with setting up CI/CD pipelines for Swift projects?
 
 [https://chat.openai.com/share/8afd4553-c94f-4cf2-b90f-1ff22f7fc6b8](https://chat.openai.com/share/8afd4553-c94f-4cf2-b90f-1ff22f7fc6b8)
+
+#### 使用 YAML 在 Microsoft Azure 
 
 使用 YAML 在 Microsoft Azure 上为 Swift 项目创建 CI/CD 的过程大致分为以下步骤：
 
@@ -945,11 +948,51 @@ steps:
 - 使用 Ruby 版本 >= 2.6。
 - 安装 Cocoapods 并切换到指定的 Xcode 版本。
 - 执行 `swift build` 和 `swift test`。
-1. 保存并运行 Pipeline。
+
+ 保存并运行 Pipeline。
 
 请注意，以上只是一个基本示例，实际的 CI/CD 设置将根据你的项目的具体需求有所不同。
 
 同时，由于 Swift 的开发一般依赖于 Xcode，而 Xcode 目前只能在 macOS 上运行，所以在 Azure Pipelines 上使用 macOS 环境进行构建和测试需要有一定的付费成本。具体的费用请参考 Azure 的官方定价信息。
+
+
+#### 使用 YAML 在GitHub Actions 
+
+也可以在 GitHub Actions 中使用 YAML。实际上，YAML 是用来定义 GitHub Actions 工作流的语言。GitHub Actions 允许你直接在你的 GitHub 仓库中使用 YAML 文件自动化软件开发工作流。
+
+下面是一个基本的 GitHub Action 的 YAML 文件示例，用于在一个简单项目上运行连续集成过程：
+
+```yaml
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - name: Install dependencies
+      run: npm install
+    - name: Run tests
+      run: npm test
+```
+
+在这个例子中，工作流在推送或向 `master` 分支发起 pull 请求时被触发。它在最新的 Ubuntu 虚拟环境上运行，并设置 Node.js 版本为 12，安装依赖，并运行测试。
+
+你可以在仓库中的 `.github/workflows/` 目录中创建这个 YAML 文件，GitHub Actions 将会自动识别并根据你定义的触发器执行它。
+
+GitHub Actions 提供了一种强大灵活的方式来自动化各种任务，包括构建、测试、部署应用程序等等，所有这些都是使用 YAML 定义的。
+
 
 ## Can you tell me more about how you manage libraries and codebases in your project?
 
