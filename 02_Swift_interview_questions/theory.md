@@ -1540,6 +1540,54 @@ As to which to use, it depends on your needs:
 
 Remember, both `flatMap` and `compactMap` do not mutate the original array. They return new arrays, which is a characteristic of functional programming.
 
+
+上面讨论的是Swift数组和集合map，flatMap和compactMap基本操作，它们用于对集合中的元素进行转换和过滤。这些函数对于处理同步操作和数据非常有用。
+
+同时，Combine框架中也存在`map`，`flatMap`和`compactMap`的使用。
+![swift-combine](../assets/swift-combine.jpg)
+
+Swift Combine框架是一个响应式编程框架，它可以处理异步事件，例如用户交互，网络响应等。Combine使用了发布者和订阅者模型，发布者发布事件，订阅者接收并处理这些事件。
+
+Combine框架中也有`map`，`flatMap`和`compactMap`操作符，但这些操作符适用于处理异步事件流。这些操作符的行为与数组和集合上的操作非常相似：
+
+- `map`：接收一个转换闭包，将接收到的每个输入事件转换为新的值或事件。
+- `flatMap`：接收一个返回Publisher的转换闭包，将接收到的每个输入事件转换为一个新的Publisher。然后，这些新的Publisher的事件被合并到一个共享的事件流中。
+- `compactMap`：与`map`操作类似，但会忽略转换闭包返回的nil值。
+
+所以说，`map`，`flatMap`和`compactMap`在Swift的基础集合和Combine框架中都有使用，它们都是对元素进行转换和过滤的操作，但Combine框架中的这些操作是应用在异步事件流上的。
+
+
+代码演示如下：
+
+注意，这需要Swift 5.0及更高版本，并且需要导入Combine库。
+
+```swift
+import Combine
+
+// Create a publisher
+let numbersPublisher = [1, 2, 3, 4, 5].publisher
+
+// map
+numbersPublisher
+    .map { $0 * 10 }
+    .sink { print($0) }  // Output: 10, 20, 30, 40, 50
+
+// flatMap
+let nestedPublisher = [[1, 2, 3], [4, 5, 6], [7, 8, 9]].publisher
+nestedPublisher
+    .flatMap { $0.publisher }
+    .sink { print($0) }  // Output: 1, 2, 3, 4, 5, 6, 7, 8, 9
+
+// compactMap
+let publisherWithNil = [1, nil, 3, nil, 5].publisher
+publisherWithNil
+    .compactMap { $0 }
+    .sink { print($0) }  // Output: 1, 3, 5
+```
+
+请注意，以上 Combine 示例是简化的，并且不包含取消订阅的逻辑，实际开发中需要正确地处理和取消订阅。
+
+
 #### 3. The time complexity of the map, filter, and reduce
 O(n)
 
@@ -1913,6 +1961,7 @@ Swift最简单的闭包形式是嵌套函数，也就是定义在其他函数的
 ## **Combine、函数式与响应式编程：**
 
 ![SwiftUI_and_Combine](../assets/SwiftUI_and_Combine.png)
+![swift-combine](../assets/swift-combine.jpg)
 
 ## Explain reactive programming and its advantages, mentioning frameworks like RxSwift and Combine.
 
