@@ -14,6 +14,7 @@ Swift面试题共分为两篇:
 **SwiftUI** 
 
 - Are you familiar with SwiftUI?
+- What’s the difference between SwiftUI and UIKit Lifecycle Methods?
 - What is Property Wrapper in SwiftUI? What’s the difference between @ObservedObject, @State, and @EnvironmentObject? 
 - Can you explain the difference between a state object and an observed object in SwiftUI?
 
@@ -83,6 +84,10 @@ Swift面试题共分为两篇:
 
 ![SwiftUI_and_Combine](../assets/SwiftUI_and_Combine.png)
 
+## What’s the difference between SwiftUI and UIKit Lifecycle Methods?
+
+![SwiftUI_and_Combine](../assets/SwiftUI_vs_UIKit_Lifecycle_Methods_Difference.jpg)
+
 ## What’s the difference between @ObservedObject, @State, and @EnvironmentObject?
 
 https://www.hackingwithswift.com/quick-start/swiftui/whats-the-difference-between-observedobject-state-and-environmentobject
@@ -93,8 +98,6 @@ https://www.hackingwithswift.com/quick-start/swiftui/whats-the-difference-betwee
 
 ![](../assets/Property_Wrapper_in_SwiftUI.jpg)
 
-
-[swift @State @Published+@StateObject+@ObservedObject+@ObservableObject+@Binding+$0$1_swift @published有什么用_linzhiji的博客-CSDN博客](https://blog.csdn.net/linzhiji/article/details/128094116)
 
 ![](../assets/16912073172453.jpg)
 
