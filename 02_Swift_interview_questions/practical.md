@@ -11,16 +11,10 @@ Swift面试题共分为两篇:
 
 # 目录
 
- **UI布局：**
-
-1. How do you create UI elements like labels and images, and how do you manage their layout and orientation when the device is rotated?
-2. Are you using any third-party libraries for layout in Auto Layout? .
-3. What is the Intrinsic Content Size in Auto Layout for?
-- What is the purpose of prepareForReuse of the Cell of UITableView and when will it be called?
-
 **SwiftUI** 
 
-1. Are you familiar with SwiftUI?
+- Are you familiar with SwiftUI?
+- What is Property Wrapper in SwiftUI? What’s the difference between @ObservedObject, @State, and @EnvironmentObject? 
 - Can you explain the difference between a state object and an observed object in SwiftUI?
 
 **设计模式：**
@@ -66,66 +60,29 @@ Swift面试题共分为两篇:
 3. How to inject mocked networking logic?
 4. What's Test-driven development?
 
+ **UI布局：**
+
+1. How do you create UI elements like labels and images, and how do you manage their layout and orientation when the device is rotated?
+2. Are you using any third-party libraries for layout in Auto Layout? .
+3. What is the Intrinsic Content Size in Auto Layout for?
+- What is the purpose of prepareForReuse of the Cell of UITableView and when will it be called?
+
 
 # 正文
 
-
- **UI布局：**
-
-## 8. How do you create UI elements like labels and images, and how do you manage their layout and orientation when the device is rotated?
-
-我说是Autolayout. 我记得viewcontroller里有个override，如果autolayout的约束不符合需求，你得在那个func里修改一下size或者距离啥的. swiftui的话，基本不用管.uikit里，你还得区分是绝对布局还是autolayout的
-
-1. 9. Are you using any third-party libraries for layout in Auto Layout?
-
- SnapKit 、 size_class_
-
-## What is the Intrinsic Content Size in Auto Layout for?
-
-4.Auto Layout 中的 Intrinsic Content Size 是干麻用的?
-
-Intrinsic Content Size is a part of Auto Layout in iOS that enables views to have their own natural size, determined by the content that is within them. This is important because it allows views to adapt their sizes based on the content they display, which is crucial for supporting different screen sizes, orientations, and dynamic type sizes.
-
-For example, a UILabel has an intrinsic content size that fits the text it is displaying. If the text is short, the label's intrinsic content size is small, and if the text is long, the label's intrinsic content size is large. Similarly, a UIButton has an intrinsic content size that fits its title and image.
-
-Not all views have an intrinsic content size. Some views, like UIView, don't have content to base their size on, so they don't have an intrinsic content size by default.
-
-Intrinsic Content Size is used in conjunction with Auto Layout's constraint-based layout system to determine the size and position of views within a hierarchy. Constraints can either respect a view's intrinsic content size, or they can override it, providing more control over a view's layout.
-
-Interviewers may ask this question to gauge your understanding of how Auto Layout works and how views determine their own sizes. To answer, you'd want to explain the concept and provide examples of views that have an intrinsic content size, and you might also talk about how it's used in the larger context of Auto Layout.
-
-## **What is the purpose of prepareForReuse of the Cell of UITableView and when will it be called?**
-
-`prepareForReuse` is a method that a `UITableViewCell` subclass can override to prepare for the cell to be reused in a UITableView. The main purpose is to reset the cell to its original state or to clear the data of the previous state so it can be ready for use again.
-
-This method is invoked just before the object is returned from the UITableView method `dequeueReusableCell(withIdentifier:)`. As such, you can use this method to clean up and prepare the cell for reuse.
-
-Here's an example:
-
-```
-override func prepareForReuse() {
-    super.prepareForReuse()
-
-    // Reset the cell to its original state
-    self.imageView?.image = nil
-    self.textLabel?.text = nil
-    self.detailTextLabel?.text = nil
-}
-
-```
-
-Keep in mind that if your cell is showing different kind of data based on different states, you must ensure that all possible states are reset in the `prepareForReuse` method to prevent old data from appearing in the newly configured cell.
-
 **SwiftUI** 
+
+## Are you familiar with SwiftUI?
+
+![SwiftUI_and_Combine](../assets/SwiftUI_and_Combine.png)
 
 ## What’s the difference between @ObservedObject, @State, and @EnvironmentObject?
 
 https://www.hackingwithswift.com/quick-start/swiftui/whats-the-difference-between-observedobject-state-and-environmentobject
 
-
 我写的有点老了，现在iOS17 是Observation框架，性能更好了，不过写法不同了. 等忙完这段时间, 我完善下. 先看下iOS17 以前的写法.
 
-[https://chat.openai.com/share/cd46dff5-9d7e-4990-8fe9-595e2aa65080](https://chat.openai.com/share/cd46dff5-9d7e-4990-8fe9-595e2aa65080)
+[Answer from AI](https://chat.openai.com/share/cd46dff5-9d7e-4990-8fe9-595e2aa65080)
 
 ![](../assets/Property_Wrapper_in_SwiftUI.jpg)
 
@@ -1024,6 +981,179 @@ https://www.avanderlee.com/swift/dependency-injection/
 https://blog.cleancoder.com/uncle-bob/2013/05/27/TheTransformationPriorityPremise.html
 
 https://www.codecademy.com/article/tdd-red-green-refactor
+
+
+ **UI布局：**
+
+## How do you create UI elements like labels and images, and how do you manage their layout and orientation when the device is rotated?
+
+https://chat.openai.com/share/d9258730-b605-4561-af1c-d053da2bb5b0
+
+Are you using any third-party libraries for layout in Auto Layout?
+To create UI elements like labels and images in iOS, you can use UIKit, a framework that provides a set of tools for developing graphical interfaces. Here's a simple example of how to create a label and an image:
+
+1. **Creating a UILabel:**
+
+```swift
+let myLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
+myLabel.center = CGPoint(x: 160, y: 285)
+myLabel.textAlignment = .center
+myLabel.text = "I am a test label"
+self.view.addSubview(myLabel)
+```
+
+2. **Creating a UIImage and UIImageView:**
+
+```swift
+let myImage = UIImage(named: "myImageName")
+let myImageView = UIImageView(image: myImage)
+myImageView.frame = CGRect(x: 0, y: 0, width: 100, height: 200)
+self.view.addSubview(myImageView)
+```
+
+For managing their layout and orientation when the device is rotated, there are two general approaches - AutoLayout and manual adjustment.
+
+**AutoLayout:** AutoLayout is the most common way of managing layout. You set constraints for each UI element in relation to the elements around it or to the superview. When the device rotates, these constraints are automatically recalculated to adjust the positions of the UI elements. Here's an example:
+
+```swift
+myLabel.translatesAutoresizingMaskIntoConstraints = false
+NSLayoutConstraint.activate([
+    myLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+    myLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+    myLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+])
+```
+
+**Manual adjustment:** Sometimes, especially for more complex custom views, you might need to manually adjust the layout. You can override the `viewWillLayoutSubviews` or `viewDidLayoutSubviews` methods in the view controller, which get called when the device is rotated.
+
+```swift
+override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    // Adjust myLabel and myImageView here
+}
+```
+
+Remember that when handling rotation manually, you have to take care of all the adjustments yourself, including handling different screen sizes and aspect ratios.
+
+It's generally recommended to use AutoLayout where possible, and fall back to manual adjustment only when necessary.
+
+Here is the iOS interview question:  How do you create UI elements like labels and images, and how do you manage their layout and orientation when the device is rotated in SwiftUI?
+
+In SwiftUI, creating UI elements and handling their layout and orientation changes is quite straightforward due to its declarative syntax and automatic handling of UI updates.
+
+Here is an example of how you can create a Label and Image:
+
+```swift
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            Text("Hello, World!")
+                .font(.title)
+                .padding()
+            
+            Image("imageName")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        }
+    }
+}
+```
+
+In the code above, we have created a VStack (a vertical stack view) that contains a Text view (the equivalent of UILabel) and an Image view. The Image view is resizable, and its content is set to maintain the aspect ratio.
+
+When it comes to device rotation, SwiftUI automatically handles most of the orientation changes. As long as you've properly set up your UI using stacks (HStack, VStack, ZStack) and flexible frames, SwiftUI will adapt your UI to the device's current orientation.
+
+However, if you need to make specific adjustments based on the orientation, you can do so by detecting the current device orientation. You can determine the device's orientation using the `@Environment` property wrapper, which allows you to access system-wide environment values:
+
+```swift
+@Environment(\.sizeCategory) var sizeCategory
+@Environment(\.verticalSizeClass) var verticalSizeClass
+@Environment(\.horizontalSizeClass) var horizontalSizeClass
+```
+
+With these properties, you can adjust your layout according to the device's orientation and size class.
+
+
+Here is the iOS interview question:   Are you using any third-party libraries for layout in Auto Layout?
+
+Yes, many iOS developers use third-party libraries to simplify working with Auto Layout. Below are a few examples:
+
+1. **SnapKit**: This is a Swift-based DSL (Domain Specific Language) that makes Auto Layout easy to use and less verbose. With SnapKit, you can create constraints with fewer lines of code and with a syntax that's easier to read and understand.
+
+```swift
+let box = UIView()
+superview.addSubview(box)
+box.snp.makeConstraints { (make) -> Void in
+   make.top.equalTo(superview).offset(20)
+   make.left.equalTo(superview).offset(20)
+   make.width.height.equalTo(50)
+}
+```
+
+2. **Masonry**: Masonry is another popular DSL for Auto Layout, but it's used with Objective-C. It also allows you to make constraints in a more human-readable way. 
+
+```objective-c
+UIView *box = [[UIView alloc] init];
+[superview addSubview:box];
+[box mas_makeConstraints:^(MASConstraintMaker *make) {
+    make.top.equalTo(superview.mas_top).with.offset(20);
+    make.left.equalTo(superview.mas_left).with.offset(20);
+    make.width.equalTo(@50);
+    make.height.equalTo(@50);
+}];
+```
+
+3. **Cartography**: This is a Swift framework that also simplifies Auto Layout. It provides a declarative DSL that enables you to write constraints more naturally.
+
+```swift
+let box = UIView()
+superview.addSubview(box)
+constrain(box) { box in
+    box.top == box.superview!.top + 20
+    box.left == box.superview!.left + 20
+    box.width == 50
+    box.height == 50
+}
+```
+
+These libraries are not required for using Auto Layout - they just make it more convenient and easier to read and write. If you're starting a new project or working with a team, it's worth considering whether the benefits outweigh the cost of adding a third-party dependency to your project.
+
+
+## What is the Intrinsic Content Size in Auto Layout for?
+
+4.Auto Layout 中的 Intrinsic Content Size 是干麻用的?
+
+Intrinsic Content Size is a part of Auto Layout in iOS that enables views to have their own natural size, determined by the content that is within them. This is important because it allows views to adapt their sizes based on the content they display, which is crucial for supporting different screen sizes, orientations, and dynamic type sizes.
+
+For example, a UILabel has an intrinsic content size that fits the text it is displaying. If the text is short, the label's intrinsic content size is small, and if the text is long, the label's intrinsic content size is large. Similarly, a UIButton has an intrinsic content size that fits its title and image.
+
+Not all views have an intrinsic content size. Some views, like UIView, don't have content to base their size on, so they don't have an intrinsic content size by default.
+
+Intrinsic Content Size is used in conjunction with Auto Layout's constraint-based layout system to determine the size and position of views within a hierarchy. Constraints can either respect a view's intrinsic content size, or they can override it, providing more control over a view's layout.
+
+Interviewers may ask this question to gauge your understanding of how Auto Layout works and how views determine their own sizes. To answer, you'd want to explain the concept and provide examples of views that have an intrinsic content size, and you might also talk about how it's used in the larger context of Auto Layout.
+
+## **What is the purpose of prepareForReuse of the Cell of UITableView and when will it be called?**
+
+`prepareForReuse` is a method that a `UITableViewCell` subclass can override to prepare for the cell to be reused in a UITableView. The main purpose is to reset the cell to its original state or to clear the data of the previous state so it can be ready for use again.
+
+This method is invoked just before the object is returned from the UITableView method `dequeueReusableCell(withIdentifier:)`. As such, you can use this method to clean up and prepare the cell for reuse.
+
+Here's an example:
+
+```
+override func prepareForReuse() {
+    super.prepareForReuse()
+
+    // Reset the cell to its original state
+    self.imageView?.image = nil
+    self.textLabel?.text = nil
+    self.detailTextLabel?.text = nil
+}
+
+```
+
+Keep in mind that if your cell is showing different kind of data based on different states, you must ensure that all possible states are reset in the `prepareForReuse` method to prevent old data from appearing in the newly configured cell.
 
 
 ----

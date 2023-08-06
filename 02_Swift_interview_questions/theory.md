@@ -85,7 +85,7 @@ Swift面试题共分为两篇:
 - Swift 的闭包（Clouse） 和 OC 的 Block
 - 请解释 Swift 中的闭包是什么，并描述一个闭包在实际编程中的应用场景？
 
-## **函数式与响应式编程：**
+## **Combine、函数式与响应式编程：**
 
 - Explain reactive programming and its advantages, mentioning frameworks like RxSwift and Combine. 如何在 Swift 中实现函数式编程？请举一个示例。
 - Q.Swift 是面向对象还是函数式的编程语言?
@@ -1904,8 +1904,7 @@ Swift最简单的闭包形式是嵌套函数，也就是定义在其他函数的
 
 ```
 
-## **函数式与响应式编程**
-
+## **Combine、函数式与响应式编程：**
 
 Explain reactive programming and its advantages, mentioning frameworks like RxSwift and Combine.
 
@@ -1916,6 +1915,7 @@ Combine跟Rx没啥区别.一个类Redux的架构
 ## Q.Swift 是面向对象还是函数式的编程语言?
 
 A:
+
 Swift 既是面向对象的，又是函数式的编程语言。
 说 Swift 是面向对象的语言，是因为 Swift 支持类的封装、继承、和多态，从这点上来看与 Java 这类纯面向对象的语言几乎毫无差别。
 说 Swift 是函数式编程语言，是因为 Swift 支持 map, reduce, filter, flatmap 这类去除中间状态、数学函数式的方法，更加强调运算结果而不是中间过程。
@@ -1932,8 +1932,8 @@ https://chat.openai.com/share/390f02bf-7c26-461d-908a-172e53d9177f
 
 ![3](assets/3-1.jpg)
 
-https://www.avanderlee.com/combine/passthroughsubject-currentvaluesubject-explained/
 
+ [PassthroughSubject vs. CurrentValueSubject explained]( https://www.avanderlee.com/combine/passthroughsubject-currentvaluesubject-explained/ "") 
 
 ## **可选类型：**
 
