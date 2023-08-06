@@ -150,6 +150,7 @@ https://www.hackingwithswift.com/quick-start/swiftui/whats-the-difference-betwee
 一个clean的例子
 
 [Clean Architecture: iOS App](https://paulallies.medium.com/clean-architecture-ios-app-100539550110)
+
 ![](../assets/16912073606938.jpg)
 
 
@@ -165,14 +166,16 @@ clean喜欢把protocol化可注入的层叫use case，命名一般叫xxxReposito
 
 ![2](assets/2-1.jpg)
 
-## 18. What kind of code typically resides in view models in MVVM?
+## What kind of code typically resides in view models in MVVM?
 
+非常好的 MVVM 的开源项目, 可以学习下: https://github.com/kickstarter/ios-oss
 
 What is the difference between clean and MVVM architecture?
 
 [MVVM with Combine Tutorial for iOS](https://www.kodeco.com/4161005-mvvm-with-combine-tutorial-for-ios)
 
 
+![](../assets/mvvm_architecture_design_pattern/mvvm_architecture_design_pattern_en.jpg)
 
 ![](../assets/mvvm_architecture_design_pattern/mvvm_architecture_design_pattern_cn.jpg)
 
