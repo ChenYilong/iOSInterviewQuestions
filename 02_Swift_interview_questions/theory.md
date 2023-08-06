@@ -916,6 +916,148 @@ Opaque Type 与 Any? | Opaque Type隐藏具体类型但保留类型信息；Any?
 Generic 与 Any?|  泛型强制执行类型一致性，提供类型安全；Any?完全灵活但缺乏类型安全。
 
 
+举例说明, 举一个MVVM架构的例子，将Model中的某些具体类型用Opaque Types表达，然后再进行改造。
+
+先举个例子，我们创建一个"User"的模型，具体类型用Opaque Types表达，并创建一个"UserViewModel"来处理该模型。
+
+### Any?
+![](assets/16912874108037.jpg)
+
+我们可以把id类型设置为Any?，使得我们可以接受任何类型的id。
+
+```swift
+protocol Model {
+    var id: Any? { get }
+}
+
+struct User: Model {
+    var id: Any?
+}
+
+protocol ViewModel {
+    associatedtype ModelType: Model
+    init(model: ModelType)
+}
+
+struct UserViewModel: ViewModel {
+    var model: User
+
+    init(model: User) {
+        self.model = model
+    }
+}
+```
+
+
+### 泛型
+![](assets/16912874480991.jpg)
+
+通过使用泛型，我们可以保持类型的安全性，而不必知道具体类型。
+
+```swift
+protocol Model {
+    associatedtype Identifier
+    var id: Identifier { get }
+}
+
+struct User: Model {
+    typealias Identifier = UUID
+    var id: Identifier
+}
+
+protocol ViewModel {
+    associatedtype ModelType: Model
+    init(model: ModelType)
+}
+
+struct UserViewModel<M: Model>: ViewModel {
+    var model: M
+
+    init(model: M) {
+        self.model = model
+    }
+}
+```
+这样，UserViewModel可以处理任何满足Model协议的类型。
+
+### 类型擦除
+
+我们可以使用类型擦除来隐藏具体类型，通常使用一种包装器来实现。如下面的例子中，我们创建了一个AnyModel来隐藏具体的Model类型：
+![](assets/16912874813432.jpg)
+
+```swift
+protocol Model {
+    associatedtype Identifier
+    var id: Identifier { get }
+}
+
+struct User: Model {
+    typealias Identifier = UUID
+    var id: Identifier
+}
+
+struct AnyModel: Model {
+    typealias Identifier = Any
+    
+    var id: Identifier
+    
+    init<M: Model>(_ model: M) {
+        self.id = model.id as! Identifier
+    }
+}
+
+protocol ViewModel {
+    associatedtype ModelType: Model
+    init(model: ModelType)
+}
+
+struct UserViewModel: ViewModel {
+    var model: AnyModel
+
+    init(model: User) {
+        self.model = AnyModel(model)
+    }
+}
+```
+这样，具体的Model类型被隐藏在了AnyModel里面，UserViewModel只知道它处理的是一个满足Model协议的对象。
+
+
+
+### Opaque Types
+Opaque Types在这个例子中，我们无需公开具体的Model类型，只需表达它遵循了某个协议。
+![](assets/16912875027729.jpg)
+
+```swift
+protocol Model {
+    associatedtype Identifier
+    var id: Identifier { get }
+}
+
+struct User: Model {
+    typealias Identifier = UUID
+    var id: Identifier
+}
+
+protocol ViewModel {
+    associatedtype ModelType: Model
+    init(model: ModelType)
+}
+
+struct UserViewModel: ViewModel {
+    var model: some Model
+
+    init(model: User) {
+        self.model = model
+    }
+}
+```
+
+在这个例子中，ViewModel不知道具体的Model类型，只知道Model满足某个协议，从而实现了封装。
+
+
+各种方法都有其优点和缺点。Opaque Types保持类型一致性，但不能用于存储变量。类型擦除隐藏了具体类型，但可能使性能下降。泛型提供了类型安全，但可能会使代码变得复杂。Any?是最灵活的，但是在使用时需要进行类型检查或强制类型转换。
+
+
 
 ## 内存管理、**性能优化和调试：**
 
