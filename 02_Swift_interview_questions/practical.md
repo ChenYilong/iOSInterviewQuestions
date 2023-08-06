@@ -17,60 +17,67 @@ Swift面试题共分为两篇:
 - What is Property Wrapper in SwiftUI? What’s the difference between @ObservedObject, @State, and @EnvironmentObject? 
 - Can you explain the difference between a state object and an observed object in SwiftUI?
 
+ **Combine、函数式与响应式编程：**
+
+- Explain reactive programming and its advantages, mentioning frameworks like RxSwift and Combine. 如何在 Swift 中实现函数式编程？请举一个示例。
+- Q.Swift 是面向对象还是函数式的编程语言?
+- What's the difference between `passthroughSubject` and `CurrentValueSubject`?
+
 **设计模式：**
 
-1. What's your ideal iOS project set up like?
-2. Can you explain how you would design a login page using the MVP/MVVM architecture?
-3. What is the singleton pattern, and what are some considerations when using it?
-4. What is the difference between MVVM (Model-View-ViewModel) and clean architecture?What is the difference between clean and MVVM architecture?
-5. What kind of code typically resides in view models in MVVM?
-6. Can you at a high level explain what are the different moving parts of MVP/MVVM architecture?
-7. Can you explain the technical details and the features you were responsible for covering off what architecture you used what, technical decisions you made? Could you touch up on any of the native iOS projects you worked on? What was the architecture you used in your projects?
-8. if you could add a high-level, based on any of your recent projects, the longest you've been associated with, can you just walk me through the features you were responsible for and just in terms of technical aspects, in terms of what architecture you used and things like that and then we can probably go on from there?
+- What's your ideal iOS project set up like?
+- Can you explain how you would design a login page using the MVP/MVVM architecture?
+- What is the singleton pattern, and what are some considerations when using it?
+- What is the difference between MVVM (Model-View-ViewModel) and clean architecture?What is the difference between clean and MVVM architecture?
+- What kind of code typically resides in view models in MVVM?
+- Can you at a high level explain what are the different moving parts of MVP/MVVM architecture?
+- Can you explain the technical details and the features you were responsible for covering off what architecture you used what, technical decisions you made? Could you touch up on any of the native iOS projects you worked on? What was the architecture you used in your projects?
+- if you could add a high-level, based on any of your recent projects, the longest you've been associated with, can you just walk me through the features you were responsible for and just in terms of technical aspects, in terms of what architecture you used and things like that and then we can probably go on from there?
 
 **并发和多线程开发：**
 
-1. How can you avoid data racing issues when using the singleton pattern in a multi-threaded environment?
-2. Can you give examples of different types of locks used in concurrent programming?
-3. Can you describe what async/await is?
-4. How can you wait for multiple network calls to complete before calling a function that relies on the results?
-5. 结构化并发（Structured Concurrency）：How to implement structured concurrency?
+- How can you avoid data racing issues when using the singleton pattern in a multi-threaded environment?
+- Can you give examples of different types of locks used in concurrent programming?
+- Can you describe what async/await is?
+- How can you wait for multiple network calls to complete before calling a function that relies on the results?
+- 结构化并发（Structured Concurrency）：How to implement structured concurrency?
 
 
 **网络编程：**
 
-1. How does the device register for push notifications, and how do notifications come from the server side?
-2. Can you explain how token-based authentication works, where you obtain a token from an API and use it for subsequent API calls?
+- How does the device register for push notifications, and how do notifications come from the server side?
+- Can you explain how token-based authentication works, where you obtain a token from an API and use it for subsequent API calls?
 
 **安全相关：**
 
-1. How do you securely store API keys in your Swift code without exposing them? Have you worked with making API calls that require API keys? How did you handle the secure storage of those keys?
+- How do you securely store API keys in your Swift code without exposing them? Have you worked with making API calls that require API keys? How did you handle the secure storage of those keys?
 
-调试、版本管理、项目管理：
+**调试、版本管理、项目管理：**
 
 - If your app has performance issues, how would you identify them and how do you resolve them?
-1. Are you familiar with setting up CI/CD pipelines for Swift projects?
-2. Can you tell me more about how you manage libraries and codebases in your project?
-3. How do you debug crash issues in your daily work?
+- Are you familiar with setting up CI/CD pipelines for Swift projects?
+- Can you tell me more about how you manage libraries and codebases in your project?
+- How do you debug crash issues in your daily work?
 
- Unit Test
+**Unit Test**
+
 1. How to mock data
 1. How to separate production env and mock
 2. How to test the view model with SwiftUI?
 3. How to inject mocked networking logic?
 4. What's Test-driven development?
 
- **UI布局：**
+ **UI布局**
 
-1. How do you create UI elements like labels and images, and how do you manage their layout and orientation when the device is rotated?
-2. Are you using any third-party libraries for layout in Auto Layout? .
-3. What is the Intrinsic Content Size in Auto Layout for?
+- How do you create UI elements like labels and images, and how do you manage their layout and orientation when the device is rotated?
+- Are you using any third-party libraries for layout in Auto Layout? .
+- What is the Intrinsic Content Size in Auto Layout for?
 - What is the purpose of prepareForReuse of the Cell of UITableView and when will it be called?
 
 
 # 正文
 
-**SwiftUI** 
+## **SwiftUI** 
 
 ## Are you familiar with SwiftUI?
 
@@ -122,7 +129,45 @@ https://www.hackingwithswift.com/quick-start/swiftui/whats-the-difference-betwee
 ![](../assets/16912073494698.jpg)
 
 
-**设计模式：**
+## **Combine、函数式与响应式编程：**
+
+![SwiftUI_and_Combine](../assets/SwiftUI_and_Combine.png)
+![swift-combine](../assets/swift-combine.jpg)
+
+## Explain reactive programming and its advantages, mentioning frameworks like RxSwift and Combine.
+
+![swift-combine](../assets/asynchronous_APIs_in_iOS/cn.jpg)
+![swift-combine](../assets/asynchronous_APIs_in_iOS/en.jpg)
+
+ [Answer from AI]( https://chat.openai.com/share/8e77bb97-fdf9-405a-bd44-9c769777211f "") 
+
+Combine类似 RxSwift(一个类Redux的架构)
+
+## Q.Swift 是面向对象还是函数式的编程语言?
+
+A:
+
+Swift 既是面向对象的，又是函数式的编程语言。
+说 Swift 是面向对象的语言，是因为 Swift 支持类的封装、继承、和多态，从这点上来看与 Java 这类纯面向对象的语言几乎毫无差别。
+说 Swift 是函数式编程语言，是因为 Swift 支持 map, reduce, filter, flatmap 这类去除中间状态、数学函数式的方法，更加强调运算结果而不是中间过程。
+
+函数式的编程，通俗易懂的讲解
+
+[一文读懂Swift函数式编程](https://zhuanlan.zhihu.com/p/192483039)
+
+拓展问题: 如何在 Swift 中实现函数式编程？请举一个示例。
+
+#### 5. What's the difference between `passthroughSubject` and `CurrentValueSubject`?
+
+https://chat.openai.com/share/390f02bf-7c26-461d-908a-172e53d9177f
+
+![3](assets/3-1.jpg)
+
+
+ [PassthroughSubject vs. CurrentValueSubject explained]( https://www.avanderlee.com/combine/passthroughsubject-currentvaluesubject-explained/ "") 
+
+
+## **设计模式：**
 ![1](assets/1-1.jpg)
 
 ## MVC vs MVP vs MVVM
@@ -756,19 +801,45 @@ When using such services, you generally need to send the device token to your ow
 
 ## 24. Can you explain how token-based authentication works, where you obtain a token from an API and use it for subsequent API calls?
 
-[https://chat.openai.com/share/cd8cfa69-ab4c-4cf3-b45d-45884b52a72c](https://chat.openai.com/share/cd8cfa69-ab4c-4cf3-b45d-45884b52a72c)
+![](assets/16913169429010.jpg)
 
-1. 基于令牌的身份验证工作原理是：
-- 用户首先向认证服务器提供凭据，如用户名和密码。
-- 如果认证成功，服务器会返回一个令牌。这个令牌包含了用户的身份信息，并由服务器签名。
-- 用户在后续的API调用中，将令牌作为请求头的一部分发送给服务器。
-- 服务器收到请求后，会验证令牌的签名。如果签名验证成功，服务器会从令牌中提取出用户的身份信息，并根据这些信息处理请求。
+英文 | 中文
+:-------------:|:-------------:
+obtain | = have = 获得. 
+subsequent | = following = 随后的. 
 
-这种方法的好处是，服务器不需要在每次请求时都验证用户的用户名和密码，而只需要验证令牌的签名。这大大提高了效率，同时也提高了安全性，因为用户的密码不需要在网络上频繁传输。
+iOS 面试问题： 你能解释一下基于令牌的身份验证是如何工作的吗？如何在这种身份验证中，从应用程序接口获取一个令牌，并在随后的应用程序接口调用中使用它?
+
+[Answer from AI](https://chat.openai.com/share/cd8cfa69-ab4c-4cf3-b45d-45884b52a72c)
+
+令牌基础认证是一种用于验证用户身份并授权他们访问系统或应用的安全技术。以下是其基本运作过程：
+
+1. **用户登录**:用户向服务器提交其凭证（通常是用户名和密码）。
+
+2. **令牌生成**:如果凭证有效，服务器将创建一个令牌。这个令牌可以是一个简单的随机字符串，一个JSON Web Token（JWT），或者其他形式的令牌，这取决于系统设计。通常，令牌包含或与用户信息相关，可能包含他们在系统中的权限或角色。
+
+3. **令牌传送**:服务器将生成的令牌发送回客户端。
+
+4. **客户端存储**:客户端应用在本地存储令牌，例如在web应用的本地存储、会话存储或一个cookie中，或在移动应用的一个安全存储区域。
+
+5. **令牌附加到后续请求**:客户端应用在每个后续的API请求中都包含令牌。这通常在HTTP头部完成 - 通常是在'Bearer {token}'格式的Authorization头部，但这取决于API的具体情况。
+
+6. **服务器验证**:服务器验证附加在API请求上的令牌。如果它是有效的（并且没有过期），请求就会被处理。如果不是，将返回一个错误，通常是401 Unauthorized（未授权）HTTP状态。
+
+7. **过期和刷新**:令牌具有有限的生命周期，并会在一段时间后过期。这是一个安全功能，用来限制令牌被盗的损害。当令牌过期时，服务器将拒绝请求，客户端应用将需要获取新的令牌。这可以通过重新验证用户或使用"刷新令牌"来完成，刷新令牌是一种生命周期更长的令牌，可以用来换取新的访问令牌。
+
+这个系统使服务器避免存储会话状态数据 - 代替的是，所有必要的东西都打包到令牌中，从而形成一个无状态的，可扩展的系统。同时，它提供了一个健壮和安全的用户认证方法。
+
 
 **安全相关：**
 
 ## 22 .How do you securely store API keys in your Swift code without exposing them? Have you worked with making API calls that require API keys? How did you handle the secure storage of those keys?
+
+英文| 中文
+:-------------:|:-------------:
+expose | 暴露
+secure storage | 安全存放问题
+
 ![7](assets/7.jpg)
 ![8](assets/8.jpg)
 ![9](assets/9.jpg)
