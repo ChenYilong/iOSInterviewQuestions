@@ -11,6 +11,8 @@ Swift面试题共分为两篇:
 
 # 目录
 
+## 初级面试题
+
 ## 代码优化题
 
 1. 优化判断题
@@ -100,6 +102,118 @@ Swift面试题共分为两篇:
 - *lazy load 是怎么实现的？*
 
 # 正文
+
+## 初级面试题
+![1](assets/1.png)
+
+Answer: C
+
+A tuple in Swift is defined as: let vals = 
+("val", 1)
+
+
+A valid dictionary in Swift should be defined as: let vals = ["val": 1]
+
+A valid set in Swift should be defined as: let vals: Set = ["val", "1"]
+
+
+![2](assets/2.png)
+
+
+**Answer:** A) Extensions cannot add properties. In Swift, extensions can add computed instance properties and computed type properties, but they cannot add stored instance properties, or property observers such as `willSet` and `didSet`. Therefore, the code snippet you provided is incorrect. 
+
+A corrected version using computed properties could look like this:
+```swift
+extension String {
+    var firstLetter : Character {
+        get {
+            return self.count > 0 ? self[self.startIndex] : nil
+        }
+        set {
+            // Replace first character of string, or add if none exists
+            if self.count > 0 {
+                self.replaceSubrange(self.startIndex...self.startIndex, with: String(newValue))
+            } else {
+                self.append(newValue)
+            }
+        }
+    }
+}
+```
+
+
+![3](assets/3.png)
+
+
+**Answer:** A) ERROR. The code will print an error. The variable `stuff` is declared but not initialized, which means it has no value assigned to it. In Swift, variables must be initialized before they can be used or queried for their type. Since `stuff` is not initialized, attempting to print its type using `type(of:)` will result in a runtime error. To fix this, you should initialize `stuff` with a value of type `Thing` (a dictionary with `String` keys and `Any` values) before querying its type. For example:
+```swift
+typealias Thing = [String: Any]
+var stuff: Thing = [:] // Initialize with an empty dictionary
+print(type(of: stuff)) // This will now print "Thing"
+```
+
+![4](assets/4.png)
+
+**Answer:** A) ABC. After executing the code, the value of `test` will be "ABC". The variable `vr` is defined as a tuple with named elements. The tuple has two elements: `name` and `val`. In Swift, you can access tuple elements using dot syntax followed by the index of the element. The first element in a tuple has an index of 0, the second element has an index of 1, and so on. In this case, `vr.0` refers to the first element of the tuple, which is `"ABC"`. Therefore, the value of `test` will be `"ABC"`.
+
+
+![5](assets/5.png)
+
+
+**Answer:** C) string?. To declare an optional String in Swift, you use the syntax `String?`. The question mark `?` indicates that the variable can either contain a String value or be `nil`, which means it is optional. For example:
+```swift
+var optionalString: String?
+```
+In this case, `optionalString` is an optional variable that can hold a String value or be `nil`.
+
+
+![6](assets/6.png)
+
+
+**Answer:** D) either a designated or another convenience initializer. In Swift, a convenience initializer must call another initializer within the same class, whether it is a designated initializer or another convenience initializer. It ensures that the complete initialization chain is followed, allowing the designated initializer at the top of the chain to initialize all properties.
+
+To clarify, the designated initializer is the primary initializer responsible for initializing all properties of a class, and it must eventually call a designated initializer from its superclass to ensure all properties throughout the inheritance chain are initialized.
+
+On the other hand, convenience initializers are secondary initializers that provide additional ways to create an instance. They must call a designated initializer or another convenience initializer from the same class before customizing the instance if needed. This guarantees that all properties are initialized properly regardless of the initializer used to create the instance.
+
+
+![7](assets/7.png)
+The correct answer is:
+
+**Answer:** C) "t"
+
+When the provided Swift code is executed, it will iterate over each character in the string "t" using the `forEach` method. The closure `{ (char) in print(char) }` is called for each character, and it will print each character to the console. In this case, there's only one character in the string, which is "t", so "t" will be printed to the console.
+
+Output:
+```
+t
+```
+
+![8](assets/8.PNG)
+
+
+**Answer:** B) Protocol functions cannot have implementations. The code is incorrect because protocol functions cannot have default implementations. Protocols are used to define a set of methods or properties that must be implemented by conforming classes or structures. However, protocol functions cannot provide a default implementation within the protocol definition itself.
+
+To fix the code, remove the implementation of the `add` function from the protocol definition, like this:
+```swift
+protocol iTeaTime {
+    func add(x1: Int, x2: Int) -> Int
+}
+```
+Now, any class or structure that conforms to the `iTeaTime` protocol will be required to provide its own implementation of the `add` function.
+
+
+![9](assets/9.png)
+
+**Answer:** A) executed on the main queue. The `DispatchQueue.main.async` method takes a block of code (closure) and schedules it to be executed asynchronously on the main queue. In iOS, the main queue is responsible for handling UI updates and user interactions. By using `DispatchQueue.main.async`, you ensure that the code inside the block will be executed on the main thread, allowing you to safely update the UI elements from that block.
+
+For example:
+```swift
+DispatchQueue.main.async {
+    // Code here will be executed on the main queue
+    // You can safely update UI elements from this block
+}
+```
 
 ## 代码优化题
 
