@@ -126,4 +126,19 @@ final class Swift101Tests: XCTestCase {
             print("barrier block")
         }
     }
+    
+    func testTypealiasWithInit() {
+        typealias Thing = [String: Any]
+        var stuff: Thing = [:] // Initialize with an empty dictionary
+        print("testTypealiasWithInit", type(of: stuff))
+
+    }
+    
+    
+    func testTypealiasNoInit() {
+        typealias Thing = [String: Any]
+        var stuff: Thing
+        print("testTypealiasNoInit", type(of: stuff))
+
+    }
 }

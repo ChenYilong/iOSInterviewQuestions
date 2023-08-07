@@ -144,13 +144,24 @@ extension String {
 
 ![3](assets/3.png)
 
+**Answer:** C) Dictionary<String, Any>
 
-**Answer:** A) ERROR. The code will print an error. The variable `stuff` is declared but not initialized, which means it has no value assigned to it. In Swift, variables must be initialized before they can be used or queried for their type. Since `stuff` is not initialized, attempting to print its type using `type(of:)` will result in a runtime error. To fix this, you should initialize `stuff` with a value of type `Thing` (a dictionary with `String` keys and `Any` values) before querying its type. For example:
+
+
+In Swift, when you define a `typealias`, it creates a new name for an existing type. However, when you print the type using `type(of:)`, it shows the original type, not the typealias name.
+
+but it is better to write the code in this way:
+
 ```swift
 typealias Thing = [String: Any]
-var stuff: Thing = [:] // Initialize with an empty dictionary
-print(type(of: stuff)) // This will now print "Thing"
+var stuff: Thing = [:]
+print(type(of: stuff))
 ```
+
+it is better to init the stuff before you use it, but it won't be a big problem.
+
+The output will indeed be `Dictionary<String, Any>`. The `type(of:)` function will print the actual type of `stuff`, which is `Dictionary<String, Any>`, not the `typealias` name `Thing`. 
+
 
 ![4](assets/4.png)
 
