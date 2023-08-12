@@ -489,15 +489,20 @@ func ft(_ a : A) {
 
 #### 4. 高层次的理解和扩展
 
-通过将依赖注入描述为强依赖转变为弱依赖，可以深刻地揭示其背后的设计原则，如面向接口编程。此外，SwiftUI的Environtment、EnvironmentObject也可以看做是依赖注入的一种扩展实践。例如，这里有一个SwiftUI的依赖注入库: [swift-dependencies](https://github.com/pointfreeco/swift-dependencies)。
+通过将依赖注入描述为强依赖转变为弱依赖，可以深刻地揭示其背后的设计原则，如面向接口编程。此外，SwiftUI的 `Environtment`、`EnvironmentObject` 也可以看做是依赖注入的一种扩展实践。例如，这里有一个SwiftUI的依赖注入库: [swift-dependencies](https://github.com/pointfreeco/swift-dependencies)。
 
 ### 总结
 
 依赖注入作为一个重要的设计模式，不仅在具体的实现细节上有着丰富的内容，而且在更高层次的设计原则上也有深远的意义。通过多角度、多平台的讨论，我们不仅能够对依赖注入的具体实现有更准确的理解，还可以洞察其背后所蕴藏的软件设计智慧。
 
-讨论中涉及的观点，如依赖注入的核心目标：低耦合，属性注入和Java中的用法，插件化开发与依赖注入的联系，以及与多态的关系等，都为我们提供了丰富的视野和启示。
+讨论中涉及的观点，如依赖注入的核心目标：低耦合，属性注入和 Java 中的用法，插件化开发与依赖注入的联系，以及与多态的关系等，都为我们提供了丰富的视野和启示。
 
 
+Reference:   
+
+- [iOS: Clean Architecture using SwiftUI, Combine, and Dependency Injection]( https://betterprogramming.pub/ios-clean-architecture-using-swiftui-combine-and-dependency-injection-for-dummies-2e44600f952b "") 
+- [Dependiject: Make Dependency Injection easy in SwiftUI]( https://medium.com/@wesleyboyd_66190/dependiject-make-dependency-injection-easy-in-swiftui-bee6bf04fd3b "") 
+- [Dependency Injection in SwiftUI]( https://mokacoding.com/blog/swiftui-dependency-injection/ "") 
 
 ## **并发和多线程开发：**
 
