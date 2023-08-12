@@ -452,8 +452,54 @@ https://synoptek.com/insights/it-blogs/greenfield-vs-brownfield-software-develop
 #### 2. What do you think of refactoring?
 
 
+![](assets/16918575846436.jpg)
 
-**并发和多线程开发：**
+### 依赖注入：多平台理解和实践的探索
+
+**参与者A**：Dependency injection aims to separate the concerns of constructing objects and using them, leading to loosely coupled programs. 
+
+依赖注入（Dependency Injection），一种常用的软件设计模式，广泛应用于许多开发环境和语言中。重点在于低耦合。本文旨在深入探讨不同开发人员在iOS、Java和Android中对依赖注入的理解和实践，并试图通过讨论的方式，揭示其中的核心概念、具体实现和设计价值。
+
+#### 1. iOS上的依赖注入
+
+在iOS开发中，依赖注入可能通过视图控制器的构造方法来实现。与Spring的@Autowired resource相比，虽然在某些方面存在异同，但核心目标依然是达到程序的低耦合。
+
+#### 2. 依赖注入的理解层次
+
+依赖注入并非一个独立的概念，它涵盖了构造函数注入、Setter方法注入等多种实现手段。一些开发人员可能会将其与Spring的特性相联系，但这种理解可能并不全面。更精确的理解应该强调组件间依赖的外部实现。
+
+#### 3. iOS中的依赖注入实践
+
+虽然某些开发人员对iOS中依赖注入的存在表示怀疑，正确的实践是确实存在的。下面的Swift代码段揭示了多态与依赖注入之间的关系：
+
+```swift
+class A {
+  func foo() {
+    print("A");
+  }}
+
+class SA: A {
+  override func foo() {print("SA");}}
+
+func ft(_ a : A) {
+  a.foo( ) }
+```
+
+对于函数`ft`来说，它只知道类A，子类SA是外部注入的，它也只能依赖A的特征和行为。
+
+#### 4. 高层次的理解和扩展
+
+通过将依赖注入描述为强依赖转变为弱依赖，可以深刻地揭示其背后的设计原则，如面向接口编程。此外，SwiftUI的Environtment、EnvironmentObject也可以看做是依赖注入的一种扩展实践。例如，这里有一个SwiftUI的依赖注入库: [swift-dependencies](https://github.com/pointfreeco/swift-dependencies)。
+
+### 总结
+
+依赖注入作为一个重要的设计模式，不仅在具体的实现细节上有着丰富的内容，而且在更高层次的设计原则上也有深远的意义。通过多角度、多平台的讨论，我们不仅能够对依赖注入的具体实现有更准确的理解，还可以洞察其背后所蕴藏的软件设计智慧。
+
+讨论中涉及的观点，如依赖注入的核心目标：低耦合，属性注入和Java中的用法，插件化开发与依赖注入的联系，以及与多态的关系等，都为我们提供了丰富的视野和启示。
+
+
+
+## **并发和多线程开发：**
 
 ## 11. How can you avoid data racing issues when using the singleton pattern in a multi-threaded environment?
 
