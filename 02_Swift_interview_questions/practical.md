@@ -177,7 +177,51 @@ https://chat.openai.com/share/390f02bf-7c26-461d-908a-172e53d9177f
 
 [Researching MVVM in Swift](https://www.agnosticdev.com/blog-entry/swift/researching-mvvm-swift)
 
-## 17. What is the difference between MVVM (Model-View-ViewModel) and clean architecture?What is the difference between clean and MVVM architecture?
+## MVP vs MVVM
+
+What is the difference between MVP and MVVM, and the major difference why? Why do you like it? 
+What is the difference between MVP and MVVM?
+In MVVM, is the view model aware of the view? Does the view model know about the view?
+In MVP, does the presenter know about the view?
+![](assets/16918517379895.jpg)
+
+Sure! Let's break down the comparison between MVP (Model-View-Presenter) and MVVM (Model-View-ViewModel), and answer the questions you've posed:
+
+### MVP (Model-View-Presenter):
+
+- **Model**: Represents the data and the business rules of the application.
+- **View**: Represents the UI of the application, and forwards user actions to the Presenter.
+- **Presenter**: Acts as a bridge between the Model and the View. It takes user actions from the View, processes (with the Model), and returns the output display to the View.
+
+In MVP, the Presenter has direct knowledge of the View, and often there is a one-to-one relationship between the Presenter and the View.
+
+### MVVM (Model-View-ViewModel):
+
+- **Model**: Similar to MVP, represents the data and the business rules.
+- **View**: Represents the UI, but is completely unaware of the ViewModel (it's loosely coupled).
+- **ViewModel**: Acts as a bridge between the Model and the View, but it doesn't have direct knowledge of the View. It handles the presentation logic and exposes data-bound properties and commands for the View to use.
+
+### Major Differences:
+
+1. **Coupling**: MVVM is more loosely coupled than MVP, as the ViewModel is not directly aware of the specific View using it. In MVP, the Presenter is directly linked to the View.
+2. **Testability**: MVVM's decoupling makes it easier to write unit tests for the ViewModel without considering the View. MVP can be more challenging to test since the Presenter is more closely tied to the View.
+3. **Responsibility**: The ViewModel in MVVM mainly deals with data formatting and exposing commands, leaving the View to handle the user interface, whereas in MVP, the Presenter is responsible for updating the View, which might involve some UI logic.
+4. **Data Binding**: MVVM often leverages data binding, allowing for more automatic synchronization between the View and the ViewModel. MVP usually requires manual updates.
+
+### Answers to Specific Questions:
+
+- **In MVVM, is the view model aware of the view? Does the view model know about the view?**
+  - No, in MVVM, the ViewModel doesn't have direct knowledge of the View, contributing to a more loosely coupled design.
+
+- **In MVP, does the presenter know about the view?**
+  - Yes, in MVP, the Presenter knows about the View, often through an interface, and directly communicates with it.
+
+### Personal Preference (hypothetical):
+
+As for why one might prefer one pattern over the other, it often depends on specific needs and project requirements. MVVM's loose coupling and ease of testing might make it more appealing for large-scale applications with complex data interactions, whereas MVP might be preferred for simpler applications where the strict separation between the View and Presenter is not necessary. Preferences can vary widely among developers based on their individual experiences and the technologies they are using.
+
+
+## 17. What is the difference between MVVM (Model-View-ViewModel) and clean architecture? What is the difference between clean and MVVM architecture?
 
 ## Clean MVVM 框架
 
@@ -406,6 +450,7 @@ https://www.interviewbit.com/agile-interview-questions/
 https://synoptek.com/insights/it-blogs/greenfield-vs-brownfield-software-development/
 
 #### 2. What do you think of refactoring?
+
 
 
 **并发和多线程开发：**
@@ -938,6 +983,9 @@ In general, the approach to debugging will depend on the nature of the issue. If
 ## Are you familiar with setting up CI/CD pipelines for Swift projects?
 
 [https://chat.openai.com/share/8afd4553-c94f-4cf2-b90f-1ff22f7fc6b8](https://chat.openai.com/share/8afd4553-c94f-4cf2-b90f-1ff22f7fc6b8)
+
+一些好用的CI/CD工具 : https://github.com/bazelbuild/bazel
+
 
 #### 使用 YAML 在 Microsoft Azure 
 

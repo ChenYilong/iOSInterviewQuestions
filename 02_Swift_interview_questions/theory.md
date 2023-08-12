@@ -142,6 +142,10 @@ extension String {
 ```
 
 
+![](assets/16918516162699.jpg)
+
+Answer: B.
+
 ![3](assets/3.png)
 
 **Answer:** C) Dictionary<String, Any>
@@ -450,6 +454,8 @@ class Test {
 
 ![](../assets/16912026477007.jpg)
 
+let result = persons.lazy.filter { $0.age >= 18}.map{ $0.name }
+print(Array(result))
 首先，我们需要理解`lazy`在Swift中的含义。当我们在集合类型（如数组）上调用`lazy`属性时，我们会得到一个特殊的集合视图，该视图会在需要时才进行计算，从而可能提高性能。这种懒惰的行为对于昂贵的计算操作（如我们的`.filter`操作）可能非常有用。
 
 ```swift
@@ -2136,9 +2142,14 @@ a?.b?.c，如果前⾯的为 nil 了则结果直接为 nil；*
 #### 4. How to unwrap optionals in Swift?
 https://www.hackingwithswift.com/sixty/10/2/unwrapping-optionals
 
-## *7、lazy load 是怎么实现的？*
+
+## *lazy load 是怎么实现的？*
+![](assets/16914714232134.jpg)
+
+请解释 Swift 中的 lazy 关键字是怎么实现的？在什么情况下会使用它？
 
 *Swift 的 lazy 分：
+
 1」lazy 修饰属性（⻅上⼀条）；
 2」lazy 修饰⽅法（⻅上⼀条）；
 3」collection 中的 lazy：
@@ -2146,7 +2157,7 @@ https://www.hackingwithswift.com/sixty/10/2/unwrapping-optionals
 SequenceWrapper 保存了原始序列和变换（transform）；
 LazySequence  的 Interator 在 next() ⽅法中，实现了延迟调⽤变换（transform）；*
 
-1. 请解释 Swift 中的 lazy 关键字是怎么实现的？在什么情况下会使用它？
+
 
 ------
 

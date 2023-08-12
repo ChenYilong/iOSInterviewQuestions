@@ -141,4 +141,90 @@ final class Swift101Tests: XCTestCase {
         print("testTypealiasNoInit", type(of: stuff))
 
     }
+    
+    func testLazyFilter() {
+        let numbers = [1, 2, 3, 4, 5]
+        let modifiedNumbers = numbers
+            .lazy
+            .filter { $0 % 2 == 0}
+            .map { $0 * 2 }
+        print(modifiedNumbers[0])
+    }
+    
+    func testLazyFilter2() {
+        let numbers = [1, 2, 3, 4, 5]
+        let modifiedNumbers = numbers
+            .lazy
+            .map { $0 * 2 }
+            .filter { $0 % 2 == 0}
+        print(modifiedNumbers.first ?? -1)
+    }
+    
+    func testLazyFilter4() {
+        let numbers = [1, 2, 3, 4, 5]
+        let modifiedNumbers = numbers
+            .lazy
+            .filter { $0 % 2 == 0}
+            .map { $0 * 2 }
+
+        if let firstNumber = modifiedNumbers.first {
+            print(firstNumber)
+        } else {
+            print("No even numbers found")
+        }
+    }
+    
+    struct Person {
+        var name: String
+        var age: Int
+    }
+
+    func testLazyFilter3() {
+        let persons = [
+            Person(name: "Alice", age: 17),
+            Person(name: "Bob", age: 18),
+            Person(name: "Charlie", age: 20),
+        ]
+        let result = persons.lazy.filter { $0.age >= 18 }.map { $0.name }
+        print(Array(result))
+    }
+    
+    
+    struct CYLSequence<Element>: Sequence {
+        struct Iterator: IteratorProtocol {
+            let _next: () -> Element?
+            
+            func next() -> Element? {
+                return _next()
+            }
+        }
+        
+        let _makeIterator: () -> Iterator
+        
+        func makeIterator() -> Iterator {
+            return _makeIterator()
+        }
+        
+        init<Seq: Sequence>(_ seq: Seq) where Seq.Element == Element {
+            var iterator = seq.makeIterator()
+            _makeIterator = {
+                return Iterator(_next: { iterator.next() })
+            }
+        }
+        
+        
+    }
+    
+    func printList(_ seq: CYLSequence<Int>) {
+        seq.forEach({ print("\($0)") })
+    }
+    
+    func testTypeErasure()  {
+        let array = [1, 2, 3, 4, 5, 6]
+        // 1, 2, 3, 5, 5
+        printList(CYLSequence(array))
+        // 2, 3, 4
+        printList(CYLSequence(array[1..<4]))
+
+    }
 }
