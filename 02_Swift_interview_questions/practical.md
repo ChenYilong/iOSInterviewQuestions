@@ -470,7 +470,23 @@ https://synoptek.com/insights/it-blogs/greenfield-vs-brownfield-software-develop
 
 #### 3. iOS中的依赖注入实践
 
-虽然某些开发人员对iOS中依赖注入的存在表示怀疑，正确的实践是确实存在的。下面的Swift代码段揭示了多态与依赖注入之间的关系：
+虽然某些开发人员对iOS中依赖注入的存在表示怀疑，正确的实践是确实存在的。
+
+常见的依赖注入的实践:
+
+实践1:
+
+为每个 view controller 上都使用了一个 context 属性，并要求在 view controller 构建的时候传入这个上下文属性。虽然和基础 MVC 中设定一个 model 对象相比没有特别大的不同，但是它还是展示了一种避免单例的方式。这也是依赖注入降低耦合的实践.
+
+实践2:
+
+如果想在 view controller 上设置一个初始 model 值时，我们有不同的方式：
+
+方式一, 通过判定 controller 在 controller 层级上的位置以及 controller 的类型，直接访问一个全局的 model 对象。
+方式二, 开始时将 model 对象的引用设置为 nil 并让所有东西保持为空白状态，直到另一个 controller 提供了一个非 nil 值。
+第三种选择是在 controller 初始化时将 model 对象当作参数传递进来 (也就是依赖注入)。
+
+下面的Swift代码段揭示了依赖注入的一种实践方式：
 
 ```swift
 class A {
@@ -486,6 +502,7 @@ func ft(_ a : A) {
 ```
 
 对于函数`ft`来说，它只知道类A，子类SA是外部注入的，它也只能依赖A的特征和行为。
+
 
 #### 4. 高层次的理解和扩展
 
