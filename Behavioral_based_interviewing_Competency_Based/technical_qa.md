@@ -81,6 +81,9 @@ https://google.github.io/eng-practices/review/reviewer/
 ### Working Method
 
 #### 1. How do you work with pair programming?
+
+![pair_programming_process_softwarequal-pair_programming_styles-f](../assets/pair_programming.jpg)
+
 ![pair_programming_process_softwarequal-pair_programming_styles-f](../assets/pair_programming_process_softwarequal-pair_programming_styles-f.png)
 ![pair_programming_process_driver-navigator-diagram](../assets/pair_programming_process_driver-navigator-diagram.png)
 

@@ -411,7 +411,11 @@ Ostracize the team member in question. Promote more interactions to create bette
 Assume everyone knows what they’re supposed to be working on. Clarify team members’ roles so that people know what is expected of them.
 
 
-#### 5. As an senior Developer, How would you track the progress of a junior developer who is new to your project, especially in a learning situation?
+#### 5. As a senior Developer, How would you track the progress of a junior developer who is new to your project, especially in a learning situation?
+
+![behavioral-question](assets/behavioral-question.jpg)
+
+
 
 Certainly! Tracking the progress of a junior developer, especially when they're new to a project and in a learning situation, requires a thoughtful and well-structured approach. Here's how I might go about it as a senior developer:
 
@@ -440,6 +444,8 @@ Certainly! Tracking the progress of a junior developer, especially when they're 
 12. **Flexibility**: Understand that everyone learns at a different pace, and be prepared to adapt your tracking and support methodologies as needed.
 
 13. **Documentation**: Keep a record of progress, meetings, and feedback. This can help in tracking growth over time and in future performance evaluations.
+
+![pair_programming_process_softwarequal-pair_programming_styles-f](../assets/pair_programming.jpg)
 
 By incorporating these strategies, you can create a nurturing learning environment that not only tracks the junior developer's progress but also fosters growth and development. It's a balance between guiding, monitoring, and allowing independence that will enable the junior developer to thrive in the project.
 
