@@ -6,19 +6,21 @@
 
 
 ## What is SOLID
-![2](assets/2.jpg)
-![1](assets/1.jpg)
-![3](assets/3.jpg)
-![4](assets/4.jpg)
-![5](assets/5.jpg)
-![6](assets/6.jpg)
-![7](assets/7.jpg)
-![8](assets/8.jpg)
-![9](assets/9.jpg)
-![10](assets/10.jpg)
-![11](assets/11.jpg)
-![12](assets/12.jpg)
-![13](assets/13.jpg)
+![1](../assets/solid/1.jpg)
+
+![2](../assets/solid/2.jpg)
+
+![3](../assets/solid/3.jpg)
+![4](../assets/solid/4.jpg)
+![5](../assets/solid/5.jpg)
+![6](../assets/solid/6.jpg)
+![7](../assets/solid/7.jpg)
+![8](../assets/solid/8.jpg)
+![9](../assets/solid/9.jpg)
+![10](../assets/solid/10.jpg)
+![11](../assets/solid/11.jpg)
+![12](../assets/solid/12.jpg)
+![13](../assets/solid/13.jpg)
 
 ### STAR answer format
 STAR stands for: 

@@ -454,11 +454,11 @@ https://synoptek.com/insights/it-blogs/greenfield-vs-brownfield-software-develop
 
 ![](assets/16918575846436.jpg)
 
-### 依赖注入：多平台理解和实践的探索
+### 依赖注入
 
-**参与者A**：Dependency injection aims to separate the concerns of constructing objects and using them, leading to loosely coupled programs. 
+Dependency injection aims to separate the concerns of constructing objects and using them, leading to loosely coupled programs. 
 
-依赖注入（Dependency Injection），一种常用的软件设计模式，广泛应用于许多开发环境和语言中。重点在于低耦合。本文旨在深入探讨不同开发人员在iOS、Java和Android中对依赖注入的理解和实践，并试图通过讨论的方式，揭示其中的核心概念、具体实现和设计价值。
+依赖注入（Dependency Injection），一种常用的软件设计模式，广泛应用于许多开发环境和语言中。重点在于低耦合。 
 
 #### 1. iOS上的依赖注入
 
@@ -507,6 +507,93 @@ func ft(_ a : A) {
 #### 4. 高层次的理解和扩展
 
 通过将依赖注入描述为强依赖转变为弱依赖，可以深刻地揭示其背后的设计原则，如面向接口编程。此外，SwiftUI的 `Environtment`、`EnvironmentObject` 也可以看做是依赖注入的一种扩展实践。例如，这里有一个SwiftUI的依赖注入库: [swift-dependencies](https://github.com/pointfreeco/swift-dependencies)。
+
+从理论上讲，依赖注入是一种实现依赖反转原则的技术。该原则指出，高级模块不应依赖于低级模块，而是两者都应依赖于抽象模块。
+
+在 iOS 应用程序中，依赖注入意味着依赖于另一个对象（如依赖于模型对象的视图控制器）的对象将获得对其依赖对象的引用，而不是创建对象本身。这使得依赖于其他对象的对象更加灵活，也更易于测试，因为在测试过程中它可以获得一个模拟对象来使用。
+
+![1](../assets/solid/1.jpg)
+
+![4](../assets/solid/4.jpg)
+
+
+下面是一个在 iOS 应用程序中使用 SwiftUI 和 Combine 框架进行 DI（依赖注入）的简单示例：
+
+ ```Java
+
+import Foundation
+import SwiftUI
+import Combine
+
+// MARK: - Presentation Layer
+struct MyView: View {
+    @ObservedObject var viewModel: MyViewModel
+    
+    var body: some View {
+        Text(viewModel.data)
+    }
+}
+
+// MARK: - Domain Layer
+class MyViewModel: ObservableObject {
+    @Published var data: String = ""
+    private let dataFetcher: DataFetcher
+    private var cancellable: AnyCancellable?
+    
+    init(dataFetcher: DataFetcher) {
+        self.dataFetcher = dataFetcher
+    }
+    
+    func fetchData() {
+        // Fetch data from the network or a local database
+        // using the data access layer
+        cancellable = dataFetcher.fetchData()
+            // Handle the result of the fetch
+            .receive(on: RunLoop.main)
+            .sink { error in
+                if case let .failure(error) = error {
+                    print(error.localizedDescription)
+                }
+            } receiveValue: { (value: String) in
+                self.data = value
+            }
+    }
+}
+
+// MARK: - Data Access Layer
+protocol DataFetcher {
+    func fetchData() -> AnyPublisher<String, Error>
+}
+
+class NetworkDataFetcher: DataFetcher {
+    func fetchData() -> AnyPublisher<String, Error> {
+        // Fetch data from the network and call the completion handler
+        Just("Hello")
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+}
+
+class DatabaseDataFetcher: DataFetcher {
+    func fetchData() -> AnyPublisher<String, Error> {
+        // Fetch data from the local database and call the completion handler
+        Just("Mom")
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+}
+ ```
+
+
+在此示例中，UserListView 依赖于 UserViewModel，而 UserViewModel 依赖于 NetworkManager。
+
+我们没有直接在 UserViewModel 中创建 NetworkManager，而是在 UserViewModel 的初始化器中传递了 NetworkManager 的引用。
+
+这使得 UserViewModel 更加灵活，因为它可以获得任何符合 NetworkManager 协议的对象，而不仅仅是 NetworkManager 的特定实现。这使得测试 UserViewModel 更加容易，因为在测试过程中可以注入一个模拟对象。
+
+现在，我们将尝试把 "简洁架构 "和 "依赖注入 "这两种方法结合在一起，利用前面示例中的知识来获得一个完整清晰的观点。
+
+
 
 ### 总结
 

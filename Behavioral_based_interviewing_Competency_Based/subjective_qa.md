@@ -409,6 +409,41 @@ Don’t:
 Develop an explanation for the colleague’s behavior without talking to them first.
 Ostracize the team member in question. Promote more interactions to create better group cohesion.
 Assume everyone knows what they’re supposed to be working on. Clarify team members’ roles so that people know what is expected of them.
+
+
+#### 5. As an senior Developer, How would you track the progress of a junior developer who is new to your project, especially in a learning situation?
+
+Certainly! Tracking the progress of a junior developer, especially when they're new to a project and in a learning situation, requires a thoughtful and well-structured approach. Here's how I might go about it as a senior developer:
+
+1. **Set Clear Expectations and Goals**: It's essential to begin by setting clear expectations and specific, measurable, achievable, relevant, and time-bound (SMART) goals for the junior developer. Understanding what's expected of them can ease their transition into the project.
+
+2. **Provide Adequate Resources**: Ensure that they have all the resources, tools, and documentation they need to understand the project and their role within it.
+
+3. **Regular Check-ins**: Schedule regular one-on-one meetings to discuss progress, challenges, and offer support. This fosters open communication and enables timely assistance.
+
+4. **Encourage Self-Assessment**: Motivate the junior developer to keep track of their progress and have them self-assess. This encourages personal growth and accountability.
+
+5. **Pair Programming and Code Reviews**: Engaging in pair programming sessions or conducting regular code reviews can help in understanding their thought process, coding style, and areas that might need improvement.
+
+6. **Monitor Progress Through Tools**: Using project management and tracking tools can help in keeping an eye on tasks completed, the time taken, and the quality of work.
+
+7. **Offer Constructive Feedback**: Provide constructive, actionable feedback that can help them grow. Be honest but empathetic in your approach.
+
+8. **Create a Supportive Environment**: Cultivate a supportive and encouraging environment where they can feel free to ask questions and seek guidance.
+
+9. **Consider Educational Opportunities**: If necessary, recommend or provide access to tutorials, courses, or workshops that might help them in acquiring the skills needed for the project.
+
+10. **Evaluate Progress at Milestones**: At various project milestones, formally evaluate their progress. This is an opportunity to reassess goals and make any necessary adjustments.
+
+11. **Encourage Collaboration**: Promote collaboration with other team members, as learning from peers can be incredibly valuable.
+
+12. **Flexibility**: Understand that everyone learns at a different pace, and be prepared to adapt your tracking and support methodologies as needed.
+
+13. **Documentation**: Keep a record of progress, meetings, and feedback. This can help in tracking growth over time and in future performance evaluations.
+
+By incorporating these strategies, you can create a nurturing learning environment that not only tracks the junior developer's progress but also fosters growth and development. It's a balance between guiding, monitoring, and allowing independence that will enable the junior developer to thrive in the project.
+
+
 ### Career experience & expectation
 #### 1. What are your most important career accomplishments?
 In Weibo, I was involved in the peak-cutter plan. Our third-party Cloud for live streaming calculates prices by peak data. It would cost us billions of Chinese yuan (equivalent to hundreds of million of Euros) in just one year. Obviously, we can't afford that. My team members and discussed if we could reduce the data during rush hour, we would save a large amount of money. Of course, the process was not easy. We investigated kinds of other apps' solutions for video baseline profiles and did group-controlled trials. Eventually, we made a balance solution, keeping good picture quality and lower data. As a bonus from our company, every team member got 1k euros. 
