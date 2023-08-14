@@ -183,17 +183,25 @@ What is the difference between MVP and MVVM, and the major difference why? Why d
 What is the difference between MVP and MVVM?
 In MVVM, is the view model aware of the view? Does the view model know about the view?
 In MVP, does the presenter know about the view?
-![](assets/16918517379895.jpg)
+
+![](../assets/mvp_architecture_design_pattern/mvp_architecture_design_pattern_qa.jpg)
+
+
 
 Sure! Let's break down the comparison between MVP (Model-View-Presenter) and MVVM (Model-View-ViewModel), and answer the questions you've posed:
 
+![](../assets/mvp_architecture_design_pattern/mvp_architecture_design_pattern_en.jpg)
+
+![](../assets/mvp_architecture_design_pattern/mvp_architecture_design_pattern_cn.jpg)
 ### MVP (Model-View-Presenter):
+![](../assets/mvp_architecture_design_pattern.png)
 
 - **Model**: Represents the data and the business rules of the application.
 - **View**: Represents the UI of the application, and forwards user actions to the Presenter.
 - **Presenter**: Acts as a bridge between the Model and the View. It takes user actions from the View, processes (with the Model), and returns the output display to the View.
 
 In MVP, the Presenter has direct knowledge of the View, and often there is a one-to-one relationship between the Presenter and the View.
+
 
 ### MVVM (Model-View-ViewModel):
 
