@@ -229,8 +229,17 @@ In MVP, the Presenter has direct knowledge of the View, and often there is a one
 As for why one might prefer one pattern over the other, it often depends on specific needs and project requirements. MVVM's loose coupling and ease of testing might make it more appealing for large-scale applications with complex data interactions, whereas MVP might be preferred for simpler applications where the strict separation between the View and Presenter is not necessary. Preferences can vary widely among developers based on their individual experiences and the technologies they are using.
 
 
-## 17. What is the difference between MVVM (Model-View-ViewModel) and clean architecture? What is the difference between clean and MVVM architecture?
+## 17. What is the difference between MVVM (Model-View-ViewModel) and clean architecture? 
 
+What is the difference between clean and MVVM architecture?
+
+![](../assets/MVVM_Clean_SOLID/banner_en.jpg)
+
+![](../assets/MVVM_Clean_SOLID/en.jpg)
+
+![](../assets/MVVM_Clean_SOLID/banner_cn.jpg)
+
+![](../assets/MVVM_Clean_SOLID/cn.jpg)
 ## Clean MVVM 框架
 
 [https://github.com/kudoleh/iOS-Clean-Architecture-MVVM](https://github.com/kudoleh/iOS-Clean-Architecture-MVVM)
@@ -418,12 +427,23 @@ final class PostListViewModel: ContentListViewModelProtocol {
 
 ### Architecture, Pattern, and System Design
 
+最初的MVC解决了 View 和 Model 的角色分离, 和 View Action 和 Model Action 的处理问题... 后续的七七八八的架构产生都是为了测试目的...
+
+国内其实除了MVVM, 其他的都不care, 毕竟衍生的架构都是为了test. 而我们不需要test...
+
 #### 1. Pattern
 
 **VIPER**
+
+viper就是过度设计的mvp. 其实就是比标准的mvp多了个interactor. viper里E指的其实就是model，非得改个名字。R是router，感觉跟mvvm-c里的coordinate却差不多.
+interactor感觉就是为了搞一个没有任何ui相关逻辑的可注入层.
+
 https://github.com/adib/ViperMovieDemo
 
 https://github.com/unwire/viper-demo-ios
+
+https://www.objc.io/issues/13-architecture/viper/
+
 
 **MVVM**:
 
@@ -460,7 +480,11 @@ https://synoptek.com/insights/it-blogs/greenfield-vs-brownfield-software-develop
 #### 2. What do you think of refactoring?
 
 
-![](assets/16918575846436.jpg)
+## Dependency Injection in SwiftUI
+
+![](assets/16919852605513.jpg)
+
+![](assets/16919848599418.jpg)
 
 ### 依赖注入
 
