@@ -92,7 +92,8 @@ Swift面试题共分为两篇:
 
 https://www.hackingwithswift.com/quick-start/swiftui/whats-the-difference-between-observedobject-state-and-environmentobject
 
-我写的有点老了，现在iOS17 是Observation框架，性能更好了，不过写法不同了. 等忙完这段时间, 我完善下. 先看下iOS17 以前的写法.
+我写的有点老了，现在iOS17 是Observation框架，性能更好了，不过写法不同了. 等忙完这段时间, 我完善下. 先看下iOS17 以前的写法. [SwiftUI Data Flow 2023]( https://troz.net/post/2023/swiftui-data-flow-2023/ "") 
+
 
 [Answer from AI](https://chat.openai.com/share/cd46dff5-9d7e-4990-8fe9-595e2aa65080)
 
