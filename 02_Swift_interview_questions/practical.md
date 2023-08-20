@@ -264,8 +264,12 @@ What is the difference between clean and MVVM architecture?
 ![](../assets/16912073606938.jpg)
 
 
-TDD friendly我觉得是个优点.TCA(TCA一般是指：the composable architecture)有点插件式的感觉，你要调用子component的逻辑，你就得把它的state、action、scope都声明一下就能用了.
+TDD friendly我觉得是个优点.
 
+TCA(TCA一般是指：the composable architecture)有点插件式的感觉，你要调用子component的逻辑，你就得把它的state、action、scope都声明一下就能用了.
+
+有的， 
+TCA 虽然是一种设计模式, 但也有一个非常流行的最佳实践库, 可以理解为 [TCA 标准库: The Composable Architecture]( https://github.com/pointfreeco/swift-composable-architecture "") 
 感觉最大的优势，还是代码清晰。。。。
 
 state，action本身内部内聚很高, 类似声明. 一旦类似delegate的action出去了. 单看一个模块就读不出完整逻辑了. 我觉得reducer做到了有所有的逻辑啊，delegate也只是一种effect而已.  跟其他的effect没有什么区别. 原来这个模块这条链路是这个意思.它问了Clean框架, 我说我听过, 没用过. 新西兰有很多移动端的架构就是Clean.
