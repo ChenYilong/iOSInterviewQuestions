@@ -1,0 +1,48 @@
+{
+    "total_count": 160136,
+    "incomplete_results": false,
+    "items": [
+        {
+            "login": "jack",
+            "id": 85945244,
+            "node_id": "MDQ6VXNlcjg1OTQ1MjQ0",
+            "avatar_url": "https://avatars.githubusercontent.com/u/85945244?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/jack",
+            "html_url": "https://github.com/jack",
+            "followers_url": "https://api.github.com/users/jack/followers",
+            "following_url": "https://api.github.com/users/jack/following{/other_user}",
+            "gists_url": "https://api.github.com/users/jack/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/jack/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/jack/subscriptions",
+            "organizations_url": "https://api.github.com/users/jack/orgs",
+            "repos_url": "https://api.github.com/users/jack/repos",
+            "events_url": "https://api.github.com/users/jack/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/jack/received_events",
+            "type": "User",
+            "site_admin": false,
+            "score": 1.0
+        },
+        {
+            "login": "JacksonTian",
+            "id": 327019,
+            "node_id": "MDQ6VXNlcjMyNzAxOQ==",
+            "avatar_url": "https://avatars.githubusercontent.com/u/327019?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/JacksonTian",
+            "html_url": "https://github.com/JacksonTian",
+            "followers_url": "https://api.github.com/users/JacksonTian/followers",
+            "following_url": "https://api.github.com/users/JacksonTian/following{/other_user}",
+            "gists_url": "https://api.github.com/users/JacksonTian/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/JacksonTian/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/JacksonTian/subscriptions",
+            "organizations_url": "https://api.github.com/users/JacksonTian/orgs",
+            "repos_url": "https://api.github.com/users/JacksonTian/repos",
+            "events_url": "https://api.github.com/users/JacksonTian/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/JacksonTian/received_events",
+            "type": "User",
+            "site_admin": false,
+            "score": 1.0
+        }
+    ]
+}

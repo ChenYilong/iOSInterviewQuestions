@@ -1,0 +1,48 @@
+{
+    "total_count": 160143,
+    "incomplete_results": false,
+    "items": [
+        {
+            "login": "jackfrued",
+            "id": 7474657,
+            "node_id": "MDQ6VXNlcjc0NzQ2NTc=",
+            "avatar_url": "https://avatars.githubusercontent.com/u/7474657?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/jackfrued",
+            "html_url": "https://github.com/jackfrued",
+            "followers_url": "https://api.github.com/users/jackfrued/followers",
+            "following_url": "https://api.github.com/users/jackfrued/following{/other_user}",
+            "gists_url": "https://api.github.com/users/jackfrued/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/jackfrued/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/jackfrued/subscriptions",
+            "organizations_url": "https://api.github.com/users/jackfrued/orgs",
+            "repos_url": "https://api.github.com/users/jackfrued/repos",
+            "events_url": "https://api.github.com/users/jackfrued/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/jackfrued/received_events",
+            "type": "User",
+            "site_admin": false,
+            "score": 1.0
+        },
+        {
+            "login": "jackfranklin",
+            "id": 193238,
+            "node_id": "MDQ6VXNlcjE5MzIzOA==",
+            "avatar_url": "https://avatars.githubusercontent.com/u/193238?v=4",
+            "gravatar_id": "",
+            "url": "https://api.github.com/users/jackfranklin",
+            "html_url": "https://github.com/jackfranklin",
+            "followers_url": "https://api.github.com/users/jackfranklin/followers",
+            "following_url": "https://api.github.com/users/jackfranklin/following{/other_user}",
+            "gists_url": "https://api.github.com/users/jackfranklin/gists{/gist_id}",
+            "starred_url": "https://api.github.com/users/jackfranklin/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/jackfranklin/subscriptions",
+            "organizations_url": "https://api.github.com/users/jackfranklin/orgs",
+            "repos_url": "https://api.github.com/users/jackfranklin/repos",
+            "events_url": "https://api.github.com/users/jackfranklin/events{/privacy}",
+            "received_events_url": "https://api.github.com/users/jackfranklin/received_events",
+            "type": "User",
+            "site_admin": false,
+            "score": 1.0
+        }
+    ]
+}

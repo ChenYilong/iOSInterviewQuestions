@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>DefaultCompletionName</key>
+	<string>MyScene</string>
+	<key>Description</key>
+	<string>This generates unit tests for your scene using Uncle Bob&apos;s clean architecture. It consists of three test files for view controller, interactor, and presenter.</string>
+	<key>Kind</key>
+	<string>Xcode.IDEKit.TextSubstitutionFileTemplateKind</string>
+	<key>Options</key>
+	<array>
+		<dict>
+			<key>Description</key>
+			<string>The name of the scene to create tests for</string>
+			<key>Identifier</key>
+			<string>sceneName</string>
+			<key>Name</key>
+			<string>Scene Name:</string>
+			<key>NotPersisted</key>
+			<true/>
+			<key>Required</key>
+			<true/>
+			<key>Type</key>
+			<string>text</string>
+		</dict>
+		<dict>
+			<key>Default</key>
+			<string>___VARIABLE_sceneName:identifier___</string>
+			<key>Identifier</key>
+			<string>productName</string>
+			<key>Type</key>
+			<string>static</string>
+		</dict>
+		<dict>
+			<key>Default</key>
+			<string>___VARIABLE_sceneName:identifier___ViewControllerTests</string>
+			<key>Description</key>
+			<string>The view controller tests name</string>
+			<key>Identifier</key>
+			<string>viewControllerTestsName</string>
+			<key>Name</key>
+			<string>View Controller Tests Name:</string>
+			<key>Required</key>
+			<true/>
+			<key>Type</key>
+			<string>static</string>
+		</dict>
+		<dict>
+			<key>Default</key>
+			<string>___VARIABLE_sceneName:identifier___InteractorTests</string>
+			<key>Description</key>
+			<string>The interactor tests name</string>
+			<key>Identifier</key>
+			<string>interactorTestsName</string>
+			<key>Name</key>
+			<string>Interactor Tests Name:</string>
+			<key>Required</key>
+			<true/>
+			<key>Type</key>
+			<string>static</string>
+		</dict>
+		<dict>
+			<key>Default</key>
+			<string>___VARIABLE_sceneName:identifier___PresenterTests</string>
+			<key>Description</key>
+			<string>The presenter tests name</string>
+			<key>Identifier</key>
+			<string>presenterTestsName</string>
+			<key>Name</key>
+			<string>Presenter Tests Name:</string>
+			<key>Required</key>
+			<true/>
+			<key>Type</key>
+			<string>static</string>
+		</dict>
+		<dict>
+			<key>Default</key>
+			<string>___VARIABLE_sceneName:identifier___WorkerTests</string>
+			<key>Description</key>
+			<string>The worker tests name</string>
+			<key>Identifier</key>
+			<string>workerTestsName</string>
+			<key>Name</key>
+			<string>Worker Tests Name:</string>
+			<key>Required</key>
+			<true/>
+			<key>Type</key>
+			<string>static</string>
+		</dict>
+		<dict>
+			<key>AllowedTypes</key>
+			<dict>
+				<key>Objective-C</key>
+				<array>
+					<string>public.objective-c-source</string>
+					<string>public.objective-c-plus-plus-source</string>
+				</array>
+				<key>Swift</key>
+				<array>
+					<string>public.swift-source</string>
+				</array>
+			</dict>
+			<key>Default</key>
+			<string>Swift</string>
+			<key>Description</key>
+			<string>The implementation language</string>
+			<key>Identifier</key>
+			<string>languageChoice</string>
+			<key>MainTemplateFiles</key>
+			<dict>
+				<key>Swift</key>
+				<string>___VARIABLE_sceneName___.swift</string>
+				<key>Objective-C</key>
+				<string>___VARIABLE_sceneName___.m</string>
+			</dict>
+			<key>Name</key>
+			<string>Language:</string>
+			<key>Required</key>
+			<true/>
+			<key>Type</key>
+			<string>popup</string>
+			<key>Values</key>
+			<array>
+				<string>Swift</string>
+				<string>Objective-C</string>
+			</array>
+		</dict>
+	</array>
+	<key>Platforms</key>
+	<array>
+		<string>com.apple.platform.iphoneos</string>
+	</array>
+	<key>SortOrder</key>
+	<string>8</string>
+	<key>Summary</key>
+	<string>This generates unit tests for your scene using Uncle Bob&apos;s clean architecture.</string>
+</dict>
+</plist>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>DefaultCompletionName</key>
+	<string>MyScene</string>
+	<key>Description</key>
+	<string>This generates a new worker to perform your specific business logic.</string>
+	<key>Kind</key>
+	<string>Xcode.IDEKit.TextSubstitutionFileTemplateKind</string>
+	<key>Options</key>
+	<array>
+		<dict>
+			<key>Description</key>
+			<string>The name of the scene to create</string>
+			<key>Identifier</key>
+			<string>sceneName</string>
+			<key>Name</key>
+			<string>New Scene Name:</string>
+			<key>NotPersisted</key>
+			<true/>
+			<key>Required</key>
+			<true/>
+			<key>Type</key>
+			<string>text</string>
+		</dict>
+		<dict>
+			<key>Default</key>
+			<string>___VARIABLE_sceneName:identifier___</string>
+			<key>Identifier</key>
+			<string>productName</string>
+			<key>Type</key>
+			<string>static</string>
+		</dict>
+		<dict>
+			<key>Default</key>
+			<string>___VARIABLE_sceneName:identifier___Worker</string>
+			<key>Description</key>
+			<string>The worker name</string>
+			<key>Identifier</key>
+			<string>workerName</string>
+			<key>Name</key>
+			<string>Worker Name:</string>
+			<key>Required</key>
+			<true/>
+			<key>Type</key>
+			<string>static</string>
+		</dict>
+		<dict>
+			<key>AllowedTypes</key>
+			<dict>
+				<key>Objective-C</key>
+				<array>
+					<string>public.objective-c-source</string>
+					<string>public.objective-c-plus-plus-source</string>
+				</array>
+				<key>Swift</key>
+				<array>
+					<string>public.swift-source</string>
+				</array>
+			</dict>
+			<key>Default</key>
+			<string>Swift</string>
+			<key>Description</key>
+			<string>The implementation language</string>
+			<key>Identifier</key>
+			<string>languageChoice</string>
+			<key>MainTemplateFiles</key>
+			<dict>
+				<key>Swift</key>
+				<string>___VARIABLE_sceneName___.swift</string>
+				<key>Objective-C</key>
+				<string>___VARIABLE_sceneName___.m</string>
+			</dict>
+			<key>Name</key>
+			<string>Language:</string>
+			<key>Required</key>
+			<true/>
+			<key>Type</key>
+			<string>popup</string>
+			<key>Values</key>
+			<array>
+				<string>Swift</string>
+				<string>Objective-C</string>
+			</array>
+		</dict>
+	</array>
+	<key>Platforms</key>
+	<array>
+		<string>com.apple.platform.iphoneos</string>
+	</array>
+	<key>SortOrder</key>
+	<string>5</string>
+	<key>Summary</key>
+	<string>This generates a new worker to perform your specific business logic.</string>
+</dict>
+</plist>
