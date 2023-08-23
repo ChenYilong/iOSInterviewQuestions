@@ -245,6 +245,8 @@ What is the difference between clean and MVVM architecture?
 
 [https://github.com/kudoleh/iOS-Clean-Architecture-MVVM](https://github.com/kudoleh/iOS-Clean-Architecture-MVVM)
 
+https://github.com/nanosoftonline/clean-architecture-ios-contacts
+
 新西兰的各类流行框架
 
 [g-enius - Repositories](https://github.com/g-enius?page=1&tab=repositories)
@@ -437,17 +439,30 @@ final class PostListViewModel: ContentListViewModelProtocol {
 国内其实除了MVVM, 其他的都不care, 毕竟衍生的架构都是为了test. 而我们不需要test...
 
 #### 1. Pattern
+![](../assets/VIPER_architecture_design_pattern/1.jpg)
+
 
 **VIPER**
 
-viper就是过度设计的mvp. 其实就是比标准的mvp多了个interactor. viper里E指的其实就是model，非得改个名字。R是router，感觉跟mvvm-c里的coordinate却差不多.
+
+![](../assets/VIPER_architecture_design_pattern/viper_architecture_design_pattern_en.jpg)
+
+![](../assets/viper_architecture_design_pattern.png)
+
+
+viper就是过度设计的mvp. 其实就是比标准的mvp多了个interactor. 
+viper里E指的其实就是model，非得改个名字。R是router，感觉跟mvvm-c里的coordinate却差不多.
 interactor感觉就是为了搞一个没有任何ui相关逻辑的可注入层.
 
 https://github.com/adib/ViperMovieDemo
 
 https://github.com/unwire/viper-demo-ios
 
-https://www.objc.io/issues/13-architecture/viper/
+这应该是己知的 最早的出处了 https://www.objc.io/issues/13-architecture/viper/
+
+https://rowant.co.uk/unit-testing-with-viper/
+
+https://www.kodeco.com/29416318-getting-started-with-the-vip-clean-architecture-pattern
 
 
 **MVVM**:
