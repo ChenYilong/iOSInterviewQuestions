@@ -447,6 +447,8 @@ final class PostListViewModel: ContentListViewModelProtocol {
 
 ![](../assets/VIPER_architecture_design_pattern/viper_architecture_design_pattern_en.jpg)
 
+<br/><a href="https://mp.weixin.qq.com/s/A4e5h3xgIEh6PInf1Rjqsw"><img src="../assets/viper_architecture_design_pattern_model.gif"></a><br/>
+
 ![](../assets/viper_architecture_design_pattern_model.gif)
 
 ![](../assets/viper_architecture_design_pattern.png)
