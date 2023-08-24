@@ -194,6 +194,11 @@ Sure! Let's break down the comparison between MVP (Model-View-Presenter) and MVV
 ![](../assets/mvp_architecture_design_pattern/mvp_architecture_design_pattern_en.jpg)
 
 ![](../assets/mvp_architecture_design_pattern/mvp_architecture_design_pattern_cn.jpg)
+
+![https://github.com/ChenYilong](../assets/mvp_architecture_design_pattern_presenters_replace_controller.gif)
+
+
+
 ### MVP (Model-View-Presenter):
 ![](../assets/mvp_architecture_design_pattern.png)
 
