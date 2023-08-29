@@ -669,7 +669,9 @@ class DatabaseDataFetcher: DataFetcher {
 
 
 Reference:   
-
+- [Dependency injection libs on GitHub](https://github.com/matteocrippa/awesome-swift#dependency-injection "") 
+- [Dependency Injection in Swift with Property Wrappers]( https://medium.com/swlh/dependency-injection-in-swift-with-property-wrappers-c1f02f06cd51 "") 
+ 
 - [iOS: Clean Architecture using SwiftUI, Combine, and Dependency Injection]( https://betterprogramming.pub/ios-clean-architecture-using-swiftui-combine-and-dependency-injection-for-dummies-2e44600f952b "") 
 - [Dependiject: Make Dependency Injection easy in SwiftUI]( https://medium.com/@wesleyboyd_66190/dependiject-make-dependency-injection-easy-in-swiftui-bee6bf04fd3b "") 
 - [Dependency Injection in SwiftUI]( https://mokacoding.com/blog/swiftui-dependency-injection/ "") 
