@@ -281,6 +281,11 @@ TCA 虽然是一种设计模式, 但也有一个非常流行的最佳实践库, 
 
 state，action本身内部内聚很高, 类似声明. 一旦类似delegate的action出去了. 单看一个模块就读不出完整逻辑了. 我觉得reducer做到了有所有的逻辑啊，delegate也只是一种effect而已.  跟其他的effect没有什么区别. 原来这个模块这条链路是这个意思.它问了Clean框架, 我说我听过, 没用过. 新西兰有很多移动端的架构就是Clean.
 
+![](../assets/tca_architecture_design_pattern/tca_architecture_design_pattern_qa.jpg)
+
+![](../assets/tca_architecture_design_pattern/tca_architecture_design_pattern_en.jpg)
+
+
 [Clean Architecture for SwiftUI](https://nalexn.github.io/clean-architecture-swiftui/)
 
 clean喜欢把protocol化可注入的层叫use case，命名一般叫xxxRepository
