@@ -104,6 +104,10 @@
 
  - [《软件开发术语》]( https://github.com/ChenYilong/iOSInterviewQuestions/blob/master/02_Swift_interview_questions/Software_Development_Terminology.md) 
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=ChenYilong/iOSInterviewQuestions&type=Date)](https://star-history.com/#ChenYilong/iOSInterviewQuestions&Date)
+
 
 -------------
 
