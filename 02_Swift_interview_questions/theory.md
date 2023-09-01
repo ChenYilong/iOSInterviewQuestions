@@ -2028,8 +2028,7 @@ Block 的原理及其内存管理
 Swift 的闭包：（闭包是⼀个捕获了全局上下⽂的常量或者变量的函数）
 1、捕获值原理：在堆上开辟内存空间，并将捕获的值放到这个内存空间⾥
 2、修改捕获值时：实质是修改堆空间的值
-3、闭包是⼀个引⽤类型（引⽤类型是地址传递），闭包的底层结构（是结构体：函数地址 + 捕获变量的地址 == 闭
-包）
+3、闭包是⼀个引⽤类型（引⽤类型是地址传递），闭包的底层结构（是结构体：函数地址 + 捕获变量的地址 == 闭包）
 4、函数也是⼀个引⽤类型（本质是⼀个结构体，其中只保存了函数的地址）
 
 参考: [《Swift-进阶 09：闭包（⼀）使⽤&捕获原理》](https://www.jianshu.com/p/299a9a5c5cd1) 
@@ -2062,8 +2061,10 @@ swift 闭包的优化，就是上⾯的代码
 Swift最简单的闭包形式是嵌套函数，也就是定义在其他函数的函数体内的函数。
 嵌套函数可以捕获其外部函数所有的参数以及定义的常量和变量。
 
+![](../assets/closure_vs_block/closure_vs_block_question1.jpg)
+
 ```swift
-//这个例⼦就是 嵌套函数 incrementor() 的本质是闭包， 闭包捕获了 amount 值，存储了起来，
+//这个例⼦就是 嵌套函数 incrementor() 的本质是闭包， 闭包捕获了 runningTotal 值，存储了起来，
 所以每次调⽤都会 + 10
 func makeIncrementor(forIncrement amount: Int) -> () -> Int {
     var runningTotal = 0
@@ -2085,6 +2086,10 @@ print(incrementByTen())
 
 ```
 
+扩展:
+
+![](../assets/closure_vs_block/closure_vs_block_question2.jpg)
+![](../assets/closure_vs_block/closure_vs_block_question3.jpg)
 ## **可选类型：**
 
 ## What is optionals?
