@@ -84,7 +84,7 @@ Swift面试题共分为两篇:
 - When would you use a closure?
 - What are closures in Swift?
 - 请解释 Swift 中的闭包是什么，并描述一个闭包在实际编程中的应用场景？
-- Swift 的闭包（Clouse） 和 OC 的 Block
+- Swift 的闭包（Closure） 和 OC 的 Block
 - 请解释 Swift 中的闭包是什么，并描述一个闭包在实际编程中的应用场景？
 
 
@@ -2017,7 +2017,7 @@ IndexingIterator，类似 IteratorProtocol；
 ![](../assets/16911996457612.jpg)
 
 
-## Swift 的闭包（Clouse） 和 OC 的 Block
+## Swift 的闭包（Closure） 和 OC 的 Block
 
 ![](../assets/clojure_vs_block.jpg)
 
