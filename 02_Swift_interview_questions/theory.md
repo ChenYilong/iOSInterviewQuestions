@@ -2017,7 +2017,9 @@ IndexingIterator，类似 IteratorProtocol；
 ![](../assets/16911996457612.jpg)
 
 
-## 11、Swift 的闭包（Clouse） 和 OC 的 Block
+## Swift 的闭包（Clouse） 和 OC 的 Block
+
+![](../assets/clojure_vs_block.jpg)
 
 本质上 OC 的 block 就是⼀个结构体，然后这个结构体⾥⾯有⼀个结构体成员专⻔⽤来保存捕捉对象，因此才会导致
 被 block 捕捉引⽤ +1  ，或者说 block 是⼀个带有⾃动变量（局部变量）的匿名函数。
@@ -2028,23 +2030,22 @@ Swift 的闭包：（闭包是⼀个捕获了全局上下⽂的常量或者变�
 3、闭包是⼀个引⽤类型（引⽤类型是地址传递），闭包的底层结构（是结构体：函数地址 + 捕获变量的地址 == 闭
 包）
 4、函数也是⼀个引⽤类型（本质是⼀个结构体，其中只保存了函数的地址）
-参考：Swift-进阶 09：闭包（⼀）使⽤&捕获原理
+
+参考: [《Swift-进阶 09：闭包（⼀）使⽤&捕获原理》](https://www.jianshu.com/p/299a9a5c5cd1) 
 
 先看个经典的闭包优化
 
 ```swift
-1"//2020 年在满帮分享 Swift 时我⽤到的闭包简化的例⼦：
-2results = OKRs.filter({ (s1: Int) "-> Bool in
-3      return s1 > 90
-4}) "//正常闭包
-5results = OKRs.filter({ s1 in return s1 > 90 }) "//类型推断
-6results = OKRs.filter({ s1 in s1 > 90 }) "//默认返回值
-7results = OKRs.filter({ $0 > 90 }) "//参数替换
-8results = OKRs.filter{ $0 > 90 } "//尾随闭包
-9results = OKRs.filter( $0 > 90 ) "//⾃动闭包 @autoclosure
-10"// @autoclosure 会把 $0 > 90 的表达式⾃动转换成 () "-> T
-11
-12"//a ？？b 中 b 的实现也是转换成了⼀个⾃动闭包 () "-> T
+results = OKRs.filter({ (s1: Int) -> Bool in
+      return s1 > 90
+}) //正常闭包
+
+results = OKRs.filter({ s1 in return s1 > 90 }) //类型推断
+results = OKRs.filter({ s1 in s1 > 90 }) //默认返回值
+results = OKRs.filter({ $0 > 90 }) //参数替换
+results = OKRs.filter{ $0 > 90 } //尾随闭包
+results = OKRs.filter( $0 > 90 ) //⾃动闭包 @autoclosure // @autoclosure 会把 $0 > 90 的表达式⾃动转换成 () -> T
+//a ？？b 中 b 的实现也是转换成了⼀个⾃动闭包 () -> T
 
 ```
 
@@ -2061,25 +2062,25 @@ Swift最简单的闭包形式是嵌套函数，也就是定义在其他函数的
 嵌套函数可以捕获其外部函数所有的参数以及定义的常量和变量。
 
 ```swift
-1"//这个例⼦就是 嵌套函数 incrementor() 的本质是闭包， 闭包捕获了 amount 值，存储了起来，
+//这个例⼦就是 嵌套函数 incrementor() 的本质是闭包， 闭包捕获了 amount 值，存储了起来，
 所以每次调⽤都会 + 10
-2func makeIncrementor(forIncrement amount: Int) "-> () "-> Int {
-3    var runningTotal = 0
-4    func incrementor() "-> Int {
-5        runningTotal += amount
-6        return runningTotal
-7    }
-8    return incrementor
-9}
-10
-11let incrementByTen = makeIncrementor(forIncrement: 10)
-12
-13"// 返回的值为10
-14print(incrementByTen())
-15"// 返回的值为20
-16print(incrementByTen())
-17"// 返回的值为30
-18print(incrementByTen())
+func makeIncrementor(forIncrement amount: Int) -> () -> Int {
+    var runningTotal = 0
+    func incrementor() -> Int {
+        runningTotal += amount
+        return runningTotal
+    }
+    return incrementor
+}
+
+let incrementByTen = makeIncrementor(forIncrement: 10)
+
+// 返回的值为10
+print(incrementByTen())
+// 返回的值为20
+print(incrementByTen())
+// 返回的值为30
+print(incrementByTen())
 
 ```
 
