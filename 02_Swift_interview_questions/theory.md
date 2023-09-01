@@ -2019,7 +2019,7 @@ IndexingIterator，类似 IteratorProtocol；
 
 ## Swift 的闭包（Closure） 和 OC 的 Block
 
-![](../assets/clojure_vs_block.jpg)
+![](../assets/closure_vs_block.jpg)
 
 本质上 OC 的 block 就是⼀个结构体，然后这个结构体⾥⾯有⼀个结构体成员专⻔⽤来保存捕捉对象，因此才会导致
 被 block 捕捉引⽤ +1  ，或者说 block 是⼀个带有⾃动变量（局部变量）的匿名函数。
