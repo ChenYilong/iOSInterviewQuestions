@@ -1288,6 +1288,119 @@ Therefore, you would typically use `weak` when there's a possibility the referen
 
 ![](../assets/16912025406113.jpg)
 
+
+closure 捕获变量的几种方式:
+"懒捕获"（Lazy Capture）和"早捕获"（Eager Capture）是两种描述Swift闭包捕获变量或常量方式的术语。这两种概念并不是Swift官方文档中明确定义的，但它们有助于理解闭包如何与其周围的作用域交互。
+
+### 懒捕获（Lazy Capture）
+
+"懒捕获"通常指的是当闭包被执行时，它才会捕获周围作用域中的变量。这意味着如果变量在闭包创建后和执行前发生了改变，闭包将使用最新的值。
+
+```swift
+var lazyVar = 1
+let lazyCapture = {
+    print("Lazy Capture: \(lazyVar)")
+}
+lazyVar = 2
+lazyCapture()  // 输出 "Lazy Capture: 2"
+```
+
+### 早捕获（Eager Capture）
+
+"早捕获"则是指在闭包创建的时候，就捕获了周围作用域中的变量或常量。最常见的使用场景就是通过捕获列表明确指定捕获。
+
+```swift
+var eagerVar = 1
+let eagerCapture = { [eagerVar] in
+    print("Eager Capture: \(eagerVar)")
+}
+eagerVar = 2
+eagerCapture()  // 输出 "Eager Capture: 1"
+```
+
+### 组合情况
+
+当然，你也可以在同一个闭包中使用多种捕获方式。
+
+```swift
+var var1 = 1
+var var2 = 1
+
+let mixedCapture = { [var1] in
+    print("Eager Capture: \(var1)")
+    print("Lazy Capture: \(var2)")
+}
+
+var1 = 2
+var2 = 2
+mixedCapture()  
+// 输出 "Eager Capture: 1"
+// 输出 "Lazy Capture: 2"
+```
+
+这样，`var1` 是在闭包创建时就被捕获的（早捕获），而 `var2` 是在闭包执行时被捕获的（懒捕获）。
+
+### 什么是 Capture List?
+
+在Swift中，捕获列表（Capture List）是唯一明确指定闭包捕获变量或常量方式的语法。捕获列表用方括号 `[]` 包围，并放在闭包表达式的开始处。
+
+在捕获列表中，你可以明确地指定以值的方式捕获（即捕获当前状态下的值），或以引用的方式捕获（即创建一个指向对象的强引用或弱引用）。
+
+### 值类型捕获
+
+```swift
+var x = 10
+let captureValue = { [x] in
+    print("captured value: \(x)")  // 输出：captured value: 10
+}
+x = 20
+captureValue()  // 还是输出：captured value: 10
+```
+
+### 引用类型捕获
+
+```swift
+class MyClass {
+    var value = 0
+}
+
+let obj = MyClass()
+obj.value = 10
+
+let captureReference = { [obj] in
+    print("captured value: \(obj.value)")  // 输出：captured value: 10
+}
+
+obj.value = 20
+captureReference()  // 输出：captured value: 20
+```
+
+### 弱引用和无主引用
+
+使用 `weak` 或 `unowned` 可以避免强引用导致的循环引用问题。
+
+```swift
+class MyClass {
+    var value = 0
+}
+
+var obj: MyClass? = MyClass()
+obj?.value = 10
+
+let captureWeakReference = { [weak obj] in
+    print("captured value: \(obj?.value ?? -1)")  // 输出：captured value: 10
+}
+
+obj?.value = 20
+captureWeakReference()  // 输出：captured value: 20
+
+obj = nil
+captureWeakReference()  // 输出：captured value: -1
+```
+
+
+-------
+
 相似之处：
 
 1. Swift 的 Capture List 和 Objective-C 的 __block 和 __weak 都是用来更改闭包或 block 对其外部变量的捕获方式，以便更好地管理内存和控制引用。
@@ -1377,22 +1490,44 @@ valueCaptureListClosure()  // 打印0，说明闭包看到的是捕获时的 cap
 也就是不使用Capture List 功能的写法, 显然Capture List 写法更加简洁:
 
 ```swift
-var capturedValue: Int = 0
-let capturedValueForClosure = capturedValue  // 这里相当于 Capture List 中的 [capturedValue]
+        var capturedValue: Int = 0
+        let capturedValueForClosure = capturedValue  // 这里相当于 Capture List 中的 [capturedValue]
 
-let closure = {
-    var capturedValue = capturedValueForClosure
-    print(capturedValue)  // 在闭包中使用的是 capturedValueForClosure 的值
-}
+        let valueCaptureListClosure = {
+            print(capturedValueForClosure)  // 在闭包中使用的是 capturedValueForClosure 的值
+        }
 
-capturedValue = 1
+        capturedValue = 1
 
-closure()  // 打印0，说明闭包看到的是捕获时的 capturedValue 的值，而不是当前的值
+        valueCaptureListClosure()  // 打印0，说明闭包看到的是捕获时的 capturedValue 的值，而不是当前的值
+
 ```
 
 这里的 `capturedValueForClosure` 的行为模拟了 Capture List 中的 `capturedValue`。即，闭包内部使用的 `capturedValue` 实际上是在闭包创建时就被捕获的 `capturedValueForClosure`，而不是外部变量 `capturedValue`，这样就可以保证即使外部的 `capturedValue` 改变了，闭包内部的 `capturedValue` 也不会受影响。这例子也可以解释 Capture List 的工作原理。
 
-这个确实有点反直觉, 没人会预期代码会这么运行, 所以在开发中要避免这种场景的使用, 那么应该如何规避这种情况, 请看下面的例子:
+这个确实有点反直觉, 没人会预期代码会这么运行, 所以在开发中要避免这种场景的使用,
+
+当然也不用过于担心, 之所以平时我们不会经常遇到这个问题, 是因为我们经常使用下面的用法, 也就是
+如果你没有在捕获列表中明确指定捕获方式，Swift 的闭包会"懒捕获”(lazy capture) 这些变量，这意味着实际的值捕获只会在闭包首次执行时进行。这样，如果该变量在闭包创建之后但在闭包执行之前被修改，闭包内将使用该最新的值
+
+参考以下代码:
+
+
+
+```swift
+        var capturedValue: Int = 0
+
+        let valueCaptureListClosure = {
+            print(capturedValue)  // 在闭包中使用的是 capturedValueForClosure 的值
+        }
+
+        capturedValue = 1
+
+        valueCaptureListClosure()  // 打印1 说明闭包看到的是当前的 capturedValue 的值 
+```
+    
+    
+但基于上面提到的种种问题, 那么应该如何尽量规避这种情况, 请看下面的例子:
 
 
 ---

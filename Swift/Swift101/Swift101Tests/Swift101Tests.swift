@@ -227,4 +227,28 @@ final class Swift101Tests: XCTestCase {
         printList(CYLSequence(array[1..<4]))
 
     }
+    
+    func testLazyCapture() {
+        var capturedValue: Int = 0
+
+        let valueCaptureListClosure = {
+            print(capturedValue)
+        }
+
+        capturedValue = 1
+
+        valueCaptureListClosure()  // 打印1 说明闭包看到的是当前的 capturedValue 的值
+    }
+    
+    func testEagerCaptureAndCaptureListValueType() {
+        var capturedValue: Int = 0
+
+        let valueCaptureListClosure = { [capturedValue] in
+            print(capturedValue)
+        }
+
+        capturedValue = 1
+
+        valueCaptureListClosure()  // 打印0，说明闭包看到的是捕获时的 capturedValue 的值，而不是当前的值
+    }
 }
