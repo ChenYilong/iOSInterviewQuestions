@@ -1392,6 +1392,9 @@ closure()  // 打印0，说明闭包看到的是捕获时的 capturedValue 的�
 
 这里的 `capturedValueForClosure` 的行为模拟了 Capture List 中的 `capturedValue`。即，闭包内部使用的 `capturedValue` 实际上是在闭包创建时就被捕获的 `capturedValueForClosure`，而不是外部变量 `capturedValue`，这样就可以保证即使外部的 `capturedValue` 改变了，闭包内部的 `capturedValue` 也不会受影响。这例子也可以解释 Capture List 的工作原理。
 
+这个确实有点反直觉, 没人会预期代码会这么运行, 所以在开发中要避免这种场景的使用, 那么应该如何规避这种情况, 请看下面的例子:
+
+
 ---
 
 第3个例子，我们将其命名为 "referenceCaptureExample":
@@ -1414,6 +1417,11 @@ referenceCaptureClosure()  // 打印1，说明闭包看到的是 capturedInstanc
 ```
 
 - "referenceCaptureExample"（引用捕获示例）: 在这个例子中，`capturedInstance` 是一个引用类型（类的实例）。尽管没有指定捕获列表，但是由于它是引用类型，所以闭包捕获的是这个引用的副本。因此，即使在外部改变了这个实例的属性，闭包也能看到这个改变。
+
+
+所以我们可以得出结论:
+
+> 如果想让捕获的值，改变之后，还能让闭包内部知道的话，只能通过引用类型.
 
 ---
 

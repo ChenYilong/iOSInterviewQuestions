@@ -285,7 +285,8 @@ state，action本身内部内聚很高, 类似声明. 一旦类似delegate的act
 
 ![](../assets/tca_architecture_design_pattern/tca_architecture_design_pattern_en.jpg)
 
-
+ [Composable Architecture]( https://zenn.dev/inamiy/books/3dd014a50f321040a047/viewer/cca752a1fe8700f9d0c0 "") 
+ 
 [Clean Architecture for SwiftUI](https://nalexn.github.io/clean-architecture-swiftui/)
 
 clean喜欢把protocol化可注入的层叫use case，命名一般叫xxxRepository
