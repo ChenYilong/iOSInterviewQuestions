@@ -880,6 +880,8 @@ Swift requires each object to have a type, which must be known during compilatio
 - **Value types**, which are typically described as a struct, enum, or tuple and allow each instance to maintain a separate copy of its data.
 - **Reference types**, where a single copy of the data is shared by all instances, and where the type is often expressed as a class.
 
+
+
 ### **26. What is a Tuple in Swift?**
 
 A tuple is a collection of many values combined into a single compound value. It contains elements in an organized list. You can access a tuple's object data in two ways: by name or position.

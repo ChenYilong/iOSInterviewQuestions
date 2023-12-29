@@ -162,6 +162,34 @@ First, I would like to have a principle that says User Experience Always Has to 
 
 Based on this principle, I want to try to cope with the conflict. If my coworker or customer makes a challenging demand, I would like to do my best to help them, but if it is beyond my responsibility. I would like to ask my manager for help. If the manager confirms, I can spend additional time helping coworkers or customers. I think I will be happy to help them during my work time.
 
+Simple Steps to Deal with Conflict:
+
+1. **Let Them Have Their Say:**
+   - Don't interrupt.
+   - Allow them time to express themselves.
+
+2. **Don't Get Angry:**
+   - Stay calm and composed.
+   - Allow them time to let off steam.
+
+3. **Apologize:**
+   - Say "I’m sorry that has happened."
+   - You may need to apologize several times.
+
+4. **Look for a Solution:**
+   - When they are ready, discuss possible resolutions.
+   - Make agreements on the next steps.
+
+5. **Involve the Manager:**
+   - Where necessary, involve the Management Supervisor.
+
+An Easy Way to Remember How to Handle Conflict:
+
+- **H** - **Hold Back:** Practice restraint in your response.
+- **E** - **Empathise:** Show understanding and compassion.
+- **L** - **Listen:** Actively listen to the other person's concerns.
+- **P** - **Provide a Solution:** Work towards finding a resolution.
+   
 //TODO: STAR
 
 团队内部出现相悖的观点，可能要体现你的open观点，和其他developer，测试，PO 协商，seek better solution.同时也要相信体现自己的technical confidence，可以make a suitable decision.
