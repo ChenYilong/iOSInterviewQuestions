@@ -37,6 +37,10 @@ So I think feedback and communication are the critical points to dealing with th
 
 //TODO: STAR
 
+//*one more thing*
+
+<!--- 
+
 朋友点评如下:
 
 不要complain 同事 , 说啥也不能说同事，尤其在面试。
@@ -46,6 +50,8 @@ iOS challenge 就说OC转swift UI，
 现在大部分公司都在推swift和swift UI，这是核心技能，如果你有类似OC-》swift和uikit-》swift UI的经验，就是bonus.
 
 我不建议你写这种会影响到performance的东西。 你可以就直说是语言，然后一定要however，你说我觉得我基本沟通工作都是没问题的，但是毕竟英文有些还是有文化背景的，例如give a shit，这是一个褒义词，但是我第一次看到的时候我以为是贬义词。Anyway，这都不是事，我觉得我呆1-2个月，就很容易融入了，毕竟我是一个fast learner.
+
+-->
 
 ## Have you ever made a mistake?
 
@@ -200,9 +206,7 @@ An Easy Way to Remember How to Handle Conflict:
 
 这个题，其实更像是你在敏捷里的角色，planning和refinement都是讨价还价，各抒己见的菜市场，但是一定敲定了，那么sprint的execute就是要尽可能的achieve goal
 
-## Do you handle it when there's a conflict among team members?
-
-How do you handle conflict between team members? What do you do?
+## How do you handle conflict between team members? What do you do?
 
 As we worked together daily, a conflict was quite brutal to avoid. We have to face it directly. I want to share my experience. During my last job, we worked very hard and had a very tight deadline. We had to deal with multiple projects. Sometimes, we had to ask our colleagues for help because we all had very tight deadlines. In this situation, we had some conflicts because of disturbance.
 
@@ -219,6 +223,13 @@ Furthermore, I'd like to share my viewpoint with my colleagues to tell them that
 I want to ask my manager for help if I can't solve this conflict. I think maybe my manager can have a clear view of the conflict.
 
 The spectators see the chess game better than the players.
+
+Using the ‘questioning approach’ when seeing others working wrong to get buy-in encourages engagement and builds relationships. 
+
+The best way to acknowledge a workmate’s actions is to say, “Well done, keep it up, thank you” when you see someone working right.
+
+Positive conversations promote a kind culture at work. It allows us to acknowledge the right behaviors, not just the wrong ones.
+
 
 ## What's the biggest challenge you've already faced as an engineer?
 
@@ -443,11 +454,17 @@ Assume everyone knows what they’re supposed to be working on. Clarify team mem
 
 ![behavioral-question](assets/behavioral-question.jpg)
 
+Certainly! Tracking the progress of a junior developer, especially when they're new to a project and in a learning situation, requires a thoughtful and well-structured approach. 
 
+The best way to help others act right is to Always role model the right actions on site. Junior developers find it easier to act right when the boss, senior ones, and role models demonstrate the right actions for others to follow. 
 
-Certainly! Tracking the progress of a junior developer, especially when they're new to a project and in a learning situation, requires a thoughtful and well-structured approach. Here's how I might go about it as a senior developer:
+What can you do to further engage positively with your mates on site? Talk to them about the right behavior you have seen others do.
 
-1. **Set Clear Expectations and Goals**: It's essential to begin by setting clear expectations and specific, measurable, achievable, relevant, and time-bound (SMART) goals for the junior developer. Understanding what's expected of them can ease their transition into the project.
+The main benefit of speaking up when you don’t feel on track is that it can save you or others from getting out of track.
+
+Here's how I might go about it as a senior developer:
+
+1. **Set Clear Expectations, Role models and Goals**: It's essential to begin by setting clear expectations and specific, measurable, achievable, relevant, and time-bound (SMART) goals for the junior developer. Understanding what's expected of them can ease their transition into the project. 
 
 2. **Provide Adequate Resources**: Ensure that they have all the resources, tools, and documentation they need to understand the project and their role within it.
 
