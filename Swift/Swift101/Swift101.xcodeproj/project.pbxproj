@@ -18,6 +18,7 @@
 		9AD289D32A7307C800A24D55 /* Swift101UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD289D22A7307C800A24D55 /* Swift101UITestsLaunchTests.swift */; };
 		9AD289E12A73083C00A24D55 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD289DF2A73083B00A24D55 /* BaseCell.swift */; };
 		9AD289E22A73083C00A24D55 /* ClassIdenfifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD289E02A73083B00A24D55 /* ClassIdenfifiable.swift */; };
+		9AE13BAB2B8ABA6200DEE46D /* SwiftPlaygroundTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE13BAA2B8ABA6200DEE46D /* SwiftPlaygroundTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		9AD289D22A7307C800A24D55 /* Swift101UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swift101UITestsLaunchTests.swift; sourceTree = "<group>"; };
 		9AD289DF2A73083B00A24D55 /* BaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		9AD289E02A73083B00A24D55 /* ClassIdenfifiable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassIdenfifiable.swift; sourceTree = "<group>"; };
+		9AE13BAA2B8ABA6200DEE46D /* SwiftPlaygroundTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftPlaygroundTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				9AD289C62A7307C800A24D55 /* Swift101Tests.swift */,
+				9AE13BAA2B8ABA6200DEE46D /* SwiftPlaygroundTest.swift */,
 			);
 			path = Swift101Tests;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AE13BAB2B8ABA6200DEE46D /* SwiftPlaygroundTest.swift in Sources */,
 				9AD289C72A7307C800A24D55 /* Swift101Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
