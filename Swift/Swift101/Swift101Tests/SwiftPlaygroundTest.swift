@@ -48,5 +48,39 @@ final class SwiftPlaygroundTest: XCTestCase {
         print("AudioSample min \(AudioSample.min), AudioSample max \(AudioSample.max), this AudioSample is \(sample)")
     }
     
+    func testTuple() {
+        let error = (1, "No Autherity")
+        print("error is \(error)")
+        print("error code is \(error.0)")
+        print("error msg is \(error.1)")
+        
+        let notExistError = (errorCode: 1, errorMessage: "not exist")
+        print("error is \(notExistError)")
+        print("error code is \(notExistError.errorCode)")
+        print("error msg is \(notExistError.errorMessage)")
+        
+        var codeEditableError = (errorCode: 2, errorMessage: "not exist")
+        codeEditableError.errorCode = 404
+        print("error is \(codeEditableError)")
+        print("error code is \(codeEditableError.errorCode)")
+        print("error msg is \(codeEditableError.errorMessage)")
+        
+        
+        var msgEditableError: (errorCode: Int, errorMessage: Any) = (errorCode: 2, errorMessage: "not exist")
+        msgEditableError.errorMessage = 404
+        print("error is \(msgEditableError)")
+        print("error code is \(msgEditableError.errorCode)")
+        print("error msg is \(msgEditableError.errorMessage)")
+        
+        func writeFile(content: String) -> (errorCode: Int, errorMsg: String) {
+            return (1, "not exist")
+        }
+        
+        let funcReturnError = writeFile(content: "onlyForTest")
+
+        print("🔴 Swift Class Name：\((#file as NSString).lastPathComponent) func Name：\(#function)（at \(#line) line）, Q: what the funcReturnError is? A：\(funcReturnError)")
+
+        
+    }
     
 }
