@@ -39,9 +39,8 @@ final class SwiftPlaygroundTest: XCTestCase {
     //    }
     
     func testBasicDataTypes() {
-        let a = 8
-        let b: UInt8 = 240
-        print("uint8 min \(UInt8.min), UInt8 max \(UInt8.max), this Unit8 is \(b)")
+        let a: UInt8 = 240
+        print("uint8 min \(UInt8.min), UInt8 max \(UInt8.max), this Unit8 is \(a)")
         
         typealias AudioSample = UInt16
         let sample: AudioSample = 8
@@ -113,7 +112,71 @@ final class SwiftPlaygroundTest: XCTestCase {
             let count = actualStrOptionalWrapped.count
             print(" Swift Class Name：\((#file as NSString).lastPathComponent) func Name：\(#function)（at \(#line) line）, Q: what the count is? A：\(count)")
         }
+    }
+    
+    func testStr() {
+        var emptyStr = ""
+        if emptyStr.isEmpty {
+            print("emptyStr is empty")
+        }
         
+        emptyStr = "123"
+        emptyStr = String()
+        if emptyStr.isEmpty {
+            print("emptyStr is empty")
+        }
         
+        var numbers = """
+1
+2
+3
+4
+5
+"""
+        print("🔴 Swift Class Name：\((#file as NSString).lastPathComponent) func Name：\(#function)（at \(#line) line）, Q: what the numbers is? A：\(numbers)")
+
+        numbers = """
+        
+1
+2
+3
+4
+5
+"""
+        print("🔴 Swift Class Name：\((#file as NSString).lastPathComponent) func Name：\(#function)（at \(#line) line）, Q: what the numbers is? A：\(numbers)")
+
+        
+        numbers = """
+        
+1\
+2\
+3
+4
+5
+"""
+        print("🔴 Swift Class Name：\((#file as NSString).lastPathComponent) func Name：\(#function)（at \(#line) line）, Q: what the numbers is? A：\(numbers)")
+
+        numbers = """
+        1
+        2
+            3
+        4
+        5
+        """
+        print("🔴 Swift Class Name：\((#file as NSString).lastPathComponent) func Name：\(#function)（at \(#line) line）, Q: what the numbers is? A：\(numbers)")
+
+        
+        var strMutiLine = "\n1\n2\n3"
+        print("🔴 Swift Class Name：\((#file as NSString).lastPathComponent) func Name：\(#function)（at \(#line) line）, Q: what the strMutiLine is? A：\(strMutiLine)")
+
+        strMutiLine = #"\n1\n2\n3"#
+        print("🔴 Swift Class Name：\((#file as NSString).lastPathComponent) func Name：\(#function)（at \(#line) line）, Q: what the strMutiLine is? A：\(strMutiLine)")
+        strMutiLine = ##"\n1\"#n2\n3"##
+
+        print("🔴 Swift Class Name：\((#file as NSString).lastPathComponent) func Name：\(#function)（at \(#line) line）, Q: what the strMutiLine is? A：\(strMutiLine)")
+        strMutiLine = ##"\n1\"#n2\##n3"##
+        print("🔴 Swift Class Name：\((#file as NSString).lastPathComponent) func Name：\(#function)（at \(#line) line）, Q: what the strMutiLine is? A：\(strMutiLine)")
+        strMutiLine = ##"\n1\"#n2\#n3"##
+        print("🔴 Swift Class Name：\((#file as NSString).lastPathComponent) func Name：\(#function)（at \(#line) line）, Q: what the strMutiLine is? A：\(strMutiLine)")
     }
 }
