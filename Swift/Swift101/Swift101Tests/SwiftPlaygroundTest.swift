@@ -77,10 +77,43 @@ final class SwiftPlaygroundTest: XCTestCase {
         }
         
         let funcReturnError = writeFile(content: "onlyForTest")
-
-        print("🔴 Swift Class Name：\((#file as NSString).lastPathComponent) func Name：\(#function)（at \(#line) line）, Q: what the funcReturnError is? A：\(funcReturnError)")
-
         
+        print("🔴 Swift Class Name：\((#file as NSString).lastPathComponent) func Name：\(#function)（at \(#line) line）, Q: what the funcReturnError is? A：\(funcReturnError)")
     }
     
+    func testOptional() {
+        let str: String? = "123"
+        //        let count = str.count //🔴 error: Value of optional type 'String?' must be unwrapped to refer to member 'count' of wrapped base type 'String'
+        let count = str!.count
+        print(" Swift Class Name：\((#file as NSString).lastPathComponent) func Name：\(#function)（at \(#line) line）, Q: what the count is? A：\(count)")
+        
+        if str != nil {
+            let count = str!.count
+            print(" Swift Class Name：\((#file as NSString).lastPathComponent) func Name：\(#function)（at \(#line) line）, Q: what the count is? A：\(count)")
+            
+        }
+        
+        if let actual = str {
+            let count = actual.count
+            print(" Swift Class Name：\((#file as NSString).lastPathComponent) func Name：\(#function)（at \(#line) line）, Q: what the count is? A：\(count)")
+        }
+        
+        let strSecond: String? = nil
+        //        let countSecond = strSecond!.count // 🔴Crash:         Thread 1: Fatal error: Unexpectedly found nil while unwrapping an Optional value
+        //        print(" Swift Class Name：\((#file as NSString).lastPathComponent) func Name：\(#function)（at \(#line) line）, Q: what the countSecond is? A：\(countSecond)")
+        
+        //try to use optional<wrapped> instead of ?
+        
+        let strOptionalWrapped: Optional<String> = "123"
+        //unsafelyUnwrapped is used to force unwrapping of an optional value, assuming that the optional value is not nil. if it is nil, then the program will crash. like:    🔴 crash when    ```let strOptionalWrapped: Optional<String> = nil```
+        let countForStrOptionalWrapped = strOptionalWrapped.unsafelyUnwrapped.count
+        print(" Swift Class Name：\((#file as NSString).lastPathComponent) func Name：\(#function)（at \(#line) line）, Q: what the countForStrOptionalWrapped is? A：\(countForStrOptionalWrapped)")
+        
+        if let actualStrOptionalWrapped = strOptionalWrapped {
+            let count = actualStrOptionalWrapped.count
+            print(" Swift Class Name：\((#file as NSString).lastPathComponent) func Name：\(#function)（at \(#line) line）, Q: what the count is? A：\(count)")
+        }
+        
+        
+    }
 }
