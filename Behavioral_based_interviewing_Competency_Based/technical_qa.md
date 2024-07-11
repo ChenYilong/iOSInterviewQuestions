@@ -22,6 +22,88 @@
 ![12](../assets/solid/12.jpg)
 ![13](../assets/solid/13.jpg)
 
+
+ 
+
+### S – Single Responsibility Principle (SRP)
+
+**Concept**: A class should have only one reason to exist.
+
+**Application**: Each class in your application should have only one specific job or responsibility. For instance, if you have a `UserHandler` class, its responsibility should be strictly limited to user-related operations, such as creating, updating, or deleting users, and not also include network functionality, for example.
+
+In Swift or SwiftUI, adhering to the SRP means ensuring that each class or module is focused on a single task. This approach simplifies maintenance and reduces the likelihood of errors. For example, you might have:
+
+- **A class for handling network requests**: This class is responsible solely for network communication. It could include methods for sending HTTP requests, handling responses, and managing errors related to networking.
+  
+  ```swift
+  class NetworkManager {
+      func fetchData(from url: URL, completion: @escaping (Data?, Error?) -> Void) {
+          // Implementation for network request
+      }
+  }
+  ```
+
+- **A class for parsing data**: This class handles the parsing of raw data into usable objects or structures. It does not concern itself with how the data was obtained.
+
+  ```swift
+  class DataParser {
+      func parse(data: Data) -> ParsedObject? {
+          // Implementation for parsing data
+      }
+  }
+  ```
+
+- **A class for managing the user interface**: This class or module focuses on rendering the UI and handling user interactions.
+
+  ```swift
+  struct ContentView: View {
+      var body: some View {
+          // Implementation for user interface
+      }
+  }
+  ```
+
+By keeping these responsibilities separate, each class or module remains clean, focused, and easy to understand. This separation of concerns aligns with the Single Responsibility Principle and promotes a more modular and maintainable codebase.
+
+**Example in Swift**:
+
+Consider the following Swift classes and their responsibilities:
+
+```swift
+class NetworkManager {
+    func fetchUserData(completion: @escaping (Data?, Error?) -> Void) {
+        // Code to fetch user data from network
+    }
+}
+
+class UserParser {
+    func parseUser(data: Data) -> User? {
+        // Code to parse data into User object
+    }
+}
+
+struct UserView: View {
+    var user: User
+    
+    var body: some View {
+        VStack {
+            Text(user.name)
+            Text(user.email)
+        }
+    }
+}
+```
+
+In this example:
+- `NetworkManager` is responsible only for fetching data from the network.
+- `UserParser` is responsible only for parsing that data into a `User` object.
+- `UserView` is responsible only for displaying the user information in the UI.
+
+Following SRP, these classes and structs are easier to test, debug, and maintain because each has a single responsibility.
+
+In summary, the Single Responsibility Principle encourages developers to create classes and modules that focus on one particular task or responsibility, leading to a more organized and manageable code structure.
+ 
+
 ### STAR answer format
 STAR stands for: 
 
