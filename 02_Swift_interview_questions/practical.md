@@ -92,13 +92,21 @@ Swift面试题共分为两篇:
 
 https://www.hackingwithswift.com/quick-start/swiftui/whats-the-difference-between-observedobject-state-and-environmentobject
 
-我写的有点老了，现在iOS17 是Observation框架，性能更好了，不过写法不同了. 等忙完这段时间, 我完善下. 先看下iOS17 以前的写法. [SwiftUI Data Flow 2023]( https://troz.net/post/2023/swiftui-data-flow-2023/ "") 
+iOS17 以后 是Observation框架，性能更好了，不过写法不同了.  [SwiftUI Data Flow 2023]( https://troz.net/post/2023/swiftui-data-flow-2023/ "") 
 
 
 [Answer from AI](https://chat.openai.com/share/cd46dff5-9d7e-4990-8fe9-595e2aa65080)
 
-![](../assets/Property_Wrapper_in_SwiftUI.jpg)
+![](../assets/Property_Wrapper_in_SwiftUI/ios16_overview.png)
 
+![](../assets/Property_Wrapper_in_SwiftUI/ios17_overview.png)
+
+![](../assets/Property_Wrapper_in_SwiftUI/ios16_code.png)
+![](../assets/Property_Wrapper_in_SwiftUI/ios17_code.png)
+
+![](../assets/Property_Wrapper_in_SwiftUI/ios16_pros_cons.png)
+
+![](../assets/Property_Wrapper_in_SwiftUI/ios17_pros_cons.png)
 
 ![](../assets/16912073172453.jpg)
 
@@ -239,13 +247,16 @@ As for why one might prefer one pattern over the other, it often depends on spec
 
 What is the difference between clean and MVVM architecture?
 
-![](../assets/MVVM_Clean_SOLID/banner_en.jpg)
+![](../assets/MVVM_Clean_SOLID/banner_en.png)
 
-![](../assets/MVVM_Clean_SOLID/en.jpg)
+![](../assets/MVVM_Clean_SOLID/en.png)
 
-![](../assets/MVVM_Clean_SOLID/banner_cn.jpg)
+![](../assets/MVVM_Clean_SOLID/banner_cn.png)
 
-![](../assets/MVVM_Clean_SOLID/cn.jpg)
+![](../assets/MVVM_Clean_SOLID/cn.png)
+![](../assets/MVVM_Clean_SOLID/tca_onion_layering.png)
+![](../assets/MVVM_Clean_SOLID/tca_horizontal_layer.png)
+
 ## Clean MVVM 框架
 
 [https://github.com/kudoleh/iOS-Clean-Architecture-MVVM](https://github.com/kudoleh/iOS-Clean-Architecture-MVVM)
