@@ -84,6 +84,22 @@ Swift面试题共分为两篇:
 
 ![SwiftUI_and_Combine](../assets/SwiftUI_and_Combine.png)
 
+However, from iOS17 things about Combine change a lot.
+
+You should always consult the developers’ documentation to find out about the most recent documentation: https://developer.apple.com/documentation/swiftui/.
+
+The Combine framework with this new update is going to be substituted with the Observation framework, which extends State and Environment to replace StateObject and EnvironmentObject. The net effect is a huge simplification.
+
+You can introduce the new changes in your existing apps that use Combine incrementally, keeping the old approaches in place and substituting them as you progress; much of what you know already and is available in previous versions of SwiftUI will remain valid for quite a while. It normally takes a couple of years for the old approach to be completely replaced. But keep in mind that Combine is practically going to die eventually. And with Combine, the concept of Apple supporting reactive frameworks natively will also die.
+
+So, relying on reactive frameworks is probably going to be a bad idea for your architectural choices on Apple systems, as the evolution of the Apple operating system seems to be moving away from that concept.
+
+Another piece of big news just presented during WWDC2023 is the replacement of the Core Data framework with the new, simpler-to-use SwiftData framework for data persistence. SwiftData is compatible with Core Data to the point that it is possible to use both in the same app. Xcode is able to convert Core Data models into classes for use with SwiftData, so the conversion to the new framework is going to be rather simple. It still makes sense to use Core Data, as this transition will take about two years, and SwiftData is interoperable with Core Data.
+
+There is, however, going to be less and less reason to depend on third-party frameworks such as Realm.
+
+From a historical perspective, trying to innovate in front of Apple by introducing change means that you are going to spend quite a lot to keep your applications up to spec and maintain them. All technical engineering choices are economic choices, and trying to guess the future is part of the business.
+
 ## What’s the difference between SwiftUI and UIKit Lifecycle Methods?
 
 ![SwiftUI_and_Combine](../assets/SwiftUI_vs_UIKit_Lifecycle_Methods_Difference.jpg)
@@ -292,9 +308,9 @@ TCA 虽然是一种设计模式, 但也有一个非常流行的最佳实践库, 
 
 state，action本身内部内聚很高, 类似声明. 一旦类似delegate的action出去了. 单看一个模块就读不出完整逻辑了. 我觉得reducer做到了有所有的逻辑啊，delegate也只是一种effect而已.  跟其他的effect没有什么区别. 原来这个模块这条链路是这个意思.它问了Clean框架, 我说我听过, 没用过. 新西兰有很多移动端的架构就是Clean.
 
-![](../assets/tca_architecture_design_pattern/tca_architecture_design_pattern_qa.jpg)
+![](../assets/tca_architecture_design_pattern/tca_architecture_design_pattern_qa.png)
 
-![](../assets/tca_architecture_design_pattern/tca_architecture_design_pattern_en.jpg)
+![](../assets/tca_architecture_design_pattern/tca_architecture_design_pattern_en.png)
 
  [Composable Architecture]( https://zenn.dev/inamiy/books/3dd014a50f321040a047/viewer/cca752a1fe8700f9d0c0 "") 
  
@@ -502,6 +518,11 @@ Modern MVVM: https://www.vadimbulavin.com/modern-mvvm-ios-app-architecture-with-
 **Redux**:
 
 Redux: https://www.raywenderlich.com/22096649-getting-a-redux-vibe-into-swiftui
+![](../assets/redux_architecture_design_pattern/redux_architecture_design_pattern_QA.png)
+
+
+![](../assets/redux_architecture_design_pattern/redux_architecture_design_pattern_en.png)
+
 
 #### 2. Describe binding in MVVM.
 
