@@ -1112,7 +1112,12 @@ When using such services, you generally need to send the device token to your ow
 obtain | = have = 获得. 
 subsequent | = following = 随后的. 
 
+
+
 iOS 面试问题： 你能解释一下基于令牌的身份验证是如何工作的吗？如何在这种身份验证中，从应用程序接口获取一个令牌，并在随后的应用程序接口调用中使用它?
+
+token-based authentication == JWT.
+该问题主要是考察JWT工作原理.
 
 [Answer from AI](https://chat.openai.com/share/cd8cfa69-ab4c-4cf3-b45d-45884b52a72c)
 
