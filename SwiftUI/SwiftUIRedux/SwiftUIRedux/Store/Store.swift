@@ -6,40 +6,37 @@
 //
 
 import Foundation
-typealias Reducer = (_ state: State,_ action: Action) -> State
-struct State {
+typealias Reducer<State: ReduxState> = (_ state: State,_ action: Action) -> State
+
+protocol ReduxState { }
+
+struct AppState: ReduxState {
+    var counterState = CounterState()
+}
+
+struct CounterState: ReduxState {
     var counter: Int = 0
+    var movies = [String]()
 }
 
 protocol Action { }
 
 struct IncrementAction: Action { }
 struct DecrementAction: Action { }
+struct getMoviesAction: Action {
+    let moveis: [String]
+}
 
 struct addAction: Action {
     var value: Int
 }
-func reducer(_ state: State,_ action: Action) -> State {
-    var state = state
-    switch action {
-        case _ as IncrementAction:
-            state.counter += 1
-        case _ as DecrementAction:
-            state.counter -= 1
-        case let action as addAction:
-            state.counter += action.value
-        default:
-            break
-    }
-    
-    return state
-}
 
-class Store: ObservableObject {
-    var reducer: Reducer
-    @Published var state: State
+class Store<StoreState: ReduxState>: ObservableObject {
     
-    init(reducer:@escaping Reducer, state: State = State()) {
+    var reducer: Reducer<StoreState>
+    @Published var state: StoreState
+    
+    init(reducer:@escaping Reducer<StoreState>, state: StoreState) {
         self.state = state
         self.reducer = reducer
     }

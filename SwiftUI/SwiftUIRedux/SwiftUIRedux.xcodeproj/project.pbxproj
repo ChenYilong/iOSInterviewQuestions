@@ -15,6 +15,8 @@
 		9A970F4C2C435CED0043EC5E /* SwiftUIReduxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A970F4B2C435CED0043EC5E /* SwiftUIReduxUITests.swift */; };
 		9A970F4E2C435CED0043EC5E /* SwiftUIReduxUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A970F4D2C435CED0043EC5E /* SwiftUIReduxUITestsLaunchTests.swift */; };
 		9A970F5C2C435D170043EC5E /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A970F5B2C435D170043EC5E /* Store.swift */; };
+		9ADC410B2C43862600D8500A /* CounterReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADC410A2C43862600D8500A /* CounterReducer.swift */; };
+		9ADC410F2C4386A400D8500A /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADC410E2C4386A400D8500A /* AppReducer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +48,8 @@
 		9A970F4B2C435CED0043EC5E /* SwiftUIReduxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIReduxUITests.swift; sourceTree = "<group>"; };
 		9A970F4D2C435CED0043EC5E /* SwiftUIReduxUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIReduxUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		9A970F5B2C435D170043EC5E /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		9ADC410A2C43862600D8500A /* CounterReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CounterReducer.swift; sourceTree = "<group>"; };
+		9ADC410E2C4386A400D8500A /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,9 +137,19 @@
 		9A970F5A2C435D0B0043EC5E /* Store */ = {
 			isa = PBXGroup;
 			children = (
+				9ADC41092C43860400D8500A /* reducers */,
 				9A970F5B2C435D170043EC5E /* Store.swift */,
 			);
 			path = Store;
+			sourceTree = "<group>";
+		};
+		9ADC41092C43860400D8500A /* reducers */ = {
+			isa = PBXGroup;
+			children = (
+				9ADC410A2C43862600D8500A /* CounterReducer.swift */,
+				9ADC410E2C4386A400D8500A /* AppReducer.swift */,
+			);
+			path = reducers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,8 +283,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A970F5C2C435D170043EC5E /* Store.swift in Sources */,
+				9ADC410B2C43862600D8500A /* CounterReducer.swift in Sources */,
 				9A970F332C435CEB0043EC5E /* ContentView.swift in Sources */,
 				9A970F312C435CEB0043EC5E /* SwiftUIReduxApp.swift in Sources */,
+				9ADC410F2C4386A400D8500A /* AppReducer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
