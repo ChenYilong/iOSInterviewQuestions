@@ -10,10 +10,10 @@ import SwiftUI
 @main
 struct SwiftUIReduxApp: App {
     var body: some Scene {
-        let store = Store(reducer: appReducer, state: AppState())
+        let store = Store(reducer: appReducer, state: AppState(), minddlewares: [logMiddleware(), incrementMiddleware()])
         WindowGroup {
-//            ContentView().environmentObject(store)
-            AddTaskView().environmentObject(store)
+            ContentView().environmentObject(store)
+//            AddTaskView().environmentObject(store)
         }
     }
 }
