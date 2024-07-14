@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isPresented: Bool = false
     
     @EnvironmentObject var store: Store<AppState>
     
@@ -34,6 +35,7 @@ struct ContentView: View {
         let props = map(state: store.state.counterState)
         
         VStack {
+            Spacer()
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
@@ -56,8 +58,18 @@ struct ContentView: View {
             }) {
                 Text("Add 10")
             }
+            Spacer()
+            
+            Button(action: {
+//                store.dispatch(action: getMoviesAction(moveis: ["movie1", "movie2"]))
+                isPresented = true
+            }) {
+                Text("Add Tasks")
+            }
         }
-        .padding()
+        .padding().sheet(isPresented: $isPresented) {
+            Text("Add text view")
+        }
     }
 }
 

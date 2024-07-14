@@ -12,11 +12,16 @@ protocol ReduxState { }
 
 struct AppState: ReduxState {
     var counterState = CounterState()
+    var taskState = TaskState()
 }
 
 struct CounterState: ReduxState {
     var counter: Int = 0
     var movies = [String]()
+}
+
+struct TaskState: ReduxState {
+    var tasks: [Task] = [Task]()
 }
 
 protocol Action { }
@@ -29,6 +34,10 @@ struct getMoviesAction: Action {
 
 struct addAction: Action {
     var value: Int
+}
+
+struct AddTaskAction: Action {
+    var task: Task
 }
 
 class Store<StoreState: ReduxState>: ObservableObject {

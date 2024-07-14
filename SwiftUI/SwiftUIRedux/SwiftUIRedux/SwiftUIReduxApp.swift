@@ -12,7 +12,8 @@ struct SwiftUIReduxApp: App {
     var body: some Scene {
         let store = Store(reducer: appReducer, state: AppState())
         WindowGroup {
-            ContentView().environmentObject(store)
+//            ContentView().environmentObject(store)
+            AddTaskView().environmentObject(store)
         }
     }
 }
