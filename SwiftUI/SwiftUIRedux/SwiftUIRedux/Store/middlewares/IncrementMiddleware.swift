@@ -13,7 +13,7 @@ func incrementMiddleware() -> Middleware<AppState> {
             case _ as IncrementActionAsync:
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 dispatch(IncrementAction())
-                print("Increment")
+                print("dispatch IncrementActionAsync")
             }
         default:
             break

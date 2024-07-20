@@ -9,6 +9,6 @@ import Foundation
 
 func logMiddleware() -> Middleware<AppState> {
     return { state, action, dispatch in
-        print("Action: \(action)")
+        print("logMiddleware Action trigger: \(action)")
     }
 }

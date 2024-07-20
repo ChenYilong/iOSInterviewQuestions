@@ -21,16 +21,15 @@ struct ContentView: View {
     }
     
     private func map(state: CounterState) -> Props {
-        Props(counter: state.counter, onIncrement: {
-            store.dispatch(action: IncrementAction())
-        }, onDecrement: {
-            store.dispatch(action: DecrementAction())
-        }, onAdd: {
-            store.dispatch(action: addAction(value: $0))
-        }) {
-            store.dispatch(action: IncrementActionAsync())
-        }
+        return Props(
+            counter: state.counter,
+            onIncrement: { store.dispatch(action: IncrementAction()) },
+            onDecrement: { store.dispatch(action: DecrementAction()) },
+            onAdd: { value in store.dispatch(action: addAction(value: value)) },
+            onIncrementAsync: { store.dispatch(action: IncrementActionAsync()) }
+        )
     }
+    
     
     var body: some View {
         
@@ -83,6 +82,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
+//        let store = Store(reducer: appReducer, state: AppState(), middlewares: [logMiddleware(), incrementMiddleware()])
         let store = Store(reducer: counterReducer, state: CounterState())
         ContentView().environmentObject(store)
     }
