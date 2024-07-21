@@ -63,9 +63,11 @@ class Store<StoreState: ReduxState>: ObservableObject {
     func dispatch(action: Action) {
         DispatchQueue.main.async {
             self.state = self.reducer(self.state, action)
+            print("reducer update state")
         }
         
         middlewares.forEach { middleware in
+            print("middlewares.forEach")
             middleware(state, action, self.dispatch)
         }
     }

@@ -517,12 +517,17 @@ Modern MVVM: https://www.vadimbulavin.com/modern-mvvm-ios-app-architecture-with-
 
 **Redux**:
 
+
+Please look at the demo named SwiftUIRedux in this repository to learn more about redux with SwiftUI.
+ 
 Redux: https://www.raywenderlich.com/22096649-getting-a-redux-vibe-into-swiftui
 ![](../assets/redux_architecture_design_pattern/redux_architecture_design_pattern_QA.png)
 
 
 ![](../assets/redux_architecture_design_pattern/redux_architecture_design_pattern_en.png)
 
+![](../assets/redux_architecture_design_pattern/redux_architecture_design_pattern_copy1.png)
+![](../assets/redux_architecture_design_pattern/redux_architecture_design_pattern_copy2.png)
 
 #### 2. Describe binding in MVVM.
 
