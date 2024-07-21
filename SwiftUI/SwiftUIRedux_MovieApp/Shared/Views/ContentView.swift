@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     @EnvironmentObject var store: Store<AppState>
-    
+    @State private var searchText = ""
     struct Props {
         let movies: [Movie]
         let onSearch: (String) -> Void
@@ -27,17 +27,16 @@ struct ContentView: View {
         let props = map(state: store.state, dispatch: store.dispatch)
         
         VStack {
+            TextField("search", text: $searchText, onEditingChanged: { _ in }, onCommit: {
+                props.onSearch(searchText)
+            }).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
+            
             List(props.movies, id: \.imdbId) { movie in
                 MovieCell(movie: movie)
             }
-            
-            .onAppear(perform: {
-                props.onSearch("Batman")
-            })
-            
-        }.navigationTitle("Movies").embedInNavigationView()
-        
-        
+        }
+        .navigationTitle("Movies")
+        .embedInNavigationView()
     }
 }
 
