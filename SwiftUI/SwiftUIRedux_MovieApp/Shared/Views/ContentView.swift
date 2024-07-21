@@ -13,12 +13,12 @@ struct ContentView: View {
     
     struct Props {
         let movies: [Movie]
-        let onMoviesFetch: () -> Void
+        let onSearch: (String) -> Void
     }
     
     func map(state: AppState, dispatch: @escaping Dispatcher) -> Props {
-        Props(movies: state.moviesState.movies, onMoviesFetch: {
-            dispatch(FetchMoviesAction())
+        Props(movies: state.moviesState.movies, onSearch: { search in
+            dispatch(FetchMoviesAction(search: search))
         })
     }
     
@@ -28,15 +28,11 @@ struct ContentView: View {
         
         VStack {
             List(props.movies, id: \.imdbId) { movie in
-                HStack {
-                    URLImage(url: movie.poster)
-                        .frame(width: 100, height: 100)
-                    Text(movie.title)
-                }
+                MovieCell(movie: movie)
             }
             
             .onAppear(perform: {
-                props.onMoviesFetch()
+                props.onSearch("Batman")
             })
             
         }.navigationTitle("Movies").embedInNavigationView()
@@ -51,5 +47,17 @@ struct ContentView_Previews: PreviewProvider {
         let store = Store(reducer: appReducer, state: AppState(),
                           middlewares: [moviesMiddleware()])
         return ContentView().environmentObject(store)
+    }
+}
+
+struct MovieCell: View {
+    let movie: Movie
+    var body: some View {
+        HStack {
+            URLImage(url: movie.poster)
+                .frame(width: 100, height: 100)
+                .cornerRadius(10)
+            Text(movie.title)
+        }
     }
 }

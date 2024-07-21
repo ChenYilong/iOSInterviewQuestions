@@ -35,6 +35,8 @@
 		9A11191F2C4D018A005C31F4 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A11191D2C4D018A005C31F4 /* String+Extensions.swift */; };
 		9A1119212C4D04EF005C31F4 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1119202C4D04EF005C31F4 /* RatingView.swift */; };
 		9A1119222C4D04EF005C31F4 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1119202C4D04EF005C31F4 /* RatingView.swift */; };
+		9A1119272C4D1156005C31F4 /* MoviesMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1119262C4D1156005C31F4 /* MoviesMiddleware.swift */; };
+		9A1119282C4D1156005C31F4 /* MoviesMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A1119262C4D1156005C31F4 /* MoviesMiddleware.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +59,7 @@
 		34D2F6F3251150DC00117401 /* AppReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
 		9A11191D2C4D018A005C31F4 /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		9A1119202C4D04EF005C31F4 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		9A1119262C4D1156005C31F4 /* MoviesMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesMiddleware.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +205,7 @@
 		9A1119232C4D0F3A005C31F4 /* Middlewares */ = {
 			isa = PBXGroup;
 			children = (
+				9A1119262C4D1156005C31F4 /* MoviesMiddleware.swift */,
 			);
 			path = Middlewares;
 			sourceTree = "<group>";
@@ -250,7 +254,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1420;
 				TargetAttributes = {
 					342978C6250FEC1500F20610 = {
 						CreatedOnToolsVersion = 12.0;
@@ -303,6 +307,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A1119272C4D1156005C31F4 /* MoviesMiddleware.swift in Sources */,
 				340AF8242514034700D0E6B7 /* ImageLoader.swift in Sources */,
 				34111D5D250FFE8C009064B8 /* Store.swift in Sources */,
 				343CB8BB25193AF4008E9A7B /* View+Extensions.swift in Sources */,
@@ -323,6 +328,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A1119282C4D1156005C31F4 /* MoviesMiddleware.swift in Sources */,
 				340AF8252514034700D0E6B7 /* ImageLoader.swift in Sources */,
 				34111D5E250FFE8C009064B8 /* Store.swift in Sources */,
 				343CB8BC25193AF4008E9A7B /* View+Extensions.swift in Sources */,
@@ -376,6 +382,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -435,6 +442,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -504,8 +512,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = B2Q8EGNCQA;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -528,8 +538,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = macOS/macOS.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = B2Q8EGNCQA;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;

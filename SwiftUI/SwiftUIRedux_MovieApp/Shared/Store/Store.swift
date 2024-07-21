@@ -12,32 +12,6 @@ typealias Dispatcher = (Action) -> Void
 typealias Reducer<State: ReduxState> = (_ state: State, _ action: Action) -> State
 typealias Middleware<StoreState: ReduxState> = (StoreState, Action, @escaping Dispatcher) -> Void
 
-// Middlewares
-func moviesMiddleware() -> Middleware<AppState> {
-    
-    return { state, action, dispatch in
-        
-        switch action {
-            case _ as FetchMoviesAction:
-                Webservice().getAllMovies(url: Constants.Url.moviesURL) { result in
-                    
-                    switch result {
-                        case .success(let movies):
-                            print(movies)
-                            dispatch(SetMoviesAction(movies: movies))
-                        case .failure(let error):
-                            print(error.localizedDescription)
-                    }
-                }
-            default:
-                break
-        }
-        
-    }
-    
-}
-
-
 protocol ReduxState { }
 
 struct AppState: ReduxState {
@@ -51,6 +25,7 @@ struct MoviesState: ReduxState {
 protocol Action { }
 
 struct FetchMoviesAction: Action {
+    let search: String
 }
 
 struct SetMoviesAction: Action {
