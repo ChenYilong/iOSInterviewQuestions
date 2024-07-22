@@ -14,6 +14,8 @@ func moviesReducer(state: MoviesState, action: Action) -> MoviesState {
     switch action {
         case let action as SetMoviesAction:
             state.movies = action.movies
+        case let action as SetMovieDetailAction:
+            state.selectedMovieDetail = action.movieDetail
         default:
             break 
     }

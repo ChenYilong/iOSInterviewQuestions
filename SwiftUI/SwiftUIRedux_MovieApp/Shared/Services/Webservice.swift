@@ -11,9 +11,40 @@ enum NetworkError: Error {
     case badUrl
     case decodingError
     case noData
+    case networkError(Error)
 }
 
 class Webservice {
+    func getMovieDetailsById(id: String, completion: @escaping (Result<MovieDetail?, NetworkError>) -> Void) {
+        
+        let url = URL(string: Constants.Url.urlForMovieDetailsByImdbId(id))
+        
+        guard let movieUrl = url else {
+            completion(.failure(.badUrl))
+            return
+        }
+        
+        URLSession.shared.dataTask(with: movieUrl) { data, _, error in
+            
+            if let error = error {
+                completion(.failure(.networkError(error)))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.noData))
+                return
+            }
+            
+            do {
+                let movieDetail = try JSONDecoder().decode(MovieDetail.self, from: data)
+                completion(.success(movieDetail))
+            } catch {
+                completion(.failure(.decodingError))
+            }
+            
+        }.resume()
+    }
     
     func getMoviesBySearch(search: String, completion: @escaping (Result<[Movie]?, NetworkError>) -> Void) {
         
@@ -27,18 +58,22 @@ class Webservice {
         
         URLSession.shared.dataTask(with: moviesUrl) { data, _, error in
             
-            guard let data = data, error == nil else {
+            if let error = error {
+                completion(.failure(.networkError(error)))
+                return
+            }
+            
+            guard let data = data else {
                 completion(.failure(.noData))
                 return
             }
             
-            guard let movieResponse = try? JSONDecoder().decode(MovieResponse.self, from: data)
-                  else {
+            do {
+                let movieResponse = try JSONDecoder().decode(MovieResponse.self, from: data)
+                completion(.success(movieResponse.movies))
+            } catch {
                 completion(.failure(.decodingError))
-                    return
             }
-            
-            completion(.success(movieResponse.movies))
             
         }.resume()
     }
@@ -52,21 +87,24 @@ class Webservice {
         
         URLSession.shared.dataTask(with: moviesUrl) { data, _, error in
             
-            guard let data = data, error == nil else {
+            if let error = error {
+                completion(.failure(.networkError(error)))
+                return
+            }
+            
+            guard let data = data else {
                 completion(.failure(.noData))
                 return
             }
             
-            guard let movieResponse = try? JSONDecoder().decode(MovieResponse.self, from: data)
-                  else {
+            do {
+                let movieResponse = try JSONDecoder().decode(MovieResponse.self, from: data)
+                completion(.success(movieResponse.movies))
+            } catch {
                 completion(.failure(.decodingError))
-                    return
             }
-            
-            completion(.success(movieResponse.movies))
             
         }.resume()
         
     }
-    
 }

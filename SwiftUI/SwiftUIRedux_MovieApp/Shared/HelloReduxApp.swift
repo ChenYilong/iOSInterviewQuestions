@@ -15,7 +15,8 @@ struct HelloReduxApp: App {
                           middlewares: [moviesMiddleware()])
         
         WindowGroup {
-            ContentView().environmentObject(store)
+            MovieDetailsView(movie:
+                                Movie(title: "Batman: The Killing Joke", imdbId: "tt4853102", poster: "https://m.media-amazon.com/images/M/MV5BMTdjZTliODYtNWExMi00NjQ1LWIzN2MtN2Q5NTg5NTk3NzliL2ltYWdlXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg")).environmentObject(store)
         }
     }
 }
