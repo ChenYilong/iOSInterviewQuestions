@@ -1,0 +1,767 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		76E1C79A2C155EE6006A98A5 /* RestRoomFinderApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7992C155EE6006A98A5 /* RestRoomFinderApp.swift */; };
+		76E1C79E2C155EE8006A98A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76E1C79D2C155EE8006A98A5 /* Assets.xcassets */; };
+		76E1C7A12C155EE8006A98A5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 76E1C7A02C155EE8006A98A5 /* Preview Assets.xcassets */; };
+		76E1C7AB2C155EE8006A98A5 /* RestRoomFinderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7AA2C155EE8006A98A5 /* RestRoomFinderTests.swift */; };
+		76E1C7B52C155EE8006A98A5 /* RestRoomFinderUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7B42C155EE8006A98A5 /* RestRoomFinderUITests.swift */; };
+		76E1C7B72C155EE8006A98A5 /* RestRoomFinderUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7B62C155EE8006A98A5 /* RestRoomFinderUITestsLaunchTests.swift */; };
+		76E1C7D92C156353006A98A5 /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7C32C156352006A98A5 /* String+Extensions.swift */; };
+		76E1C7DA2C156353006A98A5 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7C42C156352006A98A5 /* View+Extensions.swift */; };
+		76E1C7DC2C156353006A98A5 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7C82C156352006A98A5 /* HomeScreen.swift */; };
+		76E1C7DD2C156353006A98A5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7CA2C156352006A98A5 /* Constants.swift */; };
+		76E1C7E02C156353006A98A5 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7D02C156353006A98A5 /* Actions.swift */; };
+		76E1C7E22C156353006A98A5 /* AppReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7D42C156353006A98A5 /* AppReducer.swift */; };
+		76E1C7E42C156353006A98A5 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7D72C156353006A98A5 /* Store.swift */; };
+		76E1C7E72C15671E006A98A5 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7E62C15671E006A98A5 /* NetworkManager.swift */; };
+		76E1C7EA2C156792006A98A5 /* MainNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7E92C156792006A98A5 /* MainNetworkManager.swift */; };
+		76E1C7EC2C156867006A98A5 /* Restroom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7EB2C156867006A98A5 /* Restroom.swift */; };
+		76E1C7EE2C156968006A98A5 /* RestroomService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7ED2C156968006A98A5 /* RestroomService.swift */; };
+		76E1C7F12C1569EA006A98A5 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7F02C1569EA006A98A5 /* Logger.swift */; };
+		76E1C7F32C156C24006A98A5 /* RestroomReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7F22C156C24006A98A5 /* RestroomReducer.swift */; };
+		76E1C7F52C156D7D006A98A5 /* RestroomsMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7F42C156D7D006A98A5 /* RestroomsMiddleware.swift */; };
+		76E1C7F82C156F9A006A98A5 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7F72C156F9A006A98A5 /* LocationManager.swift */; };
+		76E1C7FE2C157630006A98A5 /* RestroomListRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7FD2C157630006A98A5 /* RestroomListRow.swift */; };
+		76E1C8002C1694E2006A98A5 /* ConsoleLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E1C7FF2C1694E2006A98A5 /* ConsoleLogger.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		76E1C7A72C155EE8006A98A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76E1C78E2C155EE6006A98A5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 76E1C7952C155EE6006A98A5;
+			remoteInfo = RestRoomFinder;
+		};
+		76E1C7B12C155EE8006A98A5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 76E1C78E2C155EE6006A98A5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 76E1C7952C155EE6006A98A5;
+			remoteInfo = RestRoomFinder;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		76E1C7962C155EE6006A98A5 /* RestRoomFinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RestRoomFinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		76E1C7992C155EE6006A98A5 /* RestRoomFinderApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestRoomFinderApp.swift; sourceTree = "<group>"; };
+		76E1C79D2C155EE8006A98A5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		76E1C7A02C155EE8006A98A5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		76E1C7A62C155EE8006A98A5 /* RestRoomFinderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RestRoomFinderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		76E1C7AA2C155EE8006A98A5 /* RestRoomFinderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestRoomFinderTests.swift; sourceTree = "<group>"; };
+		76E1C7B02C155EE8006A98A5 /* RestRoomFinderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RestRoomFinderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		76E1C7B42C155EE8006A98A5 /* RestRoomFinderUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestRoomFinderUITests.swift; sourceTree = "<group>"; };
+		76E1C7B62C155EE8006A98A5 /* RestRoomFinderUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestRoomFinderUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		76E1C7C32C156352006A98A5 /* String+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		76E1C7C42C156352006A98A5 /* View+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
+		76E1C7C82C156352006A98A5 /* HomeScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
+		76E1C7CA2C156352006A98A5 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		76E1C7D02C156353006A98A5 /* Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
+		76E1C7D42C156353006A98A5 /* AppReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppReducer.swift; sourceTree = "<group>"; };
+		76E1C7D72C156353006A98A5 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		76E1C7E52C1565B5006A98A5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		76E1C7E62C15671E006A98A5 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		76E1C7E92C156792006A98A5 /* MainNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNetworkManager.swift; sourceTree = "<group>"; };
+		76E1C7EB2C156867006A98A5 /* Restroom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restroom.swift; sourceTree = "<group>"; };
+		76E1C7ED2C156968006A98A5 /* RestroomService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestroomService.swift; sourceTree = "<group>"; };
+		76E1C7F02C1569EA006A98A5 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		76E1C7F22C156C24006A98A5 /* RestroomReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestroomReducer.swift; sourceTree = "<group>"; };
+		76E1C7F42C156D7D006A98A5 /* RestroomsMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestroomsMiddleware.swift; sourceTree = "<group>"; };
+		76E1C7F72C156F9A006A98A5 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		76E1C7FD2C157630006A98A5 /* RestroomListRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestroomListRow.swift; sourceTree = "<group>"; };
+		76E1C7FF2C1694E2006A98A5 /* ConsoleLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleLogger.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		76E1C7932C155EE6006A98A5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		76E1C7A32C155EE8006A98A5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		76E1C7AD2C155EE8006A98A5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		76E1C78D2C155EE6006A98A5 = {
+			isa = PBXGroup;
+			children = (
+				76E1C7982C155EE6006A98A5 /* RestRoomFinder */,
+				76E1C7A92C155EE8006A98A5 /* RestRoomFinderTests */,
+				76E1C7B32C155EE8006A98A5 /* RestRoomFinderUITests */,
+				76E1C7972C155EE6006A98A5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		76E1C7972C155EE6006A98A5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				76E1C7962C155EE6006A98A5 /* RestRoomFinder.app */,
+				76E1C7A62C155EE8006A98A5 /* RestRoomFinderTests.xctest */,
+				76E1C7B02C155EE8006A98A5 /* RestRoomFinderUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		76E1C7982C155EE6006A98A5 /* RestRoomFinder */ = {
+			isa = PBXGroup;
+			children = (
+				76E1C7E52C1565B5006A98A5 /* Info.plist */,
+				76E1C7C52C156352006A98A5 /* Extensions */,
+				76E1C7C72C156352006A98A5 /* Managers */,
+				76E1C7CF2C156353006A98A5 /* Models */,
+				76E1C7CD2C156353006A98A5 /* Services */,
+				76E1C7D82C156353006A98A5 /* Store */,
+				76E1C7CB2C156352006A98A5 /* Utils */,
+				76E1C7C92C156352006A98A5 /* Views */,
+				76E1C7992C155EE6006A98A5 /* RestRoomFinderApp.swift */,
+				76E1C79D2C155EE8006A98A5 /* Assets.xcassets */,
+				76E1C79F2C155EE8006A98A5 /* Preview Content */,
+			);
+			path = RestRoomFinder;
+			sourceTree = "<group>";
+		};
+		76E1C79F2C155EE8006A98A5 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				76E1C7A02C155EE8006A98A5 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		76E1C7A92C155EE8006A98A5 /* RestRoomFinderTests */ = {
+			isa = PBXGroup;
+			children = (
+				76E1C7AA2C155EE8006A98A5 /* RestRoomFinderTests.swift */,
+			);
+			path = RestRoomFinderTests;
+			sourceTree = "<group>";
+		};
+		76E1C7B32C155EE8006A98A5 /* RestRoomFinderUITests */ = {
+			isa = PBXGroup;
+			children = (
+				76E1C7B42C155EE8006A98A5 /* RestRoomFinderUITests.swift */,
+				76E1C7B62C155EE8006A98A5 /* RestRoomFinderUITestsLaunchTests.swift */,
+			);
+			path = RestRoomFinderUITests;
+			sourceTree = "<group>";
+		};
+		76E1C7C52C156352006A98A5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				76E1C7C32C156352006A98A5 /* String+Extensions.swift */,
+				76E1C7C42C156352006A98A5 /* View+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		76E1C7C72C156352006A98A5 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				76E1C7F62C156F92006A98A5 /* LocationManager */,
+				76E1C7EF2C1569E4006A98A5 /* Logger */,
+				76E1C7E82C156722006A98A5 /* Network Manager */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		76E1C7C92C156352006A98A5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				76E1C7C82C156352006A98A5 /* HomeScreen.swift */,
+				76E1C7FD2C157630006A98A5 /* RestroomListRow.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		76E1C7CB2C156352006A98A5 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				76E1C7CA2C156352006A98A5 /* Constants.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		76E1C7CD2C156353006A98A5 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				76E1C7ED2C156968006A98A5 /* RestroomService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		76E1C7CF2C156353006A98A5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				76E1C7EB2C156867006A98A5 /* Restroom.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		76E1C7D12C156353006A98A5 /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				76E1C7D02C156353006A98A5 /* Actions.swift */,
+			);
+			path = Actions;
+			sourceTree = "<group>";
+		};
+		76E1C7D32C156353006A98A5 /* Middlewares */ = {
+			isa = PBXGroup;
+			children = (
+				76E1C7F42C156D7D006A98A5 /* RestroomsMiddleware.swift */,
+			);
+			path = Middlewares;
+			sourceTree = "<group>";
+		};
+		76E1C7D62C156353006A98A5 /* Reducers */ = {
+			isa = PBXGroup;
+			children = (
+				76E1C7D42C156353006A98A5 /* AppReducer.swift */,
+				76E1C7F22C156C24006A98A5 /* RestroomReducer.swift */,
+			);
+			path = Reducers;
+			sourceTree = "<group>";
+		};
+		76E1C7D82C156353006A98A5 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				76E1C7D12C156353006A98A5 /* Actions */,
+				76E1C7D32C156353006A98A5 /* Middlewares */,
+				76E1C7D62C156353006A98A5 /* Reducers */,
+				76E1C7D72C156353006A98A5 /* Store.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		76E1C7E82C156722006A98A5 /* Network Manager */ = {
+			isa = PBXGroup;
+			children = (
+				76E1C7E62C15671E006A98A5 /* NetworkManager.swift */,
+				76E1C7E92C156792006A98A5 /* MainNetworkManager.swift */,
+			);
+			path = "Network Manager";
+			sourceTree = "<group>";
+		};
+		76E1C7EF2C1569E4006A98A5 /* Logger */ = {
+			isa = PBXGroup;
+			children = (
+				76E1C7F02C1569EA006A98A5 /* Logger.swift */,
+				76E1C7FF2C1694E2006A98A5 /* ConsoleLogger.swift */,
+			);
+			path = Logger;
+			sourceTree = "<group>";
+		};
+		76E1C7F62C156F92006A98A5 /* LocationManager */ = {
+			isa = PBXGroup;
+			children = (
+				76E1C7F72C156F9A006A98A5 /* LocationManager.swift */,
+			);
+			path = LocationManager;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		76E1C7952C155EE6006A98A5 /* RestRoomFinder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 76E1C7BA2C155EE8006A98A5 /* Build configuration list for PBXNativeTarget "RestRoomFinder" */;
+			buildPhases = (
+				76E1C7922C155EE6006A98A5 /* Sources */,
+				76E1C7932C155EE6006A98A5 /* Frameworks */,
+				76E1C7942C155EE6006A98A5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RestRoomFinder;
+			productName = RestRoomFinder;
+			productReference = 76E1C7962C155EE6006A98A5 /* RestRoomFinder.app */;
+			productType = "com.apple.product-type.application";
+		};
+		76E1C7A52C155EE8006A98A5 /* RestRoomFinderTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 76E1C7BD2C155EE8006A98A5 /* Build configuration list for PBXNativeTarget "RestRoomFinderTests" */;
+			buildPhases = (
+				76E1C7A22C155EE8006A98A5 /* Sources */,
+				76E1C7A32C155EE8006A98A5 /* Frameworks */,
+				76E1C7A42C155EE8006A98A5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				76E1C7A82C155EE8006A98A5 /* PBXTargetDependency */,
+			);
+			name = RestRoomFinderTests;
+			productName = RestRoomFinderTests;
+			productReference = 76E1C7A62C155EE8006A98A5 /* RestRoomFinderTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		76E1C7AF2C155EE8006A98A5 /* RestRoomFinderUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 76E1C7C02C155EE8006A98A5 /* Build configuration list for PBXNativeTarget "RestRoomFinderUITests" */;
+			buildPhases = (
+				76E1C7AC2C155EE8006A98A5 /* Sources */,
+				76E1C7AD2C155EE8006A98A5 /* Frameworks */,
+				76E1C7AE2C155EE8006A98A5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				76E1C7B22C155EE8006A98A5 /* PBXTargetDependency */,
+			);
+			name = RestRoomFinderUITests;
+			productName = RestRoomFinderUITests;
+			productReference = 76E1C7B02C155EE8006A98A5 /* RestRoomFinderUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		76E1C78E2C155EE6006A98A5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1540;
+				LastUpgradeCheck = 1540;
+				TargetAttributes = {
+					76E1C7952C155EE6006A98A5 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					76E1C7A52C155EE8006A98A5 = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = 76E1C7952C155EE6006A98A5;
+					};
+					76E1C7AF2C155EE8006A98A5 = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = 76E1C7952C155EE6006A98A5;
+					};
+				};
+			};
+			buildConfigurationList = 76E1C7912C155EE6006A98A5 /* Build configuration list for PBXProject "RestRoomFinder" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 76E1C78D2C155EE6006A98A5;
+			productRefGroup = 76E1C7972C155EE6006A98A5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				76E1C7952C155EE6006A98A5 /* RestRoomFinder */,
+				76E1C7A52C155EE8006A98A5 /* RestRoomFinderTests */,
+				76E1C7AF2C155EE8006A98A5 /* RestRoomFinderUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		76E1C7942C155EE6006A98A5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76E1C7A12C155EE8006A98A5 /* Preview Assets.xcassets in Resources */,
+				76E1C79E2C155EE8006A98A5 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		76E1C7A42C155EE8006A98A5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		76E1C7AE2C155EE8006A98A5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		76E1C7922C155EE6006A98A5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76E1C7D92C156353006A98A5 /* String+Extensions.swift in Sources */,
+				76E1C7E72C15671E006A98A5 /* NetworkManager.swift in Sources */,
+				76E1C7EC2C156867006A98A5 /* Restroom.swift in Sources */,
+				76E1C7DC2C156353006A98A5 /* HomeScreen.swift in Sources */,
+				76E1C7F82C156F9A006A98A5 /* LocationManager.swift in Sources */,
+				76E1C7E02C156353006A98A5 /* Actions.swift in Sources */,
+				76E1C7E42C156353006A98A5 /* Store.swift in Sources */,
+				76E1C7E22C156353006A98A5 /* AppReducer.swift in Sources */,
+				76E1C7F52C156D7D006A98A5 /* RestroomsMiddleware.swift in Sources */,
+				76E1C7FE2C157630006A98A5 /* RestroomListRow.swift in Sources */,
+				76E1C7DD2C156353006A98A5 /* Constants.swift in Sources */,
+				76E1C7EE2C156968006A98A5 /* RestroomService.swift in Sources */,
+				76E1C7F32C156C24006A98A5 /* RestroomReducer.swift in Sources */,
+				76E1C7F12C1569EA006A98A5 /* Logger.swift in Sources */,
+				76E1C7EA2C156792006A98A5 /* MainNetworkManager.swift in Sources */,
+				76E1C8002C1694E2006A98A5 /* ConsoleLogger.swift in Sources */,
+				76E1C7DA2C156353006A98A5 /* View+Extensions.swift in Sources */,
+				76E1C79A2C155EE6006A98A5 /* RestRoomFinderApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		76E1C7A22C155EE8006A98A5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76E1C7AB2C155EE8006A98A5 /* RestRoomFinderTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		76E1C7AC2C155EE8006A98A5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				76E1C7B52C155EE8006A98A5 /* RestRoomFinderUITests.swift in Sources */,
+				76E1C7B72C155EE8006A98A5 /* RestRoomFinderUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		76E1C7A82C155EE8006A98A5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 76E1C7952C155EE6006A98A5 /* RestRoomFinder */;
+			targetProxy = 76E1C7A72C155EE8006A98A5 /* PBXContainerItemProxy */;
+		};
+		76E1C7B22C155EE8006A98A5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 76E1C7952C155EE6006A98A5 /* RestRoomFinder */;
+			targetProxy = 76E1C7B12C155EE8006A98A5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		76E1C7B82C155EE8006A98A5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		76E1C7B92C155EE8006A98A5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		76E1C7BB2C155EE8006A98A5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"RestRoomFinder/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RestRoomFinder/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Restroom Finder requires access to your location.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Restroom Finder requires access to your location.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.takasurazeem.RestRoomFinder;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		76E1C7BC2C155EE8006A98A5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"RestRoomFinder/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RestRoomFinder/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Restroom Finder requires access to your location.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Restroom Finder requires access to your location.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.takasurazeem.RestRoomFinder;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		76E1C7BE2C155EE8006A98A5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.takasurazeem.RestRoomFinderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RestRoomFinder.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RestRoomFinder";
+			};
+			name = Debug;
+		};
+		76E1C7BF2C155EE8006A98A5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.takasurazeem.RestRoomFinderTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RestRoomFinder.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/RestRoomFinder";
+			};
+			name = Release;
+		};
+		76E1C7C12C155EE8006A98A5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.takasurazeem.RestRoomFinderUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = RestRoomFinder;
+			};
+			name = Debug;
+		};
+		76E1C7C22C155EE8006A98A5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.takasurazeem.RestRoomFinderUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = RestRoomFinder;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		76E1C7912C155EE6006A98A5 /* Build configuration list for PBXProject "RestRoomFinder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				76E1C7B82C155EE8006A98A5 /* Debug */,
+				76E1C7B92C155EE8006A98A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		76E1C7BA2C155EE8006A98A5 /* Build configuration list for PBXNativeTarget "RestRoomFinder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				76E1C7BB2C155EE8006A98A5 /* Debug */,
+				76E1C7BC2C155EE8006A98A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		76E1C7BD2C155EE8006A98A5 /* Build configuration list for PBXNativeTarget "RestRoomFinderTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				76E1C7BE2C155EE8006A98A5 /* Debug */,
+				76E1C7BF2C155EE8006A98A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		76E1C7C02C155EE8006A98A5 /* Build configuration list for PBXNativeTarget "RestRoomFinderUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				76E1C7C12C155EE8006A98A5 /* Debug */,
+				76E1C7C22C155EE8006A98A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 76E1C78E2C155EE6006A98A5 /* Project object */;
+}

@@ -32,8 +32,10 @@ struct ContentView: View {
             }).textFieldStyle(RoundedBorderTextFieldStyle()).padding()
             
             List(props.movies, id: \.imdbId) { movie in
-                MovieCell(movie: movie)
-            }
+                NavigationLink(destination: MovieDetailsView(movie: movie), label: {
+                    MovieCell(movie: movie)
+                })
+            }.listStyle(PlainListStyle())
         }
         .navigationTitle("Movies")
         .embedInNavigationView()

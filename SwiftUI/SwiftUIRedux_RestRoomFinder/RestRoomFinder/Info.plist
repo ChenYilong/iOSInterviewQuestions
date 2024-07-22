@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- 📍 Location -->
+    <key>NSLocationUsageDescription</key>
+    <string>$(PRODUCT_NAME) location use</string>
+
+    <!-- 📍 Location When In Use -->
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>$(PRODUCT_NAME) location use</string>
+
+    <!-- 📍 Location Always -->
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>$(PRODUCT_NAME) always uses location </string>
+        
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+</dict>
+</plist>
