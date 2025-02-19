@@ -120,7 +120,7 @@ Can you go into more detail about what you did With backend development?
 
 Generally speaking, I was working as an iOS developer. However, during my work, I have to perform as a backend developer to develop the API, which is short for an application programming interface.
 
-In addition, I’d like to introduce my primary role as an iPhone platform developer. I developed some trendy applications in the app store, like the Alibaba cloud application and some popular frameworks. I used to use some programming languages like react-native and objective-c, swift. But, I still want to go further.
+In addition, I’d like to introduce my primary role as an iPhone platform developer. I developed some trendy applications in the app store, like the XXX application and some popular frameworks. I used to use some programming languages like react-native and objective-c, swift. But, I still want to go further.
 
 ## What are your salary requirements?
 
@@ -146,7 +146,7 @@ If I had time, I'd like to post blogs on the internet, share my experience with 
 
 What is the first thing you will do after working in New Zealand as a software engineer? How are you going to settle well?
 
-Before I answer this question, I'd like to share my experience. I had been to New Zealand three years ago. When I married and had a honeymoon with my wife, this was my second time in New Zealand.
+Before I answer this question, I'd like to share my experience. I had been to New Zealand three years ago. When I xxx, this was my second time in New Zealand.
 
 So, how can I adapt to life in New Zealand?
 
