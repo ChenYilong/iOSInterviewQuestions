@@ -794,7 +794,7 @@ self.block = ^{
 ```Objective-C
 __weak __typeof(self) weakSelf = self;
 self.block = ^{
-    __strong typeof(self) strongSelf = weakSelf;
+    __strong typeof(weakSelf) strongSelf = weakSelf;
     if (!strongSelf) {
          return;
     }
