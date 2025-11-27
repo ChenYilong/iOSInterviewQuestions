@@ -80,3 +80,15 @@ struct ScoreView: View {
         Text("[@EnvironmentObject]Your Score in ScoreView: \(settings.score)")
     }
 }
+
+// ✅ OLD: PreviewProvider (still works)
+struct Previews_ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
+
+// ✅ NEW: #Preview macro (Xcode 15+, recommended)
+#Preview("Default State") {
+    ContentView()
+}
