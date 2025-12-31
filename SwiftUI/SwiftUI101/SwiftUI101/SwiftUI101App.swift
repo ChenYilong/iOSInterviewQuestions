@@ -19,6 +19,8 @@ struct MyApp: App {
 
 struct Previews_SwiftUI101App_Previews: PreviewProvider {
     static var previews: some View {
+        Image("iteatime").resizable()
+
         /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
     }
 }

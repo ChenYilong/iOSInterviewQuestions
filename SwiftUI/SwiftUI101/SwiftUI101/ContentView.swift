@@ -15,7 +15,8 @@ class UserSettings: ObservableObject {
 struct ContentView: View {
     @State private var name = "[@State]Anonymous"
     @StateObject private var settings = UserSettings()
-    
+    @State var showCreateView = false
+
     var body: some View {
         NavigationView {
             VStack {
@@ -26,19 +27,21 @@ struct ContentView: View {
                 
                 // StateObject usage
                 Text("[@StateObject]Your score is \(settings.score)")
-
+                
                 Button("[@State&@StateObject]Touch to Increase Score") {
                     settings.score += 1
                     name = "[@State]chenyilong" + String(settings.score)
                 }
-                // Navigate to ChildView, passing the settings
-                NavigationLink(destination: ChildView(settings: settings, name: $name)) {
+//                 Navigate to ChildView, passing the settings
+                NavigationLink(destination: ChildView(settings: settings, name: $name, showCreateView: $showCreateView)) {
                     Text("[@Binding]Go to ChildView View")
                 }
                 
-                // Display the ScoreView using @EnvironmentObject
-                ScoreView().background(Color.green)
                 
+                // Display the ScoreView using @EnvironmentObject
+                ScoreView()
+                
+
                 List {
                     //In SwiftUI, you can use a ForEach loop directly in your List.
                     //This is equivalent to numberOfRowsInSection and cellForRowAt indexPath in UIKit.
@@ -46,6 +49,15 @@ struct ContentView: View {
                         MyCustomCell(title: "Title \(index)", subtitle: "Subtitle \(index)", index: index)
                     }
                 }
+            }.toolbar {
+                Button(action: {
+                    showCreateView = true
+                }) {
+                    Label("Add Item", systemImage: "plus")
+                }
+            }
+            .sheet(isPresented: $showCreateView) {
+                ChildView(settings: settings, name: $name, showCreateView: $showCreateView)
             }
         }
         .environmentObject(settings) // Provide UserSettings as an environment object to the other views
@@ -55,8 +67,9 @@ struct ContentView: View {
 struct ChildView: View {
     @ObservedObject var settings: UserSettings
     @Binding var name: String
-    @Environment(\.presentationMode) private var presentationMode
-    
+    @Environment(\.dismiss) private var dismiss
+    @Binding var showCreateView: Bool
+
     var body: some View {
         VStack {
             Text("[@Binding]Score: \(settings.score)")
@@ -66,7 +79,8 @@ struct ChildView: View {
                 name = "[@Binding]chenyilong" + String(settings.score)
             }
             Button("Dismiss") {
-                self.presentationMode.wrappedValue.dismiss()
+                showCreateView = false
+  
             }
         }
     }
@@ -78,6 +92,11 @@ struct ScoreView: View {
     
     var body: some View {
         Text("[@EnvironmentObject]Your Score in ScoreView: \(settings.score)")
+            .font(.subheadline)
+            .padding()
+            .foregroundStyle(.red)
+            .background(RoundedRectangle(cornerRadius: 20).fill(Color.green))
+            .overlay(RoundedRectangle(cornerRadius: 20).stroke(.red, lineWidth: 2))
     }
 }
 
@@ -92,3 +111,4 @@ struct Previews_ContentView_Previews: PreviewProvider {
 #Preview("Default State") {
     ContentView()
 }
+
