@@ -880,7 +880,25 @@ Swift requires each object to have a type, which must be known during compilatio
 - **Value types**, which are typically described as a struct, enum, or tuple and allow each instance to maintain a separate copy of its data.
 - **Reference types**, where a single copy of the data is shared by all instances, and where the type is often expressed as a class.
 
+Collections are Value Types, as mentioned in [Value And Reference Types In Swift]( https://www.swift.org/documentation/articles/value-and-reference-types.html "") 
 
+Although in many languages, collections such as arrays and dictionaries are reference types, in Swift the standard collections Array, Dictionary and String are all value types.
+
+
+Can swift array contain value type?  
+A Swift array can contain value types. In fact, all of Swift's standard library collection types—including arrays, strings, and dictionaries—are themselves value types. 
+
+ ```Swift
+ let absences = [0, 2, 0, 4, 0, 3, 1, 0]
+ let midpoint = absences.count / 2
+
+let firstHalf = absences[..<midpoint]
+let secondHalf = absences[midpoint...]
+
+print(firstHalf)
+print(secondHalf)
+
+ ```
 
 ### **26. What is a Tuple in Swift?**
 

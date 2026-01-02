@@ -469,20 +469,20 @@ final class SwiftPlaygroundTest: XCTestCase {
             size = 10
             color = "Red"
         }
-//        init(brand: String, size: Int, color: String) {
-//            self.brand = brand
-//            self.size = size
-//            self.color = color
-//        }
+        //        init(brand: String, size: Int, color: String) {
+        //            self.brand = brand
+        //            self.size = size
+        //            self.color = color
+        //        }
     }
     
     func testInitializeWithShoe() {
-//        let shoe = Shoe(brand: "Nike", size: 10, color: "Red")
-//        print("shoe is \(shoe)")
+        //        let shoe = Shoe(brand: "Nike", size: 10, color: "Red")
+        //        print("shoe is \(shoe)")
         
         let shoe = Shoe(brand: "Nike")
         print("shoe is \(shoe)")
-
+        
     }
     
     class Products {
