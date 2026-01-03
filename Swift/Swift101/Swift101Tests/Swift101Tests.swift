@@ -181,15 +181,15 @@ final class Swift101Tests: XCTestCase {
         //the union of [3, 1, 2] with [4, 3, 2] is [2, 3, 1, 4]
         print("the union of \(a) with \(b) is \(a.union(b))")
         //the intersection of [2, 1, 3] with [3, 4, 2] is [2, 3]
-
+        
         print("the intersection of \(a) with \(b) is \(a.intersection(b))")
-//        the diff of [2, 1, 3] with [3, 4, 2] is [1]
-
+        //        the diff of [2, 1, 3] with [3, 4, 2] is [1]
+        
         print("the diff of \(a) with \(b) is \(a.subtracting(b))")
         //the diff of [3, 4, 2] with [2, 1, 3] is [4]
-
+        
         print("the diff of \(b) with \(a) is \(b.subtracting(a))")
-
+        
     }
     func testDict() {
         var foodCalories:[String: Int] = ["banana":105, "pizza": 285]
@@ -210,19 +210,136 @@ final class Swift101Tests: XCTestCase {
     }
     
     func testControlFlow() {
-
+        
         let minuteInterval = 10
         var minutes = 60
-//        while minutes < 60 {
-//            print("\(minutes) minutes have passed since 12:00 PM")
-//            minutes += minuteInterval
-//        }
+        //        while minutes < 60 {
+        //            print("\(minutes) minutes have passed since 12:00 PM")
+        //            minutes += minuteInterval
+        //        }
         
         
         for tickMark in stride(from: 0, through: minutes, by: minuteInterval)  {
             print(tickMark)
         }
     }
+    
+    /*!
+     * https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Range-Operators
+     */
+    func testRangeOperators() {
+        //Switch
+        func positionDescription( point: (x: Int, y: Int)) -> String {
+            switch point {
+            case (0,0):
+                "\(point) is at the origin"
+            case (_,0):
+                "\(point) is on the x-axis"
+            case (0,_):
+                "\(point) is on the y-axis"
+            case (0...,0...):"\(point) is in the first quadrant"
+            case (...0,0...):
+                "\(point) is in the second quadrant"
+            case (...0,...0):
+                "\(point) is in the third quadrant"
+            case (0...,...0):
+                "\(point) is in the fourth quadrant"
+            default:
+                "\(point) is at an unknown position"
+            }
+        }
+        /*!
+        * (x: 2, y: 2) is in the first quadrant
+       (x: -2, y: 2) is in the second quadrant
+       (x: 2, y: -2) is in the fourth quadrant
+       (x: -2, y: -2) is in the third quadrant
+       (x: 0, y: 0) is at the origin
+        */
+        print(positionDescription(point: (2,2)))
+        
+        print(positionDescription(point: (-2,2)))
+        
+        print(positionDescription(point: (2,-2)))
+        
+        print(positionDescription(point: (-2,-2)))
+        
+        print(positionDescription(point: (0,0)))
+        /*!
+         * play with Swift case statements and tuples. It looks like one of the cooler features of the language.
+         A value-binding tuple pattern with a where clause inside a switch case is a valid construct in Swift programming language.
+         * threshold 阈值
+         */
+        func onSineOrCosine(point:(x: Double, y: Double ), threshold: Double = 0.01) -> String {
+            let threshold = 0.001
+            switch point {
+            case let (x, y) where (y <= sin(x)+threshold || y >= sin(x)-threshold) || (y <= cos(x)+threshold || y >= cos(x)-threshold):
+                return "\(point) is on sine, cosine or both"
+            default:
+                return "\(point) is not on sine or cosine"
+            }
+        }
+
+        /*!(x: 5.0, y: -0.9589242746631385) is on sine, cosine or both
+         */
+        print(onSineOrCosine(point: (5, sin(5)), threshold: 0.1))
+        
+        func sum(numbers: Double...) -> Double {
+            var sum = 0.0
+            for number in numbers {
+                sum += number
+            }
+            return sum
+        }
+        print(sum(numbers: 1,2,3,4,5))
+        print(sum())
+        /*!
+         inout keyword.
+         *
+         NSValue *frameObj = [NSValue value:&frame withObjCType:@encode(CGRect)];
+         result = [NSJSONSerialization JSONObjectWithData:dataToBeParsed options:kNilOptions error:&error];
+         #define MyKVOContext(A) static void * const A = (void*)&A;
+         */
+        func swap(a: inout Int, b: inout Int) {
+            let temp = a
+            a = b
+            b = temp
+        }
+        var num1 = 1
+        var num2 = 2
+        print("num1 \(num1) num2 is \(num2)")
+        swap(a: &num1, b: &num2)
+        print("num1 \(num1) num2 is \(num2)")
+
+        
+
+
+
+    }
+    func testClosure() {
+        
+        func sumF(_ numbers: Double..., fn: (Double) -> Double) -> Double {
+            var sum: Double = 0
+            for number in numbers {
+                sum += fn(number)
+            }
+            return sum
+        }
+        
+        func square(_ x: Double) -> Double {
+            return x * x
+        }
+        //squre(1)+squre(2)+squre(3)
+        print(sumF(1,2,3, fn: square))
+        
+        //floor(1)+floor(2)+floor(3)
+        print(sumF(1,2,3, fn: floor))
+        
+        
+        print(sumF(1,2,3, fn: +))
+        print(sumF(1,2,3, fn: -))
+//        print(sumF(1,2,3, fn: *))
+    }
+    
     //arithmetic
     //compound operator 复合运算
     //an= a1+a2+a3+..+an , a2=a1+d

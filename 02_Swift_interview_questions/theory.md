@@ -892,6 +892,7 @@ A Swift array can contain value types. In fact, all of Swift's standard library 
  let absences = [0, 2, 0, 4, 0, 3, 1, 0]
  let midpoint = absences.count / 2
 
+//ArraySlice
 let firstHalf = absences[..<midpoint]
 let secondHalf = absences[midpoint...]
 
@@ -2170,6 +2171,14 @@ IndexingIterator，类似 IteratorProtocol；
 
 
 ## **闭包：**
+ 
+
+- Have you worked with closures in Swift?
+- When would you use a closure?
+- What are closures in Swift?
+- 请解释 Swift 中的闭包是什么，并描述一个闭包在实际编程中的应用场景？
+- Swift 的闭包（Closure） 和 OC 的 Block
+- 请解释 Swift 中的闭包是什么，并描述一个闭包在实际编程中的应用场景？
 
 ## Closure in Swift
 
