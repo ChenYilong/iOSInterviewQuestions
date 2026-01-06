@@ -363,33 +363,32 @@ class Test {
 ```
 
 ## 答案
+考察 swift 中 getter 懒加载的写法,具体解析如下:
 
-**初始**方案 **：**
+
+**初始**方案 **：** 其中 carsInDriving 不是函数, 是一个 Computed Property,等价写法如下
+
+体现了 Swift 的核心设计哲学之一
+
+If it looks like data, use a property.
+If it looks like behavior, use a function.
 
 ```swift
-struct Car {
-    var driving = false
-}
-
-class Test {
-    var cars: [Car] = []
-
-    var carsInDriving: [Car] {
-        cars.filter({$0.driving})
-    }
-
-    func loop() {
-        for car in carsInDriving {
-            // ...
-        }
+var carsInDriving: [Car] {
+    get {
+        return cars.filter { $0.driving }
     }
 }
+
 
 ```
+
+优化思路是将 Computed Property 改成“存储属性 + 更新逻辑”.
 
 在这段代码中，`carsInDriving` 的 getter 方法有 O(n) 的时间复杂度，其中 n 是 `cars` 数组的元素数量。这是因为我们需要检查数组中的每个元素以确定它是否在驾驶。然而，这个过滤操作只会在每次访问 `carsInDriving` 时执行一次，并且结果不会被存储，所以在同一个 `get` 调用中，复杂度是 O(n)。`loop` 方法的时间复杂度也是 O(n)，这是因为它在每次调用时都需要重新计算 `carsInDriving`，然后遍历所有正在驾驶的车。
 
 这里的数组不建议换成set. set主要用于去重的场景, 而且set是无序的.
+
 
 优化方案1**. 优化后的代码：**
 
@@ -427,6 +426,9 @@ class Test {
 
 在这段代码中，`carsInDriving` 的 getter 方法在 `_carsInDriving` 为空时具有 O(n) 的时间复杂度，否则它具有 O(1) 的时间复杂度。这是因为我们只在 `_carsInDriving` 为空时计算 `carsInDriving`，并将结果存储在 `_carsInDriving` 中。这样就创建了一个缓存机制。`loop` 方法的时间复杂度仍然是 O(n)，但如果 `carsInDriving` 被多次调用，并且 `cars` 没有发生改变，那么除了第一次计算外，其余的调用都具有 O(1) 的时间复杂度。
 
+总结一下, 原始代码中，`loop` 方法的时间复杂度是 O(n)，这是因为 直接在 `loop` 方法中遍历 `cars`，并在遍历时过滤出正在驾驶的车辆。这个方法的优点是它在每次调用时都对 `cars` 进行实时的过滤，无需依赖额外的状态，但缺点是每次调用 `loop` 时都需要重新过滤 `cars`。
+
+总结起来，哪种方法更好取决于使用情况。如果 `cars` 集合经常变化，或者我们不需要频繁地访问正在驾驶的车辆，那么 方法可能更好。如果我们需要频繁地访问正在驾驶的车辆，但 `cars` 集合不经常变化，那么优化后的方法可能更好。
 **优化方案2：**
 
 ```swift
@@ -446,11 +448,12 @@ class Test {
 
 ```
 
-在你的代码中，`loop` 方法的时间复杂度是 O(n)，这是因为你直接在 `loop` 方法中遍历 `cars`，并在遍历时过滤出正在驾驶的车辆。这个方法的优点是它在每次调用时都对 `cars` 进行实时的过滤，无需依赖额外的状态，但缺点是每次调用 `loop` 时都需要重新过滤 `cars`。
 
-总结起来，哪种方法更好取决于你的使用情况。如果 `cars` 集合经常变化，或者我们不需要频繁地访问正在驾驶的车辆，那么你的方法可能更好。如果我们需要频繁地访问正在驾驶的车辆，但 `cars` 集合不经常变化，那么第二种优化后的方法可能更好。
 
 方案的另一种写法:
+
+getter 懒加载写法:
+
 
 ![](../assets/16912026477007.jpg)
 
@@ -502,7 +505,7 @@ class Test {
 
 ```
 
-在这个版本中，我们将 `Dog` 结构体替换为 `Car`，并将 `running` 属性替换为 `driving`，这样 `driving` 就表示这辆车是否正在行驶。类 `Test` 中的其他部分也进行了相应的修改。现在 `loop` 函数会遍历所有正在驾驶的车辆。
+在这个版本中，   `loop` 函数会遍历所有正在驾驶的车辆。
 
 方案4的另一种写法
 
@@ -2193,6 +2196,10 @@ IndexingIterator，类似 IteratorProtocol；
 ![](../assets/closure_vs_block/banner.jpg)
 
 ![](../assets/closure_vs_block/closure_vs_block_map.jpg)
+
+
+note: multiple trailing closures is called chaining closures, via [Chaining closures in Swift]( https://medium.com/@panovdev/chaining-closures-in-swift-65109941c3b1 "") 
+
 
 本质上 OC 的 block 就是⼀个结构体，然后这个结构体⾥⾯有⼀个结构体成员专⻔⽤来保存捕捉对象，因此才会导致
 被 block 捕捉引⽤ +1  ，或者说 block 是⼀个带有⾃动变量（局部变量）的匿名函数。

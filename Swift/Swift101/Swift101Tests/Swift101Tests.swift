@@ -226,6 +226,17 @@ final class Swift101Tests: XCTestCase {
     
     /*!
      * https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators/#Range-Operators
+     *
+     for (var i = 0; i < list.length; i++) {
+         print(list[i]);
+     }
+      
+     vs
+      
+      for i in 0..<list.length {
+          print(list[i])
+      }
+    
      */
     func testRangeOperators() {
         //Switch
@@ -249,12 +260,12 @@ final class Swift101Tests: XCTestCase {
             }
         }
         /*!
-        * (x: 2, y: 2) is in the first quadrant
-       (x: -2, y: 2) is in the second quadrant
-       (x: 2, y: -2) is in the fourth quadrant
-       (x: -2, y: -2) is in the third quadrant
-       (x: 0, y: 0) is at the origin
-        */
+         * (x: 2, y: 2) is in the first quadrant
+         (x: -2, y: 2) is in the second quadrant
+         (x: 2, y: -2) is in the fourth quadrant
+         (x: -2, y: -2) is in the third quadrant
+         (x: 0, y: 0) is at the origin
+         */
         print(positionDescription(point: (2,2)))
         
         print(positionDescription(point: (-2,2)))
@@ -278,7 +289,7 @@ final class Swift101Tests: XCTestCase {
                 return "\(point) is not on sine or cosine"
             }
         }
-
+        
         /*!(x: 5.0, y: -0.9589242746631385) is on sine, cosine or both
          */
         print(onSineOrCosine(point: (5, sin(5)), threshold: 0.1))
@@ -309,12 +320,8 @@ final class Swift101Tests: XCTestCase {
         print("num1 \(num1) num2 is \(num2)")
         swap(a: &num1, b: &num2)
         print("num1 \(num1) num2 is \(num2)")
-
-        
-
-
-
     }
+    
     func testClosure() {
         
         func sumF(_ numbers: Double..., fn: (Double) -> Double) -> Double {
@@ -337,12 +344,21 @@ final class Swift101Tests: XCTestCase {
         
         print(sumF(1,2,3, fn: +))
         print(sumF(1,2,3, fn: -))
-//        print(sumF(1,2,3, fn: *))
+//                print(sumF(1,2,3, fn: *))
+        
+        // Avoid infinite loop: starting from .infinity and incrementing will never reduce abs(term)
+        var term: Double = Double.infinity
+        let threshold: Double = 10
+        while term < threshold {
+            term += 1
+            print("\(term)")
+        }
     }
     
     //arithmetic
     //compound operator 复合运算
     //an= a1+a2+a3+..+an , a2=a1+d
+
     func sumarithmetic(a1: Double, d: Double, n: Int) -> Double? {
         var sum: Double = 0
         if n  <= 0 {
@@ -358,19 +374,46 @@ final class Swift101Tests: XCTestCase {
     func arithmeticProgression(a1: Double, d: Double, n: Int) -> Double {
         return a1 + (Double(n) + d)
     }
-    
+    /*!
+     *
+     | API | `$0`（第 1 个参数） | `$1`（第 2 个参数） |
+    |----|------------------|------------------|
+    | `map` | 当前元素 | —（不存在） |
+    | `flatMap` | 当前子元素 / 子数组 | —（不存在） |
+    | `filter` | 当前元素 | —（不存在） |
+    | `compactMap` | 当前元素 | —（不存在） |
+    | `reduce` | 累积结果 | 当前元素 |
+    | `reduce(into:)` | inout 累积结果 | 当前元素 |
+    | `sorted(by:)` | 左侧比较值 | 右侧比较值 |
+    | `min(by:)` | 当前最小候选 | 新比较值 |
+    | `max(by:)` | 当前最大候选 | 新比较值 |
+    | `forEach` | 当前元素 | —（不存在） |
+
+     */
     func testArrayFilter() {
         let nestedArray = [[1, 2, 3], [4, 5, 6]]
         let flattenedArray = nestedArray.flatMap { $0 }
         print("flatMap ", flattenedArray) // Output: [1, 2, 3, 4, 5, 6]
-        
+        print("sum of flatMap result", flattenedArray.reduce(0, +)) // Output: 21
+        print("sum of flatMap result", flattenedArray.reduce(into:0) { $0 += $1 }) // Output: 21
+
+        // If you wanted to use reduce(into:), you would write: flattenedArray.reduce(into: 0) { $0 += $1 }
+
         let stringNumbers = ["1", "2", "three", "4"]
         let mappedNumbers = stringNumbers.compactMap { Int($0) }
-        print("compactMap ", mappedNumbers) // Output: [1, 2, 4]
-        
+        print("concatenated stringNumbers ", stringNumbers.reduce("", { (result, word) in return result + word })) // Output: 12three4
+        print("joined stringNumbers (counts)", stringNumbers.reduce("", { (result, word) in return result + String(word.count) })) // Output: 1221
+        print("joined stringNumbers ", stringNumbers.joined()) // Output: 12three4
+        print("joined stringNumbers ", stringNumbers.joined(separator: ", and ")) // Output: 12three4
+
+        print("concatenated mappedNumbers ", mappedNumbers.reduce("", { $0 + $1.description })) // Output: 124
+
+
         let sampleNumbers = [1, 2, 3, 4]
         let squaredNumbers = sampleNumbers.map { $0 * $0 }
         print("compactMap ", squaredNumbers) // Output: [1, 4, 9, 16]
+        print("compactMap filter", sampleNumbers.map { $0 * $0 }.filter{$0 % 2 == 0}) // Output: [4, 16]
+
         
     }
     
