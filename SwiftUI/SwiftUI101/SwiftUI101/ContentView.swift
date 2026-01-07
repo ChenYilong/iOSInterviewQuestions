@@ -16,9 +16,11 @@ struct ContentView: View {
     @State private var name = "[@State]Anonymous"
     @StateObject private var settings = UserSettings()
     @State var showCreateView = false
-
+    
     var body: some View {
+        
         NavigationView {
+            
             VStack {
                 // State usage
                 TextField("[@State]Enter your name", text: $name).background(Color.red)
@@ -32,7 +34,7 @@ struct ContentView: View {
                     settings.score += 1
                     name = "[@State]chenyilong" + String(settings.score)
                 }
-//                 Navigate to ChildView, passing the settings
+                //                 Navigate to ChildView, passing the settings
                 NavigationLink(destination: ChildView(settings: settings, name: $name, showCreateView: $showCreateView)) {
                     Text("[@Binding]Go to ChildView View")
                 }
@@ -41,7 +43,7 @@ struct ContentView: View {
                 // Display the ScoreView using @EnvironmentObject
                 ScoreView()
                 
-
+                
                 List {
                     //In SwiftUI, you can use a ForEach loop directly in your List.
                     //This is equivalent to numberOfRowsInSection and cellForRowAt indexPath in UIKit.
@@ -69,7 +71,7 @@ struct ChildView: View {
     @Binding var name: String
     @Environment(\.dismiss) private var dismiss
     @Binding var showCreateView: Bool
-
+    
     var body: some View {
         VStack {
             Text("[@Binding]Score: \(settings.score)")
@@ -80,7 +82,7 @@ struct ChildView: View {
             }
             Button("Dismiss") {
                 showCreateView = false
-  
+                
             }
         }
     }

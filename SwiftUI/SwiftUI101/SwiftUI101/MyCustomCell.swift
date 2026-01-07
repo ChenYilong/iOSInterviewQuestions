@@ -35,49 +35,104 @@ struct DetailView: View {
     var title: String
     // Define numbers once with an initializer
     @State private var numbers: [Int] = [100, 200, 300, 500, 600, 700, 800, 900, 1000]
+    let lineWidth: CGFloat = 6
+    let diameter: CGFloat = 120
+    @State private var isRotated: Bool = false
+    
+    //computed property
+    var angle: Angle { isRotated ? .degrees(360) : .degrees(0) }
+
+    //computed property
+    var angularGradient: AngularGradient {
+        AngularGradient(
+            gradient: Gradient(colors: [
+                .pink,
+                .purple,
+                .blue,
+                .orange,
+                .yellow
+            ]),
+            center: .center,
+            angle: .zero
+        )
+    }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 12) {
+        ZStack {
+            Color
+                .cyan
+                .opacity(0.7)
+                .ignoresSafeArea()
             
-            Divider()
-                .padding(.vertical, 8)
+            LinearGradient(colors: [.green.opacity(0.5), Color(red: 139/255, green: 80/255, blue: 240/255)], startPoint: .topLeading,endPoint: .bottomTrailing)
+                .ignoresSafeArea()
             
-            VStack {
-                Image("iteatime")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .clipShape(Circle())
-                    .frame(height: 100)
-                    .background {
-                        Circle()
-                            .foregroundColor(.blue)
-                            .offset(x: 10, y: 10)
-                    }
-                    .background {
-                        Circle()
-                            .foregroundColor(.yellow)
-                            .offset(x: -10, y: 10)
-                    }
-                    .background {
-                        Circle()
-                            .foregroundColor(.red)
-                            .offset(x: 10, y: -10)
-                    }
-                Spacer().frame(height: 10)
+            VStack(alignment: .leading, spacing: 12) {
                 
-                Text("Detail view for row \(index)")
-                    .font(.largeTitle)
+                Divider()
+                    .padding(.vertical, 8)
                 
-                List(numbers, id: \.self) { number in
-                    Text("\(number) is a number")
+                VStack(alignment: .center) {
+                    ZStack {
+                        
+                        
+                        Image("iteatime")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .clipShape(Circle())
+                            .frame(height: 100)
+                            .background {
+                                Circle()
+                                    .foregroundColor(.blue)
+                                    .offset(x: 10, y: 10)
+                            }
+                            .background {
+                                Circle()
+                                    .foregroundColor(.yellow)
+                                    .offset(x: -10, y: 10)
+                            }
+                            .background {
+                                Circle()
+                                    .foregroundColor(.red)
+                                    .offset(x: 10, y: -10)
+                            }
+                            .onTapGesture {
+                                withAnimation(.easeInOut(duration: 1)) {
+                                    isRotated.toggle()
+                                }
+                            }
+                        
+                        
+                        Circle()
+                            .strokeBorder(angularGradient, lineWidth: lineWidth)
+                            .rotationEffect(angle)
+                            .frame(width: diameter, height: diameter)
+                            .onTapGesture {
+                                withAnimation(.easeInOut(duration: 1)) {
+                                    isRotated.toggle()
+                                }
+                            }
+                        
+                        Text("touch me")
+                            .font(.subheadline)
+                            .padding()
+                            .foregroundStyle(.red)
+                    }
+                    Spacer().frame(height: 10)
+                    
+                    Text("Detail view for row \(index)")
+                        .font(.largeTitle)
+                    
+                    List(numbers, id: \.self) { number in
+                        Text("\(number) is a number")
+                    }
+                    
                 }
-                
             }
+            .padding()
+            .navigationTitle(title)
         }
-        .padding()
-        .navigationTitle(title)
     }
 }
-
 
 
