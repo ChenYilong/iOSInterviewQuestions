@@ -38,7 +38,12 @@ struct DetailView: View {
     let lineWidth: CGFloat = 6
     let diameter: CGFloat = 120
     @State private var isRotated: Bool = false
+
+    //imageRotation is specific and internal to a single class, declare  imageRotation as static  at the top of the file
+    @State private var imageRotation: Double = 0
     
+    //imageRotation is specific and internal to a single class, declare  imageRotation as static  at the top of the file
+//    @State private var imageRotation: String = "imageRotation"
     //computed property
     var angle: Angle { isRotated ? .degrees(360) : .degrees(0) }
 
@@ -81,6 +86,7 @@ struct DetailView: View {
                             .aspectRatio(contentMode: .fit)
                             .clipShape(Circle())
                             .frame(height: 100)
+                            .rotationEffect(Angle(degrees: imageRotation))
                             .background {
                                 Circle()
                                     .foregroundColor(.blue)
@@ -99,6 +105,7 @@ struct DetailView: View {
                             .onTapGesture {
                                 withAnimation(.easeInOut(duration: 1)) {
                                     isRotated.toggle()
+                                    imageRotation += 90
                                 }
                             }
                         
@@ -109,7 +116,9 @@ struct DetailView: View {
                             .frame(width: diameter, height: diameter)
                             .onTapGesture {
                                 withAnimation(.easeInOut(duration: 1)) {
-                                    isRotated.toggle()
+                                    isRotated..toggle()
+                                    imageRotation += 90
+
                                 }
                             }
                         

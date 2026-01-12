@@ -883,6 +883,58 @@ Swift requires each object to have a type, which must be known during compilatio
 - **Value types**, which are typically described as a struct, enum, or tuple and allow each instance to maintain a separate copy of its data.
 - **Reference types**, where a single copy of the data is shared by all instances, and where the type is often expressed as a class.
 
+
+Swift 中的 Value Types vs Reference Types
+
+| 类型分类 | 具体类型 | 是否为 Value Type | 是否为 Reference Type | 说明 |
+|--------|---------|------------------|----------------------|------|
+| 基本数值类型 | `Int`, `Double`, `Float`, `Bool` | ✅ | ❌ | 栈语义，赋值即拷贝 |
+| 字符类型 | `Character` | ✅ | ❌ | 单个 Unicode 字符 |
+| 字符串 | `String` | ✅ | ❌ | **结构体实现，值类型（Copy-on-Write）** |
+| 数组 | `Array<T>` | ✅ | ❌ | **值类型，使用 Copy-on-Write 优化** |
+| 字典 | `Dictionary<K, V>` | ✅ | ❌ | 值类型，CoW |
+| 集合 | `Set<T>` | ✅ | ❌ | 值类型，CoW |
+| 元组 | `Tuple` | ✅ | ❌ | 组合多个值 |
+| 枚举 | `enum` | ✅ | ❌ | 可带关联值 |
+| 结构体 | `struct` | ✅ | ❌ | Swift 推荐默认使用 |
+| 函数类型 | `(T) -> U` | ⚠️（值语义） | ❌ | 闭包是引用捕获但语义为值 |
+| 协议 | `protocol` | ⚠️ | ❌ | 本身不是实例类型 |
+| Optional | `Optional<T>` | ✅ | ❌ | 枚举实现 |
+| Error | `Error` | ⚠️ | ❌ | 通常为 enum / struct |
+| Any / AnyObject | `Any` | ⚠️ | ⚠️ | 类型擦除 |
+| 类 | `class` | ❌ | ✅ | 引用语义，ARC 管理 |
+| 闭包（Closure） | `{ }` | ❌ | ✅ | 引用类型，可捕获上下文 |
+| NSObject 及子类 | `NSObject` | ❌ | ✅ | Objective-C 运行时支持 |
+| Actor（并发） | `actor` | ❌ | ✅ | 引用语义，线程安全 |
+| 函数指针（C） | `@convention(c)` | ❌ | ✅ | C 级引用语义 |
+
+
+ Value Types vs Reference Types in Swift
+
+| Category | Type | Value Type | Reference Type | Notes |
+|--------|------|------------|----------------|-------|
+| Primitive numeric types | `Int`, `Double`, `Float`, `Bool` | ✅ | ❌ | Copied on assignment |
+| Character | `Character` | ✅ | ❌ | Represents a single Unicode scalar |
+| String | `String` | ✅ | ❌ | **Implemented as a struct (Copy-on-Write)** |
+| Array | `Array<T>` | ✅ | ❌ | **Value type with Copy-on-Write optimization** |
+| Dictionary | `Dictionary<K, V>` | ✅ | ❌ | Value type, CoW |
+| Set | `Set<T>` | ✅ | ❌ | Value type, CoW |
+| Tuple | `(T, U, ...)` | ✅ | ❌ | Groups multiple values |
+| Enum | `enum` | ✅ | ❌ | Can contain associated values |
+| Struct | `struct` | ✅ | ❌ | Preferred by Swift for modeling data |
+| Optional | `Optional<T>` | ✅ | ❌ | Implemented as an enum |
+| Function type | `(T) -> U` | ⚠️ (value semantics) | ❌ | Closures may capture references |
+| Protocol | `protocol` | ⚠️ | ❌ | Not an instance type |
+| Error | `Error` | ⚠️ | ❌ | Usually implemented by enum or struct |
+| Any | `Any` | ⚠️ | ❌ | Type-erased value |
+| AnyObject | `AnyObject` | ❌ | ✅ | Class-only type |
+| Class | `class` | ❌ | ✅ | Reference semantics, ARC-managed |
+| Closure | `{ }` | ❌ | ✅ | Reference type, captures context |
+| NSObject & subclasses | `NSObject` | ❌ | ✅ | Objective-C interoperability |
+| Actor | `actor` | ❌ | ✅ | Reference type with concurrency safety |
+| C function pointer | `@convention(c)` | ❌ | ✅ | C-level reference semantics |
+
+
 Collections are Value Types, as mentioned in [Value And Reference Types In Swift]( https://www.swift.org/documentation/articles/value-and-reference-types.html "") 
 
 Although in many languages, collections such as arrays and dictionaries are reference types, in Swift the standard collections Array, Dictionary and String are all value types.
