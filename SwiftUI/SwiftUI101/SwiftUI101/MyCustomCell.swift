@@ -116,7 +116,7 @@ struct DetailView: View {
                             .frame(width: diameter, height: diameter)
                             .onTapGesture {
                                 withAnimation(.easeInOut(duration: 1)) {
-                                    isRotated..toggle()
+                                    isRotated.toggle()
                                     imageRotation += 90
 
                                 }

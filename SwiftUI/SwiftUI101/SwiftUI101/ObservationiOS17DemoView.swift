@@ -6,23 +6,23 @@
 //
 
 import SwiftUI
+import Observation
 
 // Observable object to be used
 /*option 2(>iOS17)*/
-//@Observable
-class UserSettingsViewModel: ObservableObject {
-        /*option 1(<iOS17)*/ @Published var score = 0
-        /*option 1(<iOS17)*/  @Published var data1 = "hello world"
-        /*option 1(<iOS17)*/ @Published var data2 = "we love programming!"
+@Observable class UserSettingsiOS17ViewModel {
+    //    /*option 1(<iOS17)*/ @Published var score = 0
+    //    /*option 1(<iOS17)*/  @Published var data1 = "hello world"
+    //    /*option 1(<iOS17)*/ @Published var data2 = "we love programming!"
     
-//    /*option 2(>iOS17)*/ var score = 0
-//    /*option 2(>iOS17)*/ var data1 = "hello world"
-//    /*option 2(>iOS17)*/ var data2 = "we love programming!"
+    /*option 2(>iOS17)*/ var score = 0
+    /*option 2(>iOS17)*/ var data1 = "hello world"
+    /*option 2(>iOS17)*/ var data2 = "we love programming!"
     
 }
-struct OtherChildView: View {
-        /*option 1(<iOS17)*/ @ObservedObject var settings = UserSettingsViewModel()
-//    /*option 2(>iOS17)*/ @State var settings = UserSettingsViewModel()
+struct OtheriOS17ChildView: View {
+    //    /*option 1(<iOS17)*/ @ObservedObject var settings = UserSettingsViewModel()
+    /*option 2(>iOS17) */ @State private var settings = UserSettingsiOS17ViewModel()
     
     var body: some View {
         
@@ -47,19 +47,17 @@ struct OtherChildView: View {
                                    alpha: 1)))
     }
 }
-struct OtherParentView: View {
+
+struct OtheriOS17ParentView: View {
     //number is specific and internal to a single class, declare  number as static  at the top of the file
     @State private var number: Int = 0
     var body: some View {
         VStack {
-            
-            
             Text("parent data\(number)")
             Button("update parent data") {
                 number += 1
             }
-            
-            OtherChildView()
+            OtheriOS17ChildView()
         }.background(Color(UIColor(red: CGFloat(Int.random(in: 0...255)) / 255,
                                    green: CGFloat(Int.random(in: 0...255)) / 255,
                                    blue: CGFloat(Int.random(in: 0...255)) / 255,
@@ -67,9 +65,9 @@ struct OtherParentView: View {
     }
 }
 
-struct ContentView: View {
+struct iOS17ContentView: View {
     @State private var name = "[@State]Anonymous"
-    @ObservedObject var settings = UserSettingsViewModel()
+    @State var settings = UserSettingsiOS17ViewModel()
     @State var showCreateView = false
     
     var body: some View {
@@ -90,13 +88,13 @@ struct ContentView: View {
                     name = "[@State]chenyilong" + String(settings.score)
                 }
                 //                 Navigate to ChildView, passing the settings
-                NavigationLink(destination: ChildView(settings: settings, name: $name, showCreateView: $showCreateView)) {
+                NavigationLink(destination: iOS17ChildView(settings: settings, name: $name, showCreateView: $showCreateView)) {
                     Text("[@Binding]Go to ChildView View")
                 }
                 
                 
                 // Display the ScoreView using @EnvironmentObject
-                ScoreView()
+                iOS17ScoreView().environment(settings)
                 OtherParentView()
                 
                 List {
@@ -116,15 +114,15 @@ struct ContentView: View {
                 }
             }
             .sheet(isPresented: $showCreateView) {
-                ChildView(settings: settings, name: $name, showCreateView: $showCreateView)
+                iOS17ChildView(settings: settings, name: $name, showCreateView: $showCreateView)
             }
         }
-        .environmentObject(settings) // Provide UserSettings as an environment object to the other views
+        .environment(settings) // Provide UserSettings as an environment object to the other views
     }
 }
 
-struct ChildView: View {
-    @ObservedObject var settings: UserSettingsViewModel
+struct iOS17ChildView: View {
+    /*@Bindable*/ var settings: UserSettingsiOS17ViewModel
     @Binding var name: String
     @Environment(\.dismiss) private var dismiss
     @Binding var showCreateView: Bool
@@ -139,15 +137,15 @@ struct ChildView: View {
             }
             Button("Dismiss") {
                 showCreateView = false
-                dismiss()
+                
             }
         }
     }
 }
 
-struct ScoreView: View {
+struct iOS17ScoreView: View {
     // Access UserSettings using @EnvironmentObject
-    @EnvironmentObject var settings: UserSettingsViewModel
+    @Environment(UserSettingsiOS17ViewModel.self) var settings
     
     var body: some View {
         Text("[@EnvironmentObject]Your Score in ScoreView: \(settings.score)")
@@ -159,50 +157,50 @@ struct ScoreView: View {
     }
 }
 
-// ✅ FIXED: Preview with environmentObject
+
+// ✅ FIXED: Previews with proper environment setup
 #Preview("Default State") {
-    @Previewable @StateObject var settings = UserSettingsViewModel()
+    @Previewable @State var settings = UserSettingsiOS17ViewModel()
     
-    return ContentView(settings: settings)
-        .environmentObject(settings)
+    return iOS17ContentView(settings: settings)
+        .environment(settings)
 }
 
 #Preview("With Score") {
-    @Previewable @StateObject var settings = UserSettingsViewModel()
+    @Previewable @State var settings = UserSettingsiOS17ViewModel()
     
     let _ = { settings.score = 10 }()
     
-    return ContentView(settings: settings)
-        .environmentObject(settings)
+    return iOS17ContentView(settings: settings)
+        .environment(settings)
 }
 
 #Preview("Dark Mode") {
-    @Previewable @StateObject var settings = UserSettingsViewModel()
+    @Previewable @State var settings = UserSettingsiOS17ViewModel()
     
-    return ContentView(settings: settings)
-        .environmentObject(settings)
+    return iOS17ContentView(settings: settings)
+        .environment(settings)
         .preferredColorScheme(.dark)
 }
 
 #Preview("Child View") {
-    @Previewable @StateObject var settings = UserSettingsViewModel()
+    @Previewable @State var settings = UserSettingsiOS17ViewModel()
     @Previewable @State var name = "Test User"
     @Previewable @State var showCreateView = false
     
-    return NavigationView {
-        ChildView(settings: settings, name: $name, showCreateView: $showCreateView)
-    }
+    return iOS17ChildView(settings: settings, name: $name, showCreateView: $showCreateView)
 }
 
+
+// ✅ ALSO CORRECT - Use return ONLY if single expression
 #Preview("Score View") {
-    @Previewable @StateObject var settings = UserSettingsViewModel()
-    
+    @Previewable @State var settings = UserSettingsiOS17ViewModel()
     let _ = { settings.score = 42 }()
     
-    return ScoreView()
-        .environmentObject(settings)
+    iOS17ScoreView()
+        .environment(settings)
 }
 
-#Preview("Other Parent View") {
-    OtherParentView()
+#Preview("Parent View") {
+    OtheriOS17ParentView()
 }
