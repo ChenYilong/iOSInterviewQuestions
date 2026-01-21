@@ -6,7 +6,7 @@
 * question mark ?
 * exclamation mark !
 * dash -
-* underline _
+* underscore _
 * asterisk *
 * slash /
 * backslash \
