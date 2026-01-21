@@ -14,6 +14,9 @@
 		9A28A73B2A788C5B00478870 /* SwiftUI101Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A28A73A2A788C5B00478870 /* SwiftUI101Tests.swift */; };
 		9A28A7452A788C5B00478870 /* SwiftUI101UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A28A7442A788C5B00478870 /* SwiftUI101UITests.swift */; };
 		9A28A7472A788C5B00478870 /* SwiftUI101UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A28A7462A788C5B00478870 /* SwiftUI101UITestsLaunchTests.swift */; };
+		9AAC09142F20487400C89A7C /* SwiftUI101DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAC09132F20487400C89A7C /* SwiftUI101DemoTests.swift */; };
+		9AAC09182F20673F00C89A7C /* EnvironmentExampleSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAC09172F20673F00C89A7C /* EnvironmentExampleSwiftUIView.swift */; };
+		9AAC091A2F20885500C89A7C /* BindableSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAC09192F20885500C89A7C /* BindableSwiftUIView.swift */; };
 		9AE4EB752A78C8100071A7C7 /* MyCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4EB742A78C8100071A7C7 /* MyCustomCell.swift */; };
 		9AF1756D2F17391B00F02BCD /* ObservationiOS17DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF1756C2F17390F00F02BCD /* ObservationiOS17DemoView.swift */; };
 /* End PBXBuildFile section */
@@ -46,6 +49,9 @@
 		9A28A7402A788C5B00478870 /* SwiftUI101UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftUI101UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A28A7442A788C5B00478870 /* SwiftUI101UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI101UITests.swift; sourceTree = "<group>"; };
 		9A28A7462A788C5B00478870 /* SwiftUI101UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI101UITestsLaunchTests.swift; sourceTree = "<group>"; };
+		9AAC09132F20487400C89A7C /* SwiftUI101DemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI101DemoTests.swift; sourceTree = "<group>"; };
+		9AAC09172F20673F00C89A7C /* EnvironmentExampleSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentExampleSwiftUIView.swift; sourceTree = "<group>"; };
+		9AAC09192F20885500C89A7C /* BindableSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindableSwiftUIView.swift; sourceTree = "<group>"; };
 		9AE4EB742A78C8100071A7C7 /* MyCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCustomCell.swift; sourceTree = "<group>"; };
 		9AF1756C2F17390F00F02BCD /* ObservationiOS17DemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationiOS17DemoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -101,7 +107,9 @@
 				9A28A7292A788C5600478870 /* SwiftUI101App.swift */,
 				9A28A72B2A788C5700478870 /* ContentView.swift */,
 				9AE4EB742A78C8100071A7C7 /* MyCustomCell.swift */,
+				9AAC09192F20885500C89A7C /* BindableSwiftUIView.swift */,
 				9AF1756C2F17390F00F02BCD /* ObservationiOS17DemoView.swift */,
+				9AAC09172F20673F00C89A7C /* EnvironmentExampleSwiftUIView.swift */,
 				9A28A72D2A788C5A00478870 /* Assets.xcassets */,
 				9A28A72F2A788C5A00478870 /* Preview Content */,
 			);
@@ -120,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				9A28A73A2A788C5B00478870 /* SwiftUI101Tests.swift */,
+				9AAC09132F20487400C89A7C /* SwiftUI101DemoTests.swift */,
 			);
 			path = SwiftUI101Tests;
 			sourceTree = "<group>";
@@ -264,7 +273,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9AF1756D2F17391B00F02BCD /* ObservationiOS17DemoView.swift in Sources */,
+				9AAC091A2F20885500C89A7C /* BindableSwiftUIView.swift in Sources */,
 				9AE4EB752A78C8100071A7C7 /* MyCustomCell.swift in Sources */,
+				9AAC09182F20673F00C89A7C /* EnvironmentExampleSwiftUIView.swift in Sources */,
 				9A28A72C2A788C5700478870 /* ContentView.swift in Sources */,
 				9A28A72A2A788C5600478870 /* SwiftUI101App.swift in Sources */,
 			);
@@ -275,6 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A28A73B2A788C5B00478870 /* SwiftUI101Tests.swift in Sources */,
+				9AAC09142F20487400C89A7C /* SwiftUI101DemoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

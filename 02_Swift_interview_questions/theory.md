@@ -210,11 +210,13 @@ t
 **Answer:** B) Protocol functions cannot have implementations. The code is incorrect because protocol functions cannot have default implementations. Protocols are used to define a set of methods or properties that must be implemented by conforming classes or structures. However, protocol functions cannot provide a default implementation within the protocol definition itself.
 
 To fix the code, remove the implementation of the `add` function from the protocol definition, like this:
+
 ```swift
 protocol iTeaTime {
     func add(x1: Int, x2: Int) -> Int
 }
 ```
+
 Now, any class or structure that conforms to the `iTeaTime` protocol will be required to provide its own implementation of the `add` function.
 
 
@@ -275,61 +277,150 @@ print(companyA.size) // ? question6
 ```
 
 A:
+答案:
+
+
+run code in Swift101.xcodeproj/Swift101Tests.swift
+
+考察 值类型与引用类型各自对应的深拷贝与浅拷贝的区别. 核心知识点:
+
+值类型类的值类型属性进行 copy 操作,是深拷贝。
+
+
+遇到copy操作 | 值类型 类 | 引用类型 类
+:-------------:|:-------------:|:-------------:
+值类型 属性 | 深拷贝 |  浅拷贝
+引用类型 属性 | 浅拷贝 | 浅拷贝
+
+
+
+
+内存上，值引⽤在栈区，引⽤类型在堆区进⾏存储和操作，栈区的运⾏效率更⾼；值类型类的值类型属性,均在栈上操作, 属于是深拷贝,效率更⾼.
+
 
 ```
-class Person {
-    var name: String
 
-    init(name: String) {
-        self.name = name
+    class Person {
+        var name: String
+        
+        init(name: String) {
+            self.name = name
+        }
     }
-}
-
-struct Company {
-    var size: Int
-    var manager: Person
-
-    mutating func increaseSize() {
-        self = Company(size: size + 1, manager: manager)
+    
+    struct Company {
+        var size: Int
+        var manager: Person
+        
+        mutating func increaseSize() {
+            self = Company(size: size + 1, manager: manager)
+        }
+        
+        mutating func increaseSizeV2() {
+            size += 1
+        }
     }
+    
+    var companyA = Company(size: 100, manager: Person(name: "ChenYilong"))
+    
+    var companyB = companyA
+    companyA.size = 150  // if a struct is an immutable value type, why we can mutate the size property? Xcode warning: Variable 'companyB' was never mutated; consider changing to 'let' constant.
+    print("question1: \(companyA.size)") // ? 150
+    print("question2: \(companyB.size)") // ? 100
+    
+    companyA.manager.name = "Bob"
+    print("question3: \(companyA.manager.name)") // ? Bob
+    print("question4: \(companyB.manager.name)")// ? Bob
+    
+    companyA.increaseSize()
+    print("question5: \(companyA.size)") // ? 151
+    companyA.increaseSizeV2()
+    print("question6: \(companyA.size)") // ? 152
+    
+    
+    print("question7: \(companyB.size)") // ? 100
+    companyA.increaseSizeV2()
+    print("question8: \(companyB.size)") // ? 100
+    
+```
 
-    mutating func increaseSizeV2() {
-        size += 1
+答案:
+
+
+
+```
+
+
+
+question1: 150
+question2: 100
+question3: Bob
+question4: Bob
+question5: 151
+question6: 152
+
+```
+
+
+注意 与 copy on write 辨别 , [Data Races with value types in Swift]( https://angelolloqui.com/blog/44-data-races-with-value-types-in-swift "") .
+
+
+注意 question2 的下面情况下, 输出与原题目不一样:
+
+
+```Swift
+
+    struct Person {
+        var name: String
+        
+        init(name: String) {
+            self.name = name
+        }
     }
-}
-
-var companyA = Company(size: 100, manager: Person(name: "Peter"))
-
-var companyB = companyA
-companyA.size = 150  // if a struct is an immutable value type, why we can mutate the size property?
-print(companyA.size) // ? 150
-print(companyB.size) // ? 150
-
-companyA.manager.name = "Bob"
-print(companyA.manager.name) // ? Bob
-print(companyB.manager.name) // ? Bob
-
-companyA.increaseSize()
-print(companyA.size) // ? 151
-companyA.increaseSizeV2()
-print(companyA.size) // ? 152
+    
+    class Company {
+        var size: Int
+        var manager: Person
+        
+        init(size: Int, manager: Person) {
+            self.size = size
+            self.manager = manager
+        }
+        
+        func increaseSize() {
+            size = size + 1
+        }
+        
+        func increaseSizeV2() {
+            size += 1
+        }
+    }
+    
+    var companyA = Company(size: 100, manager: Person(name: "ChenYilong")) // xcode warning: Variable 'companyA' was never mutated; consider changing to 'let' constant
+    
+    var companyB = companyA
+    companyA.size = 150  // if a struct is an immutable value type, why we can mutate the size property?  Xcode warning: Variable 'companyB' was never mutated; consider changing to 'let' constant.(wrong warning!!)
+    print("question1: \(companyA.size)") // ? 150
+    print("question2: \(companyB.size)") // ? 150
+    
+    companyA.manager.name = "Bob"
+    print("question3: \(companyA.manager.name)") // ? Bob
+    print("question4: \(companyB.manager.name)")// ? Bob
+    
+    companyA.increaseSize()
+    print("question5: \(companyA.size)") // ? 151
+    companyA.increaseSizeV2()
+    print("question6: \(companyA.size)") // ? 152
+    
+    
+    companyA.increaseSize()
+    print("question7: \(companyB.size)") // ? 153
+    companyA.increaseSizeV2()
+    print("question8: \(companyB.size)") // ? 154
+     
+     
 ```
-
-```
-
-答案
-
-question1:150
-question2:100
-question3:Bob
-question4:Bob
-question5:151
-question6:152
-
-```
-
-
-注意 与 copy on write 辨别  
+ 
 
 ## 代码题
 ![5](assets/5.jpg)
@@ -725,8 +816,7 @@ struct 是赋值， class是引用
 
 ## 4、Swift 的 Copy-on-Write 是怎么实现的
 
-1、Swift 分 引⽤类型 (Class) 和值类型 (Struct / Enum)，值类型赋值、函数传值时，会触发 Copy 操作，此时对值类型写
-时复制就能提升性能；
+1、Swift 分 引⽤类型 (reference type , as in Class) 和 值类型 (value type , as in Struct / Enum)，value 值类型赋值、函数传值时，会触发 Copy 操作，此时对值类型写时复制就能提升性能；
 优势：
 1）读多写少的情况，可以提⾼读取效率；
 2）集合传值之后修改，不会改变原来的值；（OC 需要⽤ deep Copy）
@@ -738,6 +828,13 @@ Tips：
 2）isKnownUniquelyReferenced 可以⽤来判断 Class 是否被唯⼀引⽤，从⽽进⾏ copy on write；
 3）Array、Dictionary、Set 等类型都是 Struct 实现的，值类型，⽀持 Copy-on-Write；
 写时复制，swift 的数组、字典等就是如此，原来是值类型，但是遇到写操作的时候，复制⼀份出来；
+
+Copy-on write is supported for String and all collection types - Array, Dictionary and Set.
+
+Besides that, compiler is free to optimize any struct access and effectively give you copy-on-write semantics, but it is not guaranteed.
+
+ [Which value types in Swift supports copy-on-write?]( https://stackoverflow.com/a/45253311/3395008 "") 
+ 
 isKnownUniquelyReferenced 源代码 。
 
 [](https://github.com/apple/swift/blob/ad0a5bf12b9f261263f20598bc4767494ff5d678/stdlib/public/core/ManagedBuffer.swift)

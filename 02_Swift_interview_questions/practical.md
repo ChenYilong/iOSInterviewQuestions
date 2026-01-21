@@ -118,7 +118,8 @@ iOS17 以后 是Observation框架，性能更好了，不过写法不同了.  [S
 ![](../assets/Property_Wrapper_in_SwiftUI/ios17_overview.png)
 
 ![](../assets/Property_Wrapper_in_SwiftUI/ios16_code.png)
-![](../assets/Property_Wrapper_in_SwiftUI/ios17_code.png)
+
+![](../assets/Property_Wrapper_in_SwiftUI/ios17_code.gif)
 
 ![](../assets/Property_Wrapper_in_SwiftUI/ios16_pros_cons.png)
 

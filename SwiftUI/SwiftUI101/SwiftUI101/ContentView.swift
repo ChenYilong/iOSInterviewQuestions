@@ -12,6 +12,14 @@ import SwiftUI
 //@Observable
 class UserSettingsViewModel: ObservableObject {
         /*option 1(<iOS17)*/ @Published var score = 0
+        
+    
+}
+
+// Observable object to be used
+/*option 2(>iOS17)*/
+//@Observable
+class OtherUserSettingsViewModel: ObservableObject {
         /*option 1(<iOS17)*/  @Published var data1 = "hello world"
         /*option 1(<iOS17)*/ @Published var data2 = "we love programming!"
     
@@ -21,8 +29,9 @@ class UserSettingsViewModel: ObservableObject {
     
 }
 struct OtherChildView: View {
-        /*option 1(<iOS17)*/ @ObservedObject var settings = UserSettingsViewModel()
-//    /*option 2(>iOS17)*/ @State var settings = UserSettingsViewModel()
+        /*option 1(<iOS17)*/ @StateObject
+ var settings = OtherUserSettingsViewModel()
+//    /*option 2(>iOS17)*/ @State var settings = OtherUserSettingsViewModel()
     
     var body: some View {
         
