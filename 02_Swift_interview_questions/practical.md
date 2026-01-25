@@ -717,15 +717,92 @@ Reference:
 
 ## **并发和多线程开发：**
 
-## 11. How can you avoid data racing issues when using the singleton pattern in a multi-threaded environment?
+## 11. How can you avoid data racing issues when using the singleton pattern in a multi-threaded environment in Swift?
 
-是不是现在所有swift里的线程问题，都可以通过actor解决？我回答的, 是用GCD, 重写 getter和setter, 实现异步读取, 同步写入.只要保证setter和getter在一个队列里就行. setter是同步, getter同步和异步都行.
 
+
+option 1:
+
+我回答的, 是用GCD, 重写 getter和setter, 实现异步读取, 同步写入.只要保证setter和getter在一个队列里就行. setter是同步, getter同步和异步都行.
+
+
+ ```Swift
+    class Singleton {
+
+    static let shared = Singleton()
+
+    private init(){}
+
+    private let internalQueue = DispatchQueue(label: "com.singletioninternal.queue",
+                                              qos: .default,
+                                              attributes: .concurrent)
+
+    private var _foo: String = "aaa"
+
+    var foo: String {
+        get {
+            return internalQueue.sync {
+                _foo
+            }
+        }
+        set (newState) {
+            internalQueue.async(flags: .barrier) {
+                self._foo = newState
+            }
+        }
+    }
+
+    func setup(string: String) {
+        foo = string
+    }
+}
+
+ ```
+ 
+ option 2:
+
+``` swift
+
+import EventKit
+
+actor EKDataStore: Sendable {
+
+static let shared = EKDataStore()
+
+let eventStore: EKEventStore
+
+private init() {
+
+self.eventStore = EKEventStore()
+
+}
+
+}
+
+```
+
+ [What is an actor and why does Swift have them?]( https://www.hackingwithswift.com/quick-start/concurrency/what-is-an-actor-and-why-does-swift-have-them "") 
+ [When to Use Structs, Classes, and Actors in Swift: 5 Practical Scenarios]( https://www.linkedin.com/pulse/when-use-structs-classes-actors-swift-5-practical-scenarios-haviv-tk1de/ "") 
+  [Actor and the Singleton Pattern]( https://www.reddit.com/r/swift/comments/1frxyl3/actor_and_the_singleton_pattern/ "") 
+  
+  
+  //*one more thing * 是不是现在所有swift里的线程问题，都可以通过actor解决？
+
+这是在Swift中一个非常直接的Actor模型的实现，并且已经足够实现基本的优点。然而，注意这些也很重要：这里引入了一些不是那么明显的局限性，包括：
+
+一个actor方法不能返回一个值、抛出一个error或拥有一个inout的参数
+所有的参数需要在被拷贝时生成独立的值 
+本地状态和非actor方法只能被语法上定义在Actor中，或其 extension之中的方法所访问。
+
+ [Swift Concurrency Manifesto]( https://gist.github.com/lattner/31ed37682ef1576b16bca1432ea9f782 "") 
+ [《Swift 并发宣言》]( https://gist.github.com/kkpan11/49e14f23f00bd3e8d7c0853c9c0d55bb#%E7%AC%AC%E4%BA%8C%E9%83%A8%E5%88%86%EF%BC%9AActor%EF%BC%9A%E6%B6%88%E7%81%AD%E5%85%B1%E4%BA%AB%E5%8F%AF%E5%8F%98%E7%8A%B6%E6%80%81 ) 
+ 
 #### 9. How do let functions run in the main queue?
 @MainActor, DispatchQueue.main, Runloop.main
 
 
-
+ 
+ 
 ## Can you give examples of different types of locks used in concurrent programming?
 
 
@@ -1020,6 +1097,33 @@ concurrentQueue.async(flags: .barrier) {
 
 注意：这个方法仅仅在自己创建的并行队列中有效，对于系统的全局并行队列并不起作用，因为全局并行队列不能被单个任务阻塞。
 
+
+
+Or using Actor like:
+
+Networking Module:
+In a typical iOS application, networking modules handle data fetching from servers. Utilizing classes might lead to race conditions when processing responses concurrently, especially if multiple threads access shared resources. On the other hand, actors can serialize these operations, ensuring data integrity and thread safety.
+
+
+ ```Swift
+// Class-based Networking
+class NetworkManager {
+    func fetchData(completion: @escaping (Data?, Error?) -> Void) {
+        //...
+    }
+}
+
+// Actor-based Networking
+actor NetworkActor {
+    func fetchData() async throws -> Data {
+        //...
+    }
+}
+ ```
+
+With NetworkActor, we can await the fetchData function, making the code more readable and safe from data races.
+
+via  [Actors vs. Classes in Swift: Navigating the Waters of Concurrency]( https://medium.com/@melissazm/actors-vs-classes-in-swift-navigating-the-waters-of-concurrency-5640364a67fb "") 
 
 #### 1. How to implement structured concurrency?
 https://www.hackingwithswift.com/swift/5.5/structured-concurrency
