@@ -12,8 +12,6 @@ import SwiftUI
 //@Observable
 class UserSettingsViewModel: ObservableObject {
         /*option 1(<iOS17)*/ @Published var score = 0
-        
-    
 }
 
 // Observable object to be used
@@ -26,8 +24,8 @@ class OtherUserSettingsViewModel: ObservableObject {
 //    /*option 2(>iOS17)*/ var score = 0
 //    /*option 2(>iOS17)*/ var data1 = "hello world"
 //    /*option 2(>iOS17)*/ var data2 = "we love programming!"
-    
 }
+
 struct OtherChildView: View {
         /*option 1(<iOS17)*/ @StateObject
  var settings = OtherUserSettingsViewModel()
@@ -53,7 +51,7 @@ struct OtherChildView: View {
         }.background(Color(UIColor(red: CGFloat(Int.random(in: 0...255)) / 255,
                                    green: CGFloat(Int.random(in: 0...255)) / 255,
                                    blue: CGFloat(Int.random(in: 0...255)) / 255,
-                                   alpha: 1)))
+                                   alpha: 0.5)))
     }
 }
 struct OtherParentView: View {
@@ -72,7 +70,7 @@ struct OtherParentView: View {
         }.background(Color(UIColor(red: CGFloat(Int.random(in: 0...255)) / 255,
                                    green: CGFloat(Int.random(in: 0...255)) / 255,
                                    blue: CGFloat(Int.random(in: 0...255)) / 255,
-                                   alpha: 1)))
+                                   alpha: 0.5)))
     }
 }
 
@@ -127,6 +125,7 @@ struct ContentView: View {
             .sheet(isPresented: $showCreateView) {
                 ChildView(settings: settings, name: $name, showCreateView: $showCreateView)
             }
+
         }
         .environmentObject(settings) // Provide UserSettings as an environment object to the other views
     }
@@ -150,7 +149,8 @@ struct ChildView: View {
                 showCreateView = false
                 dismiss()
             }
-        }
+        }.alignModifier(.trailing)
+//        .modifier(AlignModifier())
     }
 }
 

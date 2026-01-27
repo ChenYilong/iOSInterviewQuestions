@@ -149,7 +149,7 @@ struct OtherStateiOS17ChildView: View {
         }.background(Color(UIColor(red: CGFloat(Int.random(in: 0...255)) / 255,
                                    green: CGFloat(Int.random(in: 0...255)) / 255,
                                    blue: CGFloat(Int.random(in: 0...255)) / 255,
-                                   alpha: 1)))
+                                   alpha: 0.5)))
     }
 }
 
@@ -166,7 +166,7 @@ struct OtherStateiOS17ParentView: View {
         }.background(Color(UIColor(red: CGFloat(Int.random(in: 0...255)) / 255,
                                    green: CGFloat(Int.random(in: 0...255)) / 255,
                                    blue: CGFloat(Int.random(in: 0...255)) / 255,
-                                   alpha: 1)))
+                                   alpha: 0.5)))
     }
 }
 

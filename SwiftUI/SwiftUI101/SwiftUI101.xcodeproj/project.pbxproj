@@ -17,6 +17,7 @@
 		9AAC09142F20487400C89A7C /* SwiftUI101DemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAC09132F20487400C89A7C /* SwiftUI101DemoTests.swift */; };
 		9AAC09182F20673F00C89A7C /* EnvironmentExampleSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAC09172F20673F00C89A7C /* EnvironmentExampleSwiftUIView.swift */; };
 		9AAC091A2F20885500C89A7C /* BindableSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAC09192F20885500C89A7C /* BindableSwiftUIView.swift */; };
+		9AAC091E2F27186000C89A7C /* ScrollTransitionSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAC091D2F27186000C89A7C /* ScrollTransitionSwiftUIView.swift */; };
 		9AE4EB752A78C8100071A7C7 /* MyCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE4EB742A78C8100071A7C7 /* MyCustomCell.swift */; };
 		9AF1756D2F17391B00F02BCD /* ObservationiOS17DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF1756C2F17390F00F02BCD /* ObservationiOS17DemoView.swift */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,7 @@
 		9AAC09132F20487400C89A7C /* SwiftUI101DemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI101DemoTests.swift; sourceTree = "<group>"; };
 		9AAC09172F20673F00C89A7C /* EnvironmentExampleSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentExampleSwiftUIView.swift; sourceTree = "<group>"; };
 		9AAC09192F20885500C89A7C /* BindableSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BindableSwiftUIView.swift; sourceTree = "<group>"; };
+		9AAC091D2F27186000C89A7C /* ScrollTransitionSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollTransitionSwiftUIView.swift; sourceTree = "<group>"; };
 		9AE4EB742A78C8100071A7C7 /* MyCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCustomCell.swift; sourceTree = "<group>"; };
 		9AF1756C2F17390F00F02BCD /* ObservationiOS17DemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservationiOS17DemoView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -110,6 +112,7 @@
 				9AAC09192F20885500C89A7C /* BindableSwiftUIView.swift */,
 				9AF1756C2F17390F00F02BCD /* ObservationiOS17DemoView.swift */,
 				9AAC09172F20673F00C89A7C /* EnvironmentExampleSwiftUIView.swift */,
+				9AAC091D2F27186000C89A7C /* ScrollTransitionSwiftUIView.swift */,
 				9A28A72D2A788C5A00478870 /* Assets.xcassets */,
 				9A28A72F2A788C5A00478870 /* Preview Content */,
 			);
@@ -273,6 +276,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9AF1756D2F17391B00F02BCD /* ObservationiOS17DemoView.swift in Sources */,
+				9AAC091E2F27186000C89A7C /* ScrollTransitionSwiftUIView.swift in Sources */,
 				9AAC091A2F20885500C89A7C /* BindableSwiftUIView.swift in Sources */,
 				9AE4EB752A78C8100071A7C7 /* MyCustomCell.swift in Sources */,
 				9AAC09182F20673F00C89A7C /* EnvironmentExampleSwiftUIView.swift in Sources */,
