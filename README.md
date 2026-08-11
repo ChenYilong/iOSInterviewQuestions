@@ -106,11 +106,11 @@
 
 ## Star History
 
-<a href="https://www.star-history.com/?type=date&repos=ChenYilong%2FiOSInterviewQuestions">
+<a href="https://star-history.dera.page/#ChenYilong/iOSInterviewQuestions&type=date">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=ChenYilong/iOSInterviewQuestions&type=date&theme=dark&legend=top-left&sealed_token=zvpTMI_ui_mtW7KG8o7minUjA3dHsq-1UkkM0n3PtVaAk-o8pKES2GSB18nfsznitOIfRDOt5PH1Uh7xfzSUj1ew-w14X4ORiq8JO0gcM-OWVVRVLrtvuA" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=ChenYilong/iOSInterviewQuestions&type=date&legend=top-left&sealed_token=zvpTMI_ui_mtW7KG8o7minUjA3dHsq-1UkkM0n3PtVaAk-o8pKES2GSB18nfsznitOIfRDOt5PH1Uh7xfzSUj1ew-w14X4ORiq8JO0gcM-OWVVRVLrtvuA" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=ChenYilong/iOSInterviewQuestions&type=date&legend=top-left&sealed_token=zvpTMI_ui_mtW7KG8o7minUjA3dHsq-1UkkM0n3PtVaAk-o8pKES2GSB18nfsznitOIfRDOt5PH1Uh7xfzSUj1ew-w14X4ORiq8JO0gcM-OWVVRVLrtvuA" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://star-history.dera.page/svg?repos=ChenYilong/iOSInterviewQuestions&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://star-history.dera.page/svg?repos=ChenYilong/iOSInterviewQuestions&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://star-history.dera.page/svg?repos=ChenYilong/iOSInterviewQuestions&type=date&legend=top-left" />
  </picture>
 </a>
 
